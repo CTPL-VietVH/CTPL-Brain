@@ -22,3 +22,6 @@ models/
 .vscode/
 .idea/
 .DS_Store
+
+# Runtime cục bộ — binary và dữ liệu kho, không commit
+.runtime/
