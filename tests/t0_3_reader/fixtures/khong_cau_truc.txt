@@ -1,0 +1,5 @@
+Kính gửi các anh chị trong nhóm dự án.
+
+Sau buổi trao đổi sáng nay tôi tổng hợp lại mấy ý chính để mọi người cùng nắm. Trước hết là việc bàn giao hạ tầng, bên đối tác báo sẽ hoàn tất trong tuần này nhưng chưa có mốc cụ thể. Tiếp theo là phần tài liệu hướng dẫn, hiện còn thiếu phần cấu hình cho môi trường thử nghiệm.
+
+Mong mọi người cho ý kiến thêm trước thứ sáu. Cảm ơn cả nhà.

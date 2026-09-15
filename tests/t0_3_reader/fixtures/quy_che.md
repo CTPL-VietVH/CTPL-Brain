@@ -1,0 +1,28 @@
+QUYẾT ĐỊNH
+Về việc ban hành Quy chế quản lý tài sản công
+
+## CHƯƠNG I
+QUY ĐỊNH CHUNG
+
+### Điều 1. Phạm vi điều chỉnh
+1. Quy chế này quy định việc quản lý, sử dụng tài sản công tại các đơn vị trực thuộc Tổng công ty.
+2. Đối tượng áp dụng bao gồm:
+a) Các đơn vị hạch toán phụ thuộc;
+b) Các chi nhánh và văn phòng đại diện;
+c) Người lao động được giao quản lý tài sản.
+
+### Điều 2. Nguyên tắc quản lý
+1. Tài sản công phải được sử dụng đúng mục đích, tiết kiệm và hiệu quả.
+2. Mọi trường hợp điều chuyển tài sản giữa các đơn vị phải được Tổng giám đốc phê duyệt bằng văn bản.
+
+## CHƯƠNG II
+TRÁCH NHIỆM CỦA CÁC ĐƠN VỊ
+
+### Điều 3. Trách nhiệm của Thủ trưởng đơn vị
+1. Thủ trưởng đơn vị chịu trách nhiệm tổ chức triển khai Quy chế này trong phạm vi đơn vị mình quản lý.
+2. Định kỳ hằng quý, báo cáo kết quả thực hiện về Văn phòng Tổng công ty để tổng hợp, theo dõi.
+3. Trường hợp phát hiện vi phạm, phải đình chỉ ngay và báo cáo bằng văn bản chậm nhất sau 24 giờ.
+
+### Điều 4. Hiệu lực thi hành
+1. Quy chế này có hiệu lực kể từ ngày ký ban hành.
+2. Các quy định trước đây trái với Quy chế này đều bãi bỏ.
