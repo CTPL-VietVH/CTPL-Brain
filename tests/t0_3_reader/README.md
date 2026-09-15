@@ -1,22 +1,31 @@
 # T0.3 — Bộ đọc file và bộ chuẩn hoá phân cấp
 
-# ⛔ T0.3 CHƯA NGHIỆM THU. ĐANG CHỜ PO GOM TẬP THỬ.
+# ⛔ T0.3 CHƯA NGHIỆM THU. CÒN CHỜ PO ĐỐI CHIẾU TAY 21 VĂN BẢN.
 
-**Điều kiện xong** (`docs/08` Phần D, T0.3) — mỗi định dạng có một bộ đọc, mọi
-bộ đọc trả ra **cùng một hình dạng cây**, và **đạt trên một tập thử có tên gọi**:
+**Điều kiện xong** (`docs/08` Phần D, T0.3):
 
 | Điều kiện | Trạng thái |
 |---|---|
-| Mỗi định dạng một bộ đọc, cùng một hình dạng cây | ✅ **đạt** — 15/15 ca thử |
-| ≥ **20 văn bản hành chính VN thật** | ❌ **mới thử 4** |
-| trong đó ≥ **5 văn bản soạn tay không Heading style** | ❌ **chưa có** (tập tự dựng có 1 bản, không tính) |
-| trong đó ≥ **5 PDF** | ❌ **mới 2** |
-| ≥ **90% dựng đúng hoàn toàn phân cấp** | ❌ **chưa đo được** — cần người đối chiếu với bản gốc |
-| **Không ca nào rơi về cắt theo độ dài mà không báo** | ✅ **đạt** — chặn bằng cấu trúc, xem dưới |
+| Mỗi định dạng một bộ đọc, cùng một hình dạng cây | ✅ **đạt** — 16/16 ca thử |
+| ≥ **20 văn bản hành chính VN thật** | ✅ **đạt** — 21 văn bản |
+| trong đó ≥ **5 PDF** | ✅ **đạt** — 5 PDF |
+| trong đó ≥ **5 văn bản không dùng Heading style** | ✅ **đạt** — 11/16 `.docx`, kiểm bằng máy |
+| **Không ca nào rơi về cắt theo độ dài mà không báo** | ✅ **đạt** — chặn bằng cấu trúc |
+| ≥ **90% dựng đúng HOÀN TOÀN phân cấp** | ⛔ **CHƯA ĐO ĐƯỢC — chờ PO đối chiếu tay** |
 
-**Không được tự nới điều kiện nghiệm thu để qua ải bằng tập thử nhỏ hơn.** Con
-số 4 không thay được con số 20, và "có dựng ra cây" không thay được "dựng đúng
-hoàn toàn" — thứ sau cần người đối chiếu.
+> ## ⛔ Vì sao dòng cuối chưa thể đánh dấu đạt
+>
+> Công cụ đếm được **bộ đọc có dựng ra cây hay không**. Nó **không phán được
+> cây đó có ĐÚNG với văn bản gốc hay không**. 21/21 file ra `DIEU_KHOAN`
+> **không phải** là 100% đạt — nó chỉ có nghĩa là không file nào rơi xuống
+> `KHONG_DUNG_DUOC`.
+>
+> Ví dụ những thứ công cụ **không** thấy được: một Điều bị gán nhầm vào Chương
+> trước đó; một Khoản bị nuốt vào Điều trên; một dòng trong bảng bị nhận nhầm
+> thành Khoản. Tất cả đều cho ra "một cái cây", và đều **sai**.
+>
+> Vế 90% chỉ đóng được khi **người** mở từng bản gốc và đối chiếu. Preview cây
+> ở cuối trang này in sẵn để việc đó nhanh hơn.
 
 ## Đã dựng gì
 
@@ -27,20 +36,15 @@ packages/ingestion/reader/
   readers.py        bốn bộ đọc: .txt .md .docx (python-docx) .pdf (Docling)
 ```
 
-Bậc nhận diện: **Phần › Chương › Mục › Điều › Khoản › Điểm**, cộng hai đường cho
-tài liệu không theo điều khoản.
+Bậc nhận diện: **Phần › Chương › Mục › Điều › Khoản › Điểm**, cộng hai đường
+cho tài liệu không theo điều khoản.
 
 > ⚠️ **Tên trường ở tầng đọc là tên CỤC BỘ, không phải hợp đồng dữ liệu.** Tầng
 > này dùng `char_start` / `char_end` / `path`; `span_start`, `span_end`,
 > `structure_path`, `parent_chunk_id` là tên của `packages/schema/` và được
-> định nghĩa **đúng một lần** ở đó — việc đó là **T1.1, chưa làm**. Ánh xạ sang
-> hợp đồng nằm ở T2.2 và chỉ được viết ở một chỗ.
+> định nghĩa **đúng một lần** ở đó — việc đó là **T1.1, chưa làm**.
 
 ## Bốn kết cục, và không có kết cục nào là "cắt theo độ dài"
-
-`docs/06` Mục 5.2 và `docs/08` T0.3 cấm rõ việc **lặng lẽ rơi về cắt theo độ
-dài**. Ở đây điều đó được chặn **bằng cấu trúc**: kiểu `Outcome` đơn giản là
-**không có giá trị nào** mang nghĩa đó, và có ca thử canh chính điều ấy.
 
 | Kết cục | Dựa trên | Chắc chắn |
 |---|---|---|
@@ -49,90 +53,372 @@ dài**. Ở đây điều đó được chặn **bằng cấu trúc**: kiểu `O
 | `TIEU_DE_PHONG_DOAN` | tiêu đề chữ HOA **không** đánh số | ⚠️ **phán đoán** |
 | `KHONG_DUNG_DUOC` | không có dấu hiệu nào | — từ chối, **không** cắt theo độ dài |
 
-Giá trị thứ ba tách riêng có chủ ý, theo **NT2 ý 3**: số hiệu là sự kiện, còn
-"dòng này viết HOA nên chắc là tiêu đề" là phán đoán — và phán đoán sai sinh ra
-một **cây sai**, tức đơn vị đọc sai, trong im lặng. Tách thành một giá trị riêng
-để chỗ phán đoán nhìn thấy được **ở tầng kiểu dữ liệu**, không chìm trong ghi chú.
+Giá trị thứ ba tách riêng theo **NT2 ý 3**: số hiệu là sự kiện, "dòng này viết
+HOA nên chắc là tiêu đề" là phán đoán — và phán đoán sai sinh ra **cây sai**,
+tức đơn vị đọc sai, trong im lặng. Tách ở tầng kiểu để chỗ phán đoán nhìn thấy
+được.
 
-## Kết quả trên tập TỰ DỰNG — 15/15 ca thử đạt
+## Tập thử thật — 21 văn bản hành chính VN
 
-Tập tự dựng (`fixtures/`) chỉ phục vụ một việc: chứng minh **bốn bộ đọc trả ra
-cùng một hình dạng cây**. Nó **không** chứng minh được việc dựng phân cấp có
-đúng trên văn bản thật hay không.
+Nguồn: `data/test-corpus-vn-admin/` (PO tự tải; xem `MANIFEST.md` cạnh đó).
+Thư mục này **nằm ngoài git** (`.gitignore: data/`) — không commit tài liệu thật.
 
-- `.txt` / `.md` / `.docx` (2 bản) / `.pdf` → **cùng ra 2 Chương, 4 Điều, 3 Điểm**
-- `.docx` **không gán Heading style** dựng phân cấp **y hệt** bản có style
-- Vị trí đầu/cuối đếm đúng **ký tự Unicode** trên tiếng Việt có dấu
-- Chuẩn hoá **NFC** trước khi đếm: chuỗi tổ hợp 6 ký tự → 4 ký tự, khớp bản dựng sẵn
-- Văn bản không cấu trúc → `KHONG_DUNG_DUOC`, **không sinh khối con nào**
-- `.xlsx` → từ chối kèm thông báo rõ; PDF không lớp chữ → từ chối **ồn ào**
+Thành phần: **5 PDF · 5 `.docx` gốc · 11 `.docx` chuyển đổi cơ học từ `.doc`**
+bằng LibreOffice headless. Bản `.doc` gốc vẫn còn nguyên cạnh mỗi bản chuyển đổi.
 
-## Kết quả trên VĂN BẢN THẬT — mới 4 file, **chưa đủ để nghiệm thu**
+> ⚠️ **Bản chuyển đổi KHÔNG ngang hàng bản gốc** trong báo cáo này — cột *Nguồn*
+> luôn ghi rõ loại nào, để PO tự cân nhắc khi đối chiếu. Nếu PO thấy không ổn
+> với việc tính bản chuyển đổi, tập thử tụt còn 10 văn bản gốc và chưa đủ 20.
 
-| File | Đuôi | Kết cục | Điều |
-|---|---|---|---|
-| Biểu mẫu Quyết định bổ nhiệm cán bộ | `.docx` | `điều khoản` | 4 |
-| Biên bản nghiệm thu sản phẩm | `.docx` | `tiêu đề HOA` ⚠️ | 0 |
-| Hướng dẫn triển khai (v3) | `.pdf` | `tiêu đề số` | 0 |
-| Brand Overview | `.pdf` | `tiêu đề số` | 0 |
+```bash
+.venv/bin/python tools/infra/thu_bo_doc.py data/test-corpus-vn-admin/
+```
 
-Cả 4 đều dựng ra cây. **Nhưng chưa ai đối chiếu cây đó với bản gốc**, nên chưa
-nói được gì về tỷ lệ 90%.
+| # | File | Phòng ban | Nguồn | Kết cục | Chương | Điều | Khoản | Điểm | Ký tự |
+|---|---|---|---|---|---:|---:|---:|---:|---:|
+| 1 | `47_2021_nd-cp_470561.docx` | ban-giam-doc-quan-tri | docx chuyển đổi | `DIEU_KHOAN` | 6 | 35 | 141 | 64 | 68,300 |
+| 2 | `Luật-54-2019-QH14.docx` | ban-giam-doc-quan-tri | docx gốc | `DIEU_KHOAN` | 10 | 135 | 511 | 656 | 211,102 |
+| 3 | `Luật-61-2020-QH14.docx` | ban-giam-doc-quan-tri | docx gốc | `DIEU_KHOAN` | 7 | 77 | 348 | 392 | 155,483 |
+| 4 | `110-2004-nd-cp.docx` | hanh-chinh-tong-hop | docx chuyển đổi | `DIEU_KHOAN` | 6 | 36 | 88 | 45 | 23,383 |
+| 5 | `15_2017_QH14_322220_1_1.docx` | hanh-chinh-tong-hop | docx chuyển đổi | `DIEU_KHOAN` | 10 | 134 | 474 | 389 | 140,585 |
+| 6 | `luat_luutru_01.docx` | hanh-chinh-tong-hop | docx chuyển đổi | `DIEU_KHOAN` | 7 | 42 | 133 | 101 | 36,673 |
+| 7 | `2021_291 + 292_06-2021-NĐ-CP.pdf` | ky-thuat-van-hanh | PDF | `DIEU_KHOAN` | 5 | 60 | 380 | 393 | 171,621 |
+| 8 | `2023_nghi-dinh-35_2023_nd-cp_sua-doi-bo-sung-qlnn-cua-bxd.pdf` | ky-thuat-van-hanh | PDF | `DIEU_KHOAN` | 0 | 25 | 177 | 261 | 138,107 |
+| 9 | `Luật-50-2014-QH13.docx` | ky-thuat-van-hanh | docx gốc | `DIEU_KHOAN` | 10 | 168 | 658 | 599 | 200,550 |
+| 10 | `10_2020_TT-BLDTBXH_454406.docx` | nhan-su | docx chuyển đổi | `DIEU_KHOAN` | 5 | 12 | 151 | 40 | 33,323 |
+| 11 | `Bộ-luật-45-2019-QH14.docx` | nhan-su | docx gốc | `DIEU_KHOAN` | 17 | 220 | 645 | 287 | 189,425 |
+| 12 | `Nghị-định-138-2020-NĐ-CP.docx` | nhan-su | docx chuyển đổi | `DIEU_KHOAN` | 5 | 80 | 291 | 251 | 125,074 |
+| 13 | `nghi-dinh-145-2020-huong-dan-thi-hanh-dieu-kien-lao-dong-va-quan-he-lao-dong.docx` | nhan-su | docx chuyển đổi | `DIEU_KHOAN` | 12 | 133 | 447 | 400 | 237,864 |
+| 14 | `168.2024.NĐ.CP.docx` | phap-che-tuan-thu | docx chuyển đổi | `DIEU_KHOAN` | 4 | 55 | 332 | 910 | 254,227 |
+| 15 | `30_2020_ND_CP.docx` | phap-che-tuan-thu | docx gốc | `DIEU_KHOAN` | 7 | 38 | 116 | 94 | 35,927 |
+| 16 | `Luật Doanh nghiệp 2020 (1).docx` | phap-che-tuan-thu | docx chuyển đổi | `DIEU_KHOAN` | 10 | 218 | 897 | 822 | 320,551 |
+| 17 | `VanBanGoc_01_2011_TT-BNV.pdf` | phap-che-tuan-thu | PDF | `DIEU_KHOAN` | 5 | 28 | 56 | 43 | 98,870 |
+| 18 | `2021_113 + 114_01-2021-NĐ-CP.pdf` | tai-chinh-ke-toan | PDF | `DIEU_KHOAN` | 9 | 105 | 393 | 219 | 206,615 |
+| 19 | `Luat Dau thau 2023.docx` | tai-chinh-ke-toan | docx chuyển đổi | `DIEU_KHOAN` | 10 | 96 | 428 | 552 | 172,047 |
+| 20 | `Luật-88-2015-QH13.docx` | tai-chinh-ke-toan | docx chuyển đổi | `DIEU_KHOAN` | 6 | 74 | 287 | 216 | 75,166 |
+| 21 | `Thông-tư-200-2014-TT-BTC.pdf` | tai-chinh-ke-toan | PDF | `DIEU_KHOAN` | 9 | 105 | 750 | 1221 | 1,000,857 |
 
-## Hai phát hiện trong lúc dựng
+**Tổng theo kết cục:** `DIEU_KHOAN` 21
+
+### Preview cây dựng ra — để PO đối chiếu nhanh với bản gốc
+
+**1. `47_2021_nd-cp_470561.docx`** — docx chuyển đổi · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh và đối tượng áp dụng.
+    Điều 2 — Giải thích từ ngữ.
+Chương II
+    Điều 3 — Trách nhiệm của doanh nghiệp xã hội và chủ doanh nghiệp tư
+```
+
+**2. `Luật-54-2019-QH14.docx`** — docx gốc · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh
+    Điều 2 — Đối tượng áp dụng
+    Điều 3 — Áp dụng Luật Chứng khoán, các luật có liên quan
+    Điều 4 — Giải thích từ ngữ
+```
+
+**3. `Luật-61-2020-QH14.docx`** — docx gốc · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh
+    Điều 2 — Đối tượng áp dụng
+    Điều 3 — Giải thích từ ngữ
+    Điều 4 — Áp dụng Luật Đầu tư và các luật có liên quan
+```
+
+**4. `110-2004-nd-cp.docx`** — docx chuyển đổi · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi và đối tượng điều chỉnh
+    Điều 2 — Giải thích từ ngữ
+    Điều 3 — Trách nhiệm đối với công tác văn thư
+Chương II
+```
+
+**5. `15_2017_QH14_322220_1_1.docx`** — docx chuyển đổi · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh
+    Điều 2 — Đối tượng áp dụng
+    Điều 3 — Giải thích từ ngữ
+    Điều 4 — Phân loại tài sản công
+```
+
+**6. `luat_luutru_01.docx`** — docx chuyển đổi · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh và đối tượng áp dụng
+    Điều 2 — Giải thích từ ngữ
+    Điều 3 — Nguyên tắc quản lý lưu trữ
+    Điều 4 — Chính sách của Nhà nước về lưu trữ
+```
+
+**7. `2021_291 + 292_06-2021-NĐ-CP.pdf`** — PDF · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh và đối tượng áp dụng
+    Điều 2 — Giải thích từ ngữ
+    Điều 3 — Phân loại và phân cấp công trình xây dựng
+    Điều 4 — Thí nghiệm chuyên ngành xây dựng, quan trắc, trắc đạc công
+```
+
+**8. `2023_nghi-dinh-35_2023_nd-cp_sua-doi-bo-sung-qlnn-cua-bxd.pdf`** — PDF · `DIEU_KHOAN`
+
+```
+    Điều 1 — Sửa đổi, bổ sung một số khoản của Điều 14 Nghị định
+      Khoản 4 — Các lô đất có quy mô nhỏ phải đáp ứng các điều kiện sau:
+    Điều 2 — Sửa đổi, bổ sung một số khoản của Điều 10 Nghị định
+    Điều 3 — Sửa đổi, bổ sung một số điều của Nghị định số 85/2020/NĐ-C
+    Điều 4 — Sửa đổi, bổ sung một số điều của Nghị định số 11/2013/NĐ-C
+```
+
+**9. `Luật-50-2014-QH13.docx`** — docx gốc · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh
+    Điều 2 — Đối tượng áp dụng
+    Điều 3 — Giải thích từ ngữ
+    Điều 4 — Nguyên tắc cơ bản trong hoạt động đầu tư xây dựng
+```
+
+**10. `10_2020_TT-BLDTBXH_454406.docx`** — docx chuyển đổi · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh
+    Điều 2 — Đối tượng áp dụng
+Chương II
+    Điều 3 — Nội dung chủ yếu của hợp đồng lao động
+```
+
+**11. `Bộ-luật-45-2019-QH14.docx`** — docx gốc · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh
+    Điều 2 — Đối tượng áp dụng
+    Điều 3 — Giải thích từ ngữ
+    Điều 4 — Chính sách của Nhà nước về lao động
+```
+
+**12. `Nghị-định-138-2020-NĐ-CP.docx`** — docx chuyển đổi · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh
+    Điều 2 — Đối tượng áp dụng
+Chương II
+  Mục 1 — CĂN CỨ, ĐIỀU KIỆN, THẨM QUYỀN TUYỂN DỤNG
+```
+
+**13. `nghi-dinh-145-2020-huong-dan-thi-hanh-dieu-kien-lao-dong-va-quan-he-lao-dong.docx`** — docx chuyển đổi · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh
+    Điều 2 — Đối tượng áp dụng
+Chương II
+    Điều 3 — Sổ quản lý lao động
+```
+
+**14. `168.2024.NĐ.CP.docx`** — docx chuyển đổi · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh
+    Điều 2 — Đối tượng áp dụng
+    Điều 3 — Hình thức xử phạt vi phạm hành chính, biện pháp khắc phục 
+    Điều 4 — Thời hiệu xử phạt vi phạm hành chính; hành vi vi phạm hành
+```
+
+**15. `30_2020_ND_CP.docx`** — docx gốc · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh
+    Điều 2 — Đối tượng áp dụng
+    Điều 3 — Giải thích từ ngữ
+    Điều 4 — Nguyên tắc, yêu cầu quản lý công tác văn thư
+```
+
+**16. `Luật Doanh nghiệp 2020 (1).docx`** — docx chuyển đổi · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh
+    Điều 2 — Đối tượng áp dụng
+    Điều 3 — Áp dụng Luật Doanh nghiệp và luật khác
+    Điều 4 — Giải thích từ ngữ
+```
+
+**17. `VanBanGoc_01_2011_TT-BNV.pdf`** — PDF · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi và đối tượng áp dụng
+    Điều 2 — Thể thức văn bản
+    Điều 3 — Kỹ thuật trình bày văn bản
+    Điều 4 — Phông chữ trình bày văn bản
+```
+
+**18. `2021_113 + 114_01-2021-NĐ-CP.pdf`** — PDF · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh
+    Điều 2 — Đối tượng áp dụng
+    Điều 3 — Giải thích từ ngữ
+    Điều 4 — Luật Doanh nghiệp là hệ thống thông tin nghiệp vụ chuyên m
+```
+
+**19. `Luat Dau thau 2023.docx`** — docx chuyển đổi · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh
+    Điều 2 — Đối tượng áp dụng
+    Điều 3 — Áp dụng Luật Đấu thầu, pháp luật có liên quan và điều ước 
+    Điều 4 — Giải thích từ ngữ
+```
+
+**20. `Luật-88-2015-QH13.docx`** — docx chuyển đổi · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Phạm vi điều chỉnh
+    Điều 2 — Đối tượng áp dụng
+    Điều 3 — Giải thích từ ngữ
+    Điều 4 — Nhiệm vụ kế toán
+```
+
+**21. `Thông-tư-200-2014-TT-BTC.pdf`** — PDF · `DIEU_KHOAN`
+
+```
+Chương I
+    Điều 1 — Đối tượng áp dụng
+    Điều 2 — Phạm vi điều chỉnh
+    Điều 3 — Đơn vị tiền tệ trong kế toán
+    Điều 4 — Lựa chọn đơn vị tiền tệ trong kế toán
+```
+
+
+---
+
+## Kiểm Heading style — 11/16 `.docx` KHÔNG dùng
+
+```bash
+.venv/bin/python tools/infra/thu_bo_doc.py --heading-style data/test-corpus-vn-admin/
+```
+
+Phép kiểm **khách quan** (đọc thẳng `paragraph.style.name`), không cần người mở
+Word. `docs/08` T0.3 đòi **≥5** — đang có **11**.
+
+| Nguồn | Không dùng Heading style |
+|---|---|
+| `.docx` **gốc** | **1**/5 — `Bộ-luật-45-2019-QH14.docx` (dùng `Body Text`) |
+| `.docx` **chuyển đổi** | **10**/11 |
+
+### Bằng chứng này không vòng luẩn quẩn
+
+Câu hỏi đúng: *chính LibreOffice có làm phẳng style khi chuyển đổi không?* Nếu
+có thì 10 bản chuyển đổi "không Heading style" chẳng chứng minh gì về bản `.doc`
+gốc.
+
+**Đã đối chứng:** bản chuyển đổi `nghi-dinh-145-2020-....docx` **vẫn giữ 63 đoạn
+`Tiêu đề #4`** sau convert → LibreOffice **giữ được** Heading style khi bản gốc
+có. Vậy 10 bản kia không có là vì bản `.doc` gốc vốn không có.
+
+> Kể cả khi PO quyết loại hết bản chuyển đổi, vẫn còn 1 bản **gốc** không dùng
+> Heading style. Con số ≥5 khi ấy **không còn đạt** — đó là một lý do nữa để PO
+> cân nhắc kỹ việc có tính bản chuyển đổi hay không.
+
+---
+
+## ⚠️ Một lỗi IM LẶNG đã bắt được nhờ chính tập thử thật
+
+Lượt chạy đầu trên tập thật, **4/5 PDF ra `TIEU_DE` với 0 Điều** — trong khi
+chúng là Thông tư và Nghị định, chắc chắn có Điều.
+
+Nguyên nhân: PDF văn bản pháp luật VN thường tách ký tự **có dấu** thành ô chữ
+**riêng** (font khác cho phần dấu). Đo trên Thông tư 01/2011/TT-BNV:
+
+```
+l=188.35 r=266.72  'CÔNG BÁO/S'
+l=266.73 r=273.23  'ố'            ← khe hở 0.01pt
+```
+
+Bản đầu của bộ đọc nối các ô bằng dấu cách **vô điều kiện**, cho ra:
+
+```
+BỘ NỘI VỤ          →  "B Ộ  N Ộ I V Ụ"
+Nghị định          →  "Ngh ị đị nh"
+Độc lập - Tự do    →  "Độ c l ậ p - T ự  do"
+```
+
+Khi ấy chuỗi `"Điều"` **không bao giờ khớp**, cả tài liệu tụt xuống `TIEU_DE`
+với 0 Điều — mà vẫn **"dựng ra được một cái cây"**, nên không có gì báo lỗi.
+
+**Đã chữa**: quyết định chèn dấu cách theo **khe hở ngang** giữa hai ô, thay vì
+nối mù. Sau khi chữa, cùng file đó cho **38 dòng bắt đầu bằng "Điều"**, và cả
+21/21 văn bản ra `DIEU_KHOAN`. Có ca thử hồi quy canh ngưỡng này
+(`test_ghep_o_chu_pdf_theo_khe_ho_khong_chen_dau_cach_bua`).
+
+> 📌 **Đây là lý do vế 90% phải do người đối chiếu.** Lỗi này đã cho ra "một cái
+> cây" ở cả 4 file và không công cụ nào tự phát hiện được — chỉ có việc *nhìn
+> vào chữ* mới thấy. Cùng loại lỗi hoàn toàn có thể còn sót ở chỗ khác.
+
+---
+
+## Hai phát hiện trước đó (giữ lại)
 
 ### 1. `export_to_markdown()` của Docling PHÁ MẤT cấu trúc — đã đổi cách dùng
 
-Lượt chạy đầu, PDF ra **0 Điểm** trong khi `.txt` cùng nội dung ra 3. Nguyên
-nhân: tầng phân tích bố cục của Docling **gộp các dòng thành đoạn** —
+Tầng phân tích bố cục của Docling **gộp các dòng thành đoạn**: "Điều 1. Phạm vi
+điều chỉnh" và Khoản "1." bị nối chung một dòng, "a)"/"b)" bị nuốt. Với văn bản
+hành chính VN thì **ngắt dòng chính là tín hiệu cấu trúc**.
 
-```
-Điều 1. Phạm vi điều chỉnh 1. Quy chế này quy định việc quản lý, sử dụng...
-```
+Đã chữa bằng cách dùng đúng tầng (backend giữ ô chữ kèm toạ độ), **không** bằng
+cách nới regex. Công nghệ chốt 14/9 không đổi. Phụ thu: bỏ được OCR thừa, bộ thử
+từ **130 s xuống ~3 s**.
 
-— "Điều 1." và Khoản "1." bị nối chung một dòng, còn "a)" / "b)" bị nuốt vào
-đoạn trước. Với văn bản hành chính VN thì **ngắt dòng chính là tín hiệu cấu
-trúc**, nên gộp dòng là làm mất đúng thứ cần nhất.
-
-**Đã chữa bằng cách dùng đúng tầng, không phải bằng cách nới regex**: tầng
-backend của Docling vẫn giữ ô chữ kèm toạ độ, nên bộ đọc dựng lại dòng theo toạ
-độ `y`. Công nghệ đã chốt 14/9 **không đổi** — vẫn là Docling. Phụ thu: bỏ được
-bước OCR không cần thiết, bộ thử chạy từ **130 s xuống 3 s**.
-
-> 📌 **Cần PO biết.** `docs/08` T0.3 kỳ vọng Docling *"phân tích bố cục, xuất
-> cây có phân cấp tiêu đề"*. Đo thật thì phần đáng giá của Docling với văn bản
-> hành chính VN là **rút chữ kèm toạ độ**, còn phần suy ra phân cấp thì **gây
-> hại**. Điều này không đòi đổi công nghệ, nhưng nó **khớp và mở rộng** cảnh
-> báo ở B2 điểm 1: regex là đường chính — giờ đúng cho **cả PDF**, không riêng
-> `.docx`.
+> 📌 `docs/08` T0.3 đã được vá theo phát hiện này.
 
 ### 2. Tiêu đề chữ HOA không đánh số — đã đi đường thoát (1)
 
-Biên bản nghiệm thu thật ban đầu ra `KHONG_DUNG_DUOC`. Kiểm lại thì đó là **bỏ
-sót thật**, không phải báo đúng: tài liệu có tiêu đề mục rõ ràng
-(`CĂN CỨ NGHIỆM THU`, `THÔNG TIN CÁC BÊN`, `THỜI GIAN VÀ ĐỊA ĐIỂM`) nhưng viết
-**HOA, không đánh số** — dạng rất phổ biến ở biên bản, tờ trình, báo cáo VN.
-
-Đã xử theo đúng **đường thoát (1)** mà `docs/08` T0.3 xếp ưu tiên đầu: *đầu tư
-thêm vào bộ chuẩn hoá regex*. Bộ nhận diện mới cố ý **dè dặt** (giới hạn độ dài,
-loại quốc hiệu, đòi có nội dung thường theo sau) vì **dè dặt hơn là bắt trượt**:
-bắt trượt thì rơi xuống `KHONG_DUNG_DUOC` — nhìn thấy được; bắt nhầm thì sinh
-cây sai — im lặng.
+Biên bản nghiệm thu thật ban đầu ra `KHONG_DUNG_DUOC` vì tiêu đề viết HOA không
+đánh số (`CĂN CỨ NGHIỆM THU`, `THÔNG TIN CÁC BÊN`) — bỏ sót thật. Đã xử theo
+đúng **đường thoát (1)** của `docs/08`: đầu tư thêm regex, cố ý **dè dặt**, và
+mang một giá trị `Outcome` riêng.
 
 **Chưa cần dùng tới đường thoát (2) hay (3).**
 
-## Việc PO cần làm để T0.3 nghiệm thu được
+---
 
-1. **Gom tập thử có tên gọi**: ≥20 văn bản hành chính VN thật, trong đó ≥5 bản
-   soạn tay không Heading style và ≥5 PDF.
-2. **Đối chiếu tay** cây dựng ra với bản gốc trên từng văn bản — chỉ người mới
-   phán được "dựng đúng **hoàn toàn**".
-3. Nếu tỷ lệ dưới 90%, đi tiếp đường thoát (2) rồi (3) theo đúng thứ tự.
+## Việc còn lại để T0.3 nghiệm thu đầy đủ
+
+1. ⛔ **PO đối chiếu tay 21 văn bản** — mở từng bản gốc, so với preview cây ở
+   trên, xác nhận "dựng đúng **hoàn toàn**". Cần ≥90%.
+2. PO quyết: **có tính 11 bản `.docx` chuyển đổi vào tập thử không?** Nếu không,
+   tập tụt còn 10 văn bản gốc — chưa đủ 20, và số bản không Heading style tụt
+   còn 1 — chưa đủ 5.
 
 ## Chạy lại
 
 ```bash
-.venv/bin/python -m pytest tests/t0_3_reader/ -q          # bộ thử
-.venv/bin/python tests/t0_3_reader/fixtures/dung_tap_thu.py   # dựng lại tập tự dựng
-.venv/bin/python tools/infra/thu_bo_doc.py <thư mục>      # khảo sát một tập văn bản
+.venv/bin/python -m pytest tests/t0_3_reader/ -q                   # bộ thử
+.venv/bin/python tests/t0_3_reader/fixtures/dung_tap_thu.py        # dựng tập tự dựng
+.venv/bin/python tools/infra/thu_bo_doc.py <thư mục>               # khảo sát
+.venv/bin/python tools/infra/thu_bo_doc.py --markdown <thư mục>    # xuất markdown
+.venv/bin/python tools/infra/thu_bo_doc.py --heading-style <thư mục>
 ```

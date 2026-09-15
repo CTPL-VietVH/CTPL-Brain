@@ -94,6 +94,21 @@ def _doc_docx(path: pathlib.Path) -> str:
 # Đơn vị là point của PDF; 3pt nhỏ hơn mọi khoảng cách dòng thực tế.
 _NGUONG_CUNG_DONG_PT = 3.0
 
+# Khe hở ngang giữa hai ô chữ liền nhau. Dưới ngưỡng này thì NỐI THẲNG, không
+# chèn dấu cách.
+#
+# ⚠️ Vì sao cần: PDF văn bản pháp luật VN thường tách ký tự có dấu thành ô
+# RIÊNG (font khác cho phần dấu). Đo thật trên Thông tư 01/2011/TT-BNV:
+#   l=188.35 r=266.72 'CÔNG BÁO/S'
+#   l=266.73 r=273.23 'ố'              ← khe hở 0.01pt
+# Nối mù bằng dấu cách cho ra "CÔNG BÁO/S ố", "B Ộ  N Ộ I V Ụ", "Ngh ị đị nh".
+# Khi ấy chuỗi "Điều" KHÔNG BAO GIỜ khớp, và cả tài liệu tụt xuống TIEU_DE với
+# 0 Điều — hỏng hoàn toàn im lặng, vì vẫn "dựng ra được một cây".
+#
+# Bản thân ô đã mang sẵn dấu cách khi PDF có dấu cách thật (' N', ' 93 + 94'),
+# nên chỗ nào liền nhau thì nối thẳng là đúng.
+_NGUONG_CACH_CHU_PT = 1.5
+
 
 def _doc_pdf(path: pathlib.Path) -> str:
     """PDF có lớp chữ → văn bản GIỮ NGUYÊN DÒNG, qua backend của Docling.
@@ -121,29 +136,41 @@ def _doc_pdf(path: pathlib.Path) -> str:
                         backend=DoclingParseDocumentBackend, filename=path.name)
     backend = DoclingParseDocumentBackend(ind, path)
 
+    def _ghep_dong(o: list[tuple[float, float, str]]) -> str:
+        """Ghép các ô trong một dòng, quyết định dấu cách theo KHE HỞ NGANG."""
+        o = sorted(o, key=lambda c: c[0])
+        ra: list[str] = []
+        phai_truoc: float | None = None
+        for trai, phai, txt in o:
+            if phai_truoc is not None and trai - phai_truoc > _NGUONG_CACH_CHU_PT:
+                ra.append(" ")
+            ra.append(txt)
+            phai_truoc = phai
+        return "".join(ra)
+
     dong_tat_ca: list[str] = []
     for so_trang in range(backend.page_count()):
         trang = backend.load_page(so_trang)
-        o_chu = []
+        o_chu: list[tuple[float, float, float, str]] = []
         for cell in trang.get_text_cells():
-            bbox = cell.rect.to_bounding_box()
             if cell.text.strip():
-                o_chu.append((bbox.t, bbox.l, cell.text))
+                b = cell.rect.to_bounding_box()
+                o_chu.append((b.t, b.l, b.r, cell.text))
 
-        # Gom ô thành dòng theo toạ độ y, rồi sắp trong dòng theo x
-        o_chu.sort(key=lambda o: (o[0], o[1]))
-        dong_hien_tai: list[tuple[float, str]] = []
-        y_dong = None
-        for y, x, txt in o_chu:
+        # Gom ô thành dòng theo toạ độ y, rồi ghép trong dòng theo x
+        o_chu.sort(key=lambda c: (c[0], c[1]))
+        dong_hien_tai: list[tuple[float, float, str]] = []
+        y_dong: float | None = None
+        for y, trai, phai, txt in o_chu:
             if y_dong is None or abs(y - y_dong) <= _NGUONG_CUNG_DONG_PT:
-                dong_hien_tai.append((x, txt))
+                dong_hien_tai.append((trai, phai, txt))
                 y_dong = y if y_dong is None else y_dong
             else:
-                dong_tat_ca.append(" ".join(t for _, t in sorted(dong_hien_tai)))
-                dong_hien_tai = [(x, txt)]
+                dong_tat_ca.append(_ghep_dong(dong_hien_tai))
+                dong_hien_tai = [(trai, phai, txt)]
                 y_dong = y
         if dong_hien_tai:
-            dong_tat_ca.append(" ".join(t for _, t in sorted(dong_hien_tai)))
+            dong_tat_ca.append(_ghep_dong(dong_hien_tai))
 
     text = "\n".join(dong_tat_ca)
 

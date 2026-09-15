@@ -198,6 +198,39 @@ def test_source_format_duoc_ghi_lai_nhung_khong_de_re_nhanh():
           f"(Chương, Điều); source_format chỉ để ghi lại")
 
 
+def test_ghep_o_chu_pdf_theo_khe_ho_khong_chen_dau_cach_bua():
+    """⭐ Ca hồi quy: PDF pháp luật VN tách ký tự CÓ DẤU thành ô riêng.
+
+    Đo thật trên Thông tư 01/2011/TT-BNV: ô `'CÔNG BÁO/S'` kết thúc ở x=266.72,
+    ô `'ố'` bắt đầu ở x=266.73 — liền nhau. Bản đầu nối mù bằng dấu cách, cho
+    ra `"CÔNG BÁO/S ố"`, `"B Ộ  N Ộ I V Ụ"`, `"Ngh ị đị nh"`. Khi ấy chuỗi
+    "Điều" **không bao giờ khớp**, và 4/5 PDF trong tập thử tụt xuống
+    `TIEU_DE` với 0 Điều — hỏng hoàn toàn mà vẫn "dựng ra được một cây".
+
+    Đây đúng kiểu hỏng im lặng mà cả thiết kế dựng lên để chặn, nên nó xứng
+    đáng có một ca thử riêng thay vì chỉ là một lần sửa.
+    """
+    import importlib
+    mod = importlib.import_module("ingestion.reader.readers")
+
+    # Dựng lại đúng hình dạng ô đã đo được
+    o_lien_nhau = [(188.35, 266.72, "CÔNG BÁO/S"), (266.73, 273.23, "ố")]
+    o_cach_xa = [(64.06, 70.56, "8"), (188.35, 266.72, "CÔNG BÁO")]
+
+    # Hàm ghép nằm trong _doc_pdf; kiểm qua ngưỡng đã công bố
+    assert mod._NGUONG_CACH_CHU_PT > 0.01, "Ngưỡng phải lớn hơn khe hở giữa ô liền nhau"
+    assert mod._NGUONG_CACH_CHU_PT < 118.0, "Ngưỡng phải nhỏ hơn khe hở giữa hai cột thật"
+
+    khe_lien = o_lien_nhau[1][0] - o_lien_nhau[0][1]
+    khe_xa = o_cach_xa[1][0] - o_cach_xa[0][1]
+    assert khe_lien <= mod._NGUONG_CACH_CHU_PT, \
+        f"Ô liền nhau (khe {khe_lien:.2f}pt) phải được nối THẲNG, không chèn dấu cách"
+    assert khe_xa > mod._NGUONG_CACH_CHU_PT, \
+        f"Ô cách xa (khe {khe_xa:.2f}pt) phải được chèn dấu cách"
+    print(f"\n[T0.3] khe hở {khe_lien:.2f}pt → nối thẳng; {khe_xa:.2f}pt → chèn dấu cách "
+          f"(ngưỡng {mod._NGUONG_CACH_CHU_PT}pt)")
+
+
 def test_pdf_khong_co_lop_chu_bi_tu_choi_on_ao(tmp_path):
     """v1 từ chối ảnh quét. Từ chối ỒN ÀO, không đọc ra chữ rỗng rồi đi tiếp."""
     from ingestion.reader.readers import KhongDocDuocLopChu
