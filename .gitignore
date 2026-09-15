@@ -25,3 +25,5 @@ models/
 
 # Runtime cục bộ — binary và dữ liệu kho, không commit
 .runtime/
+# Cờ đánh dấu đã khởi tạo kho — trạng thái CỤC BỘ của từng máy, không phải mã nguồn
+.qdrant-initialized
