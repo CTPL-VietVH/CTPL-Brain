@@ -48,24 +48,52 @@ hình là thứ duy nhất bắt được.
 
 `SUBSTRING` theo vị trí **ký tự** trên văn bản đa byte **không nhảy thẳng tới vị
 trí được**: PostgreSQL phải giải mã UTF-8 từ đầu, nên chi phí tỉ lệ với **độ
-lệch**, không phải độ dài đoạn. Đo trên tài liệu 400.000 ký tự khó nén, đã khử
-biến gây nhiễu (cả hai truy vấn cùng có tham số):
+lệch**, không phải độ dài đoạn. Đã thử cả `STORAGE EXTENDED` và `STORAGE
+EXTERNAL` — **không đổi**.
 
-| | Khối lượng về | Độ trễ (trung vị) |
-|---|---|---|
-| Cắt trong kho | 400 ký tự (**0,1%**) | 3,25 ms |
-| Lấy cả trường | 400.000 ký tự | 1,42 ms |
+### Số liệu tuyệt đối trên bốn độ dài văn bản THẬT (15/9/2026)
 
-Đã thử cả `STORAGE EXTENDED` và `STORAGE EXTERNAL` — **không đổi** (2,16 vs 2,19 ms).
+```bash
+.venv/bin/python tools/infra/do_substring.py
+```
+
+Văn bản cắt từ `Thông-tư-200-2014-TT-BTC.pdf` trong tập thử T0.3. PostgreSQL
+cùng máy (loopback), trung vị trên 60 lượt, đoạn đọc 400 ký tự, đọc ở **giữa**
+tài liệu (đọc ở đầu sẽ cho số đẹp giả tạo). Mỗi lượt đều `assert` hai cách cho
+ra **đúng cùng một đoạn**.
+
+| Độ dài văn bản | Ký tự | Byte | `SUBSTRING` | Lấy cả trường | Chênh | **Chênh tuyệt đối** |
+|---|---:|---:|---:|---:|---:|---:|
+| một Khoản ngắn | 60 | 75 | **0,100 ms** | 0,078 ms | 1,28× | **+0,02 ms** |
+| gần trần ngữ cảnh | 25.000 | 32.634 | **0,300 ms** | 0,179 ms | 1,68× | **+0,12 ms** |
+| một Điều dài | 108.508 | 136.936 | **1,271 ms** | 0,565 ms | 2,25× | **+0,71 ms** |
+| cả tài liệu | 1.000.857 | 1.291.502 | **9,098 ms** | 6,759 ms | 1,35× | **+2,34 ms** |
+
+**Điều quan trọng nhất nằm ở cột cuối, không phải cột "chênh".** Tỷ lệ 2,25×
+nghe lớn, nhưng khoảng cách tuyệt đối là **0,71 ms**. Ở cỡ một đơn vị ĐỌC thật
+(Khoản, hoặc một Điều nằm trong trần ngữ cảnh) khoảng cách là **0,02–0,12 ms**
+— nhỏ hơn nhiều bậc so với một lượt biểu diễn vector (27 ms ở T0.2) hay một lượt
+gọi mô hình sinh.
 
 **Yêu cầu (c) vẫn ĐẠT**: đúng ký tự, và chỉ đoạn cần đọc đi qua dây. Nhưng lý lẽ
 ở `docs/07` Mục 7 yêu cầu 2 — *"không lấy toàn văn về rồi mới cắt; với tài liệu
-dài thì đó là lãng phí ở mọi lượt trả lời"* — chỉ đúng cho **băng thông và bộ
-nhớ**, **không đúng cho độ trễ** khi kho nằm cùng máy với service.
+dài thì đó là lãng phí ở mọi lượt trả lời"* — cần đọc lại cho đúng:
+
+- **Đúng cho băng thông và bộ nhớ**: chỉ **0,1%** khối lượng đi qua dây, và
+  service không phải giữ cả triệu ký tự trong bộ nhớ ở mỗi lượt trả lời. Với
+  trần 6 tài liệu mỗi lượt, đó là khác biệt thật.
+- **Không đúng cho độ trễ** khi kho nằm **cùng máy**: `SUBSTRING` chậm hơn, tuy
+  khoảng cách tuyệt đối nhỏ tới mức khó thấy (0,02–0,71 ms ở cỡ đơn vị đọc thật).
+- **Chưa đo qua mạng.** Khi kho nằm máy khác, chi phí truyền 1,3 MB sẽ áp đảo
+  0,71 ms CPU, và cán cân nhiều khả năng lật ngược. Phép đo này **không nói được
+  gì** về trường hợp đó.
 
 > Đây là chỗ `CLAUDE.md` Mục 8 áp dụng: thấy số liệu ngược với lý lẽ trong thiết
-> kế thì **báo PO, không tự đổi**. Thiết kế giữ nguyên. Ghi lại để PO quyết khi
-> có hình dung về nơi đặt kho (cùng máy hay qua mạng).
+> kế thì **báo PO, không tự đổi**. **Thiết kế giữ nguyên.** Ghi lại để PO quyết
+> khi có hình dung về nơi đặt kho. Nếu kho luôn nằm cùng máy với service thì lý
+> lẽ "lãng phí" mỏng hơn tài liệu mô tả — nhưng ngay cả khi ấy, `SUBSTRING` vẫn
+> là cách duy nhất giữ được bất biến *"không có hai bản chữ nào có thể lệch
+> nhau"* ở `docs/07` Mục 2.1, và bất biến đó không phụ thuộc vào con số nào.
 
 ### 3. (e) bắt được một lỗi thật ngay trong kịch bản dựng kho
 
