@@ -7,7 +7,7 @@
 | Điều kiện | Trạng thái |
 |---|---|
 | Mỗi định dạng một bộ đọc, cùng một hình dạng cây | ✅ **đạt** — 16/16 ca thử |
-| ≥ **20 văn bản hành chính VN thật** | ✅ **đạt** — 21 văn bản |
+| ≥ **20 văn bản hành chính VN thật** | ✅ **đạt** — 21 văn bản (PO đã chốt tính cả 11 bản chuyển đổi, 15/9/2026 — xem MANIFEST.md) |
 | trong đó ≥ **5 PDF** | ✅ **đạt** — 5 PDF |
 | trong đó ≥ **5 văn bản không dùng Heading style** | ✅ **đạt** — 11/16 `.docx`, kiểm bằng máy |
 | **Không ca nào rơi về cắt theo độ dài mà không báo** | ✅ **đạt** — chặn bằng cấu trúc |
@@ -66,9 +66,9 @@ Thư mục này **nằm ngoài git** (`.gitignore: data/`) — không commit tà
 Thành phần: **5 PDF · 5 `.docx` gốc · 11 `.docx` chuyển đổi cơ học từ `.doc`**
 bằng LibreOffice headless. Bản `.doc` gốc vẫn còn nguyên cạnh mỗi bản chuyển đổi.
 
-> ⚠️ **Bản chuyển đổi KHÔNG ngang hàng bản gốc** trong báo cáo này — cột *Nguồn*
-> luôn ghi rõ loại nào, để PO tự cân nhắc khi đối chiếu. Nếu PO thấy không ổn
-> với việc tính bản chuyển đổi, tập thử tụt còn 10 văn bản gốc và chưa đủ 20.
+> ✅ **PO đã chốt (15/9/2026): tính cả 11 bản chuyển đổi vào tập thử chính thức**
+> — lý do đầy đủ ở `data/test-corpus-vn-admin/MANIFEST.md`. Cột *Nguồn* dưới
+> đây vẫn giữ nguyên để minh bạch loại nào, phục vụ đối chiếu tay.
 
 ```bash
 .venv/bin/python tools/infra/thu_bo_doc.py data/test-corpus-vn-admin/
@@ -380,6 +380,88 @@ nối mù. Sau khi chữa, cùng file đó cho **38 dòng bắt đầu bằng "�
 
 ---
 
+---
+
+## 📄 Cây ĐẦY ĐỦ để đối chiếu tay
+
+[`cay_day_du_21_van_ban.md`](cay_day_du_21_van_ban.md) — in trọn cây tới tận
+Khoản/Điểm cho cả 21 văn bản, **không cắt ngắn ở file nào** (đã đối chiếu: số
+khai báo khớp đúng số dòng in ra ở 21/21). Mỗi văn bản một mục, kèm phòng ban và
+nguồn gốc/chuyển đổi.
+
+```bash
+.venv/bin/python tools/infra/thu_bo_doc.py --cay-day-du data/test-corpus-vn-admin/ \
+  > tests/t0_3_reader/cay_day_du_21_van_ban.md
+```
+
+Phần preview 5 dòng ở trên giữ lại để xem nhanh; bản đầy đủ mới là thứ dùng khi
+ngồi soát với bản gốc.
+
+---
+
+## ⚠️ Một lớp sai lệch CÒN MỞ — PO cần biết trước khi đối chiếu
+
+Trong lúc xuất cây đầy đủ, phát hiện một lớp lỗi **chưa được sửa** và **không
+nằm trong phạm vi lần làm này** (ghi lại để PO quyết, không tự sửa hướng).
+
+**Hiện tượng.** Văn bản *sửa đổi, bổ sung* và văn bản *hướng dẫn thi hành* trích
+nguyên văn điều khoản của văn bản khác, nên thân bài đầy dẫn chiếu kiểu
+*"…Điều 19; Điều 31; Điều 32…"*. Khi ngắt dòng làm cụm `Điều <số>` rơi xuống
+**đầu dòng**, regex neo đầu dòng bắt nhầm nó thành một mốc cấu trúc thật.
+
+Ví dụ rõ nhất: `2023_nghi-dinh-35_...pdf` đếm ra **25 Điều** trong khi văn bản
+thật chỉ có **17** (Điều 1 → Điều 17). Tám Điều thừa đều là dẫn chiếu.
+
+**Hai dấu hiệu nhận ra bằng mắt**: số hiệu **trùng lặp**, hoặc tiêu đề **bắt đầu
+bằng dấu câu** (`;` `,`).
+
+| File | Điều đếm được | Số hiệu trùng | Tiêu đề mở đầu bằng dấu câu |
+|---|---:|---:|---:|
+| `VanBanGoc_01_2011_TT-BNV.pdf` | 28 | 9 | 8 |
+| `nghi-dinh-145-2020-...docx` | 133 | 18 | 1 |
+| `2021_291 + 292_06-2021-NĐ-CP.pdf` | 60 | 5 | 0 |
+| `2023_nghi-dinh-35_...pdf` | 25 | 4 | 4 |
+| `2021_113 + 114_01-2021-NĐ-CP.pdf` | 105 | 2 | 1 |
+| `Thông-tư-200-2014-TT-BTC.pdf` | 105 | 1 | 0 |
+| *15 file còn lại* | — | **0** | **0** |
+
+> ⚠️ **"Không có dấu hiệu" không có nghĩa là "đúng".** Hai dấu hiệu trên chỉ bắt
+> được phần dễ thấy. Một dẫn chiếu tới một số hiệu **chưa từng xuất hiện** trong
+> văn bản, rơi đúng đầu dòng, và **không** mở đầu bằng dấu câu — thì không dấu
+> hiệu nào bắt được. Đó vẫn là việc của đối chiếu tay.
+
+> 📌 **Phép kiểm chéo độc lập của PO không bắt được lớp này**, vì nó áp *cùng
+> một quy tắc neo đầu dòng*. Kiểm chéo đó loại trừ rủi ro **bỏ sót** một Điều,
+> không loại trừ rủi ro **nhận thừa**. Hai loại rủi ro khác nhau.
+
+---
+
+## Kiểm chéo độc lập số đếm Chương/Điều (PO tự chạy, 15/9/2026)
+
+PO chạy một đường trích chữ **độc lập hoàn toàn** — `pdftotext -layout` /
+`pdfplumber` cho PDF, **không dùng lại Docling**, không dùng lại
+`vn_normalizer.py`, chạy trên máy khác — rồi áp cùng regex mốc `Điều`/`CHƯƠNG`.
+
+**Kết quả: 21/21 khớp tuyệt đối** số Chương và số Điều với bảng trên.
+
+Lần chạy đầu (chưa chuẩn hoá NFC) báo lệch ở 5/21 file. Đó là lỗi của **chính
+phép kiểm chéo**, không phải của bộ đọc: một số bản `.docx` chuyển đổi mã hoá dấu
+tiếng Việt ở dạng **tổ hợp (NFD)**, regex không chuẩn hoá trước thì bỏ sót. Đây
+đúng là cái bẫy mà docstring `chuan_hoa_van_ban()` đã cảnh báo. Áp NFC xong thì
+21/21 khớp.
+
+**Phép kiểm này chứng minh gì và KHÔNG chứng minh gì:**
+
+- ✅ Rủi ro *"một Điều bị bỏ sót hoàn toàn khỏi cây"* giảm mạnh trên cả 21 file —
+  hai đường trích chữ khác nhau cho cùng một số đếm.
+- ❌ **Không** kiểm Khoản/Điểm, **không** kiểm thứ tự lồng (một Điều gán nhầm
+  sang Chương khác mà tổng số vẫn đúng thì phép đếm không thấy), **không** kiểm
+  nội dung tiêu đề, và **không** kiểm rủi ro nhận thừa nói ở mục trên.
+
+Vế *"đối chiếu tay ≥90%"* vẫn nguyên là việc bắt buộc của PO.
+
+---
+
 ## Hai phát hiện trước đó (giữ lại)
 
 ### 1. `export_to_markdown()` của Docling PHÁ MẤT cấu trúc — đã đổi cách dùng
@@ -407,11 +489,14 @@ mang một giá trị `Outcome` riêng.
 
 ## Việc còn lại để T0.3 nghiệm thu đầy đủ
 
-1. ⛔ **PO đối chiếu tay 21 văn bản** — mở từng bản gốc, so với preview cây ở
-   trên, xác nhận "dựng đúng **hoàn toàn**". Cần ≥90%.
-2. PO quyết: **có tính 11 bản `.docx` chuyển đổi vào tập thử không?** Nếu không,
-   tập tụt còn 10 văn bản gốc — chưa đủ 20, và số bản không Heading style tụt
-   còn 1 — chưa đủ 5.
+1. ⛔ **PO đối chiếu tay 21 văn bản** — mở từng bản gốc, so với
+   [`cay_day_du_21_van_ban.md`](cay_day_du_21_van_ban.md), xác nhận "dựng đúng
+   **hoàn toàn**". Cần ≥90%. Ưu tiên soát 6 file đã liệt kê ở mục *"Một lớp sai
+   lệch còn mở"*.
+2. ⛔ **Quyết hướng xử lý lớp nhận thừa `Điều`** ở văn bản sửa đổi/hướng dẫn —
+   chưa sửa, chưa tự chọn hướng.
+3. ~~PO quyết có tính 11 bản `.docx` chuyển đổi vào tập thử không~~ — ✅ **đã
+   chốt 15/9/2026: CÓ tính.** Xem lý do ở `MANIFEST.md`.
 
 ## Chạy lại
 

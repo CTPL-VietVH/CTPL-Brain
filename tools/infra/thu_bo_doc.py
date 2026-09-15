@@ -245,11 +245,71 @@ def chay_markdown(dau_vao: list[str]) -> None:
         print()
 
 
+def chay_cay_day_du(dau_vao: list[str]) -> None:
+    """Xuất cây ĐẦY ĐỦ tới tận Khoản/Điểm — phục vụ PO đối chiếu tay.
+
+    Khác `--markdown` (chỉ in 5 dòng đầu mỗi file): ở đây **không cắt ngắn gì**,
+    vì mục đích là để người mở bản gốc bên cạnh và soát từng mục.
+    """
+    files = gom_file(dau_vao)
+
+    print("# Cây cấu trúc ĐẦY ĐỦ — 21 văn bản hành chính VN")
+    print()
+    print("Sinh bằng `tools/infra/thu_bo_doc.py --cay-day-du "
+          "data/test-corpus-vn-admin/`.")
+    print()
+    print("> ⚠️ **Đây là bản in để ĐỐI CHIẾU TAY, không phải kết quả nghiệm thu.** "
+          "Công cụ chỉ in ra cây nó dựng được; việc cây đó có **đúng** với bản "
+          "gốc hay không thì chỉ người mở bản gốc mới phán được. Đó chính là vế "
+          "≥90% còn treo của T0.3.")
+    print()
+    print("Cách dùng: mở bản gốc bên cạnh, soát từng Điều — đặc biệt chú ý "
+          "**Điều có số hiệu trùng nhau** hoặc **tiêu đề bắt đầu bằng dấu câu** "
+          "(`;` `,`), vì đó là dấu hiệu một dẫn chiếu giữa câu bị nhận nhầm "
+          "thành mốc cấu trúc.")
+    print()
+    print("---")
+    print()
+
+    for i, f in enumerate(files, 1):
+        nguon = phan_loai_nguon(f)
+        try:
+            kq = doc_file(f)
+        except Exception as e:  # noqa: BLE001
+            print(f"## {i}. `{f.name}`\n")
+            print(f"- **Phòng ban**: {f.parent.name}\n- **Nguồn**: {nguon}\n")
+            print(f"> ❌ LỖI: {type(e).__name__}: {e}\n")
+            continue
+
+        nodes = [n for n in kq.root.walk() if n.level is not Level.DOCUMENT]
+        print(f"## {i}. `{f.name}`")
+        print()
+        print(f"- **Phòng ban**: {f.parent.name}")
+        print(f"- **Nguồn**: {nguon}")
+        print(f"- **Kết cục**: `{TEN_KET_CUC[kq.outcome]}`")
+        print(f"- **Đếm được**: {len(kq.blocks(Level.CHUONG))} Chương · "
+              f"{len(kq.blocks(Level.DIEU))} Điều · "
+              f"{len(kq.blocks(Level.KHOAN))} Khoản · "
+              f"{len(kq.blocks(Level.DIEM))} Điểm · "
+              f"{len(kq.full_text):,} ký tự")
+        print()
+        print("```")
+        for n in nodes:
+            thut = "  " * max(0, int(n.level) - 2)
+            nhan = f"{n.level.nhan} {n.marker}".strip()
+            tieu_de = n.heading.strip()
+            print(f"{thut}{nhan}{' — ' if tieu_de else ''}{tieu_de}")
+        print("```")
+        print()
+
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     if args and args[0] == "--heading-style":
         chay_heading_style(args[1:])
     elif args and args[0] == "--markdown":
         chay_markdown(args[1:])
+    elif args and args[0] == "--cay-day-du":
+        chay_cay_day_du(args[1:])
     else:
         chay_bang(args or [str(REPO_ROOT / "tests" / "t0_3_reader" / "fixtures")])
