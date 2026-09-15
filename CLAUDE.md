@@ -188,7 +188,7 @@ Lúc tạo kho, đóng dấu **tên mô hình + số chiều + thước đo** l�
 
 > **"Ba kho" trong `docs/06` và `docs/07` là ba kho LOGIC. Vật lý chỉ có hai.** Mọi câu "kho đồ thị" đọc là *lớp quan hệ trong PostgreSQL*.
 
-⚠️ **Đừng tin Heading style của .docx.** Văn bản hành chính VN soạn tay thường in đậm và đánh số bằng tay, không gán style — **bộ chuẩn hoá regex nhiều khả năng là đường chính, không phải dự phòng**.
+⚠️ **Đừng tin thư viện nào để suy ra phân cấp — chúng chỉ được tin để RÚT CHỮ.** Văn bản hành chính VN soạn tay thường in đậm và đánh số bằng tay, không gán style, nên **bộ chuẩn hoá regex là đường chính, không phải dự phòng**. Đo thật 15/9 đã mở rộng điều này **sang cả PDF**: tầng phân tích bố cục của Docling gộp dòng thành đoạn, làm mất chính tín hiệu cấu trúc; phần dùng được là **rút chữ kèm toạ độ** ở tầng backend. Chi tiết và ba cái bẫy cụ thể: `docs/08` T0.3.
 
 ⚠️ **`span_start`/`span_end` đếm theo KÝ TỰ UNICODE, không phải byte.**
 

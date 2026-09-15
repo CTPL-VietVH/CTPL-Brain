@@ -66,7 +66,7 @@ Dựa trên gói nghiên cứu `cmd_fd7fae9e`. Tiêu chí đánh giá gốc vẫ
 
 | | Đã chốt | Độ chắc chắn |
 |---|---|---|
-| Bộ đọc file | **Docling** cho PDF, **python-docx** cho .docx, parser markdown cho .md, regex cho .txt — cộng **một bộ chuẩn hoá cây cấu trúc chung** theo quy chuẩn hành chính Việt Nam | cao |
+| Bộ đọc file | **Docling** cho PDF (rút chữ kèm toạ độ, **không** dùng phần suy ra phân cấp — xem T0.3), **python-docx** cho .docx, parser markdown cho .md, regex cho .txt — cộng **một bộ chuẩn hoá cây cấu trúc chung** theo quy chuẩn hành chính Việt Nam | cao |
 | Mô hình biểu diễn | **BGE-M3** — 1024 chiều, ngữ cảnh 8192 token, ~2.5GB, chạy được trên GPU 8GB hoặc CPU | cao |
 | Kho dữ liệu | **Qdrant + PostgreSQL**, **không cần kho đồ thị riêng** | cao |
 
@@ -125,9 +125,21 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 *Xong khi*: mô hình chạy được trên phần cứng đích, đo được độ trễ một lượt biểu diễn; và tên mô hình, số chiều, thước đo đã nằm trong nhóm cấu hình hợp đồng ở T1.2.
 
 **T0.3 — Dựng bộ đọc file và CHỨNG MINH nó ra phân cấp.** ✅ Thư viện đã chốt 14/9; phần chứng minh thì chưa ai làm. PDF có lớp chữ, `.docx`, `.txt`, `.md`. **Yêu cầu sống còn: bộ đọc phải trả ra văn bản KÈM PHÂN CẤP** (Chương › Điều › Khoản › Điểm, hoặc chuỗi tiêu đề lồng nhau), không phải một khối chữ phẳng.
-**Docling** cho PDF (phân tích bố cục, xuất cây có phân cấp tiêu đề), **python-docx** cho .docx, parser markdown cho .md, regex cho .txt — cộng **một bộ chuẩn hoá cây cấu trúc chung** nhận diện Chương / Điều / Khoản / Điểm theo quy chuẩn hành chính Việt Nam.
+**Docling** cho PDF (**rút chữ kèm toạ độ** — xem cảnh báo dưới), **python-docx** cho .docx, parser markdown cho .md, regex cho .txt — cộng **một bộ chuẩn hoá cây cấu trúc chung** nhận diện Chương / Điều / Khoản / Điểm theo quy chuẩn hành chính Việt Nam.
 
 ⚠️ **Đừng tin Heading style của .docx.** Văn bản soạn tay ở Việt Nam thường in đậm và đánh số bằng tay chứ không gán style — bộ chuẩn hoá regex nhiều khả năng là **đường chính**, không phải dự phòng.
+
+> ### ⚠️ Sửa 15/9/2026 sau khi dựng và đo thật — mở rộng cảnh báo trên sang cả PDF
+>
+> Bản trước của mục này ghi Docling *"phân tích bố cục, xuất cây có phân cấp tiêu đề"* và ngầm coi đó là nguồn phân cấp cho PDF. **Đo thật thì phần đó gây hại, không giúp ích:**
+>
+> **1. Tầng phân tích bố cục GỘP DÒNG thành đoạn.** `export_to_markdown()` nối *"Điều 1. Phạm vi điều chỉnh"* với Khoản *"1. …"* thành một dòng, và nuốt *"a)"*, *"b)"* vào đoạn trước. Với văn bản hành chính Việt Nam thì **ngắt dòng CHÍNH LÀ tín hiệu cấu trúc**, nên gộp dòng là làm mất đúng thứ cần nhất. Đo được: cùng một nội dung, bản `.txt` ra 3 Điểm còn bản PDF ra **0**.
+>
+> **2. Phần đáng giá của Docling là RÚT CHỮ KÈM TOẠ ĐỘ**, ở tầng backend — nơi vẫn giữ từng ô chữ với vị trí. Bộ đọc dựng lại dòng theo toạ độ `y` rồi giao cho bộ chuẩn hoá regex. **Công nghệ chốt 14/9 không đổi** — vẫn là Docling, chỉ dùng đúng tầng. Phụ thu: bỏ được bước OCR không cần thiết, bộ thử chạy từ 130 s xuống ~3 s.
+>
+> **3. Chèn dấu cách phải theo KHE HỞ NGANG, không được nối mù.** PDF văn bản pháp luật VN thường tách ký tự **có dấu** thành ô chữ **riêng** (font khác cho phần dấu). Đo trên `01/2011/TT-BNV`: ô `'CÔNG BÁO/S'` hết ở `x=266.72`, ô `'ố'` bắt đầu ở `x=266.73`. Nối bằng dấu cách vô điều kiện cho ra `"B Ộ  N Ộ I V Ụ"`, `"Ngh ị đị nh"` — khi ấy chuỗi `"Điều"` **không bao giờ khớp**, cả tài liệu tụt xuống "không có điều khoản" với 0 Điều **mà vẫn dựng ra được một cái cây**, nên không có gì báo lỗi. Đây là kiểu hỏng im lặng, và nó đã xảy ra thật với **4/5 PDF** trong tập thử trước khi được bắt.
+>
+> **Kết luận cho người lập trình**: cảnh báo *"bộ chuẩn hoá regex là đường chính, không phải dự phòng"* ở trên **áp cho cả PDF**, không riêng `.docx`. Không thư viện nào trong chuỗi này được tin để suy ra phân cấp — chúng chỉ được tin để **rút chữ**.
 
 *Xong khi*: mỗi định dạng có một bộ đọc, mọi bộ đọc trả ra **cùng một hình dạng cây** (điểm cắm GĐ2), và **đạt trên một tập thử có tên gọi**:
 - Ít nhất **20 văn bản hành chính Việt Nam thật**, trong đó ít nhất **5 văn bản soạn tay không dùng Heading style** và ít nhất 5 PDF.
