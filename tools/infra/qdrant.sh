@@ -35,6 +35,7 @@ require() {
 require CBRAIN_QDRANT_VERSION
 require CBRAIN_QDRANT_HTTP_PORT
 require CBRAIN_QDRANT_GRPC_PORT
+require CBRAIN_QDRANT_BIND_HOST
 
 cmd_fetch() {
   local arch; arch="$(uname -m)"
@@ -64,6 +65,7 @@ cmd_start() {
   if cmd_status >/dev/null 2>&1; then echo "Qdrant đã chạy sẵn."; return 0; fi
   mkdir -p "$STORAGE"
   QDRANT__STORAGE__STORAGE_PATH="$STORAGE" \
+  QDRANT__SERVICE__HOST="$CBRAIN_QDRANT_BIND_HOST" \
   QDRANT__SERVICE__HTTP_PORT="$CBRAIN_QDRANT_HTTP_PORT" \
   QDRANT__SERVICE__GRPC_PORT="$CBRAIN_QDRANT_GRPC_PORT" \
   QDRANT__TELEMETRY_DISABLED=true \
