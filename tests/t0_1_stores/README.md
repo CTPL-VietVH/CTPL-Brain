@@ -146,3 +146,44 @@ làm** — cần PO quyết.
 > 📌 Ghi lại một điều đã đúng: chọn **binary ARM native** cho Qdrant ở T0.1
 > thay vì Docker/Rosetta hoá ra là quyết định giữ cho một nửa bộ thử vẫn chạy
 > được sau khi Rosetta biến mất.
+
+---
+
+## ✅ 16/9/2026 — Migrate PostgreSQL sang ARM-native, 19/19 ca thử chạy lại đạt
+
+Không dùng Rosetta ở bất kỳ bước nào (đúng chính sách đã chốt). Đường đi:
+
+1. Backup thô toàn bộ cluster Intel cũ (`rsync -a`), xác minh khớp tuyệt đối
+   với bản gốc bằng checksum MD5 tổng hợp của toàn bộ file.
+2. Cài `postgresql@14` (14.24) qua Homebrew ARM (`/opt/homebrew`), gắn **tạm**
+   binary ARM thẳng vào data directory Intel cũ (`pg_ctl -D
+   /usr/local/var/postgresql@14 start`) — khởi động thành công **ngay lần đầu**,
+   không cần Rosetta.
+3. `pg_dump -Fc` riêng database `cbrain_dev`, dừng cluster tạm, **không** giữ
+   nó chạy lâu dài (tránh rủi ro lệch collation/ICU giữa hai kiến trúc).
+4. Dựng cluster ARM **hoàn toàn mới** qua `brew services start postgresql@14`
+   — data directory mặc định của bản ARM
+   (`/opt/homebrew/var/postgresql@14`), tách biệt hoàn toàn với data
+   directory Intel cũ.
+5. `pg_restore` vào cluster mới, xác minh số dòng khớp chính xác với số đã ghi
+   nhận trước migrate (`long_text`=3, `relation_edge`=4001,
+   `collection_stamp`=0), rồi `REINDEX DATABASE cbrain_dev`.
+   Kiểm tra không có cột nào gán `COLLATE` tường minh (kể cả ICU) — không phát
+   sinh rủi ro lệch collation giữa bản Intel và bản ARM.
+6. Vá `~/.zprofile`: dòng `eval "$(/opt/homebrew/bin/brew shellenv)"` giờ nằm
+   **sau** dòng tương ứng của `/usr/local/bin` — `/opt/homebrew/bin` được ưu
+   tiên trong `PATH`, `psql`/`pg_dump`/... không cần full path nữa đều trỏ
+   đúng bản ARM.
+
+**Kết quả chạy lại toàn bộ `pytest tests/t0_1_stores/`: 19/19 ca thử ĐẠT** — cả
+9 ca chỉ dùng Qdrant (không hồi quy) lẫn 10 ca cần PostgreSQL (đỏ trước migrate
+vì "Bad CPU type", nay xanh).
+
+**`qmask_v2_dev`/`qmask_test` CHỦ ĐÍCH không migrate** — hai database này không
+thuộc phạm vi CBrain; PO đã quyết định không cần bảo toàn chúng trong cluster
+ARM mới. Dữ liệu vẫn còn nguyên trong bản backup thô của cluster Intel cũ
+(không xoá, giữ làm lưới an toàn) — lấy lại được nếu sau này cần, bằng đúng kỹ
+thuật gắn-tạm-rồi-dump đã dùng ở đây cho `cbrain_dev`.
+
+Cluster Intel cũ (`/usr/local/var/postgresql@14`) và bản backup thô cũng
+**chưa dọn** — việc dọn dẹp nằm ngoài phạm vi lần migrate này.
