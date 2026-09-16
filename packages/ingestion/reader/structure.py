@@ -61,8 +61,11 @@ class BatThuongDanhSo(enum.Enum):
       Ca đã xác minh: `2023/nghi-dinh-35` — 8/8 cờ đều thuộc loại này.
     * **(b) Văn bản nguồn KHUYẾT một dải số** vì thiếu trang / thiếu kỳ Công
       báo. **Không phải lỗi bộ đọc** — bản PDF vốn đã thiếu.
-      Ca đã xác minh: `Thông-tư-200-2014-TT-BTC.pdf` — 17 cờ, tất cả thuộc loại
-      này (bản hiện có thiếu Điều 88–113).
+      Ca đã xác minh: `tt-200-btc-22-12-2014.pdf` — 79 cờ, tất cả thuộc loại
+      này. Bản PDF thiếu **đúng một trang in** nên mất tiêu đề `Điều 51`; một
+      lỗ hổng số duy nhất đó làm cờ lan xuống `Điều 52` → `Điều 130`, toàn bộ
+      là Điều THẬT. (Bản trước `Thông-tư-200-2014-TT-BTC.pdf` thiếu cả dải
+      Điều 88–113, đã được PO thay.)
     * **(c) Phụ lục là MẪU VĂN BẢN LỒNG**, tự đánh số Điều lại từ 1. **Không
       phải lỗi** — đó là cấu trúc thật, chỉ nằm ngoài phạm vi mô hình cây phẳng
       hiện tại. Hẹn xử lý ở T1.1 / GĐ2, không phải bug của T0.3.

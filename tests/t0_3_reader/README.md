@@ -96,7 +96,7 @@ bằng LibreOffice headless. Bản `.doc` gốc vẫn còn nguyên cạnh mỗi 
 | 18 | `2021_113 + 114_01-2021-NĐ-CP.pdf` | tai-chinh-ke-toan | PDF | `DIEU_KHOAN` | 9 | 105 | 393 | 219 | 206,615 |
 | 19 | `Luat Dau thau 2023.docx` | tai-chinh-ke-toan | docx chuyển đổi | `DIEU_KHOAN` | 10 | 96 | 428 | 552 | 172,047 |
 | 20 | `Luật-88-2015-QH13.docx` | tai-chinh-ke-toan | docx chuyển đổi | `DIEU_KHOAN` | 6 | 74 | 287 | 216 | 75,166 |
-| 21 | `Thông-tư-200-2014-TT-BTC.pdf` | tai-chinh-ke-toan | PDF | `DIEU_KHOAN` | 9 | 105 | 750 | 1221 | 1,000,857 |
+| 21 | `tt-200-btc-22-12-2014.pdf` | tai-chinh-ke-toan | PDF | `DIEU_KHOAN` | 6 | 130 | 435 | 1237 | 1,106,700 |
 
 **Tổng theo kết cục:** `DIEU_KHOAN` 21
 
@@ -302,7 +302,7 @@ Chương I
     Điều 4 — Nhiệm vụ kế toán
 ```
 
-**21. `Thông-tư-200-2014-TT-BTC.pdf`** — PDF · `DIEU_KHOAN`
+**21. `tt-200-btc-22-12-2014.pdf`** — PDF · `DIEU_KHOAN`
 
 ```
 Chương I
@@ -312,73 +312,6 @@ Chương I
     Điều 4 — Lựa chọn đơn vị tiền tệ trong kế toán
 ```
 
-
----
-
-## Kiểm Heading style — 11/16 `.docx` KHÔNG dùng
-
-```bash
-.venv/bin/python tools/infra/thu_bo_doc.py --heading-style data/test-corpus-vn-admin/
-```
-
-Phép kiểm **khách quan** (đọc thẳng `paragraph.style.name`), không cần người mở
-Word. `docs/08` T0.3 đòi **≥5** — đang có **11**.
-
-| Nguồn | Không dùng Heading style |
-|---|---|
-| `.docx` **gốc** | **1**/5 — `Bộ-luật-45-2019-QH14.docx` (dùng `Body Text`) |
-| `.docx` **chuyển đổi** | **10**/11 |
-
-### Bằng chứng này không vòng luẩn quẩn
-
-Câu hỏi đúng: *chính LibreOffice có làm phẳng style khi chuyển đổi không?* Nếu
-có thì 10 bản chuyển đổi "không Heading style" chẳng chứng minh gì về bản `.doc`
-gốc.
-
-**Đã đối chứng:** bản chuyển đổi `nghi-dinh-145-2020-....docx` **vẫn giữ 63 đoạn
-`Tiêu đề #4`** sau convert → LibreOffice **giữ được** Heading style khi bản gốc
-có. Vậy 10 bản kia không có là vì bản `.doc` gốc vốn không có.
-
-> Kể cả khi PO quyết loại hết bản chuyển đổi, vẫn còn 1 bản **gốc** không dùng
-> Heading style. Con số ≥5 khi ấy **không còn đạt** — đó là một lý do nữa để PO
-> cân nhắc kỹ việc có tính bản chuyển đổi hay không.
-
----
-
-## ⚠️ Một lỗi IM LẶNG đã bắt được nhờ chính tập thử thật
-
-Lượt chạy đầu trên tập thật, **4/5 PDF ra `TIEU_DE` với 0 Điều** — trong khi
-chúng là Thông tư và Nghị định, chắc chắn có Điều.
-
-Nguyên nhân: PDF văn bản pháp luật VN thường tách ký tự **có dấu** thành ô chữ
-**riêng** (font khác cho phần dấu). Đo trên Thông tư 01/2011/TT-BNV:
-
-```
-l=188.35 r=266.72  'CÔNG BÁO/S'
-l=266.73 r=273.23  'ố'            ← khe hở 0.01pt
-```
-
-Bản đầu của bộ đọc nối các ô bằng dấu cách **vô điều kiện**, cho ra:
-
-```
-BỘ NỘI VỤ          →  "B Ộ  N Ộ I V Ụ"
-Nghị định          →  "Ngh ị đị nh"
-Độc lập - Tự do    →  "Độ c l ậ p - T ự  do"
-```
-
-Khi ấy chuỗi `"Điều"` **không bao giờ khớp**, cả tài liệu tụt xuống `TIEU_DE`
-với 0 Điều — mà vẫn **"dựng ra được một cái cây"**, nên không có gì báo lỗi.
-
-**Đã chữa**: quyết định chèn dấu cách theo **khe hở ngang** giữa hai ô, thay vì
-nối mù. Sau khi chữa, cùng file đó cho **38 dòng bắt đầu bằng "Điều"**, và cả
-21/21 văn bản ra `DIEU_KHOAN`. Có ca thử hồi quy canh ngưỡng này
-(`test_ghep_o_chu_pdf_theo_khe_ho_khong_chen_dau_cach_bua`).
-
-> 📌 **Đây là lý do vế 90% phải do người đối chiếu.** Lỗi này đã cho ra "một cái
-> cây" ở cả 4 file và không công cụ nào tự phát hiện được — chỉ có việc *nhìn
-> vào chữ* mới thấy. Cùng loại lỗi hoàn toàn có thể còn sót ở chỗ khác.
-
----
 
 ---
 
@@ -421,15 +354,23 @@ kế tiếp"*). Cờ **chỉ gắn, không bao giờ xoá hay sửa cây**.
 | File | Cờ | (a) | (b) | (c) | Ghi chú |
 |---|---:|---:|---:|---:|---|
 | `2023_nghi-dinh-35_…pdf` | 8 | **8** | – | – | Cờ trùng khít ground-truth 8/8. Thật có 17 Điều, dựng ra 25 |
-| `Thông-tư-200-2014-TT-BTC.pdf` | 18 | 1 | **17** | – | ⛔ Bản hiện có **thiếu Điều 88–113** |
+| `tt-200-btc-22-12-2014.pdf` | 80 | 1 | **79** | – | ⛔ Bản này **thiếu 1 trang in → mất tiêu đề Điều 51**; cờ dây chuyền Điều 52→130 |
 | `nghi-dinh-145-2020-…docx` | 18 | – | – | **18** | Mẫu Quyết định + mẫu Hợp đồng lao động trong phụ lục |
 | `2021_291 + 292_…pdf` | 6 | **6** | – | – | Đều là dẫn chiếu *"…quy định tại khoản N…"* |
 | `VanBanGoc_01_2011_TT-BNV.pdf` | 9 | 1 | – | **8** | Thông tư hướng dẫn thể thức → phụ lục toàn văn bản mẫu |
 | `2021_113 + 114_…pdf` | 4 | **4** | – | – | ⚠️ một cờ nằm nhầm lên mốc thật — xem dưới |
-| **Tổng** | **63** | **20** | **17** | **26** | |
+| **Tổng** | **125** | **20** | **79** | **26** | |
 
-**Chỉ 20/63 cờ (32%) là lỗi nhận dạng thật.** 43 cờ còn lại trỏ vào mốc **có
+**Chỉ 20/125 cờ (16%) là lỗi nhận dạng thật.** 105 cờ còn lại trỏ vào mốc **có
 thật** — hoặc vì nguồn khuyết, hoặc vì đó là văn bản lồng.
+
+> **Số cờ nhảy 63 → 125 là do đổi file nguồn, không phải do đổi luật dò.** Bản
+> Thông tư 200 cũ (thiếu **26 Điều**, dải 88–113) sinh 18 cờ; bản mới
+> `tt-200-btc-22-12-2014.pdf` có đủ dải 1–130 nhưng **thiếu đúng 1 trang in**
+> làm mất tiêu đề `Điều 51` — và **một** lỗ hổng số duy nhất đó khiến luật *"số
+> kế tiếp"* gắn cờ dây chuyền cho **Điều 52 → Điều 130** (79 mốc, **đều là Điều
+> thật**). Đây chính là giới hạn (1) đã ghi ở `BatThuongDanhSo`, gặp thật ở
+> dạng rõ nhất: **một lỗ hổng → 79 cờ oan**.
 
 ### Hai giới hạn đã biết, KHÔNG có kế hoạch chữa ở T0.3
 
@@ -508,27 +449,41 @@ mang một giá trị `Outcome` riêng.
 
 ## Việc còn lại để T0.3 nghiệm thu đầy đủ
 
-1. ⛔ **PO cần tải lại `Thông-tư-200-2014-TT-BTC.pdf` bản đầy đủ — bản hiện tại
-   THIẾU Điều 88–113, không dùng để đối chiếu tay / nghiệm thu cho tới khi thay
-   bằng bản đủ.**
+1. ⛔ **`tt-200-btc-22-12-2014.pdf` THIẾU MỘT TRANG IN — mất tiêu đề `Điều 51`.
+   PO quyết có chấp nhận bản này để đối chiếu tay hay không; Claude Code KHÔNG
+   tự quyết loại file khỏi tập thử.**
 
-   Bản hiện có là **Công báo đăng nhiều kỳ**. Các số **có mặt** trong file:
+   Bản này **thay thế** `Thông-tư-200-2014-TT-BTC.pdf` (bản cũ thiếu cả dải
+   Điều 88–113). **Bản mới tốt hơn hẳn**: 536 trang, đủ dải Điều 1–130, không
+   trang nào rỗng chữ. Nhưng còn **đúng một** chỗ khuyết:
 
-   | Số Công báo | Số trang trong file |
-   |---|---:|
-   | 279 + 280 | 90 |
-   | 281 + 282 | 102 |
-   | 283 + 284 | 90 |
-   | 285 + 286 | 86 |
-   | **287 + 288** | **0 — THIẾU** |
-   | 289 + 290 | 106 |
+   | Phép kiểm | Kết quả |
+   |---|---|
+   | Chuỗi `"Điều 51"` trong **ô chữ thô** cả 536 trang | ❌ **không một ô nào** — không phải lỗi dựng dòng |
+   | Số hiệu Điều dựng được | 130 mốc, dải 1–130, thiếu **đúng mỗi số 51** |
+   | Trang rỗng chữ | **0/536** — bộ đọc không bỏ trang nào |
+   | Trang vật lý 223 | bắt đầu **giữa câu**, đã ở mục `d)` → là **phần GIỮA của Điều 51** |
 
-   File có mốc *"(Tiếp theo Công báo số 287 + 288)"* nhưng **không có trang nào
-   thuộc số 287 + 288** → đó là kỳ bị thiếu. Điều có mặt: **1–87** và
-   **114–130**; **thiếu chính xác Điều 88 → 113**.
+   **Bằng chứng quyết định — độ lệch số trang đổi đúng tại đây:**
 
-   > Lưu ý: giả định ban đầu là thiếu số 285+286 — **không đúng**, số đó có đủ
-   > 86 trang trong file. Số thiếu là **287+288**.
+   | Trang vật lý | 219 | 220 | 221 | 222 | **223** | 224 | 225 | 228 |
+   |---|---|---|---|---|---|---|---|---|
+   | Số in trên trang | 219 | 220 | 221 | 222 | **?** | **225** | 226 | 229 |
+   | Độ lệch | 0 | 0 | 0 | 0 | → | **+1** | +1 | +1 |
+
+   Độ lệch nhảy từ 0 sang +1 **đúng tại trang 223** ⇒ thiếu **đúng một trang
+   in**, ngay sau trang 222. Trang đó chứa phần cuối `Điều 50` + tiêu đề
+   **`Điều 51: Tài khoản 331 - Phải trả cho người bán`** + mục `1.a) 1.b) 1.c)`.
+   Phần thân còn lại của Điều 51 (mục `1.d) đ) e)` và `2. Kết cấu…`) **vẫn có**.
+
+   > So với bản cũ: cũ thiếu **26 Điều**; mới thiếu **1 tiêu đề Điều + ~1 trang
+   > nội dung**. Mức độ khác hẳn — nên đây là quyết định của PO, không phải một
+   > lần từ chối hiển nhiên.
+
+   **Hệ quả nếu giữ bản này**: một lỗ hổng số duy nhất làm luật *"số kế tiếp"*
+   gắn cờ dây chuyền cho **Điều 52 → 130** (79 mốc, đều là Điều thật). Khi đối
+   chiếu tay, **bỏ qua 79 cờ đó** và chỉ soát `Điều 69` (dẫn chiếu thật) cùng
+   vùng `Điều 50–52`.
 
 2. ⛔ **PO đối chiếu tay 21 văn bản** — mở từng bản gốc, so với
    [`cay_day_du_21_van_ban.md`](cay_day_du_21_van_ban.md), xác nhận "dựng đúng

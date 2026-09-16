@@ -3976,16 +3976,16 @@ Chương VII
 
 - **⚠️ 6 mốc Điều mang cờ BẤT THƯỜNG ĐÁNH SỐ** (đánh dấu `<<<` trong cây dưới) — cờ là **gợi ý cần người phân loại**, không phải phán quyết. Ba loại đã biết: (a) dẫn chiếu nhận nhầm · (b) nguồn khuyết dải số · (c) mẫu văn bản lồng đánh số lại.
 
-> ### Phân loại 6 cờ: **6/6 thuộc loại (a)** — dẫn chiếu nhận nhầm
+> ### Phân loại 6 cờ: **6/6 loại (a)** — dẫn chiếu nhận nhầm
 >
 > | Mốc | Ngữ cảnh ngay trước |
 > |---|---|
-> | `Điều 19` | *"…trách nhiệm tổ chức thực hiện các quy định tại khoản 8"* |
+> | `Điều 19` | *"…các quy định tại khoản 8"* |
 > | `Điều 25` | dẫn chiếu kết thúc câu, câu sau mở đầu *"Hội đồng do Thủ tướng…"* |
 > | `Điều 123` | *"…quy định tại điểm a khoản 4"* → `Điều 123 Luật số 50/2014/QH13` |
-> | `Điều 1` | *"…được sửa đổi, bổ sung tại khoản 46"* → `Điều 1 Luật số 62/2020/QH14` |
+> | `Điều 1` | *"…sửa đổi, bổ sung tại khoản 46"* → `Điều 1 Luật số 62/2020/QH14` |
 > | `Điều 39` | *"…cơ quan quy định tại khoản 4"* |
-> | `Điều 39` | *"…báo cáo cơ quan nhà nước có thẩm quyền quy định tại khoản 4"* |
+> | `Điều 39` | *"…thẩm quyền quy định tại khoản 4"* |
 
 ```
 Chương I
@@ -4848,16 +4848,14 @@ Chương V
 > Nghị định **sửa đổi, bổ sung** — sửa từng Điều rời rạc của nhiều nghị định
 > khác nên **tự nó không có Chương**; cấp ngoài cùng là Điều 1 → Điều 17. Toàn
 > văn có 38 chỗ chứa chữ "chương" nhưng **không chỗ nào là tiêu đề Chương** —
-> tất cả là danh từ thường *"chương trình"*. Không có Chương nào bị bỏ sót.
+> tất cả là danh từ thường *"chương trình"*.
 >
-> ### Phân loại 8 cờ: **8/8 thuộc loại (a)** — dẫn chiếu nhận nhầm
+> ### Phân loại 8 cờ: **8/8 loại (a)** — dẫn chiếu nhận nhầm
 >
 > Văn bản thật có **17 Điều**; công cụ dựng 25 mốc. Tám mốc thừa đều là dẫn
-> chiếu tới điều khoản của nghị định bị sửa, rơi xuống đầu dòng: `Điều 3`(lần 2),
-> `Điều 19`, `Điều 40`, `Điều 8`(lần 1), `Điều 18`, `Điều 50`, `Điều 1`(lần 2),
-> `Điều 1`(lần 3). Nhận ra bằng mắt: tiêu đề mở đầu bằng `;` hoặc `,`.
->
-> **Đây là ca duy nhất trong 6 file mà cờ trùng khít ground-truth (8/8).**
+> chiếu rơi xuống đầu dòng: `Điều 3`(lần 2), `Điều 19`, `Điều 40`, `Điều 8`
+> (lần 1), `Điều 18`, `Điều 50`, `Điều 1`(lần 2), `Điều 1`(lần 3).
+> **Ca duy nhất trong 6 file mà cờ trùng khít ground-truth (8/8).**
 
 ```
     Điều 1 — Sửa đổi, bổ sung một số khoản của Điều 14 Nghị định
@@ -8881,18 +8879,15 @@ Chương V
 
 - **⚠️ 18 mốc Điều mang cờ BẤT THƯỜNG ĐÁNH SỐ** (đánh dấu `<<<` trong cây dưới) — cờ là **gợi ý cần người phân loại**, không phải phán quyết. Ba loại đã biết: (a) dẫn chiếu nhận nhầm · (b) nguồn khuyết dải số · (c) mẫu văn bản lồng đánh số lại.
 
-> ### Phân loại 18 cờ: **18/18 thuộc loại (c)** — mẫu văn bản lồng
+> ### Phân loại 18 cờ: **18/18 loại (c)** — mẫu văn bản lồng
 >
 > **Không cờ nào là dẫn chiếu.** Cả 18 là Điều **thật** của các **biểu mẫu
 > trong phụ lục** — mỗi biểu mẫu là một văn bản lồng, tự đánh số Điều lại từ 1:
+> mẫu Quyết định trích tiền ký quỹ (`Điều 1–3`), mẫu Quyết định thu hồi giấy
+> phép (`Điều 1–4`), mẫu Hợp đồng lao động (`Điều 1–11`).
 >
-> * mẫu Quyết định trích tiền ký quỹ — `Điều 1, 2, 3`
-> * mẫu Quyết định thu hồi giấy phép — `Điều 1, 2, 3, 4`
-> * mẫu Hợp đồng lao động — `Điều 1` → `Điều 11`
->
-> Chúng không thuộc thân Nghị định 145, nên tách ra là **có ích**; nhưng đây là
-> **cấu trúc thật**, không phải lỗi. Mô hình cây phẳng hiện tại chưa có khái
-> niệm "văn bản lồng trong phụ lục" — hẹn xử lý ở **T1.1 / GĐ2**.
+> Là **cấu trúc thật**, không phải lỗi. Mô hình cây phẳng chưa có khái niệm
+> "văn bản lồng trong phụ lục" — hẹn xử lý ở **T1.1 / GĐ2**.
 
 ```
 Chương I
@@ -13468,15 +13463,14 @@ Chương X
 
 - **⚠️ 9 mốc Điều mang cờ BẤT THƯỜNG ĐÁNH SỐ** (đánh dấu `<<<` trong cây dưới) — cờ là **gợi ý cần người phân loại**, không phải phán quyết. Ba loại đã biết: (a) dẫn chiếu nhận nhầm · (b) nguồn khuyết dải số · (c) mẫu văn bản lồng đánh số lại.
 
-> ### Phân loại 9 cờ: **1 × loại (a)**, **8 × loại (c)**
+> ### Phân loại 9 cờ: **1 × (a)**, **8 × (c)**
 >
-> * **(a)** `Điều 9` — dẫn chiếu: *"…thực hiện theo hướng dẫn tại **Điều 9**,
->   12, 13 và 14 của Thông tư này."*
-> * **(c)** 8 mốc `Điều 1` / `Điều 2` còn lại — đều đứng ngay sau
->   `QUYẾT NGHỊ:` hoặc `QUYẾT ĐỊNH:` và có nội dung là dấu chấm lửng điền chỗ
->   trống (`......(6)......`). Đây là **mẫu văn bản** trong phụ lục — hợp lý,
->   vì chính Thông tư 01/2011/TT-BNV là thông tư *hướng dẫn thể thức trình bày
->   văn bản*, nên phụ lục của nó toàn văn bản mẫu.
+> * **(a)** `Điều 9` — dẫn chiếu: *"…theo hướng dẫn tại **Điều 9**, 12, 13 và
+>   14 của Thông tư này."*
+> * **(c)** 8 mốc `Điều 1` / `Điều 2` còn lại — đứng ngay sau `QUYẾT NGHỊ:` /
+>   `QUYẾT ĐỊNH:`, nội dung là dấu chấm lửng điền chỗ trống (`......(6)......`).
+>   Đây là **mẫu văn bản** trong phụ lục — hợp lý, vì chính Thông tư
+>   01/2011/TT-BNV là thông tư *hướng dẫn thể thức trình bày văn bản*.
 
 ```
 Chương I
@@ -13622,20 +13616,16 @@ Chương I
 
 - **⚠️ 4 mốc Điều mang cờ BẤT THƯỜNG ĐÁNH SỐ** (đánh dấu `<<<` trong cây dưới) — cờ là **gợi ý cần người phân loại**, không phải phán quyết. Ba loại đã biết: (a) dẫn chiếu nhận nhầm · (b) nguồn khuyết dải số · (c) mẫu văn bản lồng đánh số lại.
 
-> ### Phân loại 4 cờ: **4/4 thuộc loại (a)** — nhưng MỘT cờ nằm NHẦM CHỖ
+> ### Phân loại 4 cờ: **4/4 loại (a)** — nhưng MỘT cờ nằm NHẦM CHỖ
 >
 > * `Điều 135` — *"…quy định tại khoản 1"* → `Điều 135 Luật Chứng khoán`
 > * `Điều 23` — *"…điểm b khoản 4 Điều 22, điểm c khoản 4"* → `Điều 23`
 > * `Điều 207` — *"…các điểm a, b và c khoản 1"* → `Điều 207 Luật Doanh nghiệp`
 >
-> ⚠️ **`Điều 4` — cờ rơi lên MỐC THẬT.** Dẫn chiếu *"…quy định tại khoản 19
-> **Điều 4** Luật Doanh nghiệp là hệ thống thông tin…"* rơi **đúng lúc đang
-> chờ Điều 4**, nên được nhận là nối tiếp; còn `Điều 4. Nguyên tắc áp dụng
-> giải quyết thủ tục đăng ký doanh nghiệp` — **Điều thật** — thì bị gắn cờ.
->
-> Nguyên nhân vẫn là loại (a), nhưng hệ quả khác: **số đếm vẫn đúng, ranh giới
-> khối thì sai chỗ** — khối "Điều 4" bắt đầu ở câu dẫn chiếu thay vì ở tiêu đề
-> thật. Đây là giới hạn đã ghi ở `BatThuongDanhSo`, gặp thật trên tập thử.
+> ⚠️ **`Điều 4` — cờ rơi lên MỐC THẬT.** Dẫn chiếu *"…khoản 19 **Điều 4** Luật
+> Doanh nghiệp…"* rơi **đúng lúc đang chờ Điều 4** nên được nhận là nối tiếp;
+> còn `Điều 4. Nguyên tắc áp dụng giải quyết thủ tục đăng ký doanh nghiệp` —
+> **Điều thật** — thì bị gắn cờ. Số đếm vẫn đúng, **ranh giới khối sai chỗ**.
 
 ```
 Chương I
@@ -16075,32 +16065,55 @@ Chương VI
       Khoản 2 — Căn cứ những nguyên tắc cơ bản của Luật này, Chính phủ quy định cụ thể nội dung công tác kế toán đối với văn phòng đại diện của doanh nghiệp nước ngoài hoạt động tại Việt Nam, hộ kinh doanh và tổ hợp tác.
 ```
 
-## 21. `Thông-tư-200-2014-TT-BTC.pdf`
+## 21. `tt-200-btc-22-12-2014.pdf`
 
 - **Phòng ban**: tai-chinh-ke-toan
 - **Nguồn**: PDF
 - **Kết cục**: `DIEU_KHOAN`
-- **Đếm được**: 9 Chương · 105 Điều · 750 Khoản · 1221 Điểm · 1,000,857 ký tự
+- **Đếm được**: 6 Chương · 130 Điều · 435 Khoản · 1237 Điểm · 1,106,700 ký tự
 
-- **⚠️ 18 mốc Điều mang cờ BẤT THƯỜNG ĐÁNH SỐ** (đánh dấu `<<<` trong cây dưới) — cờ là **gợi ý cần người phân loại**, không phải phán quyết. Ba loại đã biết: (a) dẫn chiếu nhận nhầm · (b) nguồn khuyết dải số · (c) mẫu văn bản lồng đánh số lại.
+- **⚠️ 80 mốc Điều mang cờ BẤT THƯỜNG ĐÁNH SỐ** (đánh dấu `<<<` trong cây dưới) — cờ là **gợi ý cần người phân loại**, không phải phán quyết. Ba loại đã biết: (a) dẫn chiếu nhận nhầm · (b) nguồn khuyết dải số · (c) mẫu văn bản lồng đánh số lại.
 
-> ### ⛔ BẢN NÀY THIẾU ĐIỀU 88–113 — KHÔNG DÙNG ĐỂ ĐỐI CHIẾU/NGHIỆM THU
+> ### ⛔ BẢN NÀY THIẾU MỘT TRANG IN — mất tiêu đề `Điều 51`. CHỜ PO QUYẾT.
 >
-> ### Phân loại 18 cờ: **1 × loại (a)**, **17 × loại (b)**
+> **Bản thay thế cho `Thông-tư-200-2014-TT-BTC.pdf` (bản cũ thiếu Điều 88–113).
+> Bản mới TỐT HƠN HẲN: có đủ dải Điều 1–130, 536 trang, không trang nào rỗng.**
+> Nhưng vẫn còn **đúng một** chỗ khuyết, nhỏ hơn nhiều so với bản cũ.
 >
-> * **(a)** `Điều 69` — dẫn chiếu thật: *"…theo quy định tại **Điều 69** -
->   hướng dẫn phương pháp kế toán chênh lệch tỷ giá hối đoái."*
-> * **(b)** `Điều 114` → `Điều 130` (17 mốc) — **đều là Điều THẬT**, có tiêu đề
->   đầy đủ, nằm ngay sau các mốc `Chương III`…`Chương VI`. Bị gắn cờ vì **bản
->   PDF khuyết dải Điều 88–113**, không phải vì bộ đọc sai.
+> #### Xác minh `Điều 51` — đã làm đúng cách như với dải 88–113
 >
-> **Bằng chứng khuyết:** đây là bản **Công báo đăng nhiều kỳ**. Các số có mặt
-> trong file: **279+280** (90 trang) · **281+282** (102) · **283+284** (90) ·
-> **285+286** (86) · **289+290** (106). File có mốc *"(Tiếp theo Công báo số
-> 287 + 288)"* nhưng **không có trang nào của số 287+288** → đó chính là kỳ bị
-> thiếu, và Điều 88–113 nằm trong đó.
+> | Phép kiểm | Kết quả |
+> |---|---|
+> | Chuỗi `"Điều 51"` trong **ô chữ thô** của cả 536 trang | ❌ **không có một ô nào** — không phải lỗi dựng dòng |
+> | Số hiệu Điều dựng được | **130 mốc**, dải 1–130, thiếu **đúng mỗi số 51** |
+> | Trang nào rỗng chữ | **0/536** — bộ đọc không bỏ sót trang |
+> | Trang vật lý 223 | bắt đầu **giữa câu** (*"để đánh giá lại…"*), đã ở mục `d)`, rồi `2. Kết cấu… tài khoản 331 - Phải trả cho người bán` ⇒ đây là **phần GIỮA của Điều 51** |
 >
-> 📌 PO cần tải lại bản đầy đủ. Chi tiết: `tests/t0_3_reader/README.md`.
+> #### Bằng chứng quyết định: độ lệch số trang đổi đúng tại đây
+>
+> | Trang vật lý | 219 | 220 | 221 | 222 | **223** | 224 | 225 | 228 |
+> |---|---|---|---|---|---|---|---|---|
+> | Số in trên trang | 219 | 220 | 221 | 222 | **?** | **225** | 226 | 229 |
+> | Độ lệch | 0 | 0 | 0 | 0 | → | **+1** | +1 | +1 |
+>
+> Độ lệch nhảy từ 0 sang +1 **đúng tại trang 223** ⇒ **thiếu đúng MỘT trang in**,
+> ngay sau trang 222. Trang đó chứa: phần cuối `Điều 50` + **tiêu đề
+> `Điều 51: Tài khoản 331 - Phải trả cho người bán`** + mục `1.a) 1.b) 1.c)`.
+>
+> #### Hệ quả cho cờ: 80 cờ, gần như toàn bộ là loại (b)
+>
+> Một lỗ hổng số duy nhất làm luật *"số kế tiếp"* gắn cờ **dây chuyền** cho
+> `Điều 52` → `Điều 130` (79 mốc) — **tất cả đều là Điều THẬT**. Cộng thêm
+> `Điều 69` là dẫn chiếu thật, loại (a).
+>
+> → **79 × loại (b) + 1 × loại (a).** Đây đúng là giới hạn đã ghi ở
+> `BatThuongDanhSo`: nguồn khuyết một dải số thì cờ mất hết tác dụng phía sau.
+>
+> #### ⛔ Chưa tự quyết file này có đủ điều kiện đối chiếu tay hay không
+>
+> Khác bản cũ về **mức độ**: cũ thiếu **26 Điều** (88–113); mới thiếu **1 tiêu
+> đề Điều + ~1 trang nội dung**. Phần thân Điều 51 vẫn còn phần lớn. Việc quyết
+> có chấp nhận bản này hay đi tìm bản khác **thuộc về PO**.
 
 ```
 Chương I
@@ -16110,1472 +16123,1754 @@ Chương I
     Điều 4 — Lựa chọn đơn vị tiền tệ trong kế toán
       Khoản 1 — Doanh nghiệp có nghiệp vụ thu, chi chủ yếu bằng ngoại tệ căn cứ vào quy
       Khoản 2 — Đơn vị tiền tệ trong kế toán là đơn vị tiền tệ:
-        Điểm a — Được sử dụng chủ yếu trong các giao dịch bán hàng, cung cấp dịch vụ của
-        Điểm b — Được sử dụng chủ yếu trong việc mua hàng hóa, dịch vụ, có ảnh hưởng lớn
+        Điểm a — Được  sử  dụng  chủ  yếu  trong  các  giao  dịch  bán hàng,  cung  cấp  dịch  vụ
+        Điểm b — Được  sử dụng chủ yếu trong việc mua hàng hóa,  dịch vụ, có  ảnh hưởng
       Khoản 3 — Các yếu tố sau đây cũng được xem xét và cung cấp bằng chứng về đơn vị
-        Điểm a — Đơn vị tiền tệ sử dụng để huy động các nguồn lực tài chính (như phát hành
-        Điểm b — Đơn vị tiền tệ thường xuyên thu được từ các hoạt động kinh doanh và được
-      Khoản 4 — Đơn vị tiền tệ trong kế toán phản ánh các giao dịch, sự kiện, điều kiện liên
-    Điều 5 — Chuyển đổi Báo cáo tài chính lập bằng đơn vị tiền tệ trong kế toán
-      Khoản 1 — Doanh nghiệp sử dụng ngoại tệ làm đơn vị tiền tệ trong kế toán thì đồng thời
-      Khoản 2 — Nguyên tắc chuyển đổi Báo cáo tài chính lập bằng đơn vị tiền tệ kế toán là
-      Khoản 3 — Khi chuyển đổi  Báo cáo tài chính được lập bằng ngoại  tệ  sang Đồng Việt
-    Điều 6 — Kiểm toán Báo cáo tài chính trong trường hợp sử dụng đơn vị tiền
+        Điểm a — Đơn vị  tiền  tệ  sử  dụng  để  huy  động  các  nguồn  lực  tài  chính  (như  phát
+        Điểm b — Đon  vị  tiền  tệ  thường  xuyên  thu  được  từ  các  hoạt  động  kinh  doanh  và
+      Khoản 4 — Đơn  vị  tiền  tệ  trong  kế  toán  phản  ánh  các  giao  dịch,  sự kiện,  điều  kiện
+    Điều 5 — Chuyển  đổi  Báo  cáo  tài  chính  lập  bằng  đơn  vị  tiền  tệ  trong  kế
+      Khoản 1 — Doanh nghiệp sử dụng ngoại tệ làm đơn vị tiền tệ trong kế toán thì đồng
+      Khoản 2 — Nguyên tắc chuyển đổi  Báo cáo tài  chính lập bằng đơn vị tiền tệ kế toán
+      Khoản 3 — Khi chuyển đổi Báo cáo tài chính được lập bằng ngoại tệ sang Đồng Việt
+    Điều 6 — Kiểm  toán  Báo  cáo  tài  chính  trong  trường  hợp  sử dụng  đơn  vị
     Điều 7 — Thay đổi đơn vị tiền tệ trong kế toán
-    Điều 8 — Quyền và trách nhiệm của doanh nghiệp đối  với  việc tổ  chức kế
-      Khoản 1 — Doanh nghiệp có trách nhiệm tổ chức bộ máy kế toán và phân cấp hạch toán
-      Khoản 2 — Doanh nghiệp quyết định việc kế toán tại đơn vị hạch toán phụ thuộc có tổ
+    Điều 8 — Quyền và  trách  nhiệm của  doanh  nghiệp đối với việc tổ chức  kế
+      Khoản 1 — Doanh nghiệp có trách nhiệm tổ  chức bộ  máy  kế  toán và phân cấp hạch
+      Khoản 2 — Doanh nghiệp quyết định việc kế toán tại  đơn vị hạch toán phụ thuộc  có
         Điểm a — Việc  ghi  nhận  khoản  vốn  kinh  doanh  được  doanh  nghiệp  cấp:  Doanh
         Điểm b — Đối với các giao dịch mua, bán, điều chuyển sản phẩm, hàng hóa, dịch vụ
-        Điểm c — Việc phân cấp kế toán tại đơn vị hạch toán phụ thuộc: Tùy thuộc mô hình tổ
+        Điểm c — Việc phân cấp kế toán tại đơn vị hạch toán phụ thuộc: Tùy thuộc mô hình
     Điều 9 — Đăng ký sửa đổi Chế độ kế toán
       Khoản 1 — Đối với hệ thống tài khoản kế toán
-        Điểm a — Doanh nghiệp căn cứ  vào hệ  thống tài khoản kế  toán của Chế độ  kế  toán
-        Điểm b — Trường hợp doanh nghiệp cần bổ sung tài khoản cấp 1, cấp 2 hoặc sửa đổi
-        Điểm c — Doanh nghiệp có thể mở thêm các tài khoản cấp 2 và các tài khoản cấp 3 đối
+        Điểm a — Doanh nghiệp căn cứ vào hệ thống tài khoản kế toán của Chế độ kế toán
+        Điểm b — Trường  hợp  doanh  nghiệp  cần  bổ  sung  tài  khoản  cấp  1,  cấp  2  hoặc  sửa
+        Điểm c — Doanh nghiệp có thể mở thêm các tài khoản cấp 2 và các tài khoản cấp 3
       Khoản 2 — Đối với Báo cáo tài chính
-        Điểm a — Doanh nghiệp căn cứ biểu mẫu và nội dung của các chỉ tiêu của Báo cáo tài
+        Điểm a — Doanh nghiệp căn cứ biểu mẫu và nội dung của các chỉ tiêu của Báo cáo
         Điểm b — Trường hợp doanh nghiệp cần bổ sung mới hoặc sửa đổi biểu mẫu, tên và
       Khoản 3 — Đối với chứng từ và sổ kế toán
-        Điểm a — Các  chứng từ  kế  toán  đều  thuộc  loại  hướng dẫn (không bắt  buộc),  doanh
-        Điểm b — Tất cả các biểu mẫu sổ kế toán (kể cả các loại Sổ Cái, sổ Nhật ký) đều thuộc
-    Điều 10 — Chế độ kế toán áp dụng đối với nhà thầu nước ngoài
-      Khoản 1 — Nhà thầu nước ngoài có cơ sở thường trú hoặc cư trú tại Việt Nam mà cơ sở
-        Điểm a — Các nhà thầu có đặc thù áp dụng theo Chế độ kế toán do Bộ Tài chính ban
-        Điểm b — Các nhà thầu không có Chế độ kế toán do Bộ Tài chính ban hành riêng thì
-        Điểm c — Trường hợp nhà thầu lựa chọn áp dụng đầy đủ Chế độ kế toán doanh nghiệp
-        Điểm d — Nhà thầu phải thông báo cho cơ quan thuế về Chế độ kế toán áp dụng không
-      Khoản 2 — Nhà thầu nước ngoài phải  kế  toán chi tiết  theo  từng Hợp  đồng nhận thầu
-      Khoản 3 — Trường hợp  Nhà  thầu  nước  ngoài  áp  dụng  đầy  đủ  Chế độ  kế  toán  doanh
+        Điểm a — Các chứng từ kế toán đều thuộc  loại hướng dẫn (không bắt buộc),  doanh
+        Điểm b — Tất  cả  các  biểu  mẫu  sổ  kế  toán  (kế  cả  các  loại  sổ  Cái,  sổ  Nhật  ký)  đều
+    Điều 10 — Chế độ kế toán áp dụng đổi vói nhà thầu nước ngoài
+      Khoản 1 — Nhà thầu nước ngoài có cơ sở thường trú hoặc cư trú tại Việt Nam mà cơ
+        Điểm a — Các  nhà  thầu  có  đặc  thù  áp  dụng  theo  Chế  độ  kế  toán  do  Bộ  Tài  chính
+        Điểm b — Các  nhà thầu  không có  Chế  độ  kế  toán  do  Bộ  Tài  chính ban  hành riêng
+        Điểm c — Trường  họp  nhà  thầu  lựa  chọn  áp  dụng  đầy  đủ  Chế  độ  kế  toán  doanh
+        Điểm d — Nhà  thầu  phải  thông  báo  cho  cơ  quan  thuế  về  Chế  độ  kế  toán  áp  dụng
+      Khoản 2 — Nhà thầu nước ngoài phải kế toán chi tiết theo từng Hợp đồng nhận thầu
+      Khoản 3 — Trường hợp Nhà thầu nước ngoài  áp dụng đầy đủ Chế  độ  kế toán doanh
 Chương II
     Điều 11 — Nguyên tắc kế toán tiền
-      Khoản 1 — Kế toán phải mở sổ kế toán ghi chép hàng ngày liên tục theo trình tự phát
-      Khoản 2 — Các khoản tiền do doanh nghiệp khác và cá nhân ký cược, ký quỹ tại doanh
-      Khoản 3 — Khi thu, chi phải có phiếu thu, phiếu chi và có đủ chữ ký theo quy định của
-      Khoản 4 — Kế toán phải theo dõi chi tiết tiền theo nguyên tệ. Khi phát sinh các giao dịch
-      Khoản 5 — Tại  thời  điểm lập  Báo  cáo  tài  chính  theo  quy  định  của  pháp  luật,  doanh
-    Điều 12 — Tài khoản 111 - Tiền mặt
+      Khoản 1 — Kế toán phải mở sổ kế toán ghi  chép hàng ngày liên tục theo trình tự phát
+      Khoản 2 — Các  khoản  tiền  do  doanh  nghiệp  khác  và  cá  nhân  ký  cược,  ký  quỹ  tại
+      Khoản 3 — Khi thu,  chi phải  có  phiếu thu, phiếu  chi và  có  đủ  chữ ký  theo  quy  định
+      Khoản 4 — Ke toán phải theo  dõi  chi tiết tiền theo  nguyên tệ.  Khi phát sinh các  giao
+      Khoản 5 — Tại  thời  điểm  lập  Báo  cáo  tài  chính  theo  quy  định  của pháp  luật,  doanh
+    Điều 12 — Tài khoản  111 -  Tiền măt
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh tình hình thu, chi, tồn quỹ  tại quỹ  doanh
+        Điểm a — Tài khoản này dùng đê phản ánh tình hình thu, chi, tồn quỹ tại quỹ doanh
         Điểm b — Các khoản tiền mặt do doanh nghiệp khác và cá nhân ký cược, ký quỹ tại
-        Điểm c — Khi tiến hành nhập, xuất quỹ tiền mặt phải có phiếu thu, phiếu chi và có đủ
-        Điểm d — Kế toán quỹ tiền mặt phải có trách nhiệm mở sổ kế toán quỹ tiền mặt, ghi
-        Điểm đ — Thủ  quỹ  chịu trách nhiệm quản lý và nhập, xuất quỹ  tiền mặt.  Hàng ngày
-        Điểm e — Khi phát sinh các giao dịch bằng ngoại tệ, kế toán phải quy đổi ngoại tệ ra
+        Điểm c — Khi tiến hành nhập,  xuất quỹ tiền mặt phải có phiếu thu, phiếu chi và có
+        Điểm d — Kế toán quỳ tiền mặt phải có trách nhiệm mở sổ kế toán quỹ tiền mặt, ghi
+        Điểm đ — Thủ quỹ chịu trách nhiệm quản lý và nhập, xuất quỹ tiền mặt.  Hàng ngày
+        Điểm e — Khi  phát  sinh  các giao  dịch bàng ngoại  tệ,  kế toán  phải  quy đổi  ngoại  tệ
         Điểm g — Vàng tiền tệ được phản ánh trong tài khoản này là vàng được sử dụng với
-        Điểm h — Tại tất cả các thời điểm lập Báo cáo tài chính theo quy định của pháp luật,
+        Điểm h — Tại  tất  cả  các  thời  điểm  lập  Báo  cáo  tài  chính  theo  quy  định  của  pháp
       Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 111 - Tiền mặt
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Đối với sản phẩm, hàng hóa, dịch vụ, bất động sản đầu tư thuộc đối tượng
-        Điểm b — Trường hợp  không tách ngay  được  các  khoản  thuế  phải  nộp,  kế  toán  ghi
+        Điểm a — Đối với sản phẩm, hàng hoá, dịch vụ, bất động sản đầu tư thuộc đối tượng
+        Điểm b — Trường hợp không tách ngay được các khoản thuế phải nộp,  kế toán ghi
         Điểm a — Khi mua hàng hóa, dịch vụ thanh toán bằng tiền mặt là ngoại tệ.
         Điểm b — Khi thanh toán các khoản nợ phải trả bằng ngoại tệ:
         Điểm c — Khi phát sinh doanh thu, thu nhập khác bằng ngoại tệ là tiền mặt, ghi:
         Điểm d — Khi thu được tiền nợ phải thu bằng ngoại tệ, ghi:
     Điều 13 — Tài khoản 112 - Tiền gửi ngân hàng
-      Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Khi nhận được chứng từ  của Ngân hàng gửi đến, kế  toán phải  kiểm tra, đối
-        Điểm b — Ở những doanh nghiệp có các tổ chức, bộ phận phụ thuộc không tổ chức kế
-        Điểm c — Phải tổ chức hạch toán chi tiết số tiền gửi theo từng tài khoản ở Ngân hàng
-        Điểm d — Khoản thấu chi ngân hàng không được ghi âm trên tài khoản tiền gửi ngân
-        Điểm đ — Khi phát sinh các giao dịch bằng ngoại tệ, kế toán phải quy đổi ngoại tệ ra
+      Khoản 1 — Nguyền tắc kế toán
+        Điểm a — Khi nhận được chứng từ của Ngân hàng gửi đến, kế toán phải kiểm tra,
+        Điểm b — Ở những doanh nghiệp có các tổ chức, bộ phận phụ thuộc không tổ chức
+        Điểm c — Phải  tổ  chức  hạch  toán  chi  tiết  số  tiền  gửi  theo  từng  tài  khoản  ở Ngân
+        Điểm d — Khoản  thấu  chi  ngân  hàng  không  được  ghi  âm  trên  tài  khoản  tiền  gửi
+        Điểm đ — Khi phát sinh các giao dịch bằng ngoại tệ, kế toán phải quy đổi ngoại tệ
         Điểm e — Vàng tiền tệ được phản ánh trong tài khoản này là vàng được sử dụng với
-        Điểm g — Tại tất cả các thời điểm lập Báo cáo tài chính theo quy định của pháp luật,
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 112 - Tiền gửi ngân hàng
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Đối với sản phẩm, hàng hóa, dịch vụ, bất động sản đầu tư thuộc đối tượng
-        Điểm b — Trường hợp  không tách ngay  được  các  khoản  thuế  phải  nộp,  kế  toán  ghi
-    Điều 14 — Tài khoản 113 - Tiền đang chuyển
+        Điểm g — Tại  tất  cả  các  thời  điểm  lập  Báo  cáo  tài  chính  theo  quy  định  của pháp
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 112 - Tiền gửi ngân
+      Khoản 3 — Phương pháp kế toán một sổ giao dịch kỉnh tế chủ yếu
+        Điểm a — Đối với sản phẩm, hàng hoá, dịch vụ, bất động sản đầu tư thuộc đối tượng
+        Điểm b — Trường hợp không tách ngay được các khoản thuế phải nộp, kế toán ghi
+    Điều 14 — Tài khoản  113 -  Tiền đang chuyển
       Khoản 1 — Nguyên tắc kế toán
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 113 - Tiền đang chuyển
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản  113 - Tiền đang chuyển
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Thu tiền bán hàng, tiền nợ  của khách hàng hoặc các khoản thu nhập khác
+        Điểm a — Thu tiền bán hàng, tiền nợ của khách hàng hoặc các khoản thu nhập khác
         Điểm b — Xuất quỹ tiền mặt gửi vào Ngân hàng nhưng chưa nhận được giấy báo Có
-        Điểm c — Làm thủ tục chuyển tiền từ tài khoản ở Ngân hàng để trả cho chủ nợ nhưng
-        Điểm d — Khách hàng trả trước tiền mua hàng bằng séc, doanh nghiệp đã nộp séc vào
-        Điểm đ — Ngân hàng báo Có các khoản tiền đang chuyển đã vào tài khoản tiền gửi của
-        Điểm e — Ngân hàng báo Nợ  các khoản tiền đang chuyển đã chuyển cho người bán,
-        Điểm g — Việc đánh giá lại số dư ngoại tệ là tiền đang chuyển được thực hiện tương tự
-    Điều 15 — Tài khoản 121 - Chứng khoán kinh doanh
+        Điểm c — Làm  thủ  tục  chuyển  tiền  từ  tài  khoản  ở  Ngân  hàng  để  trả  cho  chủ  nợ
+        Điểm d — Khách hàng trả trước tiền mua hàng bằng  séc,  doanh nghiệp  đã nộp  séc
+        Điểm đ — Ngân hàng báo Có các khoản tiền đang chuyển đã vào tài khoản tiền gửi
+        Điểm e — Ngân hàng báo Nợ các khoản tiền đang chuyển đã chuyển cho người bán,
+        Điểm g — Việc đánh giá lại số dư ngoại tệ là tiền đang chuyển được thực hiện tương
+    Điều 15 — Tài khoản  121  - Chứng khoán kỉnh doanh
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh tình hình mua, bán và thanh toán các loại
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  tình  hình  mua,  bán  và thanh  toán  các
         Điểm b — Chứng khoán kinh doanh phải được ghi sổ kế toán theo giá gốc, bao gồm:
-        Điểm c — Cuối niên độ kế toán, nếu giá trị thị trường của chứng khoán kinh doanh bị
-        Điểm d — Doanh nghiệp phải hạch toán đầy đủ,  kịp thời  các khoản thu nhập từ  hoạt
-        Điểm đ — Mọi trường hợp hoán đổi cổ  phiếu đều phải xác định giá trị  cổ phiếu theo
+        Điểm c — Cuối niên độ kế toán, nếu giá trị thị trường của chứng khoán kinh doanh
+        Điểm d — Doanh nghiệp phải hạch toán đầy đủ, kịp thời các khoản thu nhập từ hoạt
+        Điểm đ — Mọi trường hợp hoán đổi cổ phiếu đều phải xác định giá trị cổ phiếu theo
         Điểm e — Kế toán phải mở sổ chi tiết để theo dõi chi tiết từng loại chứng khoán kinh
         Điểm g — Khi  thanh  lý,  nhượng  bán  chứng  khoán  kinh  doanh  (tính  theo  từng  loại
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 121 - Chứng khoán kinh doanh
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Khi mua chứng khoán kinh doanh, căn cứ  vào chi phí thực tế  mua (giá mua
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  121  -  Chứng  khoán  kinh
+      Khoản 3 — Phương pháp kế toán  một sổ giao dịch kinh tế chủ yếu
+        Điểm a — Khi  mua  chứng  khoán  kinh  doanh,  căn  cứ vào  chi  phí  thực  tế  mua  (giá
         Điểm b — Định kỳ thu lãi trái phiếu và các chứng khoán khác:
         Điểm c — Kế toán cổ tức, lợi nhuận được chia:
-        Điểm d — Khi chuyển nhượng chứng khoán kinh doanh, căn cứ vào giá bán chứng khoán:
+        Điểm d — Khi chuyển nhượng chứng khoán kinh doanh,  căn cứ vào giá bán chứng
         Điểm đ — Thu hồi hoặc thanh toán chứng khoán kinh doanh đã đáo hạn, ghi:
-        Điểm e — Trường hợp doanh nghiệp nhượng bán chứng khoán kinh doanh dưới hình
-        Điểm g — Đánh giá lại  số  dư  các  loại  chứng khoán thỏa  mãn  định nghĩa  các  khoản
+        Điểm e — Trường  họp  doanh  nghiệp  nhượng  bán  chứng  khoán  kinh  doanh  dưới
+        Điểm g — Đánh giá lại  số  dư các  loại  chứng khoán thỏa mãn định nghĩa các khoản
     Điều 16 — Tài khoản 128 - Đầu tư nắm giữ đến ngày đáo hạn
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng  để  phản ánh số  hiện có và tình hình biến  động tăng,
-        Điểm b — Kế toán phải mở sổ chi tiết theo dõi từng khoản đầu tư nắm giữ đến ngày đáo
-        Điểm c — Doanh nghiệp phải hạch toán đầy đủ, kịp thời doanh thu hoạt động tài chính
-        Điểm d — Đối với các khoản đầu tư nắm giữ đến ngày đáo hạn, nếu chưa được lập dự
-        Điểm đ — Tại  thời  điểm lập  Báo  cáo  tài  chính,  kế  toán  phải  đánh giá lại  tất  cả  các
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 128 - Đầu tư nắm giữ đến
-      Khoản 3 — Phương pháp kế toán một số nghiệp vụ kinh tế chủ yếu
+        Điểm a — Tài  khoản này dùng để phản ánh số hiện có và tình hình biến động tăng,
+        Điểm b — Ke toán phải mở sổ chi tiết theo dõi từng khoản đầu tư nắm giữ đến ngày
+        Điểm c — Doanh  nghiệp  phải  hạch  toán  đày  đủ,  kịp  thời  doanh  thu  hoạt  động  tài
+        Điểm d — Đối  với  các khoản đầu tư nắm giữ đến ngày đáo hạn,  nếu chưa được  lập
+        Điểm đ — Tại  thời  điểm  lập  Báo  cáo  tài  chính,  kế toán phải  đánh  giá  lại  tất cả các
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  128  -  Đầu  tư  nắm  giữ
+      Khoản 3 — Phirơng pháp kế toán một số nghiệp vụ  kinh tế chủ yếu
         Điểm a — Trường hợp mua trái phiếu nhận lãi trước:
-        Điểm b — Trường hợp mua trái phiếu nhận lãi định kỳ:
+        Điểm b — Trường họp mua trái phiếu nhận lãi định kỳ:
         Điểm c — Trường hợp mua trái phiếu nhận lãi sau:
     Điều 17 — Nguyên tắc kế toán các khoản phải thu
-      Khoản 1 — Các khoản phải thu được theo dõi chi tiết  theo kỳ  hạn phải thu, đối tượng
+      Khoản 1 — Các khoản phải thu được theo dõi chi tiết theo kỳ hạn phải thu,  đối tượng
       Khoản 2 — Việc phân loại các khoản phải thu là phải thu khách hàng, phải thu nội bộ,
-        Điểm a — Phải thu của khách hàng gồm các khoản phải thu mang tính chất thương mại
-        Điểm b — Phải thu nội bộ gồm các khoản phải thu giữa đơn vị cấp trên và đơn vị cấp
-        Điểm c — Phải thu khác gồm các khoản phải thu không có tính thương mại, không liên
-      Khoản 3 — Khi lập Báo cáo tài chính, kế toán căn cứ kỳ hạn còn lại của các khoản phải
+        Điểm a — Phải thu của khách hàng gồm các khoản phải thu mang tính chất thương
+        Điểm b — Phải  thu  nội  bộ  gồm  các  khoản phải  thu  giữa  đơn vị  cẩp trên  và  đơn  vị
+        Điểm c — Phải  thu khác  gồm  các  khoản phải thu không  có tính thương mại,  không
+      Khoản 3 — Khi  lập  Báo  cáo  tài  chính,  kế  toán  căn  cứ kỳ  hạn  còn  lại  của các  khoản
       Khoản 4 — Kế  toán  phải  xác  định  các  khoản  phải  thu  thỏa  mãn  định  nghĩa  của  các
-    Điều 18 — Tài khoản 131 - Phải thu của khách hàng
+    Điều 18 — Tài khoản  131  - Phải thu của khách hàng
       Khoản 1 — Nguyên tắc kế toán
         Điểm a — Tài khoản này dùng để phản ánh các khoản nợ phải thu và tình hình thanh
-        Điểm b — Khoản phải  thu  của khách hàng cần  được  hạch toán chi tiết  cho từng  đối
-        Điểm c — Bên giao ủy thác xuất khẩu ghi nhận trong tài khoản này đối với các khoản
-        Điểm d — Trong hạch toán chi tiết tài khoản này, kế toán phải tiến hành phân loại các
-        Điểm đ — Trong quan hệ  bán sản phẩm, hàng hóa, cung cấp dịch vụ theo thỏa thuận
+        Điểm b — Khoản phải thu của khách hàng cần được hạch toán chi tiết cho từng đối
+        Điểm c — Bên  giao  ủy  thác  xuất  khẩu  ghi  nhận  trong  tài  khoản  này  đối  với  các
+        Điểm d — Trong  hạch toán  chi  tiết tài  khoản này,  kế  toán phải  tiến hành phân  loại
+        Điểm đ — Trong quan hệ bán sản phẩm, hàng hoá, cung cấp dịch vụ theo thoả thuận
         Điểm e — Doanh nghiệp phải theo dõi chi tiết các khoản nợ phải thu của khách hàng
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 131 - Phải thu của khách hàng
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Đối với sản phẩm, hàng hóa, dịch vụ, bất động sản đầu tư thuộc đối tượng
-        Điểm b — Trường hợp  không tách ngay  được  các  khoản  thuế  phải  nộp,  kế  toán  ghi
-        Điểm a — Trường hợp số tiền chiết khấu thương mại, giảm giá hàng bán đã ghi ngay trên
-        Điểm b — Trường hợp trên hóa đơn bán hàng chưa thể hiện số tiền chiết khấu thương
-        Điểm a — Trường hợp hợp đồng xây dựng quy định nhà thầu được thanh toán theo tiến
-        Điểm b — Trường hợp hợp đồng xây dựng quy định nhà thầu được thanh toán theo giá
-        Điểm c — Khoản tiền thưởng thu được từ  khách hàng trả  phụ  thêm cho nhà thầu khi
-        Điểm d — Khoản bồi thường thu được từ khách hàng hay các bên khác để bù đắp cho
-        Điểm đ — Khi nhận được tiền thanh toán khối lượng công trình hoàn thành hoặc khoản
-    Điều 19 — Tài khoản 133 - Thuế giá trị gia tăng được khấu trừ
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  131  -  Phải  thu  của
+      Khoản 3 — Phương pháp kế toán  một số giao dịch  kinh tế chủ yếu
+        Điểm a — Đối với sản phẩm, hàng hoá, dịch vụ, bất động sản đầu tư thuộc đối tượng
+        Điểm b — Trường hợp không tách ngay được các khoản thuế phải nộp,  kế toán ghi
+        Điểm a — Trường  hợp  số  tiền  chiết  khấu  thương  mại,  giảm  giá  hàng  bán  đã  ghi
+        Điểm b — Trường  hợp  trên  hóa  đơn  bán  hàng  chưa  thể  hiện  số  tiền  chiết  khấu
+        Điểm a — Trường hợp họp đồng xây dựng quy định nhà thầu được thanh toán theo
+        Điểm b — Trường  hợp họp  đồng xây dựng quy định nhà thầu  được thanh toán theo
+        Điểm c — Khoản tiền thưởng thu được từ khách hàng trả phụ thêm cho nhà thầu khi
+        Điểm d — Khoản  bồi  thường  thu  được  từ  khách hàng  hay  các  bên  khác  để  bù  đắp
+        Điểm đ — Khi  nhận  được  tiền  thanh  toán  khối  lượng  công  trình  hoàn  thành  hoặc
+    Điều 19 — Tài khoản 133 -  Thuế giá trị gia tăng được khấu trừ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh số thuế GTGT đầu vào được khấu trừ, đã
-        Điểm b — Kế  toán  phải  hạch toán riêng thuế  GTGT  đầu  vào  được  khấu  trừ  và  thuế
-        Điểm c — Số  thuế  GTGT đầu vào không được khấu trừ được tính vào giá trị  tài  sản
-        Điểm d — Việc xác định số  thuế  GTGT đầu vào được khấu trừ,  kê  khai, quyết  toán,
-      Khoản 2 — Kết  cấu và nội  dung phản ánh của tài khoản 133 - Thuế  GTGT được
+        Điểm a — Tài  khoản này  dùng  để phản  ánh  số  thuế  GTGT đầu  vào  được  khấu trừ,
+        Điểm b — Kế toán phải hạch toán riêng thuế GTGT đầu vào được khấu trừ và thuế
+        Điểm c — Số thuế GTGT đầu vào không được khấu trừ được tính vào giá trị tài sản
+        Điểm d — Việc xác định sổ thuế GTGT đầu vào được khấu trừ, kê khai, quyết toán,
+      Khoản 2 — Kết cấu và  nội dung phản  ánh  của  tài  khoản  133 - Thuế GTGT được
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Khi mua vật tư, hàng hóa, TSCĐ, ghi:
-        Điểm b — Cuối kỳ, kế toán tính và xác định thuế GTGT đầu vào được khấu trừ, không
+        Điểm b — Cuối  kỳ,  kế  toán  tính  và  xác  định  thuế  GTGT  đầu  vào  được  khấu  trừ,
     Điều 20 — Tài khoản 136 - Phải thu nội bộ
       Khoản 1 — Nguyên tắc kế toán
         Điểm a — Tài khoản này dùng để phản ánh các khoản nợ phải thu và tình hình thanh
         Điểm b — Quan  hệ  thanh  toán  giữa  doanh  nghiệp  với  các  công  ty  thành  viên,  xí
-        Điểm c — Nội dung các khoản phải thu nội bộ phản ánh vào tài khoản 136 bao gồm:
-        Điểm d — Tài khoản 136 phải hạch toán chi tiết theo từng đơn vị cấp dưới có quan hệ
-        Điểm đ — Cuối kỳ kế toán, phải kiểm tra, đối chiếu và xác nhận số phát sinh, số dư tài
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 136 - Phải thu nội bộ
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
+        Điểm c — Nội dung các khoản phải thu nội bộ phản ánh vào tài khoản  136 bao gồm:
+        Điểm d — Tài khoản  136 phải hạch toán chi tiết theo từng đơn vị cấp dưới có quan
+        Điểm đ — Cuối kỳ kế toán, phải kiểm tra, đối  chiếu và xác nhận số phát sinh, số dư
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản  136 - Phải thu nội bộ
+      Khoản 3 — Phương pháp kế toán một số giao dịch kỉnh tế chủ yếu
         Điểm a — Khi chi hộ, trả hộ doanh nghiệp cấp trên và các đơn vị nội bộ khác:
-        Điểm b — Căn cứ  vào thông báo của doanh nghiệp cấp trên về  số  quỹ  khen thưởng,
-        Điểm c — Khi bán sản phẩm, hàng hóa, cung cấp dịch vụ cho các đơn vị trong nội bộ
-        Điểm đ — Khi nhận được tiền hoặc vật tư, tài sản của cấp trên hoặc doanh nghiệp nội
-        Điểm e — Bù trừ các khoản phải thu nội bộ với các khoản phải trả nội bộ của cùng một
-        Điểm a — Khi doanh nghiệp cấp trên giao vốn kinh doanh cho đơn vị cấp dưới không
-        Điểm b — Trường hợp các  đơn vị  cấp dưới  không có tư  cách pháp nhân hạch toán
-        Điểm c — Khi doanh nghiệp cấp trên cấp kinh phí sự  nghiệp, dự  án  cho  đơn vị  cấp
-        Điểm d — Trường hợp đơn vị  không có tư  cách pháp nhân hạch toán phụ  thuộc phải
+        Điểm b — Căn cứ vào thông báo của doanh nghiệp cấp trên về số quỹ khen thưởng,
+        Điểm c — Khi bán sản phẩm,  hàng hóa,  cung cấp dịch vụ cho  các đơn vị trong nội
+        Điểm đ — Khi  nhận  được  tiền  hoặc  vật tư,  tài  sản của  cấp trên  hoặc  doanh nghiệp
+        Điểm e — Bù trừ các khoản phải thu nội bộ với các khoản phải trả nội bộ của cùng
+        Điểm a — Khi  doanh  nghiệp  cấp  trên  giao  vốn  kinh  doanh  cho  đơn  vị  cấp  dưới
+        Điểm b — Trường hợp các đơn vị  cấp  dưới  không có tư cách pháp  nhân hạch toán
+        Điểm c — Khi  doanh nghiệp cấp trên cấp kinh phí sự nghiệp,  dự án cho đơn vị cấp
+        Điểm d — Trường hợp đơn vị không có tư cách pháp nhân hạch toán phụ thuộc phải
         Điểm đ — Căn cứ vào báo cáo của đơn vị hạch toán phụ thuộc về số vốn kinh doanh
-        Điểm e — Khi bán sản phẩm, hàng hóa, cung cấp dịch vụ cho các đơn vị trong nội bộ
-        Điểm g — Khoản phải thu về lãi của hoạt động sản xuất, kinh doanh, hoạt động khác ở
-        Điểm h — Khi chi hộ,  trả  hộ  các  đơn vị  cấp dưới  không có tư  cách pháp nhân hạch
-        Điểm i — Khi nhận được tiền do đơn vị cấp dưới nộp lên về tiền lãi kinh doanh, thanh
-        Điểm k — Bù trừ các khoản phải thu nội bộ với các khoản phải trả nội bộ của cùng một
-        Điểm a — Khi chủ đầu tư có quyết định giao vốn đầu tư bằng tiền, vật tư, TSCĐ cho
-        Điểm b — Lãi tiền gửi ngân hàng do tạm thời chưa sử dụng vốn đầu tư do các BQLDA
-        Điểm c — Chủ đầu tư kết chuyển chi phí đi vay đủ điều kiện được vốn hóa vào giá trị
+        Điểm e — Khi bán sản phẩm, hàng hóa,  cung cấp dịch vụ cho  các đơn vị trong nội
+        Điểm g — Khoản phải thu về lãi của hoạt động sản xuất, kinh doanh, hoạt động khác
+        Điểm h — Khi chi hộ, trả hộ  các đơn vị  cấp dưới không có tư cách pháp nhân hạch
+        Điểm i — Khi  nhận  được  tiền  do  đon  vị  cấp  dưới  nộp  lên  về  tiền  lãi  kinh  doanh,
+        Điểm k — Bù trừ các khoản phải thu nội bộ với các khoản phải trả nội bộ của cùng
+        Điểm a — Khi  chủ  đầu  tư  có  quyết  định  giao  vốn  đầu  tư bằng  tiền,  vật  tư,  TSCĐ
+        Điểm b — Lãi  tiền  gửi  ngân  hàng  do  tạm  thời  chưa  sử  dụng  vốn  đầu  tư  do  các
+        Điểm c — Chủ đầu tư kết chuyển chi phí đi vay đủ điều kiện được vốn hoá vào giá
         Điểm d — Khi nhận doanh thu, doanh thu hoạt động tài chính, thu nhập khác do các
-        Điểm đ — Khi các BQLDAĐT chuyển số thuế GTGT đầu vào khi mua NVL, CCDC,
-        Điểm e — Khi nhận giá vốn cung cấp dịch vụ,  chi phí tài chính, chi phí khác do các
+        Điểm đ — Khi  các  BQLDAĐT  chuyển  số  thuế  GTGT  đầu  vào  khi  mua  NVL,
+        Điểm e — Khi nhận giá vốn cung cấp dịch vụ, chi phí tài  chính, chi phí khác do các
         Điểm g — Khi dự án hoàn thành, nhận bàn giao công trình, kế toán chủ đầu tư ghi:
     Điều 21 — Tài khoản 138 - Phải thu khác
       Khoản 1 — Nguyên tắc kế toán
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 138 - Phải thu khác
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản  138 - Phải thu khác
+      Khoản 3 — Phương pháp kế toán một số giao dịch kỉnh tế chủ yếu
         Điểm a — Khi chưa xác định rõ nguyên nhân, chờ xử lý, ghi:
         Điểm b — Khi có biên bản xử lý của cấp có thẩm quyền đối với tài sản thiếu, căn cứ
-        Điểm c — Trường hợp tài sản phát hiện thiếu đã xác định được ngay nguyên nhân và
-        Điểm a — Khi bên nhận ủy thác chi hộ cho bên giao ủy thác, ghi:
-        Điểm b — Khi được doanh nghiệp ủy thác xuất khẩu thanh toán bù trừ với các khoản
-        Điểm c — Kế  toán chi tiết  các  giao dịch thanh toán xuất  -  nhập khẩu  ủy thác  được
-    Điều 22 — Tài khoản 141 - Tạm ứng
+        Điểm c — Trường  hợp  tài  sản phát  hiện  thiếu  đã xác  định  được  ngay  nguyên  nhân
+        Điểm a — Khi bên nhận uỷ thác chi hộ cho bên giao uỷ thác, ghi:
+        Điểm b — Khi  được  doanh  nghiệp  uỷ  thác  xuất  khẩu  thanh  toán  bù  trừ  với  các
+        Điểm c — Kế toán  chi  tiết  các  giao  dịch thanh toán xuất  -  nhập  khẩu ủy thác  được
+    Điều 22 — Tài khoản 141 - Tạm ửng
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh các khoản tạm ứng của doanh nghiệp cho
-        Điểm b — Khoản  tạm  ứng là  một  khoản  tiền  hoặc  vật  tư  do  doanh  nghiệp  giao  cho
-        Điểm c — Người nhận tạm ứng (có tư cách cá nhân hay tập thể) phải chịu trách nhiệm
-        Điểm d — Phải thanh toán dứt điểm khoản tạm ứng kỳ trước mới được nhận tạm ứng
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  các  khoản  tạm  ứng  của  doanh  nghiệp
+        Điểm b — Khoản tạm ứng là một khoản tiền hoặc vật tư do  doanh nghiệp giao  cho
+        Điểm c — Người  nhận  tạm  ứng  (có  tư  cách  cá  nhân  hay  tập  thể)  phải  chịu  trách
+        Điểm d — Phải  thanh  toán  dứt  điểm  khoản  tạm  ứng  kỳ  trước  mới  được  nhận  tạm
       Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 141 - Tạm ứng
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Khi tạm ứng tiền hoặc vật tư cho người lao động trong doanh nghiệp, ghi:
-        Điểm b — Khi  thực  hiện  xong  công  việc  được  giao,  người  nhận  tạm  ứng  lập  Bảng
+        Điểm b — Khi  thực  hiện xong  công việc được  giao, người  nhận tạm ứng  lập Bảng
         Điểm c — Các khoản tạm ứng chi (hoặc sử dụng) không hết, phải nhập lại quỹ, nhập
-        Điểm d — Trường hợp số thực chi đã được duyệt lớn hơn số đã nhận tạm ứng, kế toán
+        Điểm d — Trường  hợp  số  thực  chi  đã  được  duyệt  lớn  hơn  số  đã  nhận  tạm  ứng,  kế
     Điều 23 — Nguyên tắc kế toán Hàng tồn kho
-      Khoản 1 — Nhóm tài khoản hàng tồn kho được dùng để phản ánh trị giá hiện có và tình
-      Khoản 2 — Hàng tồn kho của doanh nghiệp là những tài sản được mua vào để sản xuất
-      Khoản 3 — Các loại sản phẩm, hàng hóa, vật tư, tài sản nhận giữ hộ, nhận ký gửi, nhận
-      Khoản 4 — Kế toán hàng tồn kho phải được thực hiện theo quy định của Chuẩn mực kế
-      Khoản 5 — Nguyên tắc xác định giá gốc hàng tồn kho được quy định cụ  thể  cho từng
-      Khoản 6 — Các khoản thuế không được hoàn lại được tính vào giá trị hàng tồn kho như:
-      Khoản 7 — Khi mua hàng tồn kho nếu được nhận kèm thêm sản phẩm, hàng hóa, thiết
-      Khoản 8 — Khi bán hàng tồn kho, giá gốc của hàng tồn kho đã bán được ghi nhận là chi
-        Điểm a — Trường hợp xuất  hàng tồn kho để  khuyến mại,  quảng cáo không thu tiền,
-        Điểm b — Trường hợp xuất hàng tồn kho để khuyến mại, quảng cáo nhưng khách hàng
+      Khoản 1 — Nhóm tài  khoản hàng tồn kho  được  dùng  để phản ánh trị  giá hiện có và
+      Khoản 2 — Hàng  tồn  kho  của  doanh  nghiệp  là  những  tài  sản  được  mua  vào  để  sản
+      Khoản 3 — Các  loại  sản  phẩm,  hàng  hóa,  vật  tư,  tài  sản  nhận  giữ  hộ,  nhận  ký  gửi,
+      Khoản 4 — Ke toán hàng tồn kho phải được thực hiện theo quy định của Chuẩn  mực
+      Khoản 5 — Nguyên tắc xác định giá gốc hàng tồn kho được quy định cụ thể cho từng
+      Khoản 6 — Các  khoản  thuế  không  được  hoàn  lại  được  tính vào  giá trị  hàng  tồn kho
+      Khoản 7 — Khi  mua  hàng  tồn  kho  nếu  được  nhận  kèm  thêm  sản  phẩm,  hàng  hóa,
+      Khoản 8 — Khi bán hàng tồn kho, giá gốc của hàng tồn kho đã bán được ghi nhận là
+        Điểm a — Trường hợp xuất hàng tồn kho để khuyến mại, quảng cáo không thu tiền,
+        Điểm b — Trường  hợp xuất hàng tồn kho  để  khuyến  mại,  quảng  cáo  nhưng khách
       Khoản 9 — Khi xác định giá trị hàng tồn kho cuối kỳ, doanh nghiệp áp dụng theo một
-        Điểm a — Phương pháp tính theo giá đích danh: Phương pháp tính theo giá đích danh
-        Điểm b — Phương pháp bình quân gia quyền: Theo phương pháp bình quân gia quyền,
-        Điểm c — Phương pháp nhập trước, xuất trước (FIFO): Phương pháp nhập trước, xuất
-      Khoản 10 — Đối  với  hàng tồn kho mua vào bằng ngoại  tệ,  phần giá mua phải  căn cứ
-      Khoản 11 — Đến cuối niên độ kế toán, nếu xét thấy giá trị hàng tồn kho không thu hồi
-      Khoản 12 — Kế toán hàng tồn kho phải đồng thời kế toán chi tiết cả về giá trị và hiện
-      Khoản 13 — Trong một doanh nghiệp (một đơn vị kế toán) chỉ được áp dụng một trong
-        Điểm a — Phương pháp kê khai thường xuyên: Phương pháp kê khai thường xuyên là
+        Điểm a — Phương  pháp  tính  theo  giá  đích  danh:  Phương  pháp  tính  theo  giá  đích
+        Điểm b — Phương  pháp  bình  quân  gia  quyền:  Theo  phương  pháp  bình  quân  gia
+        Điểm c — Phương  pháp  nhập  trước,  xuất  trước  (FIFO):  Phương  pháp  nhập  trước,
+      Khoản 10 — Đối  với hàng tồn kho  mua vào bằng ngoại tệ, phần giá mua phải căn cứ
+      Khoản 11 — Đen  cuối  niên  độ  kế  toán,  nếu  xét  thấy  giá trị  hàng  tồn  kho  không  thu
+      Khoản 12 — Ke toán hàng tồn kho phải đồng thời kế toán chi tiết cả về giá trị và hiện
+      Khoản 13 — Trong  một  doanh  nghiệp  (một  đơn  vị  kế  toán)  chỉ  được  áp  dụng  một
+        Điểm a — Phương pháp kê khai thường xuyên:  Phương pháp kê khai thường xuyên
         Điểm b — Phương pháp kiểm kê định kỳ:
-    Điều 24 — Tài khoản 151 - Hàng mua đang đi đường
+    Điều 24 — Tài khoản  151 - Hàng mua đang đi đưòng
       Khoản 1 — Nguyên tắc kế toán
         Điểm a — Tài  khoản  này  dùng  để  phản  ánh  trị  giá  của  các  loại  hàng  hóa,  vật  tư
         Điểm b — Hàng hóa, vật tư được coi là thuộc quyền sở hữu của doanh nghiệp nhưng
-        Điểm c — Kế  toán  hàng  mua  đang  đi  đường  được  ghi  nhận trên tài khoản  151  theo
-        Điểm d — Hàng ngày, khi nhận  được hóa  đơn mua hàng, nhưng hàng chưa về  nhập
-        Điểm đ — Nếu cuối tháng hàng vẫn chưa về thì căn cứ hóa đơn mua hàng ghi vào tài
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 151 - Hàng mua đang đi đường
+        Điểm c — Kế toán hàng mua đang đi  đường được ghi nhận trên tài khoản  151  theo
+        Điểm d — Hàng ngày, khi nhận được hóa đơn mua hàng, nhưng hàng chưa về nhập
+        Điểm đ — Nếu  cuối  tháng hàng vẫn  chưa về thì  căn  cứ hóa đơn mua hàng  ghi  vào
+      Khoản 2 — Kết cấu và  nội dung phản ánh của tài khoản  151  - Hàng mua đang đi
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Trường hợp doanh nghiệp hạch toán hàng tồn kho theo phương pháp kê khai
-        Điểm b — Trường hợp doanh nghiệp hạch toán hàng tồn kho theo phương pháp kiểm
+        Điểm a — Trường hợp doanh nghiệp hạch toán hàng tồn kho theo phương pháp kê
+        Điểm b — Trường  hợp  doanh  nghiệp  hạch  toán  hàng  tồn  kho  theo  phương  pháp
     Điều 25 — Tài khoản 152 - Nguyên liệu, vật liệu
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh trị giá hiện có và tình hình biến động tăng,
-        Điểm b — Kế toán nhập, xuất, tồn kho nguyên liệu, vật liệu trên tài khoản 152 phải được
-        Điểm c — Việc tính trị giá của nguyên liệu, vật liệu tồn kho, được thực hiện theo một
-        Điểm d — Kế toán chi tiết nguyên liệu, vật liệu phải thực hiện theo từng kho, từng loại,
-        Điểm đ — Không phản  ánh  vào  tài  khoản  này  đối  với  nguyên  vật  liệu  không  thuộc
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 152 - Nguyên liệu, vật liệu
+        Điểm a — Tài  khoản này  dùng  để  phản  ánh trị  giá  hiện  có  và tình  hình  biến  động
+        Điểm b — Kế toán nhập, xuất, tồn kho nguyên liệu, vật liệu trên tài khoản  152 phải
+        Điểm c — Việc  tính  trị  giá  của  nguyên  liệu,  vật  liệu  tồn  kho,  được  thực  hiện  theo
+        Điểm d — Ke toán chi tiết nguyên liệu, vật liệu phải thực hiện theo từng kho,  từng
+        Điểm đ — Không phản ánh vào tài khoản này đối với  nguyên vật liệu không thuộc
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  152  -  Nguyên  liệu,  vật
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Khi mua nguyên liệu, vật liệu về nhập kho, căn cứ hóa đơn, phiếu nhập kho
-        Điểm b — Kế toán nguyên vật liệu trả lại cho người bán, khoản chiết khấu thương mại
-        Điểm c — Trường hợp doanh nghiệp đã nhận được hóa đơn mua hàng nhưng nguyên
-        Điểm d — Khi trả tiền cho người bán, nếu được hưởng chiết khấu thanh toán, thì khoản
+        Điểm a — Khi  mua nguyên  liệu, vật  liệu về  nhập  kho,  căn  cứ  hóa đơn,  phiếu nhập
+        Điểm b — Kế toán nguyên vật  liệu  trả  lại  cho  người  bán,  khoản  chiết khấu thương
+        Điểm c — Trường  hợp  doanh  nghiệp  đã  nhận  được  hóa  đon  mua  hàng  nhưng
+        Điểm d — Khi  trả  tiền  cho  người  bán,  nếu  được  hưởng  chiết  khấu  thanh  toán,  thì
         Điểm đ — Đối với nguyên liệu, vật liệu nhập khẩu:
-        Điểm e — Các chi phí về  thu  mua, bốc xếp, vận chuyển nguyên liệu, vật  liệu từ  nơi
+        Điểm e — Các chi phí về thu mua, bốc xếp, vận chuyển nguyên liệu, vật liệu từ nơi
         Điểm g — Đối với nguyên liệu, vật liệu nhập kho do thuê ngoài gia công, chế biến:
         Điểm h — Đối với nguyên liệu, vật liệu nhập kho do tự chế:
         Điểm i — Đối với nguyên liệu, vật liệu thừa phát hiện khi kiểm kê đã xác định được
         Điểm k — Khi xuất kho nguyên liệu, vật liệu sử dụng vào sản xuất, kinh doanh, ghi:
-        Điểm l — Xuất  nguyên liệu, vật liệu sử  dụng cho hoạt động đầu tư  xây dựng cơ  bản
-        Điểm m — Đối với nguyên liệu, vật liệu đưa đi góp vốn vào công ty con, công ty liên
-        Điểm n — Khi xuất nguyên liệu, vật liệu dùng để mua lại phần vốn góp tại công ty con,
+      Khoản 1 — Xuất nguyên liệu, vật liệu sử dụng cho hoạt động đầu tư xây dựng cơ bản
+        Điểm m — Đối  với  nguyên  liệu,  vật  liệu  đưa  đi  góp  vốn  vào  công  ty  con,  công  ty
+        Điểm n — Khi xuất nguyên liệu, vật liệu dùng để mua lại phần vốn góp tại  công ty
         Điểm o — Đối với nguyên liệu, vật liệu thiếu hụt phát hiện khi kiểm kê:
         Điểm p — Đối với nguyên vật liệu, phế liệu ứ đọng, không cần dùng:
         Điểm a — Đầu kỳ, kết chuyển trị giá nguyên liệu, vật liệu tồn kho đầu kỳ, ghi:
         Điểm b — Cuối kỳ, căn cứ vào kết quả kiểm kê xác định giá trị nguyên liệu, vật liệu
-    Điều 26 — Tài khoản 153 - Công cụ, dụng cụ
+    Điều 26 — Tài khoản  153 - Công cụ, dụng cụ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh trị giá hiện có và tình hình biến động tăng,
-        Điểm b — Kế toán nhập, xuất, tồn kho công cụ, dụng cụ trên tài khoản 153 được thực
-        Điểm c — Việc  tính  giá  trị  công cụ,  dụng cụ  tồn kho cũng  được thực hiện theo một
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  trị  giá  hiện  có  và tình  hình  biến  động
+        Điểm b — Kế  toán  nhập,  xuất,  tồn  kho  công  cụ,  dụng  cụ  trên  tài  khoản  153  được
+        Điểm c — Việc tính giá trị  công cụ,  dụng cụ tồn kho  cũng  được thực hiện theo  một
         Điểm d — Kế toán chi tiết công cụ, dụng cụ phải thực hiện theo từng kho, từng loại,
-        Điểm đ — Đối với các công cụ, dụng cụ có giá trị nhỏ khi xuất dùng cho sản xuất, kinh
-        Điểm e — Trường hợp công cụ,  dụng cụ,  bao bì luân chuyển, đồ  dùng cho thuê xuất
-        Điểm g — Công cụ,  dụng cụ  liên  quan  đến các giao dịch bằng ngoại  tệ được thực
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 153 - Công cụ, dụng cụ
-      Khoản 1531 — Trường hợp cho thuê công cụ, dụng cụ dùng trong sản xuất, kinh doanh của
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Mua công cụ, dụng cụ nhập kho, nếu thuế GTGT đầu vào được khấu trừ thì
-        Điểm b — Trường  hợp  khoản  chiết  khấu  thương  mại  hoặc  giảm giá  hàng  bán  nhận
+        Điểm đ — Đối  với  các  công  cụ,  dụng  cụ  có  giá trị  nhỏ  khi xuất dùng  cho  sản xuất,
+        Điểm e — Trường họp công cụ, dụng cụ, bao bì luân chuyển, đồ dùng cho thuê xuất
+        Điểm g — Công  cụ,  dụng  cụ  liên  quan  đến  các  giao  dịch  bằng  ngoại  tệ  được  thực
+      Khoản 2 — Kết cấu và  nội dung phản  ánh của tài khoản  153 - Công cụ, dụng cụ
+      Khoản 1531 — Trường họp cho thuê công cụ, dụng cụ dùng trong sản xuất, kinh doanh của
+      Khoản 3 — Phương pháp kế toán một sổ giao dịch kinh tế chủ yếu
+        Điểm a — Mua công cụ, dụng cụ nhập kho, nếu thuế GTGT đầu vào được khấu trừ
+        Điểm b — Trường hợp khoản chiết khấu thương mại  hoặc  giảm giá hàng bán nhận
         Điểm c — Trả lại công cụ, dụng cụ đã mua cho người bán, ghi:
         Điểm d — Phản ánh chiết khấu thanh toán được hưởng (nếu có), ghi:
         Điểm đ — Xuất công cụ, dụng cụ sử dụng cho sản xuất, kinh doanh:
-        Điểm g — Đối với công cụ, dụng cụ nhập khẩu:
-        Điểm h — Khi kiểm kê phát hiện công cụ, dụng cụ thừa, thiếu, mất, hư hỏng, kế toán
+        Điểm g — Đối với công cụ, dụng cụ nhập khấu:
+        Điểm h — Khi  kiểm  kê  phát  hiện  công  cụ,  dụng  cụ  thừa,  thiếu,  mất,  hư  hỏng,  kế
         Điểm i — Đối với công cụ, dụng cụ không cần dùng:
-        Điểm a — Đầu kỳ kế toán, kết chuyển trị giá thực tế của công cụ, dụng cụ tồn kho đầu
-        Điểm b — Cuối kỳ kế toán, căn cứ vào kết quả kiểm kê xác định trị giá công cụ, dụng
-    Điều 27 — Tài khoản 154 - Chi phí sản xuất, kinh doanh dở dang
+        Điểm a — Đầu kỳ kế toán,  kết  chuyển trị  giá thực tế  của công  cụ,  dụng  cụ tồn kho
+        Điểm b — Cuối  kỳ  kế  toán,  căn  cứ  vào  kết  quả kiểm  kê  xác  định  trị  giá  công  cụ,
+    Điều 27 — Tài khoản  154 - Chỉ phí sản xuất, kỉnh doanh dở dang
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh tổng hợp chi phí sản xuất, kinh doanh phục
-        Điểm b — Tài khoản 154 "Chi phí sản xuất, kinh doanh dở dang" phản ánh chi phí sản
-        Điểm c — Chi phí sản xuất, kinh doanh hạch toán trên tài khoản 154 phải được chi tiết
-        Điểm d — Chi phí sản xuất,  kinh doanh phản ánh trên tài khoản 154 gồm những chi
-        Điểm đ — Chi phí nguyên liệu, vật liệu, chi phí nhân công vượt trên mức bình thường
-        Điểm e — Cuối kỳ, phân bổ và kết chuyển chi phí sản xuất chung cố định vào chi phí
-        Điểm g — Không hạch toán vào tài khoản 154 những chi phí sau:
-      Khoản 2 — Phương pháp vận dụng tài khoản 154 trong ngành công nghiệp
-        Điểm a — Tài  khoản  154  -  'Chi  phí  sản  xuất,  kinh  doanh  dở  dang'  áp  dụng  trong
-        Điểm b — Chỉ được phản ánh vào tài khoản 154 những nội dung chi phí sau:
-        Điểm c — Tài khoản 154 ở các doanh nghiệp sản xuất công nghiệp được hạch toán chi
-        Điểm d — Đối  với  doanh  nghiệp  sản  xuất  công  nghiệp  có  hoạt  động thuê ngoài gia
-      Khoản 3 — Phương pháp vận dụng tài khoản 154 trong ngành nông nghiệp
-        Điểm a — Tài khoản 154 'Chi phí sản xuất, kinh doanh dở dang' áp dụng trong ngành
-        Điểm b — Giá thành sản xuất  thực tế  của sản phẩm nông nghiệp  được xác  định vào
-        Điểm c — Đối với ngành trồng trọt, chi phí phải được hạch toán chi tiết theo 3 loại cây:
-        Điểm d — Không phản ánh vào tài khoản này chi phí khai hoang, trồng mới và chăm
-        Điểm đ — Về  nguyên tắc, chi phí sản xuất  ngành trồng trọt được hạch toán chi tiết
-        Điểm e — Trên cùng một diện tích canh tác, nếu trồng xen từ hai loại cây nông nghiệp
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh tổng  hợp  chi  phí  sản  xuất,  kinh  doanh
+        Điểm b — Tài  khoản  154  "Chi  phí  sản xuất,  kinh  doanh  dở dang"  phản  ánh  chi  phí
+        Điểm c — Chi  phí  sản  xuất,  kinh  doanh hạch toán trên tài khoản  154  phải  được  chi
+        Điểm d — Chi phí sản xuất, kinh doanh phản ánh trên tài  khoản  154 gồm những chi
+        Điểm đ — Chi  phí  nguyên  liệu,  vật  liệu,  chi  phí  nhân  công  vượt  trên  mức  bình
+        Điểm e — Cuối kỳ,  phân bổ  và kết  chuyển  chi  phí  sản  xuất  chung  cố  định  vào  chi
+        Điểm g — Không hạch toán vào tài khoản  154 những chi phí sau:
+      Khoản 2 — Phương pháp vận dụng tài khoản  154 trong ngành công nghiệp
+        Điểm a — Tài  khoản  154  -  'Chi  phí  sản xuất,  kinh  doanh  dở  dang"  áp  dụng  trong
+        Điểm b — Chỉ được phản ánh vào tài khoản  154 những nội dung chi phí sau:
+        Điểm c — Tài  khoản  154  ở các  doanh nghiệp  sản xuất công nghiệp  được  hạch toán
+        Điểm d — Đối  với  doanh  nghiệp  sản xuất công nghiệp có hoạt động thuê ngoài  gia
+      Khoản 3 — Phương pháp vận dụng tài khoản  154 trong ngành nông nghiệp
+        Điểm a — Tài  khoản  154  "Chi  phí  sản  xuất,  kinh  doanh  dở  dang"  áp  dụng  trong
+        Điểm b — Giá thành sản xuất thực tế của sản phẩm nông nghiệp được xác định vào
+        Điểm c — Đối  với  ngành trồng trọt,  chi  phí phải được hạch toán chi tiết theo  3  loại
+        Điểm d — Không  phản  ánh  vào  tài  khoản  này  chi  phí  khai  hoang,  trồng  mới  và
+        Điểm đ — v ề   nguyên tắc,  chi  phí  sản xuất  ngành  trồng  trọt  được  hạch  toán  chi  tiết
+        Điểm e — Trên  cùng  một  diện  tích  canh  tác,  nếu  trồng  xen  từ  hai  loại  cây  nông
         Điểm g — Đối với cây lâu năm, quá trình từ khi làm đất, gieo trồng, chăm sóc đến khi
-        Điểm h — Khi hạch toán chi phí ngành chăn nuôi trên tài khoản 154 cần chú ý một số
+        Điểm h — Khi hạch toán chi phí ngành chăn nuôi trên tài khoản  154 cần chú ý một
         Điểm i — Phần chi phí nguyên vật liệu, chi phí nhân công trực tiếp vượt trên mức bình
-      Khoản 4 — Phương pháp vận dụng tài khoản 154 trong ngành dịch vụ
-        Điểm a — Tài khoản 154 'Chi phí sản xuất,  kinh doanh dở  dang" áp dụng trong các
-        Điểm b — Đối với ngành giao thông vận tải, tài khoản này dùng để tập hợp chi phí và
-        Điểm c — Trong quá trình vận tải,  săm lốp bị  hao mòn với  mức  độ  nhanh hơn mức
-        Điểm d — Phần chi phí nguyên liệu, vật liệu, chi phí nhân công trực tiếp vượt trên
+      Khoản 4 — Phương pháp vận dụng tài khoản  154 trong ngành dịch vụ
+        Điểm a — Tài  khoản  154  'Chi  phí  sản xuất,  kinh  doanh  dở dang"  áp  dụng trong  các
+        Điểm b — Đối  với ngành giao thông vận tải, tài khoản này dùng để tập hợp chi phí
+        Điểm c — Trong quá trình vận tải,  săm  lốp bị hao  mòn với mức  độ nhanh hơn mức
+        Điểm d — Phần chi phí nguyên liệu, vật liệu, chi phí nhân công trực tiếp vượt trên mức
         Điểm đ — Đối với hoạt động kinh doanh du lịch, tài khoản này được mở chi tiết theo
-        Điểm e — Trong hoạt động kinh doanh khách sạn, tài khoản 154 phải mở chi tiết theo
-      Khoản 5 — Phương pháp vận dụng tài khoản 154 trong ngành xây dựng
-        Điểm a — Đối  với  hoạt  động  kinh  doanh  xây  lắp  quy  định  chỉ  áp  dụng  phương
-        Điểm b — Phần chi phí nguyên liệu, vật liệu trực tiếp, chi phí nhân công trực tiếp vượt
+        Điểm e — Trong hoạt động kinh doanh khách sạn, tài khoản  154 phải mở chi tiết
+      Khoản 5 — Phương pháp vận dụng tài khoản  154 trong ngành xây dựng
+        Điểm a — Đối  với hoạt động kinh doanh xây lắp quy định chỉ áp dụng phương pháp
+        Điểm b — Phần  chi  phí  nguyên  liệu,  vật  liệu  trực  tiếp,  chi  phí  nhân  công  trực  tiếp
         Điểm c — Tài khoản này trong ngành Xây lắp có 4 tài khoản cấp 2:
-        Điểm d — Việc tập hợp chi phí sản xuất,  tính  giá  thành  sản phẩm xây lắp phải  theo
-        Điểm đ — Chủ đầu tư xây dựng bất động sản sử dụng tài khoản này để tập hợp chi phí
-      Khoản 6 — Kết  cấu và nội  dung phản ánh của  tài  khoản 154 - Chi phí sản xuất,
-      Khoản 7 — Phương  pháp  kế  toán  một  số  giao  dịch  kinh  tế  chủ  yếu  trong  ngành
-        Điểm a — Cuối kỳ, kế toán kết chuyển chi phí nguyên liệu, vật liệu trực tiếp theo từng
-        Điểm b — Cuối kỳ, kế toán kết chuyển chi phí nhân công trực tiếp theo từng đối tượng
-        Điểm c — Trường hợp mức sản phẩm thực tế sản xuất ra cao hơn hoặc bằng công suất
-        Điểm d — Trường  hợp  mức  sản  phẩm thực  tế  sản  xuất  ra  thấp  hơn  công  suất  bình
+        Điểm d — Việc tập họp chi phí sản xuất, tính giá thành sản phẩm xây lắp phải theo
+        Điểm đ — Chủ đầu tư xây dựng bất động sản sử dụng tài khoản này để tập hợp chi
+      Khoản 6 — Kết cấu  và  nội  dung  phản  ánh  của  tài  khoản  154  -  Chi  phí sản  xuất,
+      Khoản 7 — Phương  pháp  kế  toán  một số  giao  dịch  kinh  tế  chủ  yếu  trong  ngành
+        Điểm a — Cuối  kỳ,  kế  toán  kết  chuyển  chi  phí  nguyên  liệu,  vật  liệu  trực  tiếp  theo
+        Điểm b — Cuối  kỳ,  kế  toán  kết  chuyển  chi  phí  nhân  công  trực  tiếp  theo  từng  đối
+        Điểm c — Trường hợp mức  sản phẩm thực tế  sản xuất ra cao  hơn hoặc  bằng  công
+        Điểm d — Trường hợp mức  sản phẩm thực tế  sản xuất ra thấp hơn công  suất  bình
         Điểm đ — Trị giá nguyên liệu, vật liệu xuất thuê ngoài gia công nhập lại kho, ghi:
-        Điểm e — Trị  giá  sản  phẩm hỏng  không  sửa  chữa  được,  người  gây  ra  thiệt  hại  sản
-        Điểm g — Đối với  doanh nghiệp có chu kỳ  sản xuất, kinh doanh dài mà trong kỳ  kế
+        Điểm e — Trị  giá  sản  phẩm  hỏng không  sửa chữa  được,  người  gây ra thiệt hại  sản
+        Điểm g — Đối với doanh nghiệp có chu kỳ sản xuất, kinh doanh dài mà trong kỳ kế
         Điểm h — Giá thành sản phẩm thực tế nhập kho trong kỳ, ghi:
-        Điểm i — Trường hợp sản phẩm sản xuất ra được sử dụng tiêu dùng nội bộ ngay hoặc
-        Điểm k — Trường hợp sau khi đã xuất kho nguyên vật liệu đưa vào sản xuất, nếu nhận
-        Điểm l — Kế toán sản phẩm sản xuất thử:
-        Điểm m — Trường hợp sản phẩm sản xuất xong, không tiến hành nhập kho mà chuyển
-        Điểm a — Cuối kỳ kế toán, căn cứ vào kết quả kiểm kê thực tế, xác định trị giá thực tế
-        Điểm b — Đầu kỳ kế toán, kết chuyển chi phí thực tế sản xuất, kinh doanh dở dang, ghi:
-      Khoản 8 — Phương  pháp  kế  toán  một  số  giao  dịch  kinh  tế  chủ  yếu  trong  ngành
-        Điểm a — Cuối kỳ,  kế  toán tính và kết  chuyển chi phí nguyên liệu, vật  liệu trực tiếp
-        Điểm b — Cuối  kỳ,  kế  toán tính và kết  chuyển chi phí nhân công trực tiếp theo từng
-        Điểm c — Cuối kỳ, kế toán thực hiện việc tính toán, phân bổ và kết chuyển chi phí sản
+        Điểm i — Trường  hợp  sản  phẩm  sản  xuất  ra  được  sử  dụng  tiêu  dùng  nội  bộ  ngay
+        Điểm k — Trường  họp  sau  khi  đã  xuất  kho  nguyên  vật  liệu  đưa  vào  sản  xuất,  nếu
+      Khoản 1 — Ke toán sản phẩm sản xuất thử:
+        Điểm m — Trường  hợp  sản  phấm  sản  xuất  xong,  không  tiến  hành  nhập  kho  mà
+        Điểm a — Cuối kỳ kế toán, căn cứ vào kết quả kiểm kê thực tế, xác định trị giá thực
+        Điểm b — Đầu kỳ kế toán, kết chuyển chi phí thực tế  sản xuất,  kinh doanh dở dang,
+      Khoản 8 — Phương pháp  kế  toán  một sổ  giao  dịch  kỉnh  tế  chủ  yếu  trong  ngành
+        Điểm a — Cuối kỳ, kế toán tính và kết chuyển chi phí nguyên liệu, vật liệu trực tiếp
+        Điểm b — Cuối kỳ, kế toán tính và kết chuyển chi phí nhân công trực tiếp theo từng
+        Điểm c — Cuối  kỳ,  kế toán thực hiện việc tính toán, phân bổ và  kết  chuyển  chi  phí
         Điểm d — Trị giá sản phẩm phụ thu hồi, ghi:
-        Điểm đ — Trị giá phế liệu thu hồi, nguyên liệu, vật liệu xuất thuê ngoài gia công xong
-        Điểm e — Trị giá súc vật con và súc vật nuôi béo chuyển sang súc vật làm việc, hoặc
-        Điểm g — Giá thành sản xuất thực tế sản phẩm sản xuất xong nhập kho hoặc tiêu thụ
-        Điểm h — Trường  hợp  sản  phẩm  sản  xuất  ra  được  sử  dụng  tiêu  dùng  nội  bộ  ngay
-      Khoản 9 — Phương  pháp  kế  toán  một  số  giao  dịch  kinh  tế  chủ  yếu  trong  ngành
-        Điểm a — Nghiệp  vụ  kết  chuyển  giá  thành  thực  tế  của  khối  lượng  dịch  vụ đã  hoàn
+        Điểm đ — Trị  giá  phế  liệu  thu  hồi,  nguyên  liệu,  vật  liệu  xuất  thuê  ngoài  gia  công
+        Điểm e — Trị  giá  súc  vật  con  và  súc  vật  nuôi  béo  chuyển  sang  súc  vật  làm  việc,
+        Điểm g — Giá thành  sản  xuất  thực  tế  sản  phẩm  sản  xuất  xong  nhập kho  hoặc  tiêu
+      Khoản 9 — Phương pháp  kế  toán  một số  giao  dịch  kinh  tế  chủ  yếu  trong  ngành
+        Điểm a — Nghiệp vụ kết chuyển giá thành thực tế  của khối  lượng dịch vụ  đã hoàn
         Điểm b — Khi sử dụng dịch vụ tiêu dùng nội bộ, ghi:
-      Khoản 10 — Phương pháp kế  toán một  số  giao dịch kinh tế  chủ  yếu trong ngành
+      Khoản 10 — Phương pháp kế toán một số giao dịch  kỉnh  tế chủ yếu trong ngành
         Điểm a — Hạch toán khoản mục nguyên liệu, vật liệu trực tiếp:
-        Điểm b — Hạch toán khoản mục chi phí nhân công trực tiếp: Hạch toán tương tự như
+        Điểm b — Hạch  toán  khoản  mục  chi  phí  nhân  công  trực  tiếp:  Hạch toán  tương  tự
         Điểm c — Hạch toán khoản mục chi phí sử dụng máy thi công:
         Điểm d — Hạch toán khoản mục chi phí sản xuất chung:
-        Điểm a — Các chi phí của hợp đồng không thể thu hồi (ví dụ: Không đủ tính thực thi
-        Điểm b — Chi phí liên quan trực tiếp đến từng hợp đồng có thể được giảm nếu có các
-        Điểm c — Cuối  kỳ  hạch toán, căn cứ  vào giá thành sản xuất  sản phẩm xây lắp thực tế
+        Điểm a — Các  chi  phí  của hợp  đồng  không thể thu hồi  (ví  dụ:  Không  đủ tính thực
+        Điểm b — Chi  phí  liên  quan trực  tiếp  đến từng  hợp  đồng  có  thể  được  giảm nếu  có
+        Điểm c — Cuối kỳ hạch toán,  căn cứ vào giá thành sản xuất sản phấm xây  lẳp thực
     Điều 28 — Tài khoản 155 - Thành phẩm
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh giá trị hiện có và tình hình biến động của
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  giá trị  hiện  có  và  tình  hình  biến  động
         Điểm b — Thành  phẩm  do  các  bộ  phận  sản  xuất  chính  và  sản  xuất  phụ  của  doanh
         Điểm c — Không được tính vào giá gốc thành phẩm các chi phí sau:
-        Điểm d — Thành phẩm thuê ngoài gia công chế biến được đánh giá theo giá thành thực
-        Điểm đ — Việc  tính  giá  trị  thành  phẩm  tồn  kho  được  thực  hiện  theo  một  trong  ba
-        Điểm e — Trường hợp doanh nghiệp kế toán hàng tồn kho theo phương pháp kê khai
-        Điểm g — Kế toán chi tiết thành phẩm phải thực hiện theo từng kho, từng loại, nhóm,
+        Điểm d — Thành phẩm thuê ngoài  gia công chế biến được đánh giá theo  giá thành
+        Điểm đ — Việc  tính  giá trị  thành  phẩm  tồn kho  được  thực  hiện  theo  một  trong  ba
+        Điểm e — Trường  họp  doanh  nghiệp  kế  toán  hàng  tồn  kho  theo  phương  pháp  kê
+        Điểm g — Kế  toán  chi  tiết  thành  phẩm  phải  thực  hiện  theo  từng  kho,  từng  loại,
       Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 155 - Thành phẩm
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Đối với thành phẩm không phải là bất động sản
-        Điểm b — Đối  với thành phẩm bất động sản (đối với  các công trình doanh nghiệp là
-        Điểm a — Trường hợp xuất sản phẩm để biếu tặng, khuyến mại, quảng cáo không thu
-        Điểm b — Trường hợp xuất sản phẩm để khuyến mại, quảng cáo nhưng khách hàng chỉ
-        Điểm c — Nếu biếu  tặng cho cán bộ  công nhân viên  được  trang  trải  bằng quỹ  khen
-        Điểm a — Đầu kỳ, kế toán căn cứ kết quả kiểm kê thành phẩm đã kết chuyển cuối kỳ
+        Điểm b — Đối với thành phẩm bất động sản (đối với các công trình doanh nghiệp là
+        Điểm a — Trường  họp  xuất  sản  phẩm  để  biếu  tặng,  khuyến  mại,  quảng  cáo  không
+        Điểm b — Trường hợp xuất sản phẩm để khuyến mại, quảng cáo nhưng khách hàng
+        Điểm c — Nếu  biếu tặng cho  cán bộ  công nhân viên được trang trải  bàng quỹ khen
+        Điểm a — Đầu  kỳ,  kế toán căn cứ kết quả kiểm kê thành phẩm đã kết chuyển cuối
         Điểm b — Cuối  kỳ  kế  toán,  căn  cứ  vào  kết  quả  kiểm  kê  thành  phẩm  tồn  kho,  kết
-Chương II
-    Điều 29 — Tài khoản 156 - Hàng hóa
+    Điều 29 — Tài khoản  156 - Hàng hóa
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh trị giá hiện có và tình hình biến động tăng,
-        Điểm b — Những trường hợp sau đây không phản ánh vào tài khoản 156 'Hàng hóa':
-        Điểm c — Kế toán nhập, xuất, tồn kho hàng hóa trên tài khoản 156 được phản ánh theo
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  trị  giá  hiện  có  và tình  hình  biến  động
+        Điểm b — Những  trường  họp  sau  đây  không  phản  ánh  vào  tài  khoản  156  'Hàng
+        Điểm c — Ke  toán  nhập,  xuất,  tồn  kho  hàng hóa trên tài  khoản  156  được  phản ánh
         Điểm d — Trường hợp mua hàng hóa được nhận kèm theo sản phẩm, hàng hóa, phụ
-        Điểm đ — Kế  toán  chi  tiết  hàng  hóa  phải  thực  hiện  theo  từng  kho,  từng  loại,  từng
+        Điểm đ — Kế  toán  chi  tiết  hàng  hóa phải  thực  hiện  theo  từng  kho,  từng  loại,  từng
       Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 156 - Hàng hóa
-        Điểm a — Kết cấu và nội dung phản ánh của tài khoản 1561 - Giá mua hàng hóa
-        Điểm b — Kết cấu và nội dung phản ánh của tài khoản 1562 - Chi phí thu mua hàng hóa
-        Điểm c — Kết cấu và nội dung phản ánh của tài khoản 1567 - Hàng hóa bất động sản
+        Điểm a — Kết cấu và nội dung phản ánh của tài khoản  1561  - Giá mua hàng hóa
+        Điểm b — Kết cấu và nội dung phản ánh của tài khoản  1562 - Chi phí thu mua hàng
+        Điểm c — Kết  cấu và nội  dung phản  ánh  của tài  khoản  1567  -  Hàng  hóa  bất  động
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Khi mua hàng hóa, nếu thuế GTGT đầu vào được khấu trừ, ghi:
         Điểm b — Khi nhập khẩu hàng hóa:
-        Điểm a — Trường hợp xuất hàng hóa để biếu tặng, khuyến mại, quảng cáo không thu
-        Điểm b — Trường hợp xuất hàng hóa để khuyến mại, quảng cáo nhưng khách hàng chỉ
-        Điểm c — Nếu hàng hóa biếu tặng cho cán bộ công nhân viên được trang trải bằng quỹ
-        Điểm d — Trường  hợp  doanh  nghiệp  là  nhà  phân  phối  hoạt  động  thương  mại  được
-        Điểm a — Đầu kỳ,  kế  toán  căn  cứ  giá  trị  hàng hóa  đã  kết  chuyển  cuối  kỳ  trước  kết
+        Điểm a — Trường  họp  xuất  hàng  hóa  để  biếu  tặng,  khuyến  mại,  quảng  cáo  không
+        Điểm b — Trường họp xuất hàng hóa để khuyến mại,  quảng cáo nhưng khách hàng
+        Điểm c — Nếu hàng hóa biếu tặng cho cán bộ công nhân viên được trang trải bằng
+        Điểm d — Trường họp doanh nghiệp là nhà phân phối hoạt động thương mại  được
+        Điểm a — Đầu kỳ,  kế toán căn cứ giá trị hàng hoá đã kết chuyển cuối  kỳ trước kết
         Điểm b — Cuối kỳ kế toán:
-    Điều 30 — Tài khoản 157 - Hàng gửi đi bán
+    Điều 30 — Tài khoản 157 -  Hàng gửi đi  bán
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Hàng gửi đi bán phản ánh trên tài khoản 157 được thực hiện theo nguyên tắc
-        Điểm b — Hàng hóa, thành phẩm phản ánh trên tài khoản này vẫn thuộc quyền sở hữu
-        Điểm c — Không phản ánh vào tài khoản này chi phí vận chuyển, bốc xếp,...  chi  hộ
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 157 - Hàng gửi đi bán
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Khi gửi hàng hóa, thành phẩm cho khách hàng, xuất hàng hóa, thành phẩm
-        Điểm b — Dịch vụ đã hoàn thành bàn giao cho khách hàng nhưng chưa xác định là đã
-        Điểm c — Khi hàng gửi đi bán và dịch vụ đã hoàn thành bàn giao cho khách hàng được
-        Điểm d — Trường hợp hàng hóa, thành phẩm đã gửi đi bán nhưng bị khách hàng trả lại:
-        Điểm a — Đầu kỳ kế toán, kết chuyển giá trị hàng hóa, thành phẩm đã gửi cho khách
-        Điểm b — Cuối kỳ kế toán, căn cứ kết quả kiểm kê hàng tồn kho, xác định trị giá hàng
-    Điều 31 — Tài khoản 158 - Hàng hóa kho bảo thuế
+        Điểm a — Hàng gửi đi bán phản ánh trên tài khoản  157 được thực hiện theo nguyên
+        Điểm b — Hàng  hóa,  thành  phẩm phản  ánh trên tài  khoản này  vẫn  thuộc  quyên  sở
+        Điểm c — Không phản ánh vào tài khoản này chi phí vận chuyển, bốc xếp,... chi  hộ
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản  157 - Hàng gửi đi bán
+      Khoản 3 — Phương pháp kế toán  một số giao dịch kỉnh tế chủ yếu
+        Điểm a — Khi  gửi  hàng  hóa,  thành  phẩm  cho  khách  hàng,  xuất  hàng  hóa,  thành
+        Điểm b — Dịch vụ đã hoàn thành bàn giao cho khách hàng nhưng chưa xác định là
+        Điểm c — Khi hàng gửi  đi  bán và dịch vụ đã hoàn thành bàn giao  cho khách hàng
+        Điểm d — Trường hợp hàng hóa, thành phẩm đã gửi đi bán nhưng bị khách hàng trả
+        Điểm a — Đầu  kỳ  kế  toán,  kết  chuyển  giá  trị  hàng  hóa,  thành  phẩm  đã  gửi  cho
+        Điểm b — Cuối  kỳ  kế  toán,  căn  cứ  kết  quả kiểm  kê  hàng  tồn  kho,  xác  định  trị  giá
+    Điều 31 — Tài  khoản  158 - Hàng hóa kho bảo thuế
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh sự biến động tăng, giảm và số hiện có của
-        Điểm b — Nguyên liệu, vật tư nhập khẩu và sản phẩm lưu giữ tại Kho bảo thuế chỉ bao
-        Điểm c — Doanh nghiệp phải mở sổ chi tiết để phản ánh số lượng và giá trị của từng
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 158 - Hàng hóa kho bảo thuế
+        Điểm a — Tài  khoản  này dùng để  phản  ánh  sự biến  động tăng,  giảm và  số  hiện  có
+        Điểm b — Nguyên liệu, vật tư nhập khẩu và sản phẩm lưu giữ tại Kho bảo thuế chỉ
+        Điểm c — Doanh nghiệp phải mở sổ chi tiết để phản ánh số lượng và giá trị của từng thứ
+      Khoản 2 — Kết cấu và  nội dung phản ánh của tài khoản  158 - Hàng hóa kho bảo
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Khi nhập khẩu nguyên liệu, vật liệu để sản xuất sản phẩm xuất khẩu, hoặc
-        Điểm b — Khi xuất nguyên liệu, vật liệu nhập khẩu ở Kho bảo thuế ra để sản xuất sản
-        Điểm c — Khi xuất kho thành phẩm hoặc hàng hóa xuất khẩu, hàng gia công xuất khẩu
-        Điểm d — Khi xuất khẩu hàng hóa của Kho bảo thuế (nếu có):
-        Điểm đ — Nếu tỷ lệ xuất khẩu thấp hơn tỷ lệ được bảo thuế tại doanh nghiệp phải nộp
-        Điểm e — Trường hợp doanh nghiệp được cơ quan có thẩm quyền cho phép bán hàng
-        Điểm g — Trường hợp xuất bán hàng hóa lưu giữ tại kho bảo thuế tại thị trường nội địa:
-        Điểm h — Trường hợp vật liệu, hàng hóa đưa vào Kho bảo thuế, nếu bị hư hỏng, kém mất
-    Điều 32 — Tài khoản 161 - Chi sự nghiệp
+        Điểm a — Khi  nhập khẩu nguyên liệu, vật liệu để sản xuất sản phẩm xuất khẩu, hoặc
+        Điểm b — Khi xuất nguyên liệu, vật liệu nhập khẩu ở Kho bảo thuế ra để  sản xuất
+        Điểm c — Khi  xuất  kho  thành phẩm  hoặc  hàng  hoá  xuất  khẩu,  hàng  gia  công  xuất
+        Điểm d — Khi xuất khẩu hàng hoá của Kho bảo thuế (nếu có):
+        Điểm đ — Nấu tỷ  lệ  xuất khẩu thấp hơn tỷ lệ  được  bảo thuế tại  doanh  nghiệp phải
+        Điểm e — Trường  hợp  doanh  nghiệp  được  cơ  quan  có  thẩm  quyền  cho  phép  bán
+        Điểm g — Trường họp xuất bán hàng hoá lưu giữ tại kho bảo thuế tại thị trường nội
+        Điểm h — Trường  hợp  vật  liệu,  hàng  hóa  đưa  vào  Kho  bảo  thuế,  nếu  bị  hư  hỏng,
+    Điều 32 — Tài khoản  161 - Chi sự nghiệp
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này phản ánh các khoản chi sự nghiệp, chi dự án để thực hiện các
-        Điểm b — Phải mở  sổ  kế  toán chi tiết chi sự  nghiệp, chi dự  án theo từng nguồn kinh
-        Điểm c — Hạch toán chi sự nghiệp, chi dự án phải đảm bảo thống nhất với công tác lập
-        Điểm d — Hạch toán vào tài  khoản  này  những khoản  chi  thuộc  kinh  phí  sự  nghiệp,
-        Điểm đ — Cuối niên độ kế toán, nếu quyết toán chưa được duyệt thì toàn bộ số chi sự
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 161 - Chi sự nghiệp
+        Điểm a — Tài khoản này phản ánh các khoản chi  sự nghiệp,  chi  dự án để thực hiện
+        Điểm b — Phải mở sổ kế toán chi tiết chi  sự nghiệp, chi dự án theo từng nguồn kinh
+        Điểm c — Hạch toán chi sự nghiệp, chi dự án phải đảm bảo thống nhất với công tác
+        Điểm d — Hạch toán vào tài  khoản này những khoản chi thuộc kinh phí sự nghiệp,
+        Điểm đ — Cuối niên độ kế toán, nếu quyết toán chưa được duyệt thì toàn bộ số chi
+      Khoản 2 — Kết cấu và  nội dung phản ánh của tài  khoản 161 - Chi sự nghiệp
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Khi xuất tiền chi cho hoạt động sự nghiệp, chương trình, dự án thuộc nguồn
-        Điểm b — Tiền lương và các khoản khác phải trả cho người lao động của doanh nghiệp,
-        Điểm c — Khi xuất kho vật tư, công cụ, dụng cụ sử dụng cho hoạt động sự nghiệp, dự
-        Điểm d — Khi nhận được các khoản kinh phí của cấp trên hoặc khi rút dự toán chi sự
-        Điểm đ — Khi kết chuyển chi phí sửa chữa lớn TSCĐ hoàn thành để sử dụng cho hoạt
-        Điểm e — Trường  hợp  mua  sắm TSCĐ  hoặc  đầu  tư  xây  dựng  cơ  bản  cho  các  hoạt
-        Điểm g — Khi trích BHXH, BHYT, BHTN, KPCĐ của người lao động tham gia hoạt
-        Điểm h — Cuối  năm  tài  chính,  nếu  quyết  toán  chưa  được  duyệt,  kế  toán  tiến  hành
-        Điểm i — Khi báo cáo quyết toán được duyệt, số chi sự nghiệp, chi dự án được quyết
-        Điểm k — Các khoản chi sai quy định không được cấp có thẩm quyền phê duyệt phải
-    Điều 33 — Tài khoản 171 - Giao dịch mua, bán lại trái phiếu Chính phủ
+        Điểm a — Khi  xuất  tiền  chi  cho  hoạt  động  sự  nghiệp,  chương  trình,  dự  án  thuộc
+        Điểm b — Tiền  lương  và  các  khoản  khác  phải  trả  cho  người lao  động của doanh
+        Điểm c — Khi xuất kho vật tư,  công cụ,  dụng cụ sử dụng cho hoạt động sự nghiệp,
+        Điểm d — Khi nhận được  các khoản kinh phí của cấp trên hoặc khi rút dự toán chi
+        Điểm đ — Khi  kết  chuyển  chi  phí  sửa  chữa  lớn  TSCĐ  hoàn thành  để  sử  dụng  cho
+        Điểm e — Trường họp mua sắm TSCĐ hoặc đầu tư xây dựng cơ bản cho các hoạt
+        Điểm g — Khi  trích  BHXH,  BHYT,  BHTN,  KPCĐ  của  người  lao  động  tham  gia
+        Điểm h — Cuối  năm tài  chính,  nếu  quyết  toán  chưa  được  duyệt,  kế  toán tiến hành
+        Điểm i — Khi  báo  cáo  quyết  toán  được  duyệt,  số  chi  sự  nghiệp,  chi  dự  án  được
+        Điểm k — Các  khoản  chi  sai  quy  định  không  được  cấp  có  thẩm  quyền  phê  duyệt
+    Điều 33 — Tài khoản  171 - Giao dịch mua, bán lại trái phiếu Chính phủ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh các giao dịch mua bán lại trái phiếu Chính
-        Điểm b — Doanh nghiệp phải  chấp hành  đúng các quy  định về  hình thức giao dịch,
-        Điểm c — Bên  mua  trái  phiếu  theo  hợp  đồng  mua  bán  lại  không  được  ghi  nhận  là
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 171 - Giao dịch mua, bán
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Khi hợp đồng mua bán lại trái phiếu Chính phủ có hiệu lực, ghi:
-        Điểm b — Định kỳ,  bên  bán  phân bổ  số  chênh lệch giữa  giá  bán  và giá  mua lại  trái
-        Điểm c — Khi kết thúc thời hạn hợp đồng mua bán lại trái phiếu Chính phủ,  công ty
-        Điểm d — Khi bên mua thanh toán cho bên bán số  coupon mà bên mua nhận hộ bên
-        Điểm a — Khi hợp đồng có hiệu lực, căn cứ  vào chứng từ  xuất tiền và các chứng từ
-        Điểm b — Định kỳ, bên mua phân bổ số chênh lệch giữa giá bán lại và giá mua trái phiếu
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  các  giao  dịch  mua  bán  lại  trái  phiếu
+        Điểm b — Doanh nghiệp phải  chấp hành đúng các qui  định về hình thức  giao dịch,
+        Điểm c — Bên  mua  trái  phiếu  theo  họp  đồng  mua  bán  lại  không  được  ghi  nhận  là
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  171  -  Giao  dịch  mua,
+      Khoản 3 — Phương pháp kế toán một sổ giao dịch kinh tế chủ yếu
+        Điểm a — Khi họp đồng mua bán lại trái phiếu Chính phủ có hiệu lực, ghi:
+        Điểm b — Định kỳ,  bên bán phân bổ  số  chênh lệch giữa giá bán và giá mua lại trái
+        Điểm c — Khi kết thúc thời hạn hợp đồng mua bán lại trái phiếu Chính phủ, công ty
+        Điểm d — Khi bên mua thanh toán cho bên bán số coupon mà bên mua nhận hộ bên
+        Điểm a — Khi hợp đồng có hiệu lực, căn cứ vào chứng từ xuất tiền và các chứng từ
+        Điểm b — Định kỳ, bên mua phân bổ số chênh lệch giữa giá bán lại và giá mua trái
         Điểm c — Khi nhận được coupon của trái phiếu của bên bán tại (các) thời điểm nằm
-        Điểm d — Khi kết thúc thời hạn của hợp đồng ghi:
-    Điều 34 — Nguyên tắc kế toán tài sản cố định, bất động sản đầu tư và chi phí
+        Điểm d — Khi kết thúc thời hạn của họp đồng ghi:
+    Điều 34 — Nguyên  tắc kế toán tài sản cổ định, bất động sản đầu  tư và chi
       Khoản 1 — Tài sản cố định, bất động sản đầu tư và chi phí đầu tư xây dựng cơ bản dở
-      Khoản 2 — Kế toán phải theo dõi chi tiết nguồn hình thành TSCĐ để phân bổ hao mòn
-      Khoản 3 — Kế  toán phân loại  TSCĐ  và  BĐSĐT theo mục  đích sử  dụng. Trường hợp
-      Khoản 4 — Khi mua TSCĐ nếu được nhận kèm thêm thiết bị, phụ tùng thay thế (phòng
-      Khoản 5 — Kế  toán  TSCĐ,  BĐSĐT và chi phí  đầu  tư  XDCB liên quan  đến  ngoại  tệ
+      Khoản 2 — Kế  toán  phải  theo  dõi  chi  tiết  nguồn  hình  thành  TSCĐ  để  phân  bổ  hao
+      Khoản 3 — Ke toán phân loại TSCĐ và BĐSĐT theo mục đích sử dụng.  Trường hợp
+      Khoản 4 — Khi  mua  TSCĐ  nếu  được  nhận  kèm  thêm  thiết  bị,  phụ  tùng  thay  thế
+      Khoản 5 — Ke toán TSCĐ, BĐSĐT và chi phí đầu tư XDCB  liên quan đến ngoại tệ
     Điều 35 — Tài khoản 211 - Tài sản cố định hữu hình
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh giá trị hiện có và tình hình biến động tăng,
-        Điểm b — Tài sản cố định hữu hình là những tài sản có hình thái vật  chất  do doanh
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  giá trị  hiện  có  và tình  hình  biến  động
+        Điểm b — Tài  sản cổ định hữu hình là những tài sản có hình thái vật chất do doanh
         Điểm c — Những tài sản hữu hình có kết cấu độc lập, hoặc nhiều bộ phận tài sản riêng
-        Điểm d — Giá trị  TSCĐ  hữu  hình  được  phản  ánh  trên  TK 211 theo nguyên giá. Kế
-    Điều 69 — - hướng dẫn phương pháp kế toán chênh lệch tỷ giá hối đoái.  <<< BẤT THƯỜNG ĐÁNH SỐ
+        Điểm d — Giá trị  TSCĐ hữu hình được phản ánh trên TK 211  theo nguyên giá.  Ke
+    Điều 69 — -  hướng dẫn phương pháp kế toán chênh lệch tỷ giá hôi đoái.  <<< BẤT THƯỜNG ĐÁNH SỐ
         Điểm đ — Chỉ được thay đổi nguyên giá TSCĐ hữu hình trong các trường hợp:
         Điểm e — Các  chi  phí  bảo  dưỡng,  sửa  chữa,  duy  trì  cho  TSCĐ  hoạt  động  bình
-        Điểm g — TSCĐ hữu hình cho thuê hoạt động vẫn phải trích khấu hao theo quy định
+        Điểm g — TSCĐ  hữu  hình  cho  thuê  hoạt  động  vẫn  phải  trích  khấu  hao  theo  quy
         Điểm h — TSCĐ hữu hình phải được theo dõi chi tiết cho từng đối tượng ghi TSCĐ,
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 211 - Tài sản cố định hữu hình
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  211  -  Tài  sản  cố  định
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Trường hợp nhận vốn góp của chủ  sở hữu hoặc nhận vốn cấp bằng TSCĐ
+        Điểm a — Trường hợp nhận vốn góp của chủ sở hữu hoặc nhận vốn cấp bằng TSCĐ
         Điểm b — Trường hợp TSCĐ được mua sắm:
         Điểm c — Trường hợp mua TSCĐ hữu hình theo phương thức trả chậm, trả góp:
-        Điểm d — Trường hợp doanh nghiệp được tài trợ, biếu, tặng TSCĐ hữu hình đưa vào
+        Điểm d — Trường hợp doanh nghiệp được tài trợ, biếu, tặng TSCĐ hữu hình đưa
         Điểm đ — Trường hợp TSCĐ hữu hình tự sản xuất:
         Điểm e — Trường hợp TSCĐ hữu hình mua dưới hình thức trao đổi:
-        Điểm g — Trường  hợp  mua  TSCĐ  hữu  hình  là  nhà  cửa,  vật  kiến  trúc  gắn  liền  với
-        Điểm h — Trường hợp TSCĐ hữu hình tăng do đầu tư XDCB hoàn thành: Trường hợp
-        Điểm i — TSCĐ nhận được do điều động nội bộ Tổng công ty (không phải thanh toán
-        Điểm k — Trường hợp dùng kinh phí sự  nghiệp, kinh phí dự  án để đầu tư,  mua sắm
-        Điểm l — Trường hợp đầu tư, mua sắm TSCĐ bằng quỹ phúc lợi, khi hoàn thành đưa
-        Điểm m — Chi phí phát sinh sau ghi nhận ban đầu liên quan đến TSCĐ hữu hình như
-        Điểm a — Trường hợp nhượng bán TSCĐ dùng vào sản xuất, kinh doanh, ghi:
-        Điểm b — Trường hợp nhượng bán TSCĐ hữu hình dùng vào hoạt động sự nghiệp, dự án:
-        Điểm c — Trường hợp  nhượng bán TSCĐ  hữu hình dùng vào hoạt  động văn hóa,
+        Điểm g — Trường hợp mua TSCĐ hữu hình là nhà cửa, vật kiến trúc gắn liền với
+        Điểm h — Trường họp TSCĐ hữu hình tăng do đầu tư XDCB hoàn thành: Trường
+        Điểm i — TSCĐ nhận được do  điều  động nội  bộ  Tổng  công  ty  (không  phải  thanh
+        Điểm k — Trường họp dùng kinh phí sự nghiệp, kinh phí dự án để đầu tư, mua sắm
+      Khoản 1 — Trường  họp  đầu  tư,  mua  sắm  TSCĐ  bằng  quỹ phúc  lợi,  khi  hoàn  thành
+        Điểm m — Chi phí phát sinh sau ghi nhận ban đầu liên quan đến TSCĐ hữu hình
+        Điểm a — Trường họp nhượng bán TSCĐ dùng vào sản xuất, kinh doanh, ghi:
+        Điểm b — Trường họp nhượng bán TSCĐ hữu hình dùng vào hoạt động sự nghiệp,
         Điểm a — TSCĐ phát hiện thừa:
         Điểm b — TSCĐ phát hiện thiếu phải được truy cứu nguyên nhân, xác định người chịu
-        Điểm a — Kế toán kết quả kiểm kê tài sản: Khi nhận được thông báo hoặc quyết định
-        Điểm b — Kế toán xử lý TSCĐ hữu hình thừa, thiếu trong kiểm kê: Doanh nghiệp phải
-        Điểm c — Kế toán nhượng bán, thanh lý tài sản không cần dùng, tài sản ứ đọng, chờ
-        Điểm d — Trường hợp  doanh nghiệp  chuyển  giao  TSCĐ  hữu  hình  không  cần  dùng,
-        Điểm đ — Kế toán chuyển giao tài sản là các công trình phúc lợi
-        Điểm e — Kế toán giá trị TSCĐ hữu hình được đánh giá lại khi xác định giá trị doanh nghiệp
+        Điểm a — Ke  toán  kết  quả  kiểm  kê  tài  sản:  Khi  nhận  được  thông  báo  hoặc  quyết
+        Điểm b — Ke toán xử lý TSCĐ hữu hình thừa, thiếu trong kiểm kê:  Doanh nghiệp
+        Điểm c — Ke toán nhượng bán, thanh lý tài sản không cần dùng, tài sản ứ đọng, chờ
+        Điểm d — Trường hợp doanh nghiệp chuyển giao TSCĐ hữu hình không cần dùng,
+        Điểm đ — Ke toán chuyển giao tài sản là các công trình phúc lợi
+        Điểm e — Kế  toán  giá  trị  TSCĐ  hữu  hình  được  đánh  giá  lại  khi  xác  định  giá  trị
         Điểm g — Bàn giao TSCĐ cho công ty cổ phần
-    Điều 36 — Tài khoản 212 - Tài sản cố định thuê tài chính
+    Điều 36 — Tài khoản 212 -  Tài sản cố đinh thuê tài chính
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh giá trị hiện có và tình hình biến động tăng,
-        Điểm b — Thuê tài chính: Là thuê tài sản mà bên cho thuê có sự chuyển giao phần lớn
-        Điểm c — Điều kiện phân loại  thuê  tài  sản là thuê tài chính: Một  hợp  đồng thuê tài
-        Điểm d — Hợp đồng thuê tài sản được coi là hợp đồng thuê tài chính nếu thỏa mãn ít
-        Điểm đ — Nguyên giá của TSCĐ thuê tài chính được ghi nhận bằng giá trị hợp lý của
-        Điểm e — Số thuế GTGT đầu vào của tài sản thuê tài chính không được khấu trừ bên
-        Điểm g — Không phản ánh vào tài khoản này giá trị của TSCĐ thuê hoạt động;
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  giá trị  hiện  có  và  tình  hình  biến  động
+        Điểm b — Thuê tài  chính:  Là thuê tài  sản mà bên cho thuê  có  sự chuyển giao phần
+        Điểm c — Điều kiện phân loại thuê tài  sản là thuê tài  chính:  Một hợp đồng thuê tài
+        Điểm d — Họp đồng thuê tài  sản được coi  là hợp đồng  thuê tài  chính  nếu thoả  mãn
+        Điểm đ — Nguyên giá của TSCĐ thuê tài  chính được  ghi nhận bằng giá trị  họp  lý
+        Điểm e — Số  thuế  GTGT  đầu vào  của tài  sản thuê  tài  chính  không  được  khấu  trừ
+        Điểm g — Không phản ánh vào tài khoản này giá trị của TSCĐ thuê hoạt động.
         Điểm h — Bên thuê có trách nhiệm tính, trích khấu hao tài sản cố định vào chi phí sản
         Điểm i — Tài khoản 212 được mở chi tiết để theo dõi từng loại, từng TSCĐ đi thuê.
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 212 - TSCĐ thuê tài chính
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 212 - TSCĐ thuê tài
+      Khoản 3 — Phuong pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Nếu thuế GTGT được khấu trừ, ghi:
         Điểm b — Nếu thuế GTGT đầu vào không được khấu trừ, ghi:
-        Điểm a — Trường hợp giao dịch bán và thuê lại với giá bán tài sản cao hơn giá trị còn
-        Điểm b — Trường hợp giao dịch bán và thuê lại với giá thấp hơn giá trị còn lại của TSCĐ:
+        Điểm a — Trường hợp giao dịch bán và thuê lại với giá bán tài sản cao hơn giá trị
+        Điểm b — Trường họp giao dịch bán và thuê lại với giá thấp hơn giá trị còn lại của
     Điều 37 — Tài khoản 213 - Tài sản cố định vô hình
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh giá trị hiện có và tình hình biến động tăng,
-        Điểm b — Nguyên giá của TSCĐ vô hình là toàn bộ các chi phí mà doanh nghiệp phải
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  giá trị  hiện  có  và tình  hình  biến  động
+        Điểm b — Nguyên giá của TSCĐ  vô  hình  là toàn  bộ  các  chi  phí  mà  doanh nghiệp
         Điểm c — Toàn bộ chi phí thực tế phát sinh liên quan đến giai đoạn triển khai không
-        Điểm d — Trong quá trình sử  dụng phải tiến hành trích khấu hao TSCĐ  vô hình vào
-        Điểm đ — Chi  phí  liên  quan  đến TSCĐ  vô  hình phát sinh sau khi ghi nhận ban  đầu
+        Điểm d — Trong quá trình sử dụng phải tiến hành trích khấu hao TSCĐ vô hình vào
+        Điểm đ — Chi  phí  liên quan đến TSCĐ vô hình phát sinh sau khi ghi nhận ban đầu
         Điểm e — Chi phí phát sinh đem lại lợi ích kinh tế trong tương lai cho doanh nghiệp
-        Điểm g — Chi phí liên quan đến tài sản vô hình đã được doanh nghiệp ghi nhận là chi
-        Điểm h — Các nhãn hiệu, tên thương mại, quyền phát hành, danh sách khách hàng và
-        Điểm i — TSCĐ  vô hình được theo dõi chi tiết  theo từng đối tượng ghi TSCĐ  trong
+        Điểm g — Chi  phí  liên  quan  đến tài  sản vô  hình  đã được  doanh nghiệp  ghi  nhận  là
+        Điểm h — Các  nhãn hiệu,  tên thương mại,  quyền phát hành,  danh sách khách hàng
+        Điểm i — TSCĐ vô hình được theo dõi chi tiết theo từng đối tượng ghi TSCĐ trong
       Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 213 - TSCĐ vô hình
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Trường hợp trao đổi hai TSCĐ vô hình tương tự: Khi nhận TSCĐ vô hình
-        Điểm b — Trường hợp trao đổi hai TSCĐ vô hình không tương tự:
-        Điểm a — Khi phát sinh chi phí trong giai đoạn triển khai xét thấy kết quả  triển khai
-        Điểm b — Khi xét thấy kết quả triển khai thỏa mãn định nghĩa và tiêu chuẩn ghi nhận
-        Điểm a — Trường hợp giá đánh giá lại xác định là vốn góp nhỏ hơn giá trị còn lại của
-        Điểm b — Trường hợp giá đánh giá lại xác định là vốn góp lớn hơn giá trị còn lại của
+        Điểm a — Trường  hợp  trao  đổi  hai  TSCĐ  vô  hình  tương  tự:  Khi  nhận  TSCĐ vô
+        Điểm b — Trường họp trao đổi hai TSCĐ vô hình không tương tự:
+        Điểm a — Khi phát sinh chi phí trong giai đoạn triển khai xét thấy kết quả triển khai
+        Điểm b — Khi  xét  thấy  kết  quả  triển  khai  thoả  mãn  định  nghĩa  và  tiêu  chuẩn  ghi
+        Điểm a — Trường họp giá đánh giá lại  xác  định là  vốn  góp nhỏ  hơn giá trị  còn  lại
+        Điểm b — Trường họp  giá  đánh  giá  lại  xác  định  là vốn  góp  lớn  hơn  giá trị  còn  lại
     Điều 38 — Tài khoản 214 - Hao mòn tài sản cố định
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh tình hình tăng, giảm giá trị hao mòn và giá
-        Điểm b — Về nguyên tắc, mọi TSCĐ, BĐSĐT dùng để cho thuê của doanh nghiệp có
-        Điểm c — Căn cứ vào quy định của pháp luật và yêu cầu quản lý của doanh nghiệp để
-        Điểm d — Thời gian khấu hao và phương pháp khấu hao TSCĐ phải được xem xét lại
+        Điểm a — Tài  khoản này dùng để phản ánh tình hình tăng, giảm giá trị hao mòn và
+        Điểm b — v ề   nguyên tắc,  mọi  TSCĐ,  BĐSĐT dùng để  cho thuê của doanh nghiệp
+        Điểm c — Căn cứ vào quy định của pháp luật và yêu cầu quản lý của doanh nghiệp
+        Điểm d — Thời gian khấu hao và phương pháp khấu hao TSCĐ phải được xem xét
         Điểm đ — Đối với các TSCĐ đã khấu hao hết (đã thu hồi đủ vốn), nhưng vẫn còn sử
-        Điểm e — Đối với TSCĐ vô hình, phải tùy thời gian phát huy hiệu quả để trích khấu
-        Điểm g — Đối với TSCĐ thuê tài chính, trong quá trình sử dụng bên đi thuê phải trích
-        Điểm h — Đối với BĐSĐT cho thuê hoạt động phải trích khấu hao và ghi nhận vào chi
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 214 - Hao mòn TSCĐ
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Định kỳ tính, trích khấu hao TSCĐ vào chi phí sản xuất, kinh doanh, chi phí
-        Điểm b — TSCĐ đã sử  dụng, nhận  được do  điều chuyển trong nội  bộ  doanh nghiệp
+        Điểm e — Đối với TSCĐ vô hình, phải tuỳ thời gian phát huỵ hiệu quả để trích khấu
+        Điểm g — Đối  với  TSCĐ  thuê  tài  chính,  trong  quá  trình  sử dụng  bên  đi  thuê  phải
+        Điểm h — Đối  với  BĐSĐT cho thuê hoạt động phải trích khấu hao và ghi nhận vào
+      Khoản 2 — Kết cấu và nội dung phản ảnh của tài khoản 214 - Hao mòn TSCĐ
+      Khoản 3 — Phương pháp kế toán một số giao dịch  kỉnh tế chủ  yếu
+        Điểm a — Định kỳ tính, trích khấu hao TSCĐ vào  chi  phí  sản  xuất,  kinh doanh,  chi
+        Điểm b — TSCĐ đã sử dụng, nhận được do điều chuyển trong nội bộ doanh nghiệp
         Điểm c — Định kỳ tính, trích khấu hao BĐSĐT đang cho thuê hoạt động, ghi:
-        Điểm d — Trường hợp giảm TSCĐ, BĐS đầu tư thì đồng thời với việc ghi giảm nguyên
-        Điểm đ — Đối với TSCĐ dùng cho hoạt động sự nghiệp, dự án, khi tính hao mòn vào
-        Điểm e — Đối với TSCĐ dùng cho hoạt động văn hóa, phúc lợi, khi tính hao mòn vào
-        Điểm g — Trường hợp vào cuối năm tài chính doanh nghiệp xem xét lại thời gian trích
-        Điểm h — Kế toán giá trị TSCĐ hữu hình được đánh giá lại khi xác định giá trị doanh
-        Điểm i — Trường hợp cổ phần hóa đơn vị hạch toán phụ thuộc của Công ty Nhà nước
+        Điểm d — Trường  hợp  giảm  TSCĐ,  BĐS  đầu  tư  thì  đồng  thời  với  việc  ghi  giảm
+        Điểm đ — Đối  với  TSCĐ  dùng  cho  hoạt  động  sự  nghiệp,  dự  án,  khi  tính  hao  mòn
+        Điểm e — Đối  với  TSCĐ  dùng  cho  hoạt  động  văn hoá,  phúc  lợi,  khi  tính hao  mòn
+        Điểm g — Trường  hợp  vào  cuối  năm  tài  chính  doanh  nghiệp  xem  xét  lại  thời  gian
+        Điểm h — Kế  toán  giá  trị  TSCĐ  hữu  hình  được  đánh  giá  lại  khi  xác  định  giá  trị
+        Điểm i — Trường  hợp  cổ  phần  hóa  đơn  vị  hạch  toán  phụ  thuộc  của  Công  ty  Nhà
     Điều 39 — Tài khoản 217 - Bất động sản đầu tư
       Khoản 1 — Nguyên tắc kế toán
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 217 - Bất động sản đầu tư
+      Khoản 2 — Kết cấu  và  nội  dung  phản  ánh  của  tài  khoản  217 - Bất động sản  đầu
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Trường hợp mua trả tiền ngay, nếu thuế GTGT đầu vào được khấu trừ:
         Điểm b — Mua BĐSĐT theo phương thức trả chậm:
-        Điểm a — Trường hợp chuyển đổi TSCĐ thành BĐSĐT:
-        Điểm b — Khi chuyển từ  hàng tồn kho thành BĐSĐT, căn cứ  vào hồ  sơ  chuyển đổi
-        Điểm a — Căn cứ vào hợp đồng thuê tài chính và các chứng từ liên quan, ghi:
+        Điểm a — Trường họp chuyển đổi TSCĐ thành BĐSĐT:
+        Điểm b — Khi  chuyển từ hàng tồn kho thành BĐSĐT, căn cứ vào hồ sơ chuyển đổi
+        Điểm a — Căn cứ vào họp đồng thuê tài chính và các chứng từ liên quan, ghi:
         Điểm b — Khi hết hạn thuê tài sản tài chính
         Điểm a — Ghi nhận doanh thu bán, thanh lý BĐSĐT:
-        Điểm b — Kế  toán ghi giảm nguyên giá và giá trị  còn lại  của BĐSĐT  đã  được bán,
+        Điểm b — Kế toán ghi giảm nguyên giá và giá trị còn lại của BĐSĐT đã được bán,
         Điểm a — Ghi nhận doanh thu từ việc cho thuê Bất động sản đầu tư:
         Điểm b — Ghi nhận giá vốn Bất động sản đầu tư cho thuê
-        Điểm a — Trường hợp BĐSĐT chuyển thành hàng tồn kho khi chủ  sở  hữu có quyết
-        Điểm b — Trường hợp chuyển BĐSĐT thành bất động sản chủ sở hữu sử dụng, ghi:
+        Điểm a — Trường hợp BĐSĐT chuyển thành hàng tồn kho khi chủ sở hữu có quyết
+        Điểm b — Trường họp chuyển BĐSĐT thành bất động sản chủ sở hữu sử dụng, ghi:
     Điều 40 — Nguyên tắc kế toán các khoản đầu tư vốn vào đơn vị khác
       Khoản 1 — Các khoản đầu tư vào đơn vị khác gồm các khoản đầu tư vào công ty con,
-        Điểm a — Đầu tư  dưới  hình thức góp vốn vào đơn vị  khác (do bên được đầu tư  huy
-        Điểm b — Đầu tư dưới hình thức mua lại phần vốn góp tại đơn vị khác (mua lại phần
-      Khoản 2 — Khi thực hiện  đầu tư  bằng tài sản phi tiền tệ,  nhà đầu tư  phải  căn cứ  vào
-        Điểm a — Nếu đầu tư dưới hình thức góp vốn bằng tài sản phi tiền tệ, nhà đầu tư phải
-        Điểm b — Nếu đầu tư dưới hình thức mua lại phần vốn góp của đơn vị khác và thanh
-      Khoản 3 — Giá  phí  các  khoản  đầu  tư được  phản  ánh theo giá gốc,  bao  gồm giá mua
-      Khoản 4 — Kế  toán  phải  mở  sổ  chi  tiết  theo  dõi  khoản  đầu tư  vào  từng công ty con,
+        Điểm a — Đầu tư dưới hình thức góp vốn vào đơn vị khác (do bên được đầu tư huy
+        Điểm b — Đầu  tư  dưới  hình  thức  mua  lại  phần  vốn  góp  tại  đơn  vị  khác  (mua  lại
+      Khoản 2 — Khi  thực hiện đầu tư bàng tài  sản phi  tiền tệ,  nhà đầu tư phải  căn cứ vào
+        Điểm a — Nếu  đầu  tư  dưới  hình  thức  góp  vốn  bằng  tài  sản phi  tiền  tệ,  nhà  đầu  tư
+        Điểm b — Nấu  đầu  tư  dưới  hình  thức  mua  lại  phần  vốn  góp  của  đơn  vị  khác  và
+      Khoản 3 — Giá phí  các  khoản đầu tư được phản ánh theo giá gốc,  bao gồm  giá  mua
+      Khoản 4 — Kế  toán phải  mở sổ  chi tiết theo  dõi  khoản đầu tư vào  từng công ty con,
       Khoản 5 — Phải hạch toán đầy đủ, kịp thời các khoản cổ tức, lợi nhuận được chia vào
-        Điểm a — Cổ tức, lợi nhuận được chia bằng tiền hoặc tài sản phi tiền tệ cho giai đoạn
-        Điểm b — Cổ tức, lợi nhuận được chia bằng tiền hoặc tài sản phi tiền tệ cho giai đoạn
-        Điểm c — Khi xác định giá trị doanh nghiệp để cổ phần hóa, nếu các khoản đầu tư vào
+        Điểm a — Cổ  tức,  lợi  nhuận  được  chia  bằng  tiền  hoặc  tài  sản  phi  tiền  tệ  cho  giai
+        Điểm b — Cổ  tức,  lợi  nhuận  được  chia  bằng  tiền  hoặc  tài  sản  phi  tiền  tệ  cho  giai
+        Điểm c — Khi xác  định giá trị  doanh nghiệp để  cổ phần hoá,  nếu các khoản đầu tư
         Điểm d — Trường hợp nhận cổ tức bằng cổ phiếu thì thực hiện theo nguyên tắc:
-      Khoản 6 — Giá vốn các khoản đầu tư tài chính khi thanh lý, nhượng bán được xác định
-      Khoản 7 — Doanh nghiệp không được phân loại lại khoản đầu tư vào công ty con, công
-      Khoản 8 — Việc xác định quyền kiểm soát, đồng kiểm soát, ảnh hưởng đáng kể là tạm
-      Khoản 9 — Khi lập Báo cáo tài chính, doanh nghiệp phải xác định giá trị khoản đầu tư
-    Điều 41 — Tài khoản 221 - Đầu tư vào công ty con
+      Khoản 6 — Giá  vốn  các  khoản  đầu  tư tài  chính  khi  thanh  lý,  nhượng  bán  được  xác
+      Khoản 7 — Doanh  nghiệp  không  được  phân  loại  lại  khoản  đầu  tư  vào  công  ty  con,
+      Khoản 8 — Việc  xác  định  quyền  kiểm  soát,  đồng  kiểm  soát,  ảnh  hưởng  đáng  kể  là
+      Khoản 9 — Khi  lập  Báo  cáo tài  chính,  doanh nghiệp phải  xác  định giá trị khoản đầu
+    Điều 41 — Tài khoản 221 -  Đầu tư vào công ty con
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh giá trị hiện có và tình hình biến động tăng,
-        Điểm b — Chỉ hạch toán vào TK 221 "Đầu tư vào công ty con" khi nhà đầu tư nắm giữ
-        Điểm c — Các trường hợp sau khoản đầu tư vẫn được hạch toán vào TK 221 "Đầu tư
-        Điểm d — Trường hợp mua khoản  đầu tư  vào  công ty con trong giao dịch hợp nhất
-        Điểm đ — Kế toán khoản đầu tư vào công ty con phải tuân thủ các nguyên tắc quy định
-        Điểm e — Trường hợp công ty mẹ giải thể công ty con và sáp nhập toàn bộ tài sản và
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  giá trị  hiện  có  và tình  hình  biến  động
+        Điểm b — Chỉ hạch toán vào TK 221  "Đầu tư vào công ty con" khi nhà đầu tư nắm
+        Điểm c — Các trường họp  sau khoản đầu tư vẫn được hạch toán vào TK 221  "Đầu
+        Điểm d — Trường hợp mua khoản đầu tư vào công ty con  trong giao dịch họp nhất
+        Điểm đ — Kế toán khoản đầu tư vào công ty con phải tuân thủ các nguyên tắc  quy
+        Điểm e — Trường hợp công ty mẹ giải thể công ty con và sáp nhập toàn bộ tài  sản
         Điểm g — Việc phân phối lợi nhuận cho chủ sở hữu tại công ty mẹ được căn cứ vào
-        Điểm h — Doanh  nghiệp  không  được  chuyển  khoản  đầu  tư  vào  công  ty  con  thành
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 221 - Đầu tư vào công ty con
+        Điểm h — Doanh  nghiệp  không  được  chuyển  khoản  đầu  tư vào  công  ty  con  thành
+      Khoản 2 — Kết cấu và  nội dung phản ánh của tài khoản 221  - Đầu  tư vào công ty
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Khi công ty mẹ đầu tư vào công ty con bằng tiền, căn cứ số tiền đầu tư và
         Điểm b — Trường hợp công ty mẹ góp vốn vào công ty con bằng tài sản phi tiền tệ:
-        Điểm a — Nếu việc mua, bán khi hợp nhất kinh doanh được bên mua thanh toán bằng
-        Điểm b — Nếu việc mua, bán khi hợp nhất kinh doanh được thực hiện bằng việc bên
-        Điểm c — Nếu việc mua, bán khi hợp nhất kinh doanh được bên mua thanh toán bằng
-        Điểm d — Nếu việc mua, bán khi hợp nhất kinh doanh được bên mua thanh toán bằng
-        Điểm đ — Các chi phí liên quan trực tiếp đến việc hợp nhất kinh doanh như chi phí tư
-        Điểm a — Khi nhận được thông báo về cổ tức, lợi nhuận được chia cho giai đoạn sau
-        Điểm b — Khi nhận được thông báo về cổ tức, lợi nhuận được chia cho giai đoạn trước
-        Điểm c — Trường hợp nhận được khoản cổ tức, lợi nhuận mà khoản cổ tức, lợi nhuận
+        Điểm a — Nếu  việc  mua,  bán  khi  họp  nhất  kinh  doanh  được  bên  mua  thanh  toán
+        Điểm b — Nếu việc mua, bán khi họp nhất kinh doanh được thực hiện bằng việc bên
+        Điểm c — Nếu  việc  mua,  bán  khi  họp  nhất  kinh  doanh  được  bên  mua  thanh  toán
+        Điểm d — Nếu  việc  mua,  bán  khi  họp  nhất  kinh  doanh  được  bên  mua  thanh  toán
+        Điểm đ — Các chi phí liên quan trực tiếp đến việc hợp nhất kinh doanh như chi phí
+        Điểm a — Khi  nhận  được  thông  báo  về  cổ  tức,  lợi  nhuận  được  chia  cho  giai  đoạn
+        Điểm b — Khi  nhận  được  thông  báo  về  cổ  tức,  lợi  nhuận  được  chia  cho  giai  đoạn
+        Điểm c — Trường  họp  nhận  được  khoản  cổ  tức,  lợi  nhuận  mà  khoản  cổ  tức,  lợi
     Điều 42 — Tài khoản 222 - Đầu tư vào công ty liên doanh, liên kết
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh toàn bộ vốn góp vào công ty liên doanh và
-        Điểm b — Kế toán khoản đầu tư vào công ty liên doanh phải tuân thủ các nguyên tắc
-        Điểm c — Khi nhà đầu tư  không còn quyền đồng kiểm soát thì phải  ghi giảm khoản
-        Điểm d — Các khoản chi phí liên quan trực tiếp tới hoạt động đầu tư vào công ty liên
-        Điểm đ — Khi thanh lý, nhượng bán, thu hồi vốn góp liên doanh, liên kết, căn cứ vào
-        Điểm e — Kế toán phải mở sổ kế toán chi tiết theo dõi các khoản vốn đầu tư vào từng
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 222 - Đầu tư vào công ty
+        Điểm a — Tài khoản này dùng để phản ánh toàn bộ vốn góp vào công ty liên doanh
+        Điểm b — Kế  toán  khoản  đầu  tư vào  công ty  liên  doanh  phải  tuân  thủ  các  nguyên
+        Điểm c — Khi nhà đầu tư không còn quyền đồng kiểm soát thì phải ghi giảm khoản
+        Điểm d — Các  khoản  chi  phí  liên  quan trực  tiếp  tới  hoạt  động  đầu  tư vào  công  ty
+        Điểm đ — Khi  thanh  lý,  nhượng  bán,  thu  hồi  vốn  góp  liên  doanh,  liên  kết,  căn  cứ
+        Điểm e — Ke toán  phải  mở  sổ  kế  toán  chi  tiết theo  dõi  các  khoản  vốn  đầu  tư vào
+      Khoản 2 — Kết cấu và  nội dung phản ánh của tài khoản 222 - Đầu tư vào công ty
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
     Điều 43 — Tài khoản 228 - Đầu tư khác
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh giá trị hiện có và tình hình biến động tăng,
-        Điểm b — Kế  toán  phải  theo  dõi  chi  tiết  từng khoản  đầu tư  khác theo số  lượng,  đối
-        Điểm c — Kế toán tuân thủ các nguyên tắc chung đối với các khoản đầu tư vào đơn vị
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 228 - Đầu tư khác
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  giá trị  hiện  có  và  tình  hình  biến  động
+        Điểm b — Kế toán phải theo dõi  chi tiết từng khoản đầu tư khác theo số  lượng,  đối
+        Điểm c — Ke toán tuân thủ các nguyên tắc chung đối  với các khoản đầu tư vào đơn
+      Khoản 2 — Kết cấu và  nội dung phản ánh của tài khoản 228 - Đầu tư khác
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Trường hợp đầu tư bằng tiền
         Điểm b — Trường hợp đầu tư bằng tài sản phi tiền tệ:
-    Điều 44 — Kế toán giao dịch hợp đồng hợp tác kinh doanh
+    Điều 44 — Ke toán giao dịch hợp đồng hợp tác kinh doanh
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài sản đồng kiểm soát bởi các bên tham gia liên doanh là tài sản được các
-        Điểm b — Mỗi bên tham gia liên doanh được nhận sản phẩm hoặc doanh thu từ việc sử
-        Điểm c — Các bên tham gia liên doanh phải mở sổ kế toán chi tiết trên cùng hệ thống
-        Điểm a — Hợp đồng hợp tác kinh doanh dưới  hình thức hoạt động kinh doanh đồng
+        Điểm a — Tài  sản  đồng kiểm  soát bởi  các  bên tham  gia  liên  doanh  là tài  sản  được
+        Điểm b — Mỗi bên tham gia liên doanh được nhận sản phẩm hoặc doanh thu từ việc
+        Điểm c — Các  bên  tham  gia  liên  doanh  phải  mở  sổ  kế  toán  chi  tiết  trên  cùng  hệ
+        Điểm a — Hợp đồng hợp tác kinh doanh dưới hình thức hoạt động kinh doanh đồng
         Điểm b — Hợp đồng hợp tác kinh doanh quy định các khoản chi phí phát sinh riêng
-        Điểm c — Các bên tham gia liên doanh phải  mở  sổ  kế  toán để  ghi chép và phản ánh
-        Điểm d — Khi bên liên doanh có phát sinh chi phí chung phải mở sổ kế toán để ghi chép,
-        Điểm e — Trường hợp hợp đồng liên doanh quy định chia sản phẩm, định kỳ theo thỏa
-        Điểm d — Trường hợp BCC phát sinh các chi phí, doanh thu chung mà các bên tham
-        Điểm a — BCC chia lợi nhuận sau thuế thường là BCC dưới hình thức hoạt động đồng
-        Điểm b — Trường hợp BCC quy định chia lợi nhuận sau thuế, bên thực hiện kế toán và
+        Điểm c — Các bên tham gia liên doanh phải mở sổ kế toán để ghi chép và phản ánh
+        Điểm d — Khi bên liên doanh có phát sinh chi phí chung phải mở sổ kế toán để ghi
+        Điểm e — Trường hợp  hợp  đồng  liên doanh quy định chia sản phẩm,  định kỳ theo
+        Điểm d — Trường  hợp  BCC  phát  sinh  các  chi  phí,  doanh  thu  chung  mà  các  bên
+        Điểm a — BCC chia lợi  nhuận  sau thuế  thường  là BCC  dưới  hình thức  hoạt  động
+        Điểm b — Trường hợp BCC quy định chia lợi nhuận sau thuế, bên thực hiện kế toán
       Khoản 2 — Phương pháp kế toán BCC theo hình thức tài sản đồng kiểm soát
-      Khoản 3 — Phương pháp kế toán BCC theo hình thức hoạt động kinh doanh đồng
+      Khoản 3 — Phương  pháp  kế  toán  BCC  theo  hình  thức  hoạt  động  kinh  doanh
         Điểm a — Tại bên nhận vốn góp
         Điểm b — Tại bên góp vốn
         Điểm a — Kế toán tại bên tham gia liên doanh có phát sinh chi phí chung:
-        Điểm b — Kế toán tại bên liên doanh không hạch toán chi phí chung cho hợp đồng
+        Điểm b — Ke toán tại  bên liên doanh không hạch toán chi phí chung cho hợp đồng
         Điểm a — Kế toán ở bên bán sản phẩm:
         Điểm b — Kế toán ở bên không bán sản phẩm:
-      Khoản 4 — Phương pháp kế toán BCC chia lợi nhuận sau thuế
+      Khoản 4 — Phưong pháp kế toán BCC chia lọi nhuận sau thuế
         Điểm a — Tại bên thực hiện kế toán và quyết toán thuế cho BCC
         Điểm b — Tại bên không thực hiện kế toán và không quyết toán thuế cho BCC
         Điểm a — Tại bên kế toán và quyết toán thuế
         Điểm b — Tại bên không kế toán và không quyết toán thuế
     Điều 45 — Tài khoản 229 - Dự phòng tổn thất tài sản
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Dự  phòng giảm giá chứng khoán kinh doanh: Là dự  phòng phần giá trị  bị
+        Điểm a — Dự phòng giảm giá chứng khoán kinh doanh: Là dự phòng phần giá trị bị
         Điểm b — Dự phòng tổn thất đầu tư vào đơn vị khác: Là khoản dự phòng tổn thất do
         Điểm c — Dự phòng phải thu khó đòi: Là khoản dự phòng phần giá trị các khoản nợ
-        Điểm d — Dự  phòng giảm giá hàng tồn kho: Là khoản dự  phòng giảm giá hàng tồn
-        Điểm a — Doanh nghiệp được trích lập dự phòng đối với phần giá trị bị tổn thất có thể
-        Điểm b — Điều kiện, căn cứ và mức trích lập hoặc hoàn nhập dự phòng thực hiện theo
-        Điểm c — Việc trích lập hoặc hoàn nhập khoản dự phòng giảm giá chứng khoán kinh
-        Điểm a — Đối với các đơn vị được đầu tư là công ty mẹ, căn cứ để nhà đầu tư trích lập
-        Điểm b — Việc trích lập và hoàn nhập khoản dự phòng tổn thất đầu tư vào đơn vị khác
+        Điểm d — Dự phòng giảm giá hàng tồn kho:  Là khoản dự phòng giảm giá hàng tồn
+        Điểm a — Doanh nghiệp được trích lập dự phòng đổi với phần giá trị bị tổn thất có
+        Điểm b — Điều  kiện,  căn  cứ  và  mức  trích  lập  hoặc  hoàn  nhập  dự phòng  thực  hiện
+        Điểm c — Việc  trích  lập  hoặc  hoàn  nhập  khoản  dự  phòng  giảm  giá  chứng
+        Điểm a — Đối  với  các  đơn vị được đầu tư là công ty mẹ, căn cứ để nhà đầu tư trích
+        Điểm b — Việc  trích  lập  và  hoàn nhập khoản  dự phòng tổn thất  đầu  tư vào  đơn  vị
         Điểm a — Khi lập Báo cáo tài chính, doanh nghiệp xác định các khoản nợ phải thu khó
         Điểm b — Doanh nghiệp trích lập dự phòng phải thu khó đòi khi:
         Điểm c — Điều kiện, căn cứ trích lập dự phòng nợ phải thu khó đòi
-        Điểm d — Việc trích lập hoặc hoàn nhập khoản dự phòng phải thu khó đòi được thực
+        Điểm d — Việc  trích  lập  hoặc  hoàn  nhập  khoản  dự  phòng  phải  thu  khó  đòi
         Điểm e — Đối  với  những  khoản  phải  thu  khó  đòi  kéo  dài  trong  nhiều  năm,  doanh
-        Điểm a — Doanh  nghiệp  trích  lập  dự  phòng  giảm giá hàng tồn  kho  phải  lập  khi  có
-        Điểm b — Dự phòng giảm giá hàng tồn kho được lập vào thời điểm lập Báo cáo tài chính.
-        Điểm c — Việc lập dự  phòng giảm giá hàng tồn kho phải  tính theo từng loại  vật  tư,
-        Điểm d — Giá trị thuần có thể thực hiện được của hàng tồn kho là giá bán ước tính của
-        Điểm đ — Khi lập Báo cáo tài chính, căn cứ vào số lượng, giá gốc, giá trị thuần có thể
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 229 - Dự phòng tổn thất tài sản
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Khi lập Báo cáo tài chính, căn cứ  vào biến động giá trị  thị trường của các
-        Điểm b — Khi lập Báo cáo tài chính, căn cứ vào biến động giá trị thị trường của các
-        Điểm c — Kế toán xử lý khoản dự phòng giảm giá chứng khoán kinh doanh trước khi
-        Điểm a — Khi lập Báo cáo tài chính, nếu số phải lập kỳ  này lớn hơn số đã lập từ kỳ
+        Điểm a — Doanh nghiệp trích lập dự phòng giảm giá hàng tồn kho phải  lập khi  có
+        Điểm b — Dự phòng giảm giá hàng tồn kho được lập vào thời điểm lập Báo cáo tài
+        Điểm c — Việc lập dự phòng giảm giá hàng tồn kho phải tính theo từng loại vật tư,
+        Điểm d — Giá trị thuần có thể thực hiện được của hàng tồn kho là giá bán ước tính
+        Điểm đ — Khi  lập Báo  cáo tài  chính,  căn cứ vào  số  lượng,  giá gốc,  giá trị thuần có
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 229 - Dự phòng tổn thất
+      Khoản 3 — Phương pháp kế toán một số giao dịch kỉnh tế chủ yếu
+        Điểm a — Khi  lập Báo cáo tài chính, căn cứ vào biến động giá trị thị trường của các
+        Điểm b — Khi  lập Báo cáo tài chính, căn cứ vào biến động giá trị thị trường của các
+        Điểm c — Ke toán  xử  lý  khoản  dự  phòng  giảm  giá  chứng  khoán  kinh  doanh  trước
+        Điểm a — Khi lập Báo cáo tài chính, nếu số phải lập kỳ này lớn hơn số đã lập từ kỳ
         Điểm b — Khi lập Báo cáo tài chính, nếu số phải lập kỳ này nhỏ hơn số đã lập từ kỳ
-        Điểm c — Khi tổn thất thực sự xảy ra, các khoản đầu tư thực sự không có khả năng thu
+        Điểm c — Khi tổn thất thực  sự xảy ra,  các khoản đầu tư thực sự không có khả năng
         Điểm d — Khoản dự phòng giảm giá đầu tư dài hạn sau khi bù đắp tổn thất, nếu còn
         Điểm a — Khi lập Báo cáo tài chính, căn cứ các khoản nợ phải thu được phân loại là
         Điểm b — Khi lập Báo cáo tài chính, căn cứ các khoản nợ phải thu được phân loại là
-        Điểm c — Đối  với  các  khoản nợ  phải  thu khó  đòi khi xác  định là không thể  thu  hồi
-        Điểm d — Đối với những khoản nợ phải thu khó đòi đã được xử lý xóa nợ, nếu sau đó
-        Điểm đ — Đối với  các khoản nợ  phải  thu quá hạn được bán theo giá thỏa thuận, tùy
-        Điểm e — Kế toán xử lý các khoản dự phòng phải thu khó đòi trước khi doanh nghiệp
-        Điểm a — Khi lập Báo cáo tài chính, nếu số dự phòng giảm giá hàng tồn kho phải lập
-        Điểm b — Khi lập Báo cáo tài chính, nếu số dự phòng giảm giá hàng tồn kho phải lập
-        Điểm c — Kế toán xử lý khoản dự phòng giảm giá hàng tồn kho đối với vật tư, hàng
-        Điểm d — Kế  toán  xử  lý  khoản  dự  phòng  giảm  giá  hàng  tồn  kho  trước  khi  doanh
+        Điểm c — Đối với các khoản nợ phải thu khó đòi khi xác định là không thể thu hồi được,
+        Điểm d — Đối  với  những khoản nợ phải thu khó đòi  đã được xử lý xoá nợ, nếu sau
+        Điểm đ — Đối với các khoản nợ phải thu quá hạn được bán theo giá thoả thuận, tuỳ
+        Điểm e — Ke  toán  xử  lý  các  khoản  dự  phòng  phải  thu  khó  đòi  trước  khi  doanh
+        Điểm a — Khi  lập  Báo  cáo  tài  chính,  nếu  số  dự phòng  giảm  giá hàng tồn kho phải
+        Điểm b — Khi  lập Báo  cáo  tài  chính,  nếu  số  dự phòng  giảm  giá hàng tồn kho  phải
+        Điểm c — Kế toán xử lý khoản dự phòng giảm giá hàng tồn kho đổi với vật tư, hàng
+        Điểm d — Ke  toán  xử  lý  khoản  dự phòng  giảm  giá  hàng  tồn  kho  trước  khi  doanh
     Điều 46 — Tài khoản 241 - Xây dựng cơ bản dở dang
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này chỉ dùng ở đơn vị không thành lập ban quản lý dự án để phản
-        Điểm b — Chi phí thực hiện các dự án đầu tư XDCB là toàn bộ chi phí cần thiết để xây
-        Điểm c — Khi đầu tư XDCB các chi phí xây lắp, chi phí thiết bị thường tính trực tiếp
-        Điểm d — Trường hợp dự án đã hoàn thành đưa vào sử dụng nhưng quyết toán dự án
-        Điểm đ — Chi  phí  sửa  chữa,  bảo  dưỡng,  duy  trì  cho  TSCĐ  hoạt  động  bình  thường
-        Điểm e — Chủ đầu tư xây dựng bất động sản sử dụng tài khoản này để tập hợp chi phí
-        Điểm g — Chênh lệch tỷ  giá  hối đoái phát sinh từ  quá trình đầu tư  xây dựng cơ  bản
-        Điểm h — Trường hợp dự án đầu tư bị hủy bỏ, doanh nghiệp phải tiến hành thanh lý và
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 241 - Xây dựng cơ bản dở dang
+        Điểm a — Tài  khoản này chỉ  dùng ở đơn vị  không thành  lập  ban  quản lý  dự án để
+        Điểm b — Chi phí thực hiện các  dự án đầu tư XDCB  là toàn bộ chi phí cần thiết để
+        Điểm c — Khi  đầu  tư  XDCB  các  chi  phí  xây  lắp,  chi  phí  thiết  bị  thường  tính trực
+        Điểm d — Trường hợp dự án đã hoàn thành đưa vào  sử dụng nhưng quyết toán  dự
+        Điểm đ — Chi  phí  sửa  chữa,  bảo  dưỡng,  duy trì  cho  TSCĐ  hoạt  động  bình  thường
+        Điểm e — Chủ đầu tư xây dựng bất động sản  sử dụng tài  khoản này để tập họp chi
+        Điểm g — Chênh lệch tỷ giá hối đoái phát sinh từ quá trình đầu tư xây dựng cơ bản
+        Điểm h — Trường hợp dự án đầu tư bị hủy bỏ, doanh nghiệp phải tiến hành thanh lý
+      Khoản 2 — Kết cấu và  nội dung phản ánh của tài khoản 241  - Xây dựng cơ bản
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Trường hợp ứng trước bằng Đồng Việt Nam:
-        Điểm b — Trường hợp ứng trước bằng ngoại tệ:
+        Điểm a — Trường hçfp ứng trước bằng Đồng Việt Nam:
+        Điểm b — Trường họp ứng trước bằng ngoại tệ:
         Điểm a — Đối với thiết bị không cần lắp, ghi:
         Điểm b — Đối với thiết bị cần lắp:
         Điểm a — Đối với chi phí chạy thử không sản xuất ra sản phẩm thử:
         Điểm b — Đối với chi phí sản xuất thử và số thu từ bán sản phẩm sản xuất thử:
         Điểm a — Kế toán tại chủ đầu tư:
-        Điểm b — Kế  toán tại  Ban quản lý dự  án:  Thực hiện theo quy  định tại  Thông tư  số
-        Điểm a — Khi  chi  phí  sửa  chữa  TSCĐ  phát  sinh  được  tập hợp vào bên Nợ  TK 241
-        Điểm b — Khi  công  trình  sửa  chữa  hoàn  thành,  nếu  không  đủ điều  kiện  ghi  tăng
-Chương II
-    Điều 47 — Tài khoản 242 - Chi phí trả trước
+        Điểm b — Kế toán tại Ban quản lý dự án:  Thực hiện theo quy định tại Thông tư  số
+        Điểm a — Khi  chi  phí  sửa chữa TSCĐ phát sinh được tập họfp vào bên Nợ TK 241
+        Điểm b — Khi  công  trình  sửa  chữa  hoàn  thành,  nếu  không  đủ  điều  kiện  ghi  tăng
+    Điều 47 — Tài khoản 242 - Chỉ phí trả trước
       Khoản 1 — Nguyên tắc kế toán
         Điểm a — Tài khoản này dùng để phản ánh các chi phí thực tế đã phát sinh nhưng có
         Điểm b — Các nội dung được phản ánh là chi phí trả trước, gồm:
-        Điểm c — Việc tính và phân bổ  chi phí trả  trước vào chi phí SXKD từng kỳ  kế  toán
-        Điểm d — Kế toán phải theo dõi chi tiết từng khoản chi phí trả trước theo từng kỳ hạn
-        Điểm đ — Đối với các khoản chi phí trả trước bằng ngoại tệ, trường hợp tại thời điểm
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 242 - Chi phí trả trước
+        Điểm c — Việc tính và phân bổ chi phí trả trước vào chi phí  SXKD từng kỳ kế toán
+        Điểm d — Kế  toán phải  theo  dõi  chi  tiết từng  khoản  chi  phí  trả trước  theo  từng  kỳ
+        Điểm đ — Đối  với  các  khoản  chi  phí  trả  trước  bằng  ngoại  tệ,  trường  hợp  tại  thời
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 242 - Chi phí trả trirớc
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Khi  phát  sinh  các  khoản  chi  phí  trả  trước  phải  phân  bổ  dần  vào  chi  phí
-        Điểm b — Khi  trả  trước  tiền  thuê  TSCĐ,  thuê  cơ  sở  hạ  tầng theo phương thức  thuê
+        Điểm a — Khi  phát  sinh  các  khoản  chi  phí  trả trước  phải  phân  bổ  dần  vào  chi  phí
+        Điểm b — Khi  trả trước tiền thuê TSCĐ, thuê cơ sở hạ tầng theo phương thức thuê
         Điểm c — Đối với công cụ, dụng cụ, bao bì luân chuyển, đồ dùng cho thuê liên quan
-        Điểm d — Trường hợp mua TSCĐ và bất động sản đầu tư theo phương thức trả chậm,
-        Điểm đ — Trường hợp chi phí sửa chữa TSCĐ phát sinh lớn, doanh nghiệp không thực
-        Điểm e — Trường hợp doanh nghiệp trả trước lãi tiền vay cho bên cho vay:
-        Điểm g — Khi doanh nghiệp phát hành trái phiếu theo mệnh giá để huy động vốn vay,
-        Điểm h — Trường hợp hợp nhất kinh doanh không dẫn đến quan hệ công ty mẹ - công
-        Điểm i — Các  doanh  nghiệp  chưa  phân  bổ  hết  lỗ  chênh  lệch  tỷ  giá  trong  giai  đoạn
+        Điểm d — Trường  họp  mua  TSCĐ  và  bất  động  sản  đầu  tư  theo  phương  thức  trả
+        Điểm đ — Trường họp  chi  phí  sửa  chữa TSCĐ phát  sinh  lớn,  doanh  nghiệp không
+        Điểm e — Trường họp doanh nghiệp trả trước lãi tiền vay cho bên cho vay:
+        Điểm g — Khi  doanh nghiệp phát hành trái  phiếu theo  mệnh  giá  để  huy  động  vốn
+        Điểm h — Trường  hợp  họp  nhất kinh  doanh không  dẫn  đến  quan  hệ  công ty  mẹ  -
+        Điểm i — Các  doanh nghiệp chưa phân bổ hết lỗ  chênh lệch tỷ giá trong giai  đoạn
         Điểm k — Khi kiểm kê tài sản tại thời điểm xác định giá trị doanh nghiệp để cổ phần
-        Điểm l — Khi kiểm kê tài sản tại thời điểm xác định giá trị doanh nghiệp để cổ phần
-        Điểm m — Lợi thế kinh doanh phát sinh khi cổ phần hóa doanh nghiệp Nhà nước được
+      Khoản 1 — Khi kiểm kê tài sản tại thời điểm xác định giá trị doanh nghiệp để cổ phần
+        Điểm m — Lợi  thế  kinh  doanh phát  sinh  khi  cổ  phần  hóa  doanh  nghiệp  Nhà  nước
     Điều 48 — Tài khoản 243 - Tài sản thuế thu nhập hoãn lại
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh giá trị hiện có và tình hình biến động tăng,
+        Điểm a — Tài  khoản này  dùng  để  phản  ánh  giá trị  hiện  có  và tình  hình  biến  động
         Điểm b — Cơ sở tính thuế của tài sản hoặc nợ phải trả và Chênh lệch tạm thời:
         Điểm c — Nếu doanh nghiệp dự tính chắc chắn có được lợi nhuận tính thuế thu nhập
-        Điểm d — Cuối năm, doanh nghiệp phải lập 'Bảng xác định chênh lệch tạm thời được
-        Điểm đ — Việc ghi nhận tài sản thuế thu nhập hoãn lại trong năm được thực hiện theo
-        Điểm e — Kế toán phải hoàn nhập tài sản thuế thu nhập hoãn lại khi các khoản chênh
-        Điểm g — Khi lập Báo cáo tài chính, nếu dự  tính  chắc  chắn có  được lợi  nhuận tính
-        Điểm h — Việc bù trừ tài sản thuế thu nhập hoãn lại và thuế thu nhập hoãn lại phải trả
-      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  243  -  Tài  sản  thuế  thu
+        Điểm d — Cuối  năm,  doanh  nghiệp  phải  lập  'Bảng  xác  định  chênh  lệch  tạm  thời
+        Điểm đ — Việc  ghi  nhận  tài  sản thuế  thu  nhập  hoãn  lại  trong  năm  được  thực  hiện
+        Điểm e — Kế  toán  phải  hoàn  nhập  tài  sản  thuế  thu  nhập  hoãn  lại  khi  các  khoản
+        Điểm g — Khi  lập  Báo  cáo tài chính,  nếu dự tính chắc chắn  có  được  lợi  nhuận tính
+        Điểm h — Việc bù trừ tài  sản thuế thu nhập hoãn lại và thuế thu nhập hoãn lại phải
+      Khoản 2 — Kết cấu  và  nội  dung  phản  ánh  của  tài  khoản  243  -  Tài  sản  thuế  thu
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Nếu tài sản thuế thu nhập hoãn lại phát sinh trong năm lớn hơn tài sản thuế
-        Điểm b — Nếu tài sản thuế thu nhập hoãn lại phát sinh trong năm nhỏ hơn tài sản thuế
-    Điều 49 — Tài khoản 244 - Cầm cố, thế chấp, ký quỹ, ký cược
+        Điểm a — Nếu tài  sản thuế  thu  nhập  hoãn  lại  phát  sinh  trong  năm  lớn  hơn tài  sản
+        Điểm b — Nếu tài  sản thuế  thu nhập  hoãn  lại  phát  sinh trong  năm nhỏ  hơn tài  sản
+    Điều 49 — Tài khoản 244 - cầm  cố, thế chấp, ký quỹ, ký cược
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh số tiền hoặc giá trị tài sản mà doanh nghiệp
-        Điểm b — Các khoản tiền, tài sản đem cầm cố,  thế  chấp ký quỹ,  ký cược phải được
-        Điểm c — Doanh nghiệp phải theo dõi chi tiết các khoản cầm cố, thế chấp ký cược, ký
-        Điểm d — Đối  với  tài  sản  đưa  đi  cầm cố,  thế  chấp, ký quỹ,  ký  cược  được phản ánh
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 244 - Cầm cố, thế chấp, ký
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  số  tiền  hoặc  giá  trị  tài  sản  mà  doanh
+        Điểm b — Các khoản tiền, tài sản đem cầm cố, thế chấp ký quỹ, ký cược phải được
+        Điểm c — Doanh nghiệp phải theo dõi chi tiết các khoản cầm cố, thế chấp ký cược,
+        Điểm d — Đối với tài  sản đưa đi  cầm cố, thế  chấp, ký quỹ,  ký  cược  được phản ánh
+      Khoản 2 — Kết cấu và  nội dung phản  ánh  của  tài khoản  244 - cầm   cố, thế chấp,
+      Khoản 3 — Phương pháp kế toán một số giao dịch kỉnh tế chủ yếu
         Điểm a — Dùng tiền mặt, hoặc tiền gửi ngân hàng để ký cược, ký quỹ, ghi:
-        Điểm b — Trường hợp dùng tài sản cố định để cầm cố, ghi:
+        Điểm b — Trường họp dùng tài sản cố định để cầm cố, ghi:
         Điểm c — Khi mang tài sản khác đi cầm cố, thế chấp, ghi:
         Điểm d — Khi nhận lại tài sản cầm cố hoặc tiền ký quỹ, ký cược:
-        Điểm đ — Trường hợp doanh nghiệp không thực hiện đúng những cam kết, bị phạt vi
-        Điểm e — Trường hợp sử dụng khoản ký cược, ký quỹ thanh toán cho người bán, ghi:
-        Điểm g — Khi lập Báo cáo tài chính, nếu các khoản ký cược, ký quỹ được quyền nhận
+        Điểm đ — Trường hợp doanh nghiệp không thực hiện đúng những cam kết, bị phạt
+        Điểm e — Trường  hợp  sử  dụng  khoản  ký  cược,  ký  quỹ  thanh  toán  cho  người  bán,
+        Điểm g — Khi  lập  Báo  cáo  tài  chính,  nếu  các  khoản  ký  cược,  ký  quỹ  được  quyền
     Điều 50 — Nguyên tắc kế toán các khoản nợ phải trả
-      Khoản 1 — Các khoản nợ phải trả được theo dõi chi tiết theo kỳ hạn phải trả, đối tượng
-      Khoản 2 — Việc phân loại các khoản phải trả là phải trả người bán, phải trả nội bộ, phải
-        Điểm a — Phải trả người bán gồm các khoản phải trả mang tính chất thương mại phát
+      Khoản 1 — Các  khoản  nợ  phải  trả  được  theo  dõi  chi  tiết  theo  kỳ  hạn  phải  trả,  đối
+      Khoản 2 — Việc phân  loại  các khoản phải  trả  là phải  trả người  bán,  phải  trả nội  bộ,
+        Điểm a — Phải  trả  người  bán  gồm  các  khoản  phải  trả  mang  tính  chất  thương  mại
         Điểm b — Phải trả nội bộ gồm các khoản phải trả giữa đơn vị cấp trên và đơn vị cấp
-        Điểm c — Phải trả khác gồm các khoản phải trả không có tính thương mại, không liên
-      Khoản 3 — Khi lập Báo cáo tài chính, kế toán căn cứ kỳ hạn còn lại của các khoản phải
-      Khoản 4 — Khi có các bằng chứng cho thấy một khoản tổn thất có khả năng chắc chắn
-      Khoản 5 — Kế toán phải xác định các khoản phải trả thỏa mãn định nghĩa của các khoản
-    Điều 51 — Tài khoản 331 - Phải trả cho người bán
-      Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh tình hình thanh toán về các khoản nợ phải
-        Điểm b — Nợ phải trả cho người bán, người cung cấp, người nhận thầu xây lắp cần được
-        Điểm c — Doanh nghiệp phải  theo  dõi  chi  tiết  các  khoản nợ  phải  trả  cho  người  bán
-        Điểm d — Bên  giao  nhập  khẩu  ủy  thác  ghi  nhận  trên  tài  khoản  này  số  tiền  phải  trả
-        Điểm đ — Những vật tư,  hàng hóa, dịch vụ đã nhận, nhập kho nhưng đến cuối tháng
+        Điểm c — Phải  trả  khác  gồm  các  khoản phải  trả không  có  tính thương  mại,  không
+      Khoản 3 — Khi  lập  Báo  cáo  tài  chính,  kế  toán  căn  cứ kỳ hạn  còn  lại  của  các  khoản
+      Khoản 4 — Khi  có  các  bằng  chứng  cho  thấy  một  khoản  tổn  thất  có  khả  năng  chắc
+      Khoản 5 — Ke  toán  phải  xác  định  các  khoản  phải  trả  thỏa  mãn  định  nghĩa  của  các
+        Điểm d — Bên giao nhập khẩu ủy thác ghi nhận trên tài khoản này số tiền phải trả
+        Điểm đ — Những vật tư, hàng hóa, dịch vụ đã nhận, nhập kho nhưng đến cuối tháng
         Điểm e — Khi hạch toán chi tiết các khoản này, kế toán phải hạch toán rõ ràng, rành
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 331 - Phải trả cho người bán
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 331 -  Phải trả cho người
+      Khoản 3 — Phương pháp kế toán một sổ giao dịch kỉnh tế chủ yếu
         Điểm a — Trường hợp mua trong nội địa, ghi:
         Điểm b — Trường hợp nhập khẩu, ghi:
-        Điểm a — Trường hợp mua trong nội địa:
-        Điểm b — Trường hợp nhập khẩu, ghi:
-    Điều 52 — Tài khoản 333 - Thuế và các khoản phải nộp nhà nước
+        Điểm a — Trường họp mua trong nội địa:
+        Điểm b — Trường họp nhập khẩu, ghi:
+    Điều 52 — Tài khoản 333 -  Thuế và các khoản phải nộp nhà nước  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh quan hệ giữa doanh nghiệp với Nhà nước
-        Điểm b — Doanh nghiệp chủ động tính, xác định và kê khai số thuế, phí, lệ phí và các
-        Điểm c — Các khoản thuế gián thu như thuế GTGT (kể cả theo phương pháp khấu trừ
-        Điểm d — Đối với các khoản thuế được hoàn, được giảm, kế toán phải phân biệt rõ số
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  quan  hệ  giữa  doanh  nghiệp  với  Nhà
+        Điểm b — Doanh nghiệp chủ động tính, xác định và kê khai  số thuế, phí,  lệ phí và
+        Điểm c — Các khoản thuế  gián thu như thuế  GTGT (kể  cả theo phương pháp khấu
+        Điểm d — Đối với các khoản thuế được hoàn, được giảm, kế toán phải phân biệt rõ
         Điểm đ — Nghĩa vụ đối với NSNN trong giao dịch ủy thác xuất - nhập khẩu:
-        Điểm e — Kế  toán  phải  mở  sổ  chi  tiết  theo  dõi  từng  khoản  thuế,  phí,  lệ  phí  và  các
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 333 - Thuế và các khoản
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
+        Điểm e — Kế toán  phải  mở sổ  chi  tiết theo  dõi  từng  khoản  thuế,  phí,  lệ  phí  và các
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 333 -  Thuế và các khoản
+      Khoản 3 — Phương pháp kế toán  một số giao dịch  kinh tế chủ yếu
         Điểm a — Kế toán thuế GTGT đầu ra phải nộp theo phương pháp khấu trừ:
         Điểm b — Kế toán thuế GTGT đầu ra phải nộp theo phương pháp trực tiếp
         Điểm c — Khi nộp thuế GTGT vào Ngân sách Nhà nước, ghi:
-        Điểm a — Khi nhập khẩu vật tư, hàng hóa, TSCĐ kế toán phản ánh số thuế nhập khẩu
+        Điểm a — Khi  nhập  khẩu  vật  tư,  hàng  hoá,  TSCĐ  kế  toán  phản  ánh  số  thuế  nhập
         Điểm b — Phản ánh số thuế GTGT phải nộp của hàng nhập khẩu:
-        Điểm c — Khi thực nộp thuế GTGT của hàng nhập khẩu vào Ngân sách Nhà nước, ghi:
+        Điểm c — Khi  thực  nộp thuế GTGT của hàng nhập khẩu vào Ngân sách Nhà nước,
         Điểm d — Trường hợp nhập khẩu ủy thác (áp dụng tại bên giao ủy thác)
-        Điểm a — Kế toán thuế tiêu thụ đặc biệt phải nộp khi bán hàng hóa, cung cấp dịch vụ:
-        Điểm b — Khi nhập khẩu hàng hóa thuộc đối tượng chịu thuế tiêu thụ đặc biệt, kế toán
+        Điểm a — Kế toán thuế tiêu thụ đặc biệt phải  nộp khi  bán hàng hoá,  cung cấp dịch
+        Điểm b — Khi  nhập  khẩu  hàng hoá thuộc  đối  tượng  chịu  thuế  tiêu  thụ  đặc  biệt, kế
         Điểm c — Khi nộp tiền thuế tiêu thụ đặc biệt vào Ngân sách Nhà nước, ghi:
-        Điểm d — Kế toán hoàn thuế tiêu thụ đặc biệt đã nộp ở khâu nhập khẩu:
-        Điểm đ — Kế  toán thuế  TTĐB phải  nộp khi bán hàng hóa, TSCĐ,  cung cấp dịch vụ
-        Điểm e — Trường hợp xuất sản phẩm, hàng hóa, dịch vụ chịu thuế tiêu thụ đặc biệt để
+        Điểm d — Ke toán hoàn thuế tiêu thụ đặc biệt đã nộp ở khâu nhập khẩu:
+        Điểm đ — Kế toán thuế TTĐB phải nộp khi bán hàng hóa, TSCĐ, cung cấp dịch vụ
+        Điểm e — Trường họp xuất sản phẩm, hàng hóa, dịch vụ chịu thuế tiêu thụ đặc biệt
         Điểm g — Trường hợp nhập khẩu ủy thác (áp dụng tại bên giao ủy thác)
-        Điểm a — Kế toán thuế xuất khẩu phải nộp khi bán hàng hóa, cung cấp dịch vụ:
+        Điểm a — Ke toán thuế xuất khẩu phải nộp khi bán hàng hoá, cung cấp dịch vụ:
         Điểm b — Khi nộp tiền thuế xuất khẩu vào NSNN, ghi:
         Điểm c — Thuế xuất khẩu được hoàn hoặc được giảm (nếu có), ghi:
         Điểm d — Trường hợp xuất khẩu ủy thác (áp dụng tại bên giao ủy thác)
-        Điểm a — Khi nhập khẩu vật tư, hàng hóa, TSCĐ, kế toán phản ánh số thuế nhập khẩu
+        Điểm a — Khi  nhập  khẩu  vật tư,  hàng  hoá,  TSCĐ,  kế  toán  phản  ánh  số  thuế  nhập
         Điểm b — Khi nộp thuế nhập khẩu vào Ngân sách Nhà nước, ghi:
-        Điểm c — Kế toán hoàn thuế nhập khẩu đã nộp ở khâu nhập khẩu
+        Điểm c — Ke toán hoàn thuế nhập khẩu đã nộp ở khâu nhập khẩu
         Điểm d — Trường hợp nhập khẩu ủy thác (áp dụng tại bên giao ủy thác)
-        Điểm a — Căn cứ  số  thuế  thu nhập doanh nghiệp phải nộp vào Ngân sách Nhà nước
+        Điểm a — Căn cứ số thuế thu nhập doanh nghiệp phải nộp vào Ngân sách Nhà nước
         Điểm b — Khi nộp tiền thuế thu nhập doanh nghiệp vào NSNN, ghi:
-        Điểm c — Cuối năm, khi xác định số thuế thu nhập doanh nghiệp phải nộp của năm
-        Điểm a — Khi bán hàng hóa, cung cấp dịch vụ thuộc đối tượng chịu thuế bảo vệ môi
-        Điểm b — Khi nhập khẩu hàng hóa thuộc đối tượng chịu thuế bảo vệ môi trường, kế
-        Điểm c — Trường hợp doanh nghiệp là bên nhận ủy thác nhập khẩu phải nộp thuế bảo
+        Điểm c — Cuối năm,  khi xác định số thuế thu nhập doanh nghiệp phải nộp của năm
+        Điểm a — Khi bán hàng hoá, cung cấp dịch vụ thuộc đối tượng chịu thuế bảo vệ môi
+        Điểm b — Khi nhập khẩu hàng hoá thuộc đối tượng chịu thuế bảo vệ môi trường, kế
+        Điểm c — Trường  họp  doanh nghiệp  là bên nhận uỷ thác nhập khẩu phải nộp thuế
         Điểm d — Kế toán hoàn thuế bảo vệ môi trường đã nộp ở khâu nhập khẩu
-        Điểm đ — Kế toán thuế  BVMT phải nộp khi bán hàng hóa, TSCĐ,  cung cấp dịch vụ
-    Điều 53 — Tài khoản 334 - Phải trả người lao động
+        Điểm đ — Ke toán thuế BVMT phải nộp khi bán hàng hóa, TSCĐ, cung cấp dịch vụ
+    Điều 53 — Tài khoản 334 - Phải trả người lao động  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-      Khoản 2 — Kết cấu và nội dung phản ảnh của tài khoản 334 - Phải trả người lao động
+      Khoản 2 — Kết cấu và  nội dung phản  ảnh của  tài khoản  334 -  Phải  trả  người lao
       Khoản 3 — Phương pháp kế toán một số nghiệp vụ kinh tế chủ yếu
-        Điểm a — Tính tiền lương, các khoản phụ  cấp theo quy  định phải  trả  cho người  lao
+        Điểm a — Tính tiền  lương,  các  khoản phụ  cấp  theo  quy định phải  trả cho  người  lao
         Điểm b — Tiền thưởng trả cho công nhân viên:
-        Điểm c — Tính tiền bảo hiểm xã hội  (ốm đau, thai sản, tai nạn,...) phải  trả  cho công
+        Điểm c — Tính tiền bảo hiểm xã hội (ốm đau, thai  sản, tai nạn,...) phải trả cho công
         Điểm d — Tính tiền lương nghỉ phép thực tế phải trả cho công nhân viên, ghi:
-        Điểm đ — Các  khoản  phải  khấu  trừ  vào  lương  và  thu  nhập  của  công  nhân  viên  và
-        Điểm e — Tính tiền thuế thu nhập cá nhân của công nhân viên và người lao động khác
-        Điểm g — Khi  ứng trước hoặc  thực trả  tiền lương, tiền công cho công nhân viên và
-        Điểm h — Thanh toán các khoản phải trả cho công nhân viên và người lao động khác
-        Điểm i — Trường hợp trả  lương hoặc thưởng cho công nhân viên và người  lao động
-        Điểm k — Xác  định  và  thanh  toán  các  khoản  khác  phải  trả  cho  công  nhân  viên  và
-    Điều 54 — Tài khoản 335 - Chi phí phải trả
+        Điểm đ — Các  khoản  phải  khấu  trừ vào  lương  và thu  nhập  của  công  nhân  viên  và
+        Điểm e — Tính  tiền  thuế  thu  nhập  cá  nhân  của  công  nhân  viên  và  người  lao  động
+        Điểm g — Khi ứng trước hoặc thực trả tiền lương, tiền công cho  công nhân viên và
+        Điểm h — Thanh  toán  các  khoản  phải  trả  cho  công  nhân  viên  và  người  lao  động
+        Điểm i — Trường họp trả lương hoặc thưởng cho công nhân viên và người lao động
+        Điểm k — Xác  định  và thanh toán  các  khoản khác  phải  trả  cho  công  nhân  viên  và
+    Điều 54 — Tài khoản 335 -  Chi phí phải trả  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
         Điểm a — Tài khoản này dùng để phản ánh các khoản phải trả cho hàng hóa, dịch vụ
         Điểm b — Kế toán phải phân biệt các khoản chi phí phải trả (hay còn được gọi là chi
-        Điểm c — Các  khoản  trích  trước  không  được  phản  ánh  vào  tài  khoản  335  mà  được
-        Điểm d — Việc trích trước vào chi phí sản xuất,  kinh doanh trong kỳ  phải được tính
-        Điểm đ — Về nguyên tắc, các khoản chi phí phải trả phải được quyết toán với số chi
-        Điểm e — Việc trích trước chi phí để  tạm tính giá vốn sản phẩm, hàng hóa bất động
-        Điểm g — Việc xác định chi phí lãi vay được vốn hóa phải tuân thủ Chuẩn mực kế toán
+        Điểm c — Các khoản trích trước không được phản ánh vào tài khoản 335  mà được phản
+        Điểm d — Việc trích trước vào chi phí sản xuất, kinh doanh trong kỳ phải được tính
+        Điểm đ — về nguyên tắc, các khoản chi phí phải trả phải được quyết toán với số chi
+        Điểm e — Việc trích trước chi phí để tạm tính giá vốn sản phẩm, hàng hoá bất động
+        Điểm g — Việc  xác  định chi phí  lãi vay được vốn hóa phải tuần thủ  Chuẩn mực  kế
         Điểm h — Những  khoản  chi  phí  trích  trước  chưa  sử  dụng  cuối  năm  phải  giải  trình
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 335 - Chi phí phải trả
+      Khoản 2 — Kết cấu và  nội dung phản ánh của tài khoản 335 -  Chi phí phải trả
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Trích trước vào chi phí về tiền lương nghỉ phép của công nhân sản xuất, ghi:
-        Điểm b — Khi tính tiền lương nghỉ phép thực tế phải trả cho công nhân sản xuất, nếu
-        Điểm c — Trích  trước  vào chi phí sản xuất,  kinh  doanh số  chi  sửa chữa  TSCĐ  phát
+        Điểm b — Khi tính tiền lương nghỉ phép thực tế phải trả cho công nhân sản xuất, nếu sổ
+        Điểm c — Trích trước  vào  chi  phí sản xuất,  kinh doanh số  chi  sửa chữa TSCĐ phát
         Điểm d — Khi công việc sửa chữa TSCĐ hoàn thành, bàn giao đưa vào sử dụng, nếu
         Điểm đ — Trích trước vào chi phí sản xuất, kinh doanh những chi phí dự tính phải chi
         Điểm e — Chi phí thực tế phát sinh liên quan đến các khoản chi phí trích trước, ghi:
-        Điểm g — Trường hợp lãi vay trả sau, cuối kỳ tính lãi tiền vay phải trả trong kỳ, ghi:
-        Điểm h — Trường hợp doanh nghiệp phát hành trái phiếu theo mệnh giá, nếu trả  lãi
-        Điểm i — Trường hợp doanh nghiệp phát hành trái phiếu có chiết khấu, nếu trả lãi sau
-        Điểm k — Trường hợp doanh nghiệp phát hành trái phiếu có phụ  trội,  nếu trả  lãi sau
-        Điểm l — Đối với doanh nghiệp 100% vốn Nhà nước khi chuyển thành công ty cổ phần:
-        Điểm m — Kế toán khoản chi phí trích trước để tạm tính giá vốn sản phẩm, hàng hóa
-    Điều 55 — Tài khoản 336 - Phải trả nội bộ
+        Điểm g — Trường họp lãi vay trả sau, cuối kỳ tính lãi tiền vay phải trả trong kỳ, ghi:
+        Điểm h — Trường họp doanh nghiệp phát hành trái phiếu theo mệnh giá, nếu trả lãi
+        Điểm i — Trường  hợp  doanh  nghiệp phát hành trái  phiếu  có  chiết  khấu,  nếu trả  lãi
+        Điểm k — Trường họp doanh nghiệp phát hành trái phiếu có phụ trội, nếu trả lãi sau
+      Khoản 1 — Đối  với  doanh nghiệp  100%  vốn Nhà nước khi  chuyển thành  công ty  cổ
+        Điểm m — Ke toán khoản chi phí trích trước để tạm tính giá vốn sản phẩm, hàng hóa
+    Điều 55 — Tài khoản 336 -  Phải trả nôi bô  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài  khoản này dùng  để  phản  ánh  tình  hình  thanh  toán  các  khoản phải  trả
+        Điểm a — Tài  khoản này dùng để phản ánh tình hình thanh toán các khoản phải trả
         Điểm b — Không phản ánh vào tài khoản 336 các giao dịch thanh toán giữa công ty
-        Điểm c — Các khoản phải trả nội bộ phản ánh trên tài khoản 336 "Phải trả nội bộ" bao
-        Điểm d — Tùy theo việc phân cấp quản lý và đặc điểm hoạt động, doanh nghiệp quyết
-        Điểm đ — Tài khoản 336 'Phải trả nội bộ' được hạch toán chi tiết cho từng đơn vị có
-        Điểm e — Cuối kỳ, kế toán tiến hành kiểm tra, đối chiếu tài khoản 136, tài khoản 336
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 336 - Phải trả nội bộ
+        Điểm c — Các  khoản  phải  trả nội  bộ  phản  ánh trên tài  khoản  336  "Phải  trả  nội  bộ"
+        Điểm d — Tùy  theo  việc  phân  cấp  quản  lý  và  đặc  điểm  hoạt  động,  doanh  nghiệp
+        Điểm đ — Tài  khoản 336  "Phải trả nội  bộ"  được hạch toán  chi tiết cho từng đơn  vị
+        Điểm e — Cuối kỳ, kế toán tiến hành kiểm tra,  đối  chiếu tài khoản  136, tài khoản
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 336 -  Phải trả nội bộ
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Khi đơn vị  hạch toán phụ  thuộc như  chi nhánh, cửa hàng, ban quản lý dự
-        Điểm b — Số tiền phải trả cho các đơn vị nội bộ khác về các khoản đã được chi hộ, trả hộ,
+        Điểm a — Khi đơn vị hạch toán phụ thuộc như chi nhánh, cửa hàng, ban quản lý dự
+        Điểm b — Số tiền phải trả cho các đơn vị nội bộ khác về các khoản đã được chi hộ,
         Điểm c — Khi thu tiền hộ hoặc vay các đơn vị nội bộ khác, ghi:
-        Điểm d — Khi trả tiền cho doanh nghiệp và các đơn vị  nội bộ về các khoản phải trả,
-        Điểm đ — Khi có quyết định điều chuyển tài sản cho các đơn vị khác trong nội bộ và
-        Điểm e — Bù trừ giữa các khoản phải thu và phải trả phát sinh từ giao dịch với các đơn
-        Điểm g — Trường hợp đơn vị hạch toán phụ thuộc không được phân cấp kế toán đến
-        Điểm h — Trường hợp  được  phân  cấp  hạch  toán  đến  lợi  nhuận  sau  thuế  chưa  phân
-        Điểm a — Số  quỹ  khen thưởng, quỹ  phúc lợi phải  cấp cho các đơn vị  hạch toán phụ
+        Điểm d — Khi trả tiền cho doanh nghiệp và các đơn vị nội bộ về các khoản phải trả,
+        Điểm đ — Khi  có  quyết định điều  chuyển tài  sản cho  các  đon  vị  khác trong nội  bộ
+        Điểm e — Bù trừ giữa các khoản phải thu và phải trả phát sinh từ giao dịch với  các
+        Điểm g — Trường  hợp  đơn  vị  hạch  toán  phụ  thuộc  không  được  phân  cấp  kế  toán
+        Điểm h — Trường hợp được phân  cấp hạch toán đến  lợi  nhuận  sau  thuế  chưa phân
+        Điểm a — Số  quỹ khen thưởng,  quỹ phúc  lợi phải  cấp cho  các  đơn vị hạch toán phụ
         Điểm b — Các khoản phải trả cho các đơn vị hạch toán phụ thuộc, ghi:
-        Điểm c — Khi thanh toán các khoản phải trả cho các đơn vị hạch toán phụ thuộc, ghi:
+        Điểm c — Khi  thanh  toán  các  khoản  phải  trả  cho  các  đơn  vị  hạch  toán  phụ  thuộc,
         Điểm d — Bù trừ các khoản phải thu, phải trả nội bộ, ghi:
-    Điều 56 — Tài khoản 337 - Thanh toán theo tiến độ hợp đồng xây dựng
+    Điều 56 — Tài khoản 337 -  Thanh toán theo tiến độ hợp đồng xây dựng  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh số tiền khách hàng phải trả theo tiến độ kế
-        Điểm b — Tài khoản 337 'Thanh toán theo tiến độ kế hoạch hợp đồng xây dựng' chỉ
-        Điểm c — Căn cứ để  ghi vào bên Nợ  TK 337 là chứng từ  xác định doanh thu tương
+        Điểm a — Tài  khoản này dùng để phản ánh số tiền khách hàng phải trả theo tiến độ
+        Điểm b — Tài  khoản  337  '  Thanh  toán  theo  tiến  độ  kế  hoạch  họp  đồng xây dựng'
+        Điểm c — Căn cứ để ghi vào bên Nợ TK 337 là chứng từ xác định doanh thu tương
         Điểm d — Tài khoản 337 phải được theo dõi chi tiết theo từng hợp đồng xây dựng.
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 337 - Thanh toán theo tiến
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  337 -  Thanh  toán  theo
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Trường hợp hợp đồng xây dựng quy định nhà thầu được thanh toán theo tiến
-        Điểm b — Căn cứ vào hóa đơn được lập theo tiến độ kế hoạch để phản ánh số tiền phải
+        Điểm a — Trường  hợp họp đồng xây dựng quỵ định nhà thầu được thanh toán theo
+        Điểm b — Căn  cứ vào hoá đơn được lập theo tiến độ kế hoạch để phản ánh số tiền
         Điểm c — Khi nhà thầu nhận được tiền của khách hàng thanh toán, ghi:
-    Điều 57 — Tài khoản 338 - Phải trả, phải nộp khác
+    Điều 57 — Tài khoản 338 -  Phải trả, phải nộp khác  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh tình hình thanh toán về các khoản phải trả,
-        Điểm b — Nội dung và phạm vi phản ánh của tài khoản này gồm các nghiệp vụ  chủ
-        Điểm c — Các khoản phải trả,  phải nộp khác bằng ngoại  tệ  hoặc việc thanh toán các
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 338 - Phải trả, phải nộp khác
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Kế  toán phản ánh giá trị  tài sản thừa theo giá trị hợp lý tại thời điểm phát
-        Điểm b — Khi có biên bản xử lý của cấp có thẩm quyền về số tài sản thừa, kế toán căn
-        Điểm a — Khi nhận của doanh nghiệp giao ủy thác nhập khẩu tiền để mua hàng nhập
-        Điểm b — Khi chuyển tiền để ký quỹ mở LC (nếu thanh toán bằng thư tín dụng), căn
-        Điểm c — Khi nhập khẩu vật tư, thiết bị, hàng hóa cho bên giao ủy thác, kế toán theo
+        Điểm a — Tài  khoản này dùng để phản ánh tình hình thanh toán  về  các  khoản phải
+        Điểm b — Nội dung và phạm vi phản ánh của tài khoản này gồm các nghiệp vụ chủ
+        Điểm c — Các khoản phải trả, phải nộp khác bằng ngoại tệ hoặc việc thanh toán các
+      Khoản 2 — Kết cấu và nội dung phản ánh  của  tài khoản 338 - Phải trả, phải nộp
+      Khoản 3 — Phương pháp kế toán một sổ giao dịch kinh tế chủ yếu
+        Điểm a — Kế toán phản ánh giá trị tài sản thừa theo giá trị hợp lý tại thời điểm phát
+        Điểm b — Khi  có biên bản xử lý của cấp có thẩm quyền về số tài  sản thừa, kế toán
+        Điểm a — Khi  nhận  của  doanh  nghiệp  giao  uỷ  thác  nhập  khẩu  tiền  để  mua  hàng
+        Điểm b — Khi  chuyển  tiền  để  ký  quỹ  mở  LC  (nếu  thanh  toán  bằng  thư  tín  dụng),
+        Điểm c — Khi  nhập  khẩu  vật  tư,  thiết  bị,  hàng  hóa  cho  bên  giao  ủy  thác,  kế  toán
         Điểm d — Kế toán các nghiệp vụ thanh toán ủy thác nhập khẩu:
-        Điểm đ — Đối  với  phí  ủy thác nhập khẩu và thuế  GTGT tính trên phí  ủy thác nhập
-        Điểm e — Các khoản chi hộ khác cho doanh nghiệp ủy thác nhập khẩu liên quan đến hoạt
+        Điểm đ — Đối  với  phí  uỷ thác nhập khẩu và thuế GTGT tính trên phí uỷ thác nhập
+        Điểm e — Các khoản chi hộ khác cho doanh nghiệp uỷ thác nhập khẩu liên quan đến
         Điểm g — Bù trừ các khoản phải thu và phải trả khác khi kết thúc giao dịch, ghi:
-        Điểm a — Khi nhận ủy thác xuất khẩu vật tư, thiết bị, hàng hóa cho bên giao ủy thác,
+        Điểm a — Khi  nhận  ủy  thác  xuất  khẩu  vật  tư,  thiết  bị,  hàng  hóa  cho  bên  giao  ủy
         Điểm b — Các khoản chi hộ bên giao ủy thác xuất khẩu, ghi:
-        Điểm c — Khi nhận được tiền hàng của người mua ở nước ngoài, kế toán phản ánh là
+        Điểm c — Khi nhận được tiền hàng của người mua  ở nước ngoài,  kể  toán phản ánh
         Điểm d — Bù trừ các khoản phải thu phải trả khác, ghi:
-    Điều 58 — Tài khoản 341 - Vay và nợ thuê tài chính
+    Điều 58 — Tài khoản 341 -  Vay và nợ thuê tài chính  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để  phản ánh các khoản tiền vay, nợ  thuê tài chính và
+        Điểm a — Tài  khoản này dùng để phản ánh các khoản tiền vay, nợ thuê tài chính và
         Điểm b — Doanh nghiệp phải theo dõi chi tiết kỳ hạn phải trả của các khoản vay, nợ
-        Điểm c — Các chi phí đi vay liên quan trực tiếp đến khoản vay (ngoài lãi vay phải trả),
-        Điểm d — Đối với khoản nợ thuê tài chính, tổng số nợ thuê phản ánh vào bên Có của
-        Điểm e — Doanh nghiệp phải  hạch toán chi tiết  và  theo dõi từng đối  tượng cho vay,
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 341 - Vay và nợ thuê tài chính
+        Điểm c — Các  chi  phí  đi  vay  liên  quan  trực tiếp  đến khoản vay  (ngoài  lãi  vay phải
+        Điểm d — Đối  với  khoản  nợ thuê  tài  chính,  tổng  sổ  nợ thuê  phản  ánh  vào  bên  Có
+        Điểm e — Doanh nghiệp phải hạch toán chi tiết và theo dõi từng đối tượng cho vay,
+      Khoản 2 — Kết cấu và  nội dung phản ánh của tài khoản 341 -  Vay và nợ thuê tài
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm b — Vay chyển thẳng cho người bán để mua sắm hàng tồn kho, TSCĐ, để thanh
-        Điểm c — Vay thanh toán hoặc ứng vốn (trả trước) cho người bán, người nhận thầu về
-        Điểm d — Vay để đầu tư vào công ty con, công ty liên doanh, liên kết, đầu tư cổ phiếu,
-        Điểm đ — Trường hợp lãi vay phải trả được nhập gốc, ghi:
-        Điểm e — Khi trả nợ vay bằng Đồng Việt Nam hoặc bằng tiền thu nợ của khách hàng, ghi:
+        Điểm b — Vay  chyển  thẳng  cho  người  bán  để  mua  sắm  hàng  tồn  kho,  TSCĐ,  để
+        Điểm c — Vay thanh toán hoặc ứng vốn (trả trước) cho người bán, người nhận thầu
+        Điểm d — Vay  để  đầu  tư  vào  công  ty  con,  công  ty  liên  doanh,  liên  kết,  đầu  tư  cổ
+        Điểm đ — Trường hợp lãi vay phải trả được nhập gổc, ghi:
+        Điểm e — Khi  trả  nợ  vay  bằng  Đồng  Việt  Nam  hoặc  bàng  tiền  thu  nợ  của  khách
         Điểm g — Khi trả nợ vay bằng ngoại tệ:
-        Điểm h — Kế  toán các nghiệp vụ  liên  quan đến hoạt động thuê tài chính: Thực hiện
-        Điểm i — Khi lập Báo cáo tài chính, số dư vay và nợ thuê tài chính bằng ngoại tệ được
-    Điều 59 — Tài khoản 343 - Trái phiếu phát hành
+        Điểm h — Kế toán các nghiệp vụ liên quan đến hoạt động thuê tài chính:  Thực hiện
+        Điểm i — Khi  lập  Báo  cáo  tài  chính,  số  dư  vay  và nợ thuê  tài  chính  bằng  ngoại  tệ
+    Điều 59 — Tài khoản 343 -  Trái phiếu phát hành  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Là lãi suất ngân hàng thương mại  cho vay đang áp dụng phổ  biến trên thị
+        Điểm a — Là lãi suất ngân hàng thương mại cho vay đang áp dụng phổ biến trên thị
         Điểm b — Trường hợp không xác định được lãi suất theo điểm a nêu trên thì lãi suất
-        Điểm a — Khi doanh nghiệp vay vốn bằng phát hành trái phiếu có thể xảy ra 3 trường hợp:
-        Điểm b — Chiết khấu và phụ trội trái phiếu chỉ phát sinh khi doanh nghiệp đi vay bằng
-        Điểm c — Doanh nghiệp sử dụng TK 3431 - Trái phiếu thường để phản ánh chi tiết các
-        Điểm d — Doanh nghiệp phải theo dõi chiết khấu và phụ trội cho từng loại trái phiếu
-        Điểm e — Trường hợp trả lãi khi đáo hạn trái phiếu thì định kỳ doanh nghiệp phải tính
-        Điểm g — Khi lập Báo cáo tài chính, trên Bảng cân đối kế toán trong phần nợ phải
-        Điểm h — Chi  phí  phát  hành  trái  phiếu  được  phân  bổ  dần  phù  hợp  với  kỳ  hạn  trái
-        Điểm a — Trái phiếu chuyển  đổi  là  loại  trái  phiếu có thể  chuyển  đổi  thành cổ  phiếu
-        Điểm b — Doanh nghiệp (bên phát hành trái phiếu chuyển đổi) sử dụng tài khoản 3432 -
-        Điểm c — Trái phiếu chuyển đổi phản ánh trên tài khoản 3432 là loại trái phiếu có thể
-        Điểm d — Chi phí phát hành trái phiếu chuyển đổi được phân bổ dần phù hợp với kỳ
-        Điểm e — Tại thời điểm ghi nhận ban đầu, khi phát hành trái phiếu chuyển đổi, doanh
+        Điểm a — Khi  doanh  nghiệp  vay  vốn  bàng  phát  hành  trái  phiếu  có  thể  xảy  ra  3
+        Điểm b — Chiết  khấu  và  phụ  trội  trái  phiếu  chỉ  phát  sinh  khi  doanh  nghiệp  đi  vay
+        Điểm c — Doanh nghiệp sử dụng TK 3431  -  Trái phiếu thường để phản ánh chi tiết
+        Điểm d — Doanh  nghiệp  phải  theo  dõi  chiết  khấu  và  phụ  trội  cho  từng  loại  trái
+        Điểm e — Trường  hợp trả  lãi  khi  đáo  hạn trái  phiếu thì  định  kỳ  doanh  nghiệp  phải
+        Điểm g — Khi  lập Báo  cáo tài  chính, trên  Bảng cân  đối  kế toán  trong phần  nợ phải
+        Điểm h — Chi  phí  phát  hành trái  phiếu  được  phân  bổ  dần phù  hợp  với  kỳ hạn trái
+        Điểm a — Trái phiếu chuyển đổi  là loại trái phiếu có thể chuyển đổi thành cổ phiếu
+        Điểm b — Doanh  nghiệp  (bên  phát  hành  trái  phiếu  chuyển  đổi)  sử  dụng  tài  khoản
+        Điểm c — Trái  phiếu  chuyển đổi phản ánh trên tài  khoản  3432  là loại  trái phiếu  có
+        Điểm d — Chi phí phát hành trái phiếu chuyến đổi được phân bổ dần phù họp với kỳ
+        Điểm e — Tại  thời  điêm  ghi  nhận  ban  đâu,  khi  phát  hành  trái  phiêu  chuyên  đôi,
         Điểm g — Sau ghi nhận ban đầu, kế toán phải điều chỉnh giá trị phần nợ gốc của trái
+      Khoản 8 — 8 5 8 . 3 8 5   [ 8 . 8 5 8 . 3 8 5   X  1 . 0 0 0 . 0 0 0 3 2 8 . 7 6 0 9 . 1 8 7 . 1 5 0
+      Khoản 9 — 1 8 7 . 1 5 0   [ 9 . 1 8 7 . 1 5 Ơ X   1 . 0 0 0 . 0 0 0 3 7 8 . 0 7 0 9 . 5 6 5 . 2 2 0
+      Khoản 9 — 5 6 5 . 2 2 0   [ 9 . 5 6 5 . 2 2 Ơ X   1 . 0 0 0 . 0 0 0 4 3 4 . 7 8 0
         Điểm h — Khi đáo hạn trái phiếu chuyển đổi:
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 343 - Trái phiếu phát hành
-        Điểm a — Tài khoản 343 'Trái phiếu phát hành' có 2 tài khoản cấp 2:
-        Điểm b — Kết cấu và nội dung phản ánh của tài khoản 3431 'Trái phiếu thường'
-        Điểm c — Kết cấu và nội dung phản ánh của tài khoản 3432 'Trái phiếu chuyển đổi'
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  343  -   Trái  phiếu  phát
+        Điểm a — Tài khoản 343  'Trải phiếu phát hành ' có 2 tài khoản cấp 2:
+        Điểm b — Kết cấu và nội dung phản ánh của tài khoản 3431  'Tráiphiếu thường'
+        Điểm c — Kết cấu và nội dung phản ánh của tài khoản 3432  'Tráiphiếu chuyển
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Kế toán phát hành trái phiếu theo mệnh giá
         Điểm b — Kế toán phát hành trái phiếu có chiết khấu
-        Điểm c — Kế toán phát hành trái phiếu có phụ trội
-        Điểm a — Tại thời điểm phát hành, kế toán xác định giá trị phần nợ gốc và quyền chọn
-        Điểm b — Chi phí phát hành trái phiếu phát sinh được phân bổ dần phù hợp với kỳ hạn
-        Điểm c — Định kỳ, kế toán ghi nhận chi phí tài chính hoặc vốn hóa đối với số lãi trái
-        Điểm d — Khi  đáo hạn  trái  phiếu,  trường hợp  người  nắm giữ  trái  phiếu không thực
+        Điểm c — Ke toán phát hành trái phiếu có phụ trội
+        Điểm a — Tại  thời  điểm  phát hành,  kế toán xác  định  giá  trị  phần  nợ gốc  và quyền
+        Điểm b — Chi phí phát hành trái phiếu phát sinh được phân bổ  dần phù hợp với kỳ
+        Điểm c — Định  kỳ,  kế  toán  ghi  nhận  chi  phí  tài  chính  hoặc  vốn  hoá  đối  với  số  lãi
+        Điểm d — Khi  đáo hạn trái phiếu, trường hợp người nắm giữ trái phiếu không thực
         Điểm e — Khi  đáo  hạn  trái  phiếu,  trường  hợp  người  nắm  giữ  trái  phiếu  thực  hiện
-    Điều 60 — Tài khoản 344 - Nhận ký quỹ, ký cược
+    Điều 60 — Tài khoản 344 - Nhận ký quỹ, ký cược  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
         Điểm a — Tài khoản này dùng để phản ánh các khoản tiền mà doanh nghiệp nhận ký
-        Điểm b — Kế toán nhận ký quỹ, ký cược phải theo dõi chi tiết từng khoản tiền nhận ký
+        Điểm b — Ke toán nhận ký quỳ, ký cược phải theo dõi chi tiết từng khoản tiền nhận
         Điểm c — Trường hợp nhận thế chấp, cầm cố bằng hiện vật thì không phản ánh ở tài
-        Điểm d — Trường hợp nhận ký cược, ký quỹ bằng ngoại tệ, kế toán phải theo dõi chi
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 344 - Nhận ký quỹ, ký cược
+        Điểm d — Trường hçyp  nhận ký  cược,  ký  quỹ bằng  ngoại  tệ,  kế  toán  phải  theo  dõi
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  344  -  Nhận  ký  quỹ,  ký
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Khi nhận tiền ký quỹ, ký cược của đơn vị, cá nhân bên ngoài, ghi:
         Điểm b — Khi hoàn trả tiền ký quỹ, ký cược cho khách hàng, ghi:
-        Điểm c — Trường hợp đơn vị ký quỹ, ký cược vi phạm hợp đồng kinh tế đã ký kết với
-        Điểm d — Khi lập Báo cáo tài chính, kế toán đánh giá lại khoản tiền nhận ký cược, ký
-    Điều 61 — Tài khoản 347 - Thuế thu nhập hoãn lại phải trả
+        Điểm c — Trường hợp đơn vị ký quỹ, ký cược vi phạm hợp đồng kinh tế đã ký kết
+        Điểm d — Khi lập Báo cáo tài  chính, kế toán đánh giá lại khoản tiền nhận ký cược,
+    Điều 61 — Tài khoản 347 -  Thuế thu nhập hoãn lại phải trả  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh giá trị hiện có và tình hình biến động tăng,
+        Điểm a — Tài  khoản này  dùng  để phản  ánh giá trị  hiện  có  và tình  hình  biến  động
         Điểm b — Cơ sở tính thuế của tài sản hoặc nợ phải trả và Chênh lệch tạm thời:
-        Điểm c — Thuế  thu  nhập hoãn lại  phải  trả  phải  được  ghi  nhận cho tất  cả  các  khoản
-        Điểm d — Khi lập Báo cáo tài chính, kế toán phải xác định các khoản chênh lệch tạm
-        Điểm đ — Việc ghi nhận thuế thu nhập hoãn lại phải trả trong năm được thực hiện theo
-        Điểm e — Thuế thu nhập hoãn lại phải trả phát sinh trong năm không liên quan đến các
-        Điểm g — Kế toán phải ghi giảm thuế thu nhập hoãn lại phải trả khi các khoản chênh
-        Điểm h — Việc bù trừ thuế thu nhập hoãn lại phải trả và tài sản thuế thu nhập hoãn lại
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 347 - Thuế thu nhập hoãn
+        Điểm c — Thuế thu nhập hoãn lại phải trả phải được ghi nhận cho tất cả các khoản
+        Điểm d — Khi  lập  Báo  cáo  tài  chính,  kế  toán  phải  xác  định  các  khoản  chênh  lệch
+        Điểm đ — Việc  ghi  nhận thuế  thu  nhập hoãn  lại phải  trả trong năm  được thực  hiện
+        Điểm e — Thuế thu nhập hoãn lại phải trả phát sinh trong năm không liên quan đến
+        Điểm g — Ke  toán  phải  ghi  giảm  thuế  thu  nhập  hoãn  lại  phải  trả  khi  các  khoản
+        Điểm h — Việc bù trừ thuế thu nhập hoãn lại phải trả và tài  sản thuế thu nhập hoãn
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  347  -   Thuế  thu  nhập
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Nếu số thuế thu nhập hoãn lại phải trả phát sinh trong năm lớn hơn số thuế
-        Điểm b — Nếu số thuế thu nhập hoãn lại phải trả phát sinh trong năm nhỏ hơn số thuế
-    Điều 62 — Tài khoản 352 - Dự phòng phải trả
+        Điểm a — Nếu  số  thuế  thu  nhập  hoãn  lại  phải  trả  phát  sinh  trong  năm  lớn  hơn  số
+        Điểm b — Nếu  số  thuế  thu  nhập  hoãn  lại  phải  trả phát  sinh  trong  năm  nhỏ  hơn  số
+    Điều 62 — Tài khoản 352 -  Dự phòng phải trả  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh các khoản dự phòng phải trả hiện có, tình
-        Điểm b — Dự phòng phải trả chỉ được ghi nhận khi thỏa mãn các điều kiện sau:
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  các  khoản  dự  phòng  phải  trả  hiện  có,
+        Điểm b — Dự phòng phải trả chỉ được ghi nhận khi thoả mãn các điều kiện sau:
         Điểm c — Giá trị được ghi nhận của một khoản dự phòng phải trả là giá trị được ước
-        Điểm d — Khoản  dự  phòng  phải  trả được  lập  tại  thời  điểm  lập  Báo  cáo  tài  chính.
-        Điểm đ — Chỉ những khoản chi phí liên quan đến khoản dự phòng phải trả đã lập ban
-        Điểm e — Không  được  ghi  nhận khoản dự  phòng cho các khoản lỗ  hoạt  động trong
-        Điểm g — Một  khoản  dự  phòng  cho  các  khoản  chi  phí  tái  cơ  cấu  doanh  nghiệp  chỉ
-        Điểm h — Một khoản dự phòng cho việc tái cơ cấu chỉ được dự tính cho những chi phí
+        Điểm d — Khoản  dự phòng  phải  trả  được  lập  tại  thời  điếm  lập  Báo  cáo  tài  chính.
+        Điểm đ — Chỉ  những khoản  chi  phỉ  liên  quan  đến  khoản  dự phòng  phải  trả  đã  lập
+        Điểm e — Không được ghi nhận khoản dự phòng cho các khoản lỗ hoạt động trong
+        Điểm g — Một khoản dự phòng cho  các khoản chi phí tái  cơ cấu doanh nghiệp chỉ
+        Điểm h — Một khoản dự phòng cho việc tái cơ cấu chỉ được dự tính cho những chi
         Điểm i — Các khoản dự phòng phải trả thường bao gồm:
-        Điểm k — Khi lập dự phòng phải trả, doanh nghiệp được ghi nhận vào chi phí quản lý
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 352 - Dự phòng phải trả
+        Điểm k — Khi lập dự phòng phải trả,  doanh nghiệp được ghi nhận vào chi phí quản
+      Khoản 2 — Kết cấu và  nội dung phản ánh của tài khoản 352 -  Dự phòng phải trả
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Phương pháp kế toán dự phòng bảo hành sản phẩm, hàng hóa
         Điểm b — Phương pháp kế toán dự phòng bảo hành công trình xây dựng
-        Điểm c — Phương pháp kế toán dự  phòng tái cơ cấu doanh nghiệp và dự phòng phải
+        Điểm c — Phương pháp kế toán dự phòng tái cơ cấu doanh nghiệp và dự phòng phải
         Điểm d — Trong một số trường hợp, doanh nghiệp có thể tìm kiếm một bên thứ 3 để
-        Điểm đ — Kế toán xử lý các khoản dự phòng phải trả trước khi chuyển doanh nghiệp 100%
-    Điều 63 — Tài khoản 353 - Quỹ khen thưởng, phúc lợi
+        Điểm đ — Ke  toán  xử  lý  các  khoản  dự  phòng  phải  trả  trước  khi  chuyển  doanh
+    Điều 63 — Tài khoản 353 -  Quỹ khen thưởng, phúc lợi  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh số hiện có, tình hình tăng, giảm quỹ khen
-        Điểm b — Việc trích lập và sử dụng quỹ khen thưởng, quỹ phúc lợi và quỹ thưởng ban
-        Điểm c — Quỹ khen thưởng, quỹ phúc lợi, quỹ thưởng ban quản lý điều hành công ty
-        Điểm d — Đối với TSCĐ đầu tư, mua sắm bằng quỹ phúc lợi khi hoàn thành dùng vào
-        Điểm đ — Đối với TSCĐ đầu tư, mua sắm bằng quỹ phúc lợi khi hoàn thành dùng cho
-      Khoản 2 — Kết cấu và nội  dung phản ánh của tài khoản 353 - Quỹ  khen thưởng,
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  số  hiện  có,  tình  hình  tăng,  giảm  quỹ
+        Điểm b — Việc trích  lập và sử dụng quỹ khen thưởng,  quỹ phúc  lợi và quỳ thưởng
+        Điểm c — Quỹ khen thưởng,  quỳ phúc lợi, quỳ thưởng ban quản lý điều hành công
+        Điểm d — Đối  với  TSCĐ  đầu tư,  mua  sắm bằng  quỹ phúc  lợi  khi  hoàn thành  dùng
+        Điểm đ — Đối  với  TSCĐ  đầu tư,  mua  sắm  bằng quỹ phúc lợi  khi  hoàn thành  dùng
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 353 -  Quỹ khen thưởng,
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Trong năm khi tạm trích quỹ khen thưởng, phúc lợi, ghi:
         Điểm b — Cuối năm, xác định quỹ khen thưởng, phúc lợi được trích thêm, ghi:
-        Điểm c — Tính tiền thưởng phải trả cho công nhân viên và người lao động khác trong
-        Điểm d — Dùng  quỹ  phúc  lợi  để  chi  trợ  cấp  khó  khăn,  chi  cho  công  nhân  viên  và
+        Điểm c — Tính tiền thưởng phải trả cho công nhân viên và người  lao động khác trong
+        Điểm d — Dùng  quỹ phúc  lợi  để  chi  trợ  cấp  khó  khăn,  chi  cho  công  nhân  viên  và
         Điểm đ — Khi bán sản phẩm, hàng hóa trang trải bằng quỹ khen thưởng phúc lợi, kế
         Điểm e — Khi cấp trên cấp quỹ khen thưởng, phúc lợi cho đơn vị cấp dưới, ghi:
         Điểm g — Số quỹ khen thưởng, phúc lợi do đơn vị cấp trên cấp xuống, ghi:
-        Điểm h — Dùng quỹ phúc lợi ủng hộ các vùng thiên tai, hỏa hoạn, chi từ thiện… ghi:
-        Điểm i — Khi đầu tư, mua sắm TSCĐ hoàn thành bằng quỹ phúc lợi đưa vào sử dụng
-        Điểm k — Định kỳ, tính hao mòn TSCĐ đầu tư, mua sắm bằng quỹ phúc lợi, sử dụng
-        Điểm l — Khi nhượng bán, thanh lý TSCĐ đầu tư, mua sắm bằng quỹ phúc lợi, dùng
-        Điểm m — Kế toán chuyển giao tài sản là các công trình phúc lợi: Trường hợp chuyển
-        Điểm n — Trường hợp chủ sở hữu doanh nghiệp quyết định thưởng cho Hội đồng quản
+        Điểm h — Dùng  quỹ  phúc  lợi  ủng  hộ  các  vùng  thiên  tai,  hỏa  hoạn,  chi  từ thiện...
+        Điểm i — Khi đầu tư, mua sắm TSCĐ hoàn thành bàng quỹ phúc lợi đưa vào sử dụng
+        Điểm k — Định  kỳ,  tính  hao  mòn  TSCĐ  đầu  tư,  mua  sắm  bằng  quỹ  phúc  lợi,  sử
+      Khoản 1 — Khi  nhượng  bán,  thanh  lý  TSCĐ  đầu  tư,  mua  sắm  bằng  quỹ  phúc  lợi,
+        Điểm m — Ke  toán  chuyến  giao  tài  sản  là  các  công  trình  phúc  lợi:  Trường  hợp
+        Điểm n — Trường  họp  chủ  sở  hữu  doanh  nghiệp  quyết  định  thưởng  cho  Hội  đồng
         Điểm o — Trường hợp công ty cổ phần được phát hành cổ phiếu thưởng từ quỹ khen
-        Điểm p — Kế toán xử lý số dư quỹ khen thưởng và quỹ phúc lợi trước khi xác định giá
-    Điều 64 — Tài khoản 356 - Quỹ phát triển khoa học và công nghệ
+        Điểm p — Ke toán xử lý số dư quỹ khen thưởng và quỹ phúc lợi trước khi xác định
+    Điều 64 — Tài  khoản 356 -  Quỹ phát triển  khoa  học và công nghệ  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh số hiện có, tình hình tăng giảm Quỹ phát
-        Điểm b — Quỹ  PTKH&CN được hạch toán vào chi phí quản lý doanh nghiệp để xác
+        Điểm a — Tài khoản này dùng để phản ánh số hiện có, tình hình tăng giảm Quỳ phát
+        Điểm b — Quỳ PTKH&CN được hạch toán vào chi phí quản lý doanh nghiệp để xác
         Điểm c — Trường  hợp  doanh  nghiệp  sử  dụng  Quỹ  PTKH&CN  để  tài  trợ  cho  việc
-        Điểm d — Định kỳ, doanh nghiệp lập Báo cáo về mức trích, sử dụng, quyết toán Quỹ
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 356 - Quỹ phát triển khoa
-      Khoản 3 — Phương pháp hạch toán kế toán một số nghiệp vụ kinh tế chủ yếu
-        Điểm a — Trong năm khi trích lập quỹ phát triển khoa học và công nghệ, ghi:
-        Điểm b — Khi chi tiêu Quỹ PTKH&CN phục vụ cho mục đích nghiên cứu, phát triển
-        Điểm c — Khi sử dụng Quỹ PTKH&CN để trang trải cho hoạt động sản xuất thử sản phẩm:
-        Điểm d — Khi  đầu tư,  mua sắm TSCĐ  hoàn thành bằng quỹ  phát  triển khoa học  và
-Chương II
-    Điều 65 — Tài khoản 357 - Quỹ bình ổn giá
-      Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh tình hình biến động và giá trị Quỹ bình ổn
-        Điểm b — Doanh nghiệp phải  trích lập, sử  dụng và quyết  toán Quỹ  bình ổn giá theo
+        Điểm d — Định  kỳ,  doanh  nghiệp  lập  Báo  cáo  về  mức  trích,  sử  dụng,  quyết  toán
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  356  -   Quỹ  phát  triển
+      Khoản 3 — Phương pháp hạch toán kế toán một số nghiệp vụ  kinh  tế chủ yếu
+        Điểm a — Trong năm khi trích lập quỹ phát triển khoa học và công  nghệ,  ghi:
+        Điểm b — Khi  chi  tiêu  Quỹ  PTKH&CN  phục  vụ  cho  mục  đích  nghiên  cứu,  phát
+        Điểm c — Khi sử dụng Quỹ PTKH&CN để trang trải cho hoạt động sản xuất thử sản
+        Điểm d — Khi đầu tư, mua sắm TSCĐ hoàn thành bằng quỹ phát triển khoa học và
+    Điều 65 — Tài khoản 357 - Quỹ bình ổn giá  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Nguyên  tắc kế toán
+        Điểm a — Tài  khoản này dùng để phản ánh tình hình biến động và giá trị Quỹ bình
+        Điểm b — Doanh nghiệp phải trích lập, sử dụng và quyết toán Quỹ bình ổn giá theo
         Điểm c — Quỹ bình ổn giá khi trích lập được tính vào giá vốn hàng bán, khi sử dụng
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 357 - Quỹ Bình ổn giá
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 357 -  Quỹ Bình ổn giá
       Khoản 3 — Phương pháp kế toán Quỹ bình ổn giá
-    Điều 66 — Nguyên tắc kế toán vốn chủ sở hữu
-      Khoản 1 — Vốn chủ sở hữu là phần tài sản thuần của doanh nghiệp còn lại thuộc sở hữu
-      Khoản 2 — Kế  toán không ghi nhận vốn góp theo vốn điều lệ  trên giấy phép đăng ký
-      Khoản 3 — Việc nhận vốn góp bằng các loại tài sản vô hình như bản quyền, quyền khai
-      Khoản 4 — Việc sử dụng vốn đầu tư của chủ sở hữu, chênh lệch đánh giá lại tài sản, quỹ
+    Điều 66 — Nguyên tắc kế toán vốn chủ sở hữu  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Vốn chủ  sở hữu  là phần  tài  sản thuần  của doanh nghiệp  còn lại thuộc  sở
+      Khoản 2 — Ke toán  không ghi  nhận  vốn góp theo vốn điều lệ trên giấy phép đăng ký
+      Khoản 3 — Việc  nhận  vốn  góp  bằng  các  loại  tài  sản  vô  hình  như  bản  quyền,  quyền
+      Khoản 4 — Việc  sử dụng vốn đầu tư của chủ sở hữu, chênh lệch đánh giá lại tài  sản,
       Khoản 5 — Việc phân phối lợi nhuận chỉ thực hiện khi doanh nghiệp có lợi nhuận sau
-    Điều 67 — Tài khoản 411 - Vốn đầu tư của chủ sở hữu
+    Điều 67 — Tài khoản 411 -  vốn đầu tư của chủ sở hữu  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
         Điểm a — Tài khoản này dùng để phản ánh vốn do chủ sở hữu đầu tư hiện có và tình
         Điểm b — Vốn đầu tư của chủ sở hữu bao gồm:
-        Điểm c — Các doanh nghiệp chỉ hạch toán vào TK 411 - 'Vốn đầu tư của chủ sở hữu'
-        Điểm d — Doanh nghiệp phải tổ chức hạch toán chi tiết vốn đầu tư của chủ sở hữu
+        Điểm c — Các  doanh nghiệp chỉ hạch toán vào TK  411  -  'Vốn  đầu  tư của chủ  sở
+        Điểm d — Doanh nghiệp phải tổ  chức  hạch toán chi tiết vốn đầu tư của chủ sở hữu
         Điểm đ — Doanh nghiệp ghi giảm vốn đầu tư của chủ sở hữu khi:
         Điểm e — Xác định phần vốn góp của nhà đầu tư bằng ngoại tệ
-        Điểm g — Trường hợp nhận vốn góp bằng tài sản phải  phản ánh tăng Vốn  đầu tư
-        Điểm h — Đối với công ty cổ  phần, vốn góp cổ phần của các cổ đông được ghi theo
-        Điểm i — Nguyên tắc xác định và ghi nhận quyền chọn chuyển đổi trái phiếu thành cổ
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 411 - Vốn đầu tư của chủ
+        Điểm g — Trường  hợp  nhận  vốn  góp  bằng tài  sản phải  phản  ánh tăng  vốn  đầu  tư
+        Điểm h — Đối  với  công ty cổ  phần, vốn góp cổ phần của các cổ đông được ghi theo
+        Điểm i — Nguyên tắc xác định và ghi  nhận quyền chọn chuyển đổi trái phiếu thành
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  411  -  vốn  đầu  tư của
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Khi nhận được tiền mua cổ  phiếu của các cổ đông với  giá phát hành theo
-        Điểm b — Khi nhận được tiền mua cổ  phiếu của các cổ đông có chênh lệch giữa giá
+        Điểm a — Khi nhận được tiền mua cổ phiếu của các cổ đông với giá phát hành theo
+        Điểm b — Khi nhận được tiền mua cổ phiếu của các cổ đông có chênh lệch giữa giá
         Điểm c — Các chi phí trực tiếp liên quan đến việc phát hành cổ phiếu, ghi:
-        Điểm a — Trường hợp công ty cổ phần được phát hành thêm cổ phiếu từ nguồn thặng
+        Điểm a — Trường  hợp  công  ty  cổ  phần  được  phát  hành  thêm cổ  phiếu  từ nguồn
         Điểm b — Trường hợp công ty cổ phần được phát hành thêm cổ phiếu từ nguồn Quỹ
-        Điểm c — Trường hợp công ty cổ  phần  được  phát  hành thêm cổ  phiếu từ  nguồn lợi
+        Điểm c — Trường họp công ty cổ phần được phát hành thêm cổ phiếu từ nguồn lợi
         Điểm a — Nếu giá phát hành cổ phiếu lớn hơn mệnh giá, ghi:
         Điểm b — Nếu giá phát hành cổ phiếu nhỏ hơn mệnh giá, ghi:
-        Điểm a — Khi mua cổ phiếu quỹ, kế toán phản ánh theo giá thực tế mua, ghi:
+        Điểm a — Khi mua cố phiếu quỹ, kế toán phản ánh theo giá thực tế mua, ghi:
         Điểm b — Khi tái phát hành cổ phiếu quỹ, ghi:
-        Điểm c — Khi công ty cổ phần hủy bỏ cổ phiếu quỹ:
+        Điểm c — Khi công ty cổ phần huỷ bỏ cổ phiếu quỹ:
         Điểm a — Đối với tài sản phát hiện thừa qua kiểm kê, căn cứ vào 'Biên bản xử lý tài
-        Điểm b — Kế toán chuyển giao vật tư, tài sản không cần dùng, tài sản ứ đọng, tài sản
-        Điểm c — Kế toán chuyển giao tài sản là các công trình phúc lợi
-        Điểm d — Kế  toán  xử  lý  các  khoản  nợ  phải  trả  trước  khi  chuyển  thành  Công  ty  cổ
-        Điểm đ — Kế  toán  xử  lý  các  khoản dự  phòng trước  khi  doanh nghiệp chuyển thành
-        Điểm e — Kế toán xử lý số dư chênh lệch tỷ giá hối đoái (nếu có)
+        Điểm b — Ke  toán  chuyển  giao  vật tư,  tài  sản không  cần  dùng,  tài  sản  ứ  đọng,  tài
+        Điểm c — Ke toán chuyển giao tài sản là các công trình phúc lợi
+        Điểm d — Kế toán xử lý các khoản nợ phải  trả trước khi  chuyển thành  Công ty cố
+        Điểm đ — Ke toán xử lý các khoản dự phòng trước khi doanh nghiệp chuyển thành
+        Điểm e — Ke toán xử lý số dư chênh lệch tỷ giá hối đoái (nếu có)
         Điểm g — Kế toán xử lý vốn đầu tư dài hạn vào doanh nghiệp khác
-        Điểm h — Kế toán khoản chênh lệch giữa giá trị thực tế và giá trị ghi sổ của vốn Nhà
-        Điểm i — Kế  toán chênh lệch tiền thuê đất  trả  trước: Trường hợp đơn vị đã nộp tiền
-        Điểm k — Kế toán chuyển các nguồn vốn, quỹ thuộc nguồn vốn chủ sở hữu thành vốn
-        Điểm l — Kế toán tiền thu từ cổ phần hóa
+        Điểm h — Ke  toán  khoản  chênh  lệch  giữa  giá trị  thực  tế  và  giá trị  ghi  sổ  của  vốn
+        Điểm i — Kế toán chênh lệch tiền thuê đất trả trước:  Trường hợp đơn vị đã nộp tiền
+        Điểm k — Kế  toán  chuyển  các  nguồn  vốn,  quỹ  thuộc  nguồn  vốn  chủ  sở  hữu  thành
+      Khoản 1 — Ke toán tiền thu từ cổ phần hóa
         Điểm m — Bàn giao tài sản, vốn cho công ty cổ phần
-        Điểm n — Kế  toán tại  công ty cổ  phần được chuyển  đổi  từ  doanh nghiệp 100% vốn
-    Điều 68 — Tài khoản 412 - Chênh lệch đánh giá lại tài sản
-      Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh số chênh lệch do đánh giá lại tài sản hiện
-        Điểm b — Chênh lệch đánh giá lại tài sản được phản ánh vào tài khoản này trong các
-        Điểm c — Tài khoản này không phản ánh số chênh lệch đánh giá lại khi đưa tài sản đi
-        Điểm d — Giá trị tài sản được xác định lại trên cơ sở bảng giá Nhà nước quy định, Hội
-        Điểm đ — Số chênh lệch giá do đánh giá lại tài sản được hạch toán và xử lý theo pháp
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 412 - Chênh lệch đánh giá
+        Điểm n — Ke toán tại  công ty cổ phần được chuyển đổi từ doanh nghiệp  100% vốn
+    Điều 68 — Tài khoản 412 -  Chênh lệch đánh giá lại tài sản  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Nguyên  tắc kế toán
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  số  chênh  lệch  do  đánh  giá  lại  tài  sản
+        Điểm b — Chênh  lệch  đánh  giá  lại  tài  sản  được  phản  ánh  vào  tài  khoản  này  trong
+        Điểm c — Tài khoản này không phản ánh số chênh lệch đánh giá lại khi đưa tài sản
+        Điểm d — Giá trị  tài  sản  được  xác  định  lại  trên  cơ  sở bảng  giá Nhà nước  quy định,
+        Điểm đ — Số  chênh  lệch  giá  do  đánh  giá  lại  tài  sản  được  hạch  toán  và  xử  lý  theo
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Khi có quyết định của Nhà nước về đánh giá lại tài sản cố định, bất động
-        Điểm b — Cuối năm tài chính xử lý chênh lệch đánh giá lại tài sản theo quyết định của
-    Điều 69 — Tài khoản 413 - Chênh lệch tỷ giá hối đoái
+        Điểm a — Khi có quyết định của Nhà nước về đánh giá lại tài  sản cố định, bất động
+        Điểm b — Cuối năm tài chính xử lý chênh lệch đánh giá lại tài  sản theo quyết định
+    Điều 69 — Tài  khoản  413  -   C hênh  lệch  tỷ  giá  hối  đoái  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Quy định chung về tỷ giá hối đoái và chênh lệch tỷ giá hối đoái
-        Điểm a — Tỷ giá giao dịch thực tế đối với các giao dịch bằng ngoại tệ phát sinh trong kỳ:
-        Điểm b — Tỷ giá giao dịch thực tế khi đánh giá lại các khoản mục tiền tệ có gốc ngoại
-        Điểm a — Khi phát sinh các giao dịch bằng ngoại tệ, tỷ giá giao dịch thực tế tại thời
-        Điểm b — Khi phát sinh các giao dịch bằng ngoại  tệ,  tỷ  giá ghi sổ  thực tế đích danh
-        Điểm c — Khi thực hiện thanh toán bằng ngoại tệ, tỷ giá ghi sổ bình quân gia quyền di
+        Điểm a — Tỷ  giá  giao  dịch  thực  tế  đổi  với  các  giao  dịch  bằng  ngoại  tệ  phát  sinh
+        Điểm b — Tỷ  giá  giao  dịch thực  tế  khi  đánh  giá  lại  các  khoản  mục  tiền  tệ  có  gốc
+        Điểm a — Khi phát sinh các giao dịch bàng ngoại tệ, tỷ giá giao dịch thực tế tại thời
+        Điểm b — Khi phát sinh các giao dịch bàng ngoại tệ, tỷ giá ghi sổ thực tế đích danh
+        Điểm c — Khi thực hiện thanh toán bằng ngoại tệ, tỷ giá ghi  sổ bình quân gia quyền
         Điểm a — Tiền mặt, các khoản tương đương tiền, tiền gửi có kỳ hạn bằng ngoại tệ;
         Điểm b — Các khoản nợ phải thu, nợ phải trả có gốc ngoại tệ, ngoại trừ:
-        Điểm c — Các khoản đi vay, cho vay dưới mọi hình thức được quyền thu hồi hoặc có
-        Điểm d — Các khoản đặt cọc, ký cược, ký quỹ được quyền nhận lại bằng ngoại tệ; Các
+        Điểm c — Các  khoản  đi  vay,  cho  vay dưới  mọi  hình thức  được  quyền thu hồi  hoặc
+        Điểm d — Các  khoản đặt cọc,  ký  cược,  ký quỹ được quyền nhận  lại  bàng ngoại  tệ;
       Khoản 2 — Nguyên tắc kế toán chênh lệch tỷ giá
-        Điểm a — Doanh nghiệp đồng thời phải theo dõi nguyên tệ trên sổ kế toán chi tiết các
-        Điểm b — Tất cả các khoản chênh lệch tỷ giá đều được phản ánh ngay vào doanh thu
-        Điểm c — Doanh nghiệp phải đánh giá lại các khoản mục tiền tệ có gốc ngoại tệ theo
-        Điểm d — Doanh nghiệp không được vốn hóa các khoản chênh lệch tỷ giá vào giá trị
-      Khoản 3 — Kết cấu và nội dung phản ánh của tài khoản 413 - Chênh lệch tỷ giá hối đoái
+        Điểm a — Doanh  nghiệp đồng thời  phải  theo  dõi  nguyên tệ trên  sổ  kế toán  chi  tiết
+        Điểm b — Tất  cả  các  khoản  chênh  lệch  tỷ  giá  đều  được  phản  ánh  ngay  vào  doanh
+        Điểm c — Doanh  nghiệp  phải  đánh  giá  lại  các  khoản  mục  tiền  tệ  có  gốc  ngoại  tệ
+        Điểm d — Doanh nghiệp không được vốn hóa các khoản chênh lệch tỷ giá vào giá
+      Khoản 3 — Kết cấu và  nội  dung  phản  ánh  của  tài  khoản  413 -  Chênh  lệch  tỷ  giá
       Khoản 4 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Khi mua vật tư, hàng hóa, TSCĐ, dịch vụ thanh toán bằng ngoại tệ:
-        Điểm b — Khi mua vật tư, hàng hóa, TSCĐ, dịch vụ của nhà cung cấp chưa thanh toán
-        Điểm c — Khi ứng trước tiền cho người  bán bằng ngoại  tệ để  mua vật  tư,  hàng hóa,
-        Điểm d — Khi thanh toán nợ phải trả bằng ngoại tệ (nợ phải trả người bán, nợ vay, nợ
-        Điểm e — Khi phát sinh doanh thu, thu nhập khác bằng ngoại tệ, căn cứ tỷ giá hối đoái
-        Điểm g — Khi nhận trước tiền của người mua bằng ngoại tệ để cung cấp vật tư, hàng
+        Điểm a — Khi mua vật tư, hàng hoá, TSCĐ, dịch vụ thanh toán bằng ngoại tệ:
+        Điểm b — Khi  mua vật tư,  hàng  hoá,  TSCĐ,  dịch  vụ  của nhà  cung  cấp  chưa thanh
+        Điểm c — Khi ứng trước tiền cho người bán bằng ngoại tệ để mua vật tư, hàng hóa,
+        Điểm d — Khi thanh toán nợ phải trả bằng ngoại tệ (nợ phải trả người bán, nợ vay,
+        Điểm e — Khi  phát  sinh  doanh thu,  thu nhập  khác  bằng ngoại  tệ,  căn  cứ tỷ  giá hối
+        Điểm g — Khi  nhận  trước  tiền  của  người  mua  bằng  ngoại  tệ  để  cung  cấp  vật  tư,
         Điểm h — Khi thu được tiền nợ phải thu bằng ngoại tệ, ghi:
         Điểm i — Khi cho vay, đầu tư bằng ngoại tệ, ghi:
         Điểm k — Các khoản ký cược, ký quỹ bằng ngoại tệ
-        Điểm a — Khi lập Báo cáo tài chính, kế toán đánh giá lại các khoản mục tiền tệ có gốc
-        Điểm b — Kế toán xử lý chênh lệch tỷ giá hối đoái phát sinh do đánh giá lại các khoản
-        Điểm c — Kế toán chênh lệch tỷ giá phát sinh trong giai đoạn trước hoạt động của doanh
-        Điểm d — Xử lý số chênh lệch tỷ giá còn lại trên TK 242 - Chi phí trả trước và TK 3387 -
-    Điều 70 — Tài khoản 414 - Quỹ đầu tư phát triển
+        Điểm a — Khi  lập  Báo  cáo  tài  chính,  kế toán đánh giá lại  các  khoản mục tiền tệ có
+        Điểm b — Ke  toán  xử  lý  chênh  lệch  tỷ  giá  hối  đoái  phát  sinh  do  đánh  giá  lại  các
+        Điểm c — Kế toán  chênh  lệch tỷ  giá phát  sinh trong  giai  đoạn trước hoạt động  của
+        Điểm d — Xử lý số chênh lệch tỷ giá còn lại trên TK 242 - Chi phí trả trước và TK
+    Điều 70 — Tài  khoản 414 - Quỹ đầu tư phát triển  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh số hiện có và tình hình tăng, giảm quỹ đầu
+        Điểm a — Tài  khoản  này dùng  để phản ánh  số hiện  có  và tình hình tăng,  giảm  quỹ
         Điểm b — Quỹ đầu tư phát triển được trích lập từ lợi nhuận sau thuế thu nhập doanh
-        Điểm c — Việc trích và sử  dụng quỹ đầu tư  phát triển phải theo chính sách tài chính
-        Điểm d — Doanh  nghiệp  không  tiếp  tục  trích  Quỹ  dự  phòng  tài  chính.  Chủ  sở  hữu
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 414 - Quỹ đầu tư phát triển
+        Điểm c — Việc trích và sử dụng quỹ đầu tư phát triển phải theo chính sách tài chính
+        Điểm d — Doanh  nghiệp không tiếp tục trích Quỹ dự phòng tài  chính.  Chủ  sở hữu
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  414  -  Quỹ  đầu  tư  phát
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Trong kỳ, khi tạm trích lập quỹ đầu tư phát triển từ lợi nhuận sau thuế thu
-        Điểm b — Cuối năm, xác định số quỹ đầu tư phát triển được trích, kế toán tính số được
-        Điểm c — Trường hợp công ty cổ phần phát hành thêm cổ phiếu từ nguồn Quỹ đầu tư
-        Điểm d — Chuyển số dư quỹ dự phòng tài chính: Số dư quỹ dự phòng tài chính hiện có
-        Điểm đ — Khi  doanh  nghiệp  bổ  sung  vốn  điều  lệ  từ  Quỹ đầu  tư  phát  triển,  doanh
-    Điều 71 — Tài khoản 417 - Quỹ hỗ trợ sắp xếp doanh nghiệp
+        Điểm b — Cuổi  năm,  xác  định  số  quỹ  đầu  tư phát triển  được  trích,  kế  toán tính  sổ
+        Điểm c — Trường hợp công ty cổ phần phát hành thêm cổ phiếu từ nguồn Quỹ đầu
+        Điểm d — Chuyển số dư quỹ dự phòng tài chính:  số dư quỹ dự phòng tài chính hiện
+        Điểm đ — Khi  doanh  nghiệp  bổ  sung  vốn  điều  lệ  từ  Quỹ  đầu  tư phát  triển,  doanh
+    Điều 71 — Tài khoản 417 -  Quỹ hỗ trợ sắp xếp doanh nghiệp  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh tình hình trích lập và sử dụng 'Quỹ Hỗ trợ
-        Điểm b — Việc quản lý và sử dụng Quỹ; Báo cáo, quyết toán; Lưu trữ hồ sơ, chứng từ
+        Điểm a — Tài khoản này dùng để phản ánh tình hình trích lập và sử dụng 'Quỹ Hỗ
+        Điểm b — Việc quản lý và sử dụng Quỹ; Báo cáo, quyết toán; Lưu trữ hồ sơ, chứng
         Điểm c — Nguồn thu của Quỹ có thể bao gồm các khoản, như:
         Điểm d — Nội dung chi Quỹ
-      Khoản 2 — Kết cấu và nội dụng phản ánh của tài khoản 417 - Quỹ hỗ trợ sắp xếp
+      Khoản 2 — Kết cấu và  nội dụng phản ánh của tài khoản 417 - Quỹ hỗ trợ sắp xếp
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Kế toán số thu về cổ phần hóa:
-        Điểm b — Kế toán phản ánh số thu của Quỹ theo quyết định của cấp có thẩm quyền, ghi:
+        Điểm b — Ke toán phản ánh số thu của Quỹ theo quyết định của cấp có thẩm quyền,
         Điểm c — Căn cứ vào báo cáo quyết toán các khoản chi thực hiện chính sách đối với
-        Điểm d — Khi điều chuyển Quỹ hoặc chi tiền từ Quỹ theo quyết định của cơ quan có
-        Điểm đ — Khi có phê duyệt của Thủ tướng Chính phủ về việc bổ sung vốn điều lệ cho
-    Điều 72 — Tài khoản 418 - Các quỹ khác thuộc vốn chủ sở hữu
+        Điểm d — Khi  điều  chuyển  Quỹ  hoặc  chi  tiền từ Quỹ theo  quyết  định  của cơ quan
+        Điểm đ — Khi  có  phê  duyệt của Thủ tướng  Chính phủ về việc bổ  sung vốn điều lệ
+    Điều 72 — Tài khoản 418 -  Các quỹ khác thuộc vốn chủ sở hữu  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 418 - Các quỹ khác thuộc
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  418  -   Các  quỹ  khác
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Trích lập quỹ  khác thuộc  vốn chủ  sở  hữu từ  lợi  nhuận sau thuế  thu  nhập
+        Điểm a — Trích  lập  quỹ khác thuộc vốn chủ sở hữu từ lợi  nhuận sau thuế thu nhập
         Điểm b — Khi sử dụng quỹ, ghi:
-        Điểm c — Khi doanh nghiệp bổ  sung vốn điều lệ  từ  các Quỹ  khác thuộc vốn chủ  sở
-    Điều 73 — Tài khoản 419 - Cổ phiếu quỹ
+        Điểm c — Khi  doanh nghiệp bổ sung vốn điều lệ từ các Quỹ khác thuộc vổn chủ sở
+    Điều 73 — Tài khoản 419 -  c ổ  phiếu quỹ  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
         Điểm a — Tài khoản này dùng để phản ánh giá trị hiện có và tình hình biến động tăng
-        Điểm b — Giá trị cổ phiếu quỹ được phản ánh trên tài khoản này theo giá thực tế mua
-        Điểm c — Cuối kỳ kế toán, khi lập Báo cáo tài chính, giá trị thực tế của cổ phiếu quỹ được
-        Điểm d — Tài  khoản  này  không phản  ánh  trị  giá  cổ  phiếu  mà  công ty  mua  của  các
+        Điểm b — Giá  trị  cổ  phiếu  quỹ  được  phản  ánh  trên  tài  khoản  này  theo  giá thực  tế
+        Điểm c — Cuối  kỳ  kế  toán,  khi  lập  Báo  cáo  tài  chính,  giá  trị  thực  tế  của  cổ  phiếu
+        Điểm d — Tài  khoản  này không phản ánh trị  giá cổ  phiếu  mà công  ty mua của các
         Điểm đ — Trị giá vốn của cổ phiếu quỹ khi tái phát hành, hoặc khi sử dụng để trả cổ
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 419 - Cổ phiếu quỹ
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 419 -  c ổ  phiếu quỹ
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Kế toán mua lại cổ phiếu do chính công ty đã phát hành:
         Điểm b — Tái phát hành cổ phiếu quỹ:
-        Điểm c — Khi hủy bỏ số cổ phiếu quỹ, ghi:
-        Điểm d — Khi có quyết  định của Hội đồng quản trị  (đã thông qua  Đại  hội  cổ đông)
-    Điều 74 — Tài khoản 421 - Lợi nhuận sau thuế chưa phân phối
+        Điểm c — Khi huỷ bỏ số cổ phiếu quỹ, ghi:
+        Điểm d — Khi có quyết định của Hội đồng quản trị (đã thông qua Đại hội cổ đông)
+    Điều 74 — Tài khoản 421 -  Lợi nhuận sau thuế chưa phân phối  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng  để  phản ánh kết  quả  kinh doanh (lãi, lỗ)  sau thuế
-        Điểm b — Việc phân chia lợi nhuận hoạt động kinh doanh của doanh nghiệp phải đảm
-        Điểm c — Phải hạch toán chi tiết kết quả hoạt động kinh doanh của từng năm tài chính
-        Điểm d — Khi áp dụng hồi tố do thay đổi chính sách kế toán và điều chỉnh hồi tố các
-        Điểm đ — Công ty mẹ được phân phối lợi nhuận cho chủ sở hữu không vượt quá mức
-        Điểm e — Trong hoạt  động hợp  đồng hợp tác kinh doanh (BCC) chia lợi  nhuận sau
-        Điểm g — Đối với cổ tức ưu đãi phải trả: Doanh nghiệp phải loại khoản cổ tức ưu đãi
-        Điểm h — Doanh nghiệp phải theo dõi trong hệ thống quản trị nội bộ số lỗ tính thuế và
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 421 - Lợi nhuận sau thuế
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
+        Điểm a — Tài khoản này dùng để phản ánh kết quả kinh doanh (lãi, lỗ) sau thuế thu
+        Điểm b — Việc  phân  chia  lợi  nhuận  hoạt  động  kinh  doanh  của  doanh  nghiệp  phải
+        Điểm c — Phải  hạch  toán  chi  tiết  kết  quả  hoạt  động  kinh  doanh  của  từng  năm  tài
+        Điểm d — Khi  áp  dụng  hồi  tố  do  thay  đổi  chính  sách kế  toán  và  điều  chỉnh  hồi  tố
+        Điểm đ — Công  ty  mẹ  được  phân  phối  lợi  nhuận  cho  chủ  sở hữu  không  vượt  quá
+        Điểm e — Trong hoạt động hợp đồng hợp tác kinh doanh (BCC) chia lợi nhuận sau
+        Điểm g — Đối  với  cổ  tức  ưu  đãi  phải  trả:  Doanh  nghiệp  phải  loại  khoản  cổ  tức  ưu
+        Điểm h — Doanh nghiệp phải theo dõi trong hệ thống quản trị nội bộ sổ lỗ tính thuế
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  421  -   Lợi  nhuận  sau
+      Khoản 3 — Phương pháp kế toán một số giao dịch kỉnh tế chủ yếu
         Điểm a — Cuối kỳ kế toán, kết chuyển kết quả hoạt động kinh doanh:
-        Điểm b — Khi có quyết định hoặc thông báo trả cổ tức, lợi nhuận được chia cho các chủ
-        Điểm c — Trường hợp Công ty cổ phần trả cổ  tức bằng cổ  phiếu (phát hành thêm cổ
-        Điểm d — Các doanh nghiệp không phải  là  công  ty  cổ  phần khi quyết  định bổ  sung
-        Điểm đ — Khi trích quỹ  từ  kết  quả  hoạt động kinh doanh (phần lợi  nhuận để  lại  của
-        Điểm e — Đầu năm tài chính, kết chuyển lợi nhuận sau thuế chưa phân phối năm nay
-        Điểm g — Kế  toán xử  lý  lợi  nhuận sau thuế  chưa phân phối  trước khi chuyển doanh
-    Điều 75 — Tài khoản 441 - Nguồn vốn đầu tư xây dựng cơ bản
+        Điểm b — Khi có quyết định hoặc thông báo trả cổ tức, lợi nhuận được chia cho các
+        Điểm c — Trường hợp Công ty cổ phần trả cổ tức bằng cổ phiếu (phát hành thêm cố
+        Điểm d — Các  doanh nghiệp không phải  là công ty cổ phần khi quyết định bổ sung
+        Điểm đ — Khi trích quỹ từ kết quả hoạt động kinh doanh (phần lợi nhuận để lại của
+        Điểm e — Đầu  năm  tài  chính,  kết  chuyển  lợi  nhuận  sau  thuế  chưa  phân  phối  năm
+        Điểm g — Ke toán xử lý lợi nhuận sau thuế chưa phân phối trước khi  chuyển doanh
+    Điều 75 — Tài khoản 441 -  Nguồn vốn đầu tư xây dựng cơ bản  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
         Điểm a — Tài khoản này dùng để phản ánh số hiện có và tình hình tăng, giảm nguồn
-        Điểm b — Mỗi khi công tác xây dựng và mua sắm TSCĐ hoàn thành, tài sản được bàn
-      Khoản 2 — Kết  cấu và nội  dung phản ánh của tài khoản 441 - Nguồn vốn đầu tư
+        Điểm b — Mỗi  khi  công tác xây  dựng và mua sắm TSCĐ hoàn thành, tài  sản được
+      Khoản 2 — Kết cấu và  nội dung phản ánh của tài khoản 441 -  Nguồn vốn đầu tư
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Nhận được vốn đầu tư XDCB bằng tiền mặt, tiền gửi Ngân hàng, ghi:
-        Điểm b — Trường hợp nhận vốn đầu tư XDCB do Ngân sách cấp theo dự toán được giao:
-        Điểm c — Khi chưa được giao dự  toán chi đầu tư  XDCB, đơn vị được Kho bạc cho
-        Điểm d — Khi dự toán chi đầu tư XDCB được giao, đơn vị phải thực hiện các thủ tục
+        Điểm b — Trường hợp nhận vốn đầu tư XDCB do Ngân sách cấp theo dự toán được
+        Điểm c — Khi chưa được giao dự toán chi đầu tư XDCB, đơn vị được Kho bạc cho
+        Điểm d — Khi  dự toán chi  đầu tư XDCB  được  giao,  đơn vị phải thực hiện các thủ
         Điểm đ — Nhận vốn đầu tư XDCB để trả các khoản vay, nợ ghi:
         Điểm e — Bổ sung vốn đầu tư XDCB bằng quỹ đầu tư phát triển, ghi:
-        Điểm g — Khi công tác xây dựng cơ bản và mua sắm tài sản cố định bằng nguồn vốn
-        Điểm h — Khi trả  lại  vốn  đầu  tư  XDCB cho Ngân sách Nhà nước,  cho  đơn vị  cấp
-        Điểm i — Khi doanh nghiệp bổ  sung vốn điều lệ  từ  nguồn vốn đầu tư  XDCB, doanh
-    Điều 76 — Tài khoản 461 - Nguồn kinh phí sự nghiệp
+        Điểm g — Khi  công  tác  xây  dựng  cơ bản và  mua  sắm  tài  sản  cố  định  bằng  nguồn
+        Điểm h — Khi  trả  lại  vốn  đầu  tư  XDCB  cho  Ngân  sách Nhà nước,  cho  đơn vị  cấp
+        Điểm i — Khi doanh nghiệp bổ sung vốn điều lệ từ nguồn vốn đầu tư XDCB, doanh
+    Điều 76 — Tài khoản 461 -  Nguồn kỉnh phí sự nghiệp  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh tình hình tiếp nhận, sử dụng và quyết toán
-        Điểm b — Nguồn kinh phí sự nghiệp, nguồn kinh phí dự án phải được hạch toán chi
-        Điểm c — Nguồn kinh phí sự  nghiệp, nguồn kinh phí dự  án phải được sử  dụng đúng
-        Điểm d — Trường hợp nguồn kinh phí được NSNN cấp thì tùy theo từng phương thức
-        Điểm đ — Cuối  mỗi  năm tài chính, đơn vị  phải làm thủ  tục quyết toán tình hình tiếp
-        Điểm e — Cuối  năm tài chính, nếu số  chi hoạt  động bằng nguồn kinh phí sự  nghiệp
-      Khoản 2 — Kết cấu và nội dung phải ánh của tài khoản 461 - Nguồn kinh phí sự nghiệp
+        Điểm a — Tài  khoản này  dùng  để  phản  ánh  tình hình tiếp  nhận,  sử  dụng  và  quyết
+        Điểm b — Nguồn  kinh  phí  sự  nghiệp,  nguồn  kinh  phí  dự  án  phải  được  hạch  toán
+        Điểm c — Nguồn kinh phí sự nghiệp, nguồn kinh phí dự án phải được sử dụng đúng
+        Điểm d — Trường  hợp  nguồn  kinh  phí  được  NSNN  cấp  thì  tùy  theo  từng  phương
+        Điểm đ — Cuối mỗi năm tài chính, đơn vị phải làm thủ tục quyết toán tình hình tiếp
+        Điểm e — Cuối năm tài  chính, nếu số chi hoạt động bằng nguồn kinh phí sự nghiệp
+      Khoản 2 — Kết cấu và  nội dung phải ánh của tài khoản 461 -  Nguồn kỉnh phí sự
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Nhận kinh phí sự nghiệp, kinh phí dự án do Ngân sách Nhà nước cấp bằng
-        Điểm b — Khi rút dự toán chi sự nghiệp, dự án về nhập quỹ hoặc mua vật tư, dụng cụ
+        Điểm a — Nhận  kinh  phí  sự  nghiệp,  kinh  phí  dự  án  do  Ngân  sách  Nhà  nước  cấp
+        Điểm b — Khi rút dự toán chi  sự nghiệp, dự án về nhập quỹ hoặc mua vật tư,  dụng
         Điểm c — Các khoản thu sự nghiệp phát sinh tại đơn vị (nếu có), ghi:
-        Điểm d — Nhận kinh phí sự nghiệp bằng TSCĐ do Ngân sách cấp, đơn vị cấp trên cấp
-        Điểm đ — Cuối  kỳ  kế  toán năm, đơn vị  còn có số  dư  tiền mặt,  tiền gửi  thuộc nguồn
-        Điểm e — Khi báo cáo quyết  toán chi sự  nghiệp, chi dự  án được duyệt  ngay trong
-        Điểm g — Nếu đến cuối năm báo cáo quyết toán chi sự nghiệp, dự án chưa được duyệt:
-        Điểm h — Khi báo cáo quyết toán chi sự nghiệp, chi dự án năm trước được duyệt, ghi:
-        Điểm i — Nguồn kinh phí sự  nghiệp của năm trước  được  xác  định còn thừa  khi xét
-    Điều 77 — Tài khoản 466 - Nguồn kinh phí hình thành tài sản cố định
+        Điểm đ — Nhận kinh phí  sự nghiệp bằng TSCĐ do Ngân sách  cấp,  đơn vị  cấp trên
+        Điểm đ — Cuối kỳ kế toán năm, đơn vị còn có số dư tiền mặt, tiền gửi thuộc nguồn
+        Điểm e — Khi báo  cáo  quyết toán chi  sự nghiệp,  chi  dự  án  được  duyệt ngay  trong
+        Điểm g — Nếu  đến  cuối  năm  báo  cáo  quyết  toán  chi  sự  nghiệp,  dự  án  chưa  được
+        Điểm h — Khi  báo  cáo  quyết toán  chi  sự nghiệp,  chi  dự án năm trước  được  duyệt,
+        Điểm i — Nguồn kinh phí sự nghiệp của năm trước được xác định còn thừa khi xét
+    Điều 77 — Tài khoản 466 -  Nguồn kinh phí hình thành tài sản cố định  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng  để  phản ánh số  hiện có và tình hình biến  động tăng,
-        Điểm b — Ghi giảm nguồn kinh phí đã hình thành TSCĐ khi tính hao mòn TSCĐ hoặc
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 466 - Nguồn kinh phí hình
+        Điểm a — Tài  khoản này dùng để phản ánh số hiện có và tình hình biến động tăng,
+        Điểm b — Ghi  giảm  nguồn kinh phí  đã hình thành TSCĐ khi tính hao  mòn TSCĐ
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  466  -  Nguồn  kỉnh  phí
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Trường hợp được Ngân sách Nhà nước, đơn vị cấp trên cấp kinh phí bằng
-        Điểm b — Cuối kỳ kế toán năm tính hao mòn TSCĐ đầu tư, mua sắm bằng nguồn kinh
+        Điểm b — Cuối  kỳ kế  toán  năm tính  hao  mòn  TSCĐ  đầu tư,  mua  sắm  bằng  nguồn
         Điểm c — Khi nhượng bán, thanh lý TSCĐ dùng cho hoạt động sự nghiệp, dự án:
-        Điểm d — Kế  toán chuyển giao tài sản là các công trình phúc lợi: Đối  với  tài  sản là
-    Điều 78 — Nguyên tắc kế toán các khoản doanh thu
-      Khoản 1 — Doanh thu là lợi ích kinh tế  thu được làm tăng vốn chủ  sở  hữu của doanh
+        Điểm d — Kế toán chuyển giao tài sản là các công trình phúc lợi:  Đối với tài sản là
+    Điều 78 — Nguyên tắc kế toán các khoản doanh thu  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Doanh thu là lợi  ích kinh tế thu được làm tăng vốn chủ sở hữu của doanh
       Khoản 2 — Doanh thu và chi phí tạo ra khoản doanh thu đó phải được ghi nhận đồng
-      Khoản 3 — Doanh thu, lãi hoặc lỗ chỉ được coi là chưa thực hiện nếu doanh nghiệp còn
+      Khoản 3 — Doanh thu,  lãi  hoặc  lỗ  chỉ  được  coi  là  chưa thực hiện nếu  doanh  nghiệp
       Khoản 4 — Doanh thu không bao gồm các khoản thu hộ bên thứ ba, ví dụ;
-      Khoản 5 — Thời điểm, căn cứ để ghi nhận doanh thu kế toán và doanh thu tính thuế có
-      Khoản 6 — Khi luân chuyển sản phẩm, hàng hóa, dịch vụ giữa các đơn vị hạch toán phụ
-      Khoản 7 — Doanh thu được ghi nhận chỉ  bao gồm doanh thu của kỳ  báo cáo. Các tài
-    Điều 79 — Tài khoản 511 - Doanh thu bán hàng và cung cấp dịch vụ
+      Khoản 5 — Thời  điểm,  căn cứ để  ghi  nhận doanh thu kế toán và doanh thu tính thuế
+      Khoản 6 — Khi  luân chuyển  sản phẩm, hàng hóa,  dịch vụ giữa các đơn vị hạch toán
+      Khoản 7 — Doanh thu được ghi nhận chỉ bao gồm doanh thu của kỳ báo cáo. Các tài
+    Điều 79 — Tài khoản 511 - Doanh thu bán hàng và cung cấp dịch vụ  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Bán hàng: Bán sản phẩm do doanh nghiệp sản xuất  ra,  bán hàng hóa mua
-        Điểm b — Cung cấp dịch vụ: Thực hiện công việc đã thỏa thuận theo hợp đồng trong
+        Điểm a — Bán hàng: Bán sản phẩm do doanh nghiệp sản xuất ra, bán hàng hoá mua
+        Điểm b — Cung  cấp  dịch  vụ:  Thực  hiện  công  việc  đã  thoả  thuận  theo  họp  đồng
         Điểm c — Doanh thu khác.
-        Điểm a — Doanh nghiệp chỉ ghi nhận doanh thu bán hàng khi đồng thời thỏa mãn các
-        Điểm b — Doanh nghiệp chỉ ghi nhận doanh thu cung cấp dịch vụ khi đồng thời thỏa
-        Điểm a — Đối với các công trình, hạng mục công trình mà doanh nghiệp là chủ đầu tư
-        Điểm b — Đối với các công trình, hạng mục công trình mà doanh nghiệp là chủ đầu
-        Điểm c — Đối với bất động sản phân lô bán nền, nếu đã chuyển giao nền đất cho khách
-        Điểm a — Đặc điểm của giao dịch bán hàng hóa, cung cấp dịch vụ theo chương trình
+        Điểm a — Doanh nghiệp chỉ  ghi  nhận doanh thu bán hàng khi  đồng thời thỏa mãn
+        Điểm b — Doanh  nghiệp  chỉ  ghi  nhận  doanh  thu  cung  cấp  dịch  vụ  khi  đồng  thời
+        Điểm a — Đối với các công trình, hạng mục công trình mà doanh nghiệp là chủ đầu
+        Điểm b — Đối với  các công trình, hạng mục công trình mà doanh nghiệp là chủ đầu
+        Điểm c — Đối  với  bất  động  sản  phân  lô  bán  nền,  nếu  đã  chuyển  giao  nền  đất  cho
+        Điểm a — Đặc  điểm  của  giao  dịch  bán  hàng  hóa,  cung  cấp  dịch  vụ  theo  chương
         Điểm b — Nguyên tắc kế toán
-        Điểm a — Doanh thu của hợp đồng xây dựng bao gồm:
-        Điểm b — Ghi nhận doanh thu của hợp đồng xây dựng theo 1 trong 2 trường hợp sau:
-        Điểm c — Khi kết quả thực hiện hợp đồng xây dựng không thể ước tính được một cách
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 511 - Doanh thu bán hàng
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Đối với sản phẩm, hàng hóa, dịch vụ, bất động sản đầu tư thuộc đối tượng
-        Điểm b — Trường hợp  không tách ngay  được  các  khoản  thuế  phải  nộp,  kế  toán  ghi
-        Điểm a — Kế  toán  phản  ánh  giá  vốn  hàng bán bao gồm giá trị  sản  phẩm, hàng hóa
+        Điểm a — Doanh thu của họp đồng xây dựng bao gồm:
+        Điểm b — Ghi  nhận  doanh thu  của  hợp  đồng xây  dựng theo  1   trong  2  trường  họp
+        Điểm c — Khi kết quả thực hiện hợp  đồng xây dựng không thể ước tính được  một
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  511  -   Doanh  thu  bán
+      Khoản 3 — Phương pháp kế toán một sổ giao dịch kinh tế chủ yếu
+        Điểm a — Đối với sản phẩm, hàng hoá, dịch vụ, bất động sản đầu tư thuộc đối tượng
+        Điểm b — Trường hợp không tách ngay được các khoản thuế phải nộp, kế toán ghi
+        Điểm a — Kế toán phản ánh giá vốn hàng bán bao gồm giá trị  sản phẩm,  hàng hóa
         Điểm b — Ghi nhận doanh thu bán hàng (vừa bán sản phẩm, hàng hóa, vừa bán sản
-        Điểm a — Khi bán hàng hóa, cung cấp dịch vụ trong chương trình dành cho khách hàng
-        Điểm b — Khi hết thời hạn quy định của chương trình, nếu khách hàng không đáp ứng
-        Điểm c — Khi khách hàng đáp ứng đủ các điều kiện của chương trình để được hưởng
+        Điểm a — Khi  bán  hàng  hóa,  cung  cấp  dịch  vụ trong  chương  trình  dành cho khách
+        Điểm b — Khi  hết  thời  hạn quy  định của chương trình,  nếu khách hàng không đáp
+        Điểm c — Khi  khách  hàng  đáp  ứng  đủ  các  điều  kiện  của  chương  trình  để  được
         Điểm a — Kế toán ở đơn vị giao hàng đại lý:
         Điểm b — Kế toán ở đơn vị nhận đại lý, bán đúng giá hưởng hoa hồng:
-        Điểm a — Kế toán tại đơn vị bán
-        Điểm b — Kế toán tại đơn vị mua
-        Điểm a — Kế toán tại đơn vị giao hàng để gia công:
+        Điểm a — Ke toán tại đon vị bán
+        Điểm b — Ke toán tại đon vị mua
+        Điểm a — Ke toán tại đơn vị giao hàng để gia công:
         Điểm b — Kế toán tại đơn vị nhận hàng để gia công:
-    Điều 80 — Tài khoản 515 - Doanh thu hoạt động tài chính
+    Điều 80 — Tài khoản 515 - Doanh thu hoạt động tài chính  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh doanh thu tiền lãi, tiền bản quyền, cổ tức, lợi
-        Điểm b — Đối  với  việc nhượng bán các khoản đầu tư  vào công ty con, công ty liên
-        Điểm c — Đối  với khoản doanh thu từ  hoạt động mua, bán ngoại tệ,  doanh thu được
-        Điểm d — Đối với lãi tiền gửi: Doanh thu không bao gồm khoản lãi tiền gửi phát sinh
-        Điểm đ — Đối với tiền lãi phải thu từ các khoản cho vay, bán hàng trả chậm, trả góp:
-        Điểm e — Đối với khoản tiền lãi đầu tư nhận được từ khoản đầu tư cổ phiếu, trái phiếu
+        Điểm a — Tài khoản này dùng để phản ánh doanh thu tiền lãi, tiền bản quyền, cổ tức,
+        Điểm b — Đối  với  việc nhượng bán các khoản đầu tư vào công ty con, công ty liên
+        Điểm c — Đối với khoản doanh thu từ hoạt động mua, bán ngoại tệ, doanh thu được
+        Điểm d — Đối  với  lãi  tiền  gửi:  Doanh  thu  không  bao  gồm  khoản  lãi  tiền  gửi  phát
+        Điểm đ — Đối  với  tiền  lãi  phải  thu  từ  các  khoản  cho  vay,  bán  hàng  trả  chậm,  trả
+        Điểm e — Đối  với  khoản  tiền  lãi  đầu  tư  nhận  được  từ  khoản  đầu  tư  cổ  phiếu,  trái
         Điểm g — Đối với khoản cổ tức, lợi nhuận được chia đã sử dụng để đánh giá lại giá
-        Điểm h — Khi nhà đầu tư nhận cổ tức bằng cổ phiếu, nhà đầu tư chỉ theo dõi số lượng
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 515 - Doanh thu hoạt động
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Phản ánh doanh thu cổ tức, lợi nhuận được chia bằng tiền phát sinh trong kỳ
-        Điểm b — Định kỳ, khi có bằng chứng chắc chắn thu được khoản lãi cho vay (bao gồm
+        Điểm h — Khi  nhà  đầu  tư  nhận  cổ  tức  bằng  cổ  phiếu,  nhà  đầu  tư  chỉ  theo  dõi  số
+      Khoản 2 — Kết cấu  và  nội  dung  phản  ánh  của  tài  khoản  515  -  Doanh  thu  hoạt
+      Khoản 3 — Phương pháp kế toán một số giao dịch kỉnh tế chủ yếu
+        Điểm a — Phản ánh doanh thu cổ tức, lợi nhuận được chia bằng tiền phát sinh trong
+        Điểm b — Định kỳ,  khi  có  bằng  chứng  chắc  chắn thu  được  khoản  lãi  cho  vay (bao
         Điểm c — Khi nhượng bán hoặc thu hồi các khoản đầu tư tài chính, ghi:
-        Điểm d — Trường hợp hoán đổi cổ phiếu, kế toán căn cứ  giá trị  hợp lý của cổ  phiếu
-        Điểm đ — Kế toán bán ngoại tệ, ghi:
-        Điểm e — Khi mua vật  tư,  hàng hóa, TSCĐ,  dịch vụ,  chi trả  các khoản chi phí bằng
-        Điểm g — Khi thanh toán nợ phải trả bằng ngoại tệ, nếu tỷ giá trên sổ kế toán các TK 111,
-        Điểm h — Khi thu được tiền nợ phải thu bằng ngoại tệ, nếu tỷ giá giao dịch thực tế
-        Điểm i — Khi bán sản phẩm, hàng hóa theo phương thức trả chậm, trả góp thì ghi nhận
+        Điểm d — Trường hợp hoán  đổi cổ  phiếu, kế toán căn cứ giá trị họp lý của cổ phiếu
+        Điểm đ — Ke toán bán ngoại tệ, ghi:
+        Điểm e — Khi mua vật tư, hàng hoá, TSCĐ, dịch vụ, chi trả các khoản chi phí bằng
+        Điểm g — Khi thanh toán nợ phải  trả bằng ngoại tệ,  nếu tỷ giá trên  sổ  kế  toán  các
+        Điểm h — Khi  thu  được tiền nợ phải thu bằng ngoại tệ,  nếu tỷ giá giao  dịch thực
+        Điểm i — Khi  bán  sản phẩm,  hàng  hoá theo  phương thức  trả chậm,  trả góp  thì  ghi
         Điểm k — Hàng kỳ, xác định và kết chuyển doanh thu tiền lãi đối với các khoản cho
-        Điểm l — Trường hợp mua trái phiếu Chính phủ theo hợp đồng mua bán lại (repo):
-        Điểm m — Số  tiền  chiết  khấu  thanh  toán  được  hưởng do thanh toán  tiền  mua  hàng
+      Khoản 1 — Trường họp mua trái phiếu Chính phủ theo hợp đồng mua bán lại (repo):
+        Điểm m — Số  tiền  chiết khấu thanh toán  được  hưởng  do thanh toán tiền mua hàng
         Điểm n — Trường hợp giá đánh giá lại vàng tiền tệ phát sinh lãi (giá vàng thị trường
-        Điểm o — Khi xử lý chênh lệch tỷ  giá hối đoái do đánh giá lại số dư các khoản mục
-        Điểm p — Cuối kỳ kế toán, kết chuyển doanh thu hoạt động tài chính để xác định kết
-    Điều 81 — Tài khoản 521 - Các khoản giảm trừ doanh thu
+        Điểm o — Khi xử lý chênh lệch tỷ giá hối đoái do đánh giá lại số dư các khoản mục
+        Điểm p — Cuối  kỳ  kế  toán,  kết  chuyển  doanh  thu  hoạt  động  tài  chính  để  xác  định
+    Điều 81 — Tài khoản 521 - Các khoản giảm trừ doanh thu  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để  phản ánh các khoản được điều chỉnh giảm trừ  vào
+        Điểm a — Tài khoản này dùng để phản ánh các khoản được điều chỉnh giảm trừ vào
         Điểm b — Việc điều chỉnh giảm doanh thu được thực hiện như sau:
-        Điểm c — Chiết khấu thương mại  phải trả  là khoản doanh nghiệp bán giảm giá niêm
-        Điểm d — Giảm giá hàng bán là khoản giảm trừ cho người mua do sản phẩm, hàng hóa
+        Điểm c — Chiết khấu thương mại phải trả là khoản doanh nghiệp bán giảm giá niêm
+        Điểm d — Giảm giá hàng bán là khoản giảm trừ cho người mua do sản phẩm, hàng
         Điểm đ — Đối với hàng bán bị trả lại, tài khoản này dùng để phản ánh giá trị của số
-        Điểm e — Kế toán phải theo dõi chi tiết chiết khấu thương mại, giảm giá hàng bán, hàng
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 521 - Các khoản giảm trừ
-      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Phản  ánh số  chiết  khấu  thương mại,  giảm giá hàng bán thực  tế  phát  sinh
-        Điểm b — Kế toán hàng bán bị trả lại
-        Điểm c — Cuối kỳ kế toán, kết chuyển tổng số giảm trừ doanh thu phát sinh trong kỳ
-    Điều 82 — Nguyên tắc kế toán các khoản chi phí
-      Khoản 1 — Chi  phí  là  những khoản  làm  giảm lợi  ích  kinh  tế,  được  ghi  nhận  tại  thời
-      Khoản 2 — Việc ghi nhận chi phí ngay cả khi chưa đến kỳ hạn thanh toán nhưng có khả
-      Khoản 3 — Mỗi  doanh nghiệp chỉ  có thể  áp dụng một  trong hai phương pháp kế  toán
+        Điểm e — Kế toán phải theo dõi chi tiết chiết khấu thương mại, giảm giá hàng bán,
+      Khoản 2 — Kết cấu  và  nội  dung  phản  ánh  của  tài  khoản  521  -  Các  khoản  giảm
+      Khoản 3 — Phương pháp kế toán một số  giao dịch kinh tế chủ  yếu
+        Điểm a — Phản  ánh số  chiết khấu thương mại, giảm giá hàng bán thực tế  phát sinh
+        Điểm b — Ke toán hàng bán bị trả lại
+        Điểm c — Cuối kỳ kế toán,  kết chuyển tổng  số  giảm trừ doanh thu phát  sinh trong
+    Điều 82 — Nguyên tắc kế toán các khoản chi phí  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Chi  phí  là những khoản  làm  giảm  lợi  ích kinh tế,  được  ghi  nhận tại  thời
+      Khoản 2 — Việc ghi  nhận chi phí ngay cả khi chưa đến kỹ hạn thanh toán nhưng có
+      Khoản 3 — Mỗi doanh nghiệp chỉ có thể áp dụng một trong hai phương pháp kế toán
       Khoản 4 — Kế toán phải theo dõi chi tiết các khoản chi phí phát sinh theo yếu tố, tiền
-      Khoản 5 — Các khoản chi phí không được coi là chi phí tính thuế TNDN theo quy định
-      Khoản 6 — Các tài khoản phản ánh chi phí không có số  dư,  cuối  kỳ  kế  toán phải  kết
-    Điều 83 — Tài khoản 611 - Mua hàng
+      Khoản 5 — Các  khoản  chi  phí  không  được  coi  là  chi  phí  tính  thuế  TNDN  theo  quy
+      Khoản 6 — Các tài  khoản phản ánh chi phí không có số dư,  cuối kỳ kế toán phải kết
+    Điều 83 — Tài khoản 611 - Mua hàng  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh trị giá nguyên liệu, vật liệu, công cụ, dụng
-        Điểm b — Giá trị nguyên liệu, vật liệu, công cụ, dụng cụ, hàng hóa mua vào phản ánh trên
-        Điểm c — Trường hợp hạch toán hàng tồn kho theo phương pháp kiểm kê định kỳ, doanh
-        Điểm d — Phương pháp hạch toán hàng tồn kho theo phương pháp kiểm kê định kỳ: Khi
-        Điểm đ — Kế toán phải mở sổ chi tiết để hạch toán giá gốc hàng tồn kho mua vào theo
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 611 - Mua hàng
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  trị  giá  nguyên  liệu,  vật  liệu,  công  cụ,
+        Điểm b — Giá trị nguyên liệu, vật liệu, công cụ, dụng cụ, hàng hoá mua vào phản ánh
+        Điểm c — Trường  hợp  hạch  toán  hàng  tồn  kho  theo  phương  pháp  kiểm  kê  định  kỳ,
+        Điểm d — Phương pháp hạch toán hàng tồn kho theo phương pháp kiểm kê định kỳ:
+        Điểm đ — Ke  toán phải  mở sổ  chi  tiết để hạch toán  giá gốc  hàng tồn kho  mua vào
+      Khoản 2 — Kết cấu và nội dụng phản ánh của tài khoản 611 - Mua hàng
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Đối với doanh nghiệp sản xuất công nghiệp, nông nghiệp, lâm nghiệp, xây lắp
-        Điểm b — Đối với doanh nghiệp kinh doanh hàng hóa
-    Điều 84 — Tài khoản 621 - Chi phí nguyên liệu, vật liệu trực tiếp
+        Điểm a — Đối với doanh nghiệp sản xuất công nghiệp, nông nghiệp,  lâm nghiệp, xây
+        Điểm b — Đối với doanh nghiệp kinh doanh hàng hoá
+    Điều 84 — Tài khoản 621 -  Chi phí nguyên liệu, vật liệu trực tiếp  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh chi phí nguyên liệu, vật liệu sử dụng trực
-        Điểm b — Chỉ hạch toán vào tài khoản 621 những chi phí nguyên liệu, vật liệu (gồm cả
-        Điểm c — Trong kỳ kế toán thực hiện việc ghi chép, tập hợp chi phí nguyên liệu, vật
-        Điểm d — Cuối kỳ kế toán, thực hiện kết chuyển (nếu nguyên liệu, vật liệu đã được tập
-        Điểm đ — Khi mua nguyên liệu, vật liệu, nếu thuế GTGT đầu vào được khấu trừ thì trị
-        Điểm e — Phần chi phí nguyên liệu, vật liệu trực tiếp vượt trên mức bình thường không
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 621 - Chi phí nguyên liệu,
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  chi  phí  nguyên  liệu,  vật  liệu  sử  dụng
+        Điểm b — Chỉ hạch toán vào tài khoản 621  những chi phí nguyên liệu, vật liệu (gồm
+        Điểm c — Trong kỳ kế toán thực hiện việc ghi chép, tập họp chi phí nguyên liệu, vật
+        Điểm d — Cuối kỳ kế toán, thực hiện kết chuyển (nếu nguyên liệu, vật liệu đã được
+        Điểm đ — Khi mua nguyên liệu, vật liệu, nếu thuế GTGT đầu vào được khấu trừ thì
+        Điểm e — Phần  chi  phí  nguyên  liệu,  vật  liệu  trực  tiếp  vượt  trên  mức  bình  thường
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  621  -  Chi  phí  nguyên
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Khi xuất  nguyên liệu, vật  liệu sử  dụng cho hoạt động sản xuất  sản phẩm,
-        Điểm b — Trường  hợp  mua  nguyên  liệu,  vật  liệu  sử  dụng  ngay  (không  qua  nhập
-        Điểm c — Trường hợp  số  nguyên  liệu,  vật  liệu  xuất  ra  không  sử  dụng hết  vào  hoạt
-        Điểm d — Đối với chi phí nguyên vật liệu trực tiếp vượt trên mức bình thường hoặc
-        Điểm e — Đối với chi phí nguyên vật liệu sử dụng chung cho hợp đồng hợp tác kinh doanh
+        Điểm a — Khi xuất nguyên liệu, vật liệu sử dụng cho hoạt động sản xuất sản phẩm,
+        Điểm b — Trường hợp  mua nguyên  liệu,  vật  liệu  sử  dụng  ngay  (không  qua nhập
+        Điểm c — Trường hợp số nguyên liệu, vật liệu xuất ra không  sử dụng hết vào hoạt
+        Điểm d — Đối  với  chi  phí  nguyên  vật  liệu  trực  tiếp  vượt  trên  mức  bình  thường
+        Điểm e — Đối  với  chi  phí  nguyên  vật  liệu  sử  dụng  chung  cho  họp  đồng  họp  tác
         Điểm g — Cuối  kỳ  kế  toán,  căn  cứ  vào  Bảng  phân  bổ  vật  liệu  tính  cho  từng  đối
-    Điều 85 — Tài khoản 622 - Chi phí nhân công trực tiếp
+    Điều 85 — Tài khoản 622 -  Chi phí nhân công trực tiếp  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
         Điểm a — Tài khoản này dùng để phản ánh chi phí nhân công trực tiếp tham gia vào
-        Điểm b — Không hạch toán vào tài khoản này những khoản phải trả về tiền lương, tiền
-        Điểm c — Riêng đối với hoạt động xây lắp, không hạch toán vào tài khoản này khoản
-        Điểm d — Tài khoản 622 phải mở  chi tiết theo đối tượng tập hợp chi phí sản xuất,
-        Điểm đ — Phần chi phí nhân công trực  tiếp vượt  trên  mức  bình thường không  được
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 622 - Chi phí nhân công
+        Điểm b — Không  hạch  toán  vào tài  khoản này  những khoản phải trả  về  tiền  lương,
+        Điểm c — Riêng  đổi  với  hoạt  động  xây  lắp,  không  hạch  toán  vào  tài  khoản  này
+        Điểm d — Tài khoản 622 phải mở chi tiết theo đối tượng tập hợp chi phí sản xuất, kinh
+        Điểm đ — Phần chi phí nhân công trực tiếp vượt trên mức bình thường không được
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  622  -   Chi  phí  nhân
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Căn cứ vào Bảng phân bổ tiền lương, ghi nhận số tiền lương, tiền công và
-        Điểm b — Tính, trích bảo hiểm xã hội, bảo hiểm y tế,  kinh phí công đoàn, bảo hiểm
+        Điểm b — Tính, trích bảo hiểm xã hội, bảo hiểm y tế, kinh phí công đoàn, bảo hiểm
         Điểm c — Khi trích trước tiền lương nghỉ phép của công nhân sản xuất, ghi:
         Điểm d — Khi công nhân sản xuất thực tế nghỉ phép, kế toán phản ánh số phải trả về
-        Điểm đ — Đối với chi phí nhân công sử dụng chung cho hợp đồng hợp tác kinh doanh
-        Điểm e — Cuối kỳ kế toán, tính phân bổ và kết chuyển chi phí nhân công trực tiếp vào
-    Điều 86 — Tài khoản 623 - Chi phí sử dụng máy thi công
+        Điểm đ — Đối  với  chi  phí  nhân  công  sử  dụng  chung  cho  họp  đồng  hợp  tác  kinh
+        Điểm e — Cuối  kỳ kế toán, tính phân bổ và két chuyển chi  phí nhân công trực tiếp
+    Điều 86 — Tài khoản 623 - Chỉ phí sử dụng máy thi công  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để tập hợp và phân bổ chi phí sử dụng xe, máy thi công
+        Điểm a — Tài  khoản  này  dùng  để  tập  hợp  và phân  bổ  chi  phí  sử  dụng  xe,  máy  thi
         Điểm b — Trường  hợp  doanh  nghiệp  thực  hiện  xây  lắp  công  trình  hoàn  toàn  theo
-        Điểm c — Không hạch toán vào TK 623 khoản trích về bảo hiểm xã hội, bảo hiểm y tế,
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 623 - Chi phí sử dụng máy
+        Điểm c — Không hạch toán vào TK 623 khoản trích về bảo hiếm xã hội, bảo hiểm y
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  623  -  Chi  phí  sử  dụng
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
         Điểm a — Nếu tổ chức đội xe, máy thi công riêng, được phân cấp hạch toán và có tổ
-        Điểm b — Nếu không tổ chức Đội xe, máy thi công riêng; hoặc có tổ chức Đội xe, máy
-    Điều 87 — Tài khoản 627 - Chi phí sản xuất chung
+        Điểm b — Nếu không tổ chức Đội xe, máy thi công riêng;  hoặc  có tổ  chức  Đội  xe,
+    Điều 87 — Tài khoản 627 -  Chi phí sản xuất chung  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc kế toán
-        Điểm a — Tài khoản này dùng để phản ánh chi phí phục vụ sản xuất, kinh doanh chung
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  chi  phí  phục  vụ  sản  xuất,  kinh  doanh
         Điểm b — Riêng đối với hoạt động kinh doanh xây lắp, khoản trích bảo hiểm xã hội,
-        Điểm c — Tài khoản 627 chỉ sử dụng ở các doanh nghiệp sản xuất công nghiệp, nông,
-        Điểm d — Tài khoản 627 được hạch toán chi tiết  cho từng phân xưởng, bộ  phận, tổ,
+        Điểm c — Tài  khoản  627  chỉ  sử  dụng  ở  các  doanh  nghiệp  sản  xuất  công  nghiệp,
+        Điểm d — Tài khoản 627 được hạch toán chi tiết cho từng phân xưởng, bộ phận, tổ,
         Điểm đ — Chi phí sản xuất chung phản ánh trên TK 627 phải được hạch toán chi tiết
-        Điểm e — Trường hợp một quy trình sản xuất ra nhiều loại sản phẩm trong cùng một
-        Điểm g — Cuối kỳ, kế toán tiến hành tính toán, phân bổ kết chuyển chi phí sản xuất
+        Điểm e — Trường  hợp  một  quy  trình  sản  xuất  ra  nhiều  loại  sản  phẩm  trong  cùng
+        Điểm g — Cuối  kỳ,  kế  toán  tiến  hành  tính  toán,  phân  bổ  kết  chuyển  chi  phí  sản
         Điểm h — Tài khoản 627 không sử dụng cho hoạt động kinh doanh thương mại.
-      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 627 - Chi phí sản xuất chung
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  627  -  Chi  phí  sản  xuất
       Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
-        Điểm a — Khi tính tiền lương, tiền công, các khoản phụ cấp phải trả cho nhân viên của
-        Điểm b — Khi trích bảo hiểm xã hội, bảo hiểm y tế, kinh phí công đoàn, bảo hiểm thất
-        Điểm c — Kế toán chi phí nguyên liệu, vật liệu xuất dùng cho phân xưởng (trường hợp
-        Điểm d — Trích khấu hao máy móc, thiết bị, nhà xưởng sản xuất,... thuộc phân xưởng,
-        Điểm đ — Chi phí điện, nước, điện thoại,... thuộc phân xưởng, bộ phận, tổ, đội sản xuất,
-        Điểm e — Trường hợp sử dụng phương pháp trích trước hoặc phân bổ dần số đã chi về
-        Điểm g — Trường hợp doanh nghiệp có TSCĐ  cho thuê hoạt động, khi phát sinh chi
-        Điểm h — Ở doanh nghiệp xây lắp, khi xác định số dự phòng phải trả về bảo hành công
-        Điểm i — Cuối kỳ kế toán, xác định lãi tiền vay phải trả, đã trả được vốn hóa cho tài
+        Điểm a — Khi tính tiền lương, tiền công, các khoản phụ cấp phải trả cho nhân viên
+        Điểm b — Khi  trích bảo  hiểm  xã hội,  bảo hiểm y tế,  kinh phí  công đoàn,  bảo  hiểm
+        Điểm c — Kế toán  chi  phí nguyên  liệu,  vật liệu xuất  dùng  cho phân xưởng  (trường
+        Điểm d — Trích  khấu  hao  máy  móc,  thiết  bị,  nhà  xưởng  sản xuất,...  thuộc  phân
+        Điểm đ — Chi  phí  điện,  nước,  điện thoại,...  thuộc phân xưởng,  bộ  phận,  tổ,  đội  sản
+        Điểm e — Trường họp sử dụng phương pháp trích trước hoặc phân bổ dần số đã chi
+        Điểm g — Trường họp doanh nghiệp có TSCĐ cho thuê hoạt động, khi phát sinh chi
+        Điểm h — Ở  doanh nghiệp xây lắp,  khi  xác  định số  dự phòng phải  trả  về  bảo  hành
+        Điểm i — Cuối kỳ kế  toán,  xác định lãi tiền vay phải trả, đã trả được vốn hoá cho  tài
         Điểm k — Nếu phát sinh các khoản giảm chi phí sản xuất chung, ghi:
-        Điểm l — Đối với chi phí sản xuất chung sử dụng chung cho hợp đồng hợp tác kinh doanh
-        Điểm m — Cuối kỳ  kế  toán, căn cứ  vào Bảng phân bổ  chi phí sản xuất chung để  kết
+      Khoản 1 — Đối với  chi phí sản xuất chung sử dụng chung cho hợp đồng hợp tác kinh
+        Điểm m — Cuối kỳ kế toán, căn cứ vào Bảng phân bổ chi phí sản xuất chung để kết
+    Điều 88 — Tài khoản 631 - Giá thành sản xuất  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Nguyên tắc kế toán
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  tổng  họp  chi  phí  sản  xuất  và  tính  giá
+        Điểm b — Đối  với  doanh nghiệp hạch toán hàng tồn kho theo phương pháp kê khai
+        Điểm c — Chỉ hạch toán vào tài khoản 631  các loại chi phí sản xuất, kinh doanh sau:
+        Điểm d — Không hạch toán vào tài khoản 631  các loại chi phí sau:
+        Điểm đ — Chi  phí  của  bộ  phận  sản  xuất,  kinh  doanh  phục  vụ  cho  sản  xuất,  kinh
+        Điểm e — Tài khoản 631  'Giá thành sản xuất' phải được hạch toán chi tiết theo nơi
+        Điểm g — Đối  với  ngành  nông  nghiệp,  giá  thành  thực  tế  của  sản  phẩm  được  xác
+        Điểm h — Tài  khoản  631  'Giá thành  sản  xuất'  áp  dụng  đối  với  ngành  giao  thông
+        Điểm i — Trong  hoạt  động  kinh  doanh  khách  sạn,  hạch  toán  tài  khoản  631  phải
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 631 - Giá thành sản xuất
+      Khoản 3 — Phương pháp kế toán một số giao dịch kỉnh tế chủ yếu:
+        Điểm a — Kết chuyển chi phí sản xuất, kinh doanh, chi phí dịch vụ dở dang đầu kỳ
+        Điểm b — Cuối kỳ kế toán, kết chuyển chi phí nguyên liệu, vật liệu trực tiếp vào tài
+        Điểm c — Cuối kỳ kế toán, kết chuyển chi phí nhân công trực tiếp vào tài khoản giá
+        Điểm d — Cuối  kỳ,  tính toán phân bổ và kết chuyển chi phí  sản xuất chung vào  tài
+        Điểm đ — Cuối kỳ kế toán, tiến hành kiểm kê và xác định giá trị  sản phẩm, dịch vụ
+        Điểm e — Giá thành sản phẩm nhập kho, dịch vụ hoàn thành, ghi:
+    Điều 89 — Tài khoản 632 -  Giá vốn hàng bán  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Nguyên tắc kế toán
+        Điểm a — Tài khoản này dùng để phản ánh trị giá vốn của sản phẩm, hàng hóa, dịch
+        Điểm b — Trường  hợp  doanh  nghiệp  là  chủ  đầu  tư  kinh  doanh  bất  động  sản,  khi
+        Điểm c — Khoản dự phòng giảm giá hàng tồn kho được tính vào giá vốn hàng bán
+        Điểm d — Khi  bán  sản  phẩm,  hàng  hóa  kèm  thiết  bị,  phụ  tùng  thay  thế  thì  giá  trị
+        Điểm đ — Đối  với  phần  giá  trị  hàng  tồn  kho  hao  hụt,  mất  mát,  kế  toán  phải  tính
+        Điểm e — Đối với  chi  phí nguyên vật liệu trực tiếp tiêu hao vượt mức  bình thường,
+        Điểm g — Các khoản thuế nhập khẩu, thuế tiêu thụ đặc biệt, thuế bảo vệ môi trường
+        Điểm h — Các  khoản  chi  phí  không  được  coi  là  chi  phí  tính  thuế  TNDN  theo  quy
+      Khoản 2 — Kết cấu và  nội dung phản ánh của tài khoản 632 - Giá vốn hàng bán
+      Khoản 3 — Phương pháp kế toán một số giao dịch kỉnh tế chủ yếu
+        Điểm a — Khi xuất bán các sản phẩm, hàng hóa (kể cả sản phẩm dùng làm thiết bị,
+        Điểm b — Phản  ánh  các  khoản  chi  phí  được  hạch toán  trực  tiếp  vào  giá  vốn  hàng
+        Điểm c — Hạch toán  khoản trích  lập  hoặc  hoàn  nhập  dự phòng  giảm  giá hàng tồn
+        Điểm d — Các nghiệp vụ kinh tế liên quan đến hoạt động kinh doanh BĐS đầu tư:
+        Điểm đ — Phương pháp kế toán khoản chi phí trích trước để tạm tính giá vốn hàng
+        Điểm e — Trường hợp dùng sản phẩm sản xuất ra chuyển thành TSCĐ để  sử dụng,
+        Điểm g — Hàng bán bị trả lại nhập kho, ghi:
+        Điểm h — Trường hợp khoản chiết khấu thương mại hoặc  giảm giá hàng bán nhận
+        Điểm k — Kết chuyển giá vốn hàng bán của các  sản phẩm,  hàng hóa,  bất động  sản
+        Điểm a — Đối với doanh nghiệp thương mại:
+        Điểm b — Đối với doanh nghiệp sản xuất và kinh doanh dịch vụ :
+    Điều 90 — Tài khoản 635 -  Chi phí tài chính  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Nguyên tắc kế toán
+        Điểm a — Tài  khoản  này  phản  ánh  những  khoản  chi  phí  hoạt  động  tài  chính  bao
+        Điểm b — Tài  khoản  635  phải  được  hạch  toán  chi  tiết  cho  từng  nội  dung  chi  phí.
+        Điểm c — Chi  phí  phát  hành  trái  phiếu  được  phân  bổ  dần phù  hợp  với  kỳ  hạn  trái
+        Điểm d — Lãi  phải  trả  của  trái  phiếu  chuyển  đối  được  tính  vào  chi  phí  tài  chính
+        Điểm đ — Nếu cổ phiếu ưu đãi được phân loại là nợ phải trả, khoản cổ tức ưu đãi đó
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 635 - Chi phí tài chính
+      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
+        Điểm a — Khi mua hàng hoá, dịch vụ, tài sản, chi trả các khoản chi phí... thanh toán
+        Điểm b — Khi thanh toán các khoản nợ phải trả bằng ngoại tệ, nếu tỷ giá trên sổ kế
+        Điểm c — Khi  thu  được  tiền Nợ phải  thu  bằng ngoại  tệ,  nếu tỷ  giá trên  sổ  kế  toán
+        Điểm d — Khoản lỗ phát sinh khi bán ngoại tệ của hoạt động kinh doanh, ghi:
+        Điểm e — Kết  chuyển  lỗ  tỷ  giá hối  đoái  đánh giá lại  các  khoản mục tiền tệ  có  gốc
+        Điểm g — Các trường họp khác phát sinh lỗ tỷ giá thực hiện theo quy định của các
+    Điều 91 — Tài khoản 641 - Chi phí bán hàng  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Nguyên tắc kế toán
+        Điểm a — Tài  khoản này dùng để phản ánh các chi phí thực tế phát sinh trong quá
+        Điểm b — Các  khoản  chi  phí  bán hàng  không  được  coi  là chi  phí  tính thuế  TNDN
+        Điểm c — Tài  khoản 641  được mở chi tiết theo từng nội dung chi phí như:  Chi phí
+      Khoản 2 — Kết cấu và  nội dung phản ánh của tài khoản 641 - Chi phí bán hàng
+      Khoản 3 — Phương pháp kế toán  một số giao dịch kinh tế chủ yếu
+        Điểm a — Tính tiền  lương,  phụ  cấp,  tiền ăn giữa ca và tính,  trích  bảo  hiểm xã hội,
+        Điểm b — Giá trị vật liệu, dụng cụ phục vụ cho quá trình bán hàng, ghi:
+        Điểm c — Trích khấu hao TSCĐ của bộ phận bán hàng, ghi:
+        Điểm d — Chi  phí  điện,  nước  mua  ngoài,  chi  phí  thông  tin  (điện  thoại,  fax...),  chi
+        Điểm đ — Đối với chi phí sửa chữa TSCĐ phục vụ cho bán hàng
+        Điểm e — Hạch  toán  chi  phí  bảo  hành  sản  phẩm,  hàng  hóa  (không  bao  gồm  bảo
+        Điểm g — Đối với sản phẩm, hàng hóa dùng để khuyến mại, quảng cáo
+        Điểm h — Đối  với  sản  phẩm,  hàng  hoá tiêu  dùng  nội  bộ  cho  hoạt  động  bán  hàng,
+        Điểm i — Trường hợp sản phẩm, hàng hoá dùng để biếu, tặng
+        Điểm k — Số tiền phải trả cho đơn vị nhận uỷ thác xuất khẩu về các khoản đã chi hộ
+      Khoản 1 — Hoa hồng bán hàng bên giao đại lý phải trả cho bên nhận đại lý, ghi:
+        Điểm m — Khi phát sinh các khoản ghi giảm chi phí bán hàng, ghi:
+        Điểm n — Cuổi  kỳ kế  toán,  kết chuyển chi phí bán hàng phát sinh trong kỳ vào tài
+    Điều 92 — Tài khoản 642 -  Chi phí quản lý doanh nghiệp  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Nguyên tắc kế toán
+        Điểm a — Tài  khoản  này  dùng  đê  phản  ánh  các  chi  phí  quản  lý  chung  của  doanh
+        Điểm b — Các khoản  chi  phí  quản  lý  doanh nghiệp  không được  coi  là chi  phí  tính
+        Điểm c — Tài  khoản 642  được mở chi tiết theo từng nội  dung chi phí theo  quy định.
+      Khoản 2 — Kết  cấu  và  nội  dung  phản  ánh  của  tài  khoản  642  -  Chi  phí  quản  lý
+      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
+        Điểm a — Trường hợp sử dụng phương pháp trích trước chi phí sửa chữa lớn TSCĐ:
+        Điểm b — Trường hợp chi phí  sửa chữa lớn TSCĐ phát  sinh một lần có giá trị  lớn
+        Điểm a — Đối với các khoản nợ phải thu đã có đủ căn cứ chứng minh theo quy định
+        Điểm b — Đối với  các khoản phải thu quá hạn được bán cho  Công ty Mua bán nợ
+    Điều 93 — Tài khoản 711 - Thu nhập khác  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Nguyên tắc kế toán
+        Điểm a — Tài  khoản  này  dùng  để  phản  ánh  các  khoản  thu  nhập  khác  ngoài  hoạt
+        Điểm b — Khi  có  khả  năng  chắc  chắn  thu  được  các  khoản  tiền  phạt  vi  phạm  hợp
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 711 - Thu nhập khác
+      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
+        Điểm a — Kế  toán  thu  nhập  khác  phát  sinh  từ  nghiệp  vụ  nhượng  bán,  thanh  lý
+        Điểm b — Kế toán thu nhập khác phát sinh khi đánh giá lại vật tư, hàng hoá, TSCĐ
+        Điểm c — Kế toán  thu  nhập  khác  phát  sinh  từ  giao  dịch  bán  và  thuê  lại  TSCĐ  là
+        Điểm d — Ke  toán  thu  nhập  khác  phát  sinh  từ  giao  dịch  bán  và thuê  lại  TSCĐ  là
+        Điểm đ — Khi hết thời hạn bảo hành công trình xây lắp, nếu công trình không phải
+        Điểm e — Phản ánh các khoản thu tiền phạt
+        Điểm g — Phản ánh các khoản được bên thứ ba bồi thường (như tiền bảo hiểm được
+        Điểm h — Hạch toán các khoản phải thu khó  đòi đã xử lý xóa sổ,  nay thu lại được
+        Điểm i — Các  khoản  nợ phải  trả  không  xác  định  được  chủ  nợ,  quyết  định  xoá  và
+        Điểm k — Ke  toán  các  khoản  thuế  phải  nộp  khi  bán  hàng  hóa,  cung  cấp  dịch  vụ
+      Khoản 1 — Trường hợp doanh nghiệp được tài trợ, biểu, tặng vật tư, hàng hoá, TSCĐ
+        Điểm m — Trường họp  chuyên đôi  hình thức sở hữu  doanh nghiệp (trừ trường hợp
+        Điểm n — Trường hợp doanh nghiệp có hoạt động thương mại  được  nhận hàng hoá
+        Điểm o — Cuối kỳ kế toán, tính và phản  ánh  số thuế  GTGT phải  nộp theo phương
+        Điểm p — Cuối  kỳ,  kết chuyển các  khoản thu nhập  khác phát sinh trong kỳ vào tài
+    Điều 94 — Tài  khoản 811 - Chi phí khác  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Nguyên tắc kế toán
+        Điểm a — Tài khoản này phản ánh những khoản chi phí phát sinh do các sự kiện hay
+        Điểm b — Các  khoản  chi  phí  không  được  coi  là  chi  phí  tính thuế  TNDN theo  quy
+      Khoản 2 — Kết cấu và nội dung phản ánh của tài khoản 811 - Chỉ phí khác
+      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
+        Điểm a — Hạch toán nghiệp vụ nhượng bán, thanh lý TSCĐ:
+        Điểm b — Khi phá dờ TSCĐ, ghi:
+        Điểm c — Ke  toán  chi  phí  khác  phát  sinh khi  đánh  giá  lại  vật tư,  hàng  hoá,  TSCĐ
+        Điểm d — Trường hợp  chuyển đổi  hình thức  sở hữu doanh  nghiệp (trừ trường hợp
+        Điểm đ — Hạch  toán  các  khoản  tiền  bị  phạt  do  vi  phạm  hợp  đồng  kinh  tế,  phạt  vi
+        Điểm e — Cuối  kỳ kế  toán,  kết  chuyển toàn  bộ  chi  phí  khác  phát  sinh trong  kỳ  để
+    Điều 95 — Tài khoản 821 -  Chi phí thuế thu nhập doanh nghiệp  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Nguyên tắc kế toán
+        Điểm a — Nguyên tắc chung
+        Điểm b — Nguyên tắc kế toán chi phí thuế thu nhập doanh nghiệp hiện hành
+        Điểm c — Nguyên tắc kế toán chi phí thuế thu nhập doanh nghiệp hoãn lại
+      Khoản 2 — Kết cấu và  nội  dung  phản  ánh  của  tài  khoản  821  -  Chi  phí thuế  thu
+        Điểm a — Kết cấu và nội dung phản ánh chung
+        Điểm b — Kết cấu và  nội dung phản ánh của  tài khoản 8211  - Chi phí thuế thu
+        Điểm c — Kết  cầu  và  nội  dung  phản  ánh  của  tài  khoản  8211  -  Chi  phí  thuế  thu
+      Khoản 3 — Phương pháp kế toán một số giao dịch kinh tế chủ yếu
+        Điểm a — Phương pháp kế toán chi phí thuế thu nhập doanh nghiệp hiện hành
+        Điểm b — Phương pháp kế toán chi phí thuế thu nhập doanh nghiệp hoãn lại
+    Điều 96 — Tài khoản 911 - Xác định kết quả kinh doanh  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Nguyên tắc kế toán
+        Điểm a — Tài  khoản  này  dùng  đế  xác  định  và  phản  ánh  kết  quả  hoạt  động  kinh
+        Điểm b — Tài  khoản  này  phải  phản  ánh  đầy  đủ,  chính  xác  kết  quả  hoạt  động  kinh
+        Điểm c — Các  khoản  doanh thu và thu nhập được kết  chuyển vào tài khoản này  là
+      Khoản 2 — Kết cấu  và  nội  dung  phản  ánh  của  tài  khoản  911  - Xác  định  kết quả
+      Khoản 3 — Phương pháp kế toán một số giao dịch kỉnh tế chủ yếu
+        Điểm a — Cuối  kỳ kế toán,  thực hiện việc kết chuyển  số  doanh thu bán hàng thuần
+        Điểm b — Kết chuyển trị giá vốn của sản phẩm, hàng hóa, dịch vụ đã tiêu thụ trong
+        Điểm c — Cuối  kỳ kế toán,  kết chuyển doanh thu hoạt động tài chính và các khoản
+        Điểm d — Cuối kỳ kế toán, kết chuyển chi phí hoạt động tài chính và các khoản chi
+        Điểm đ — Cuối  kỳ  kế  toán,  kết  chuyển  chi  phí  thuế  thu  nhập  doanh  nghiệp  hiện
+        Điểm e — Cuối kỳ kế  toán, kết chuyển số chênh lệch giữa  số  phát sinh bên Nợ và số
+        Điểm g — Cuối kỳ kế toán, kết chuyển chi phí bán hàng phát sinh trong kỳ, ghi:
+        Điểm h — Cuối kỳ kế toán, kết chuyển chi phí quản lý doanh nghiệp phát sinh trong
+        Điểm i — Kết chuyển kết quả hoạt động kinh doanh trong kỳ vào lợi nhuận sau thuế
+        Điểm k — Định kỳ, đơn vị hạch toán phụ thuộc được phân cấp theo dõi kết quá kinh
 Chương III
-    Điều 114 — Hướng dẫn lập và trình bày Báo cáo lưu chuyển tiền tệ (Mẫu số  <<< BẤT THƯỜNG ĐÁNH SỐ
+  Mục 1
+    Điều 97 — Muc đích của Báo cáo tài chính  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Báo cáo tài chính dùng để cung cấp thông tin về tình hình tài chính, tình
+        Điểm a — Tài sản;
+        Điểm b — Nợ phải trả;
+        Điểm c — Vốn chủ sở hữu;
+        Điểm d — Doanh thu, thu nhập khác, chi phí sản xuất kinh doanh và chi phí khác;
+        Điểm đ — Lãi, lỗ và phân chia kết quả kinh doanh;
+        Điểm e — Các luồng tiền.
+      Khoản 2 — Ngoài  các  thông tin này,  doanh nghiệp  còn phải  cung  cấp  các  thông  tin
+    Điều 98 — Kỳ lập Báo cáo tài chỉnh  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Kỳ  lập  Báo  cáo  tài  chính  năm:  Các  doanh  nghiệp  phải  lập  Báo  cáo  tài
+      Khoản 2 — Kỳ  lập  Báo  cáo  tài  chính  giữa niên  độ:  Báo  cáo  tài  chính  giữa  niên  độ
+      Khoản 3 — Kỳ lập Báo cáo tài chính khác
+        Điểm a — Các doanh nghiệp có thể lập Báo cáo tài chính theo kỳ kế toán khác (như
+        Điểm b — Đom vị kế toán bị chia, tách, hợp nhất, sáp nhập, chuyển đổi hình thức sở
+      Khoản 4 — Xác định niên độ tổng hợp Báo cáo tài chính của cơ quan tài chính, thống
+        Điểm a — Trường hợp Báo cáo tài chính năm của doanh nghiệp bắt đầu từ  1/4, kết
+        Điểm b — Trường hợp Báo cáo tài  chính năm của doanh nghiệp bắt đầu tư  1/7, kết
+        Điểm c — Trường hợp Báo cáo tài chính năm của doanh nghiệp bắt đầu từ  1/10, kết
+    Điều 99 — Đối tượng áp dụng, trách nhiệm lập và chữ ký trên Báo cáo tài  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Đối tượng lập Báo cáo tài chính năm:
+      Khoản 2 — Đối  tượng lập Báo cáo tài  chính giữa niên độ  (Báo  cáo  tài  chính  quý vậ
+        Điểm a — Doanh nghiệp  do  Nhà nước  sở hữu  100%  vốn  điều  lệ  hoặc  nắm giữ cổ
+        Điểm b — Các  doanh nghiệp khác không thuộc đối tượng tại  điểm a nêu trên được
+        Điểm c — Báo cáo tài chính giữa niên độ được lập dưới dạng đầy đủ hoặc tóm lược.
+      Khoản 3 — Doanh nghiệp  cấp trên có  các  đơn vị  trực  thuộc  không  có  tư cách pháp
+      Khoản 4 — Việc  lập và trình bày Báo cáo tài  chính của các doanh nghiệp ngành đặc
+      Khoản 5 — Việc lập,  trình bày và công khai Báo cáo tài chính hợp nhất năm và Báo
+      Khoản 6 — Việc ký Báo cáo tài chính phải thực hiện theo Luật kế toán. Đối với đơn
+    Điều 100 — Hệ thống Báo cáo tài chính của doanh nghiệp  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Báo cáo tài chính năm gồm:
+      Khoản 2 — Báo cáo tài chính giữa niên độ:
+        Điểm a — Báo cáo tài chính giữa niên độ dạng đầy đủ, gồm:
+        Điểm b — Báo cáo tài chính giữa niên độ dạng tóm lược, gồm:
+    Điều 101 — Yêu cầu đổi vói thông tin trình bày trong Báo cáo tài chính  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Thông tin trình bày trên Báo cáo tài chính phải phản ánh trung thực, hợp
+      Khoản 2 — Thông  tin  tài  chính  phải  thích  họp  để  giúp  người  sử  dụng  Báo  cáo  tài
+      Khoản 3 — Thông tin tài chính phải được trình bày đầy đủ trên mọi khía cạnh trọng
+      Khoản 4 — Thông tin phải đảm bảo có thể kiểm chứng, kịp thời và dễ hiểu.
+      Khoản 5 — Thông tin tài chính phải được trình bày nhất quán và có thể so sánh giữa
+    Điều 102 — Nguyên  tắc  lập  và  trình  bày  Báo  cáo  tài  chính  của  doanh  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Việc  lập  và trình  bày  Báo  cáo  tài  chính  phải  tuân  thủ  các  quy  định  tại
+      Khoản 2 — Báo cáo tài chính phải phản ánh đúng bản chất kinh tế của các giao dịch
+      Khoản 3 — Tài  sản không  được  ghi nhận cao  hơn giá trị  có thể thu hồi;  Nợ phải  trả
+      Khoản 4 — Phân loại tài  sản và nợ phải trả:  Tài  sản và nợ phải trả trên Bảng cân đối
+        Điểm a — Tài sản hoặc nợ phải trả có thời gian đáo hạn còn lại không quá  12 tháng
+        Điểm b — Những tài  sản và nợ phải trả không được phân loại là ngắn hạn thì được
+        Điểm c — Khi lập Báo cáo tài chính, kế toán phải thực hiện tái phân loại tài  sản và
+      Khoản 5 — Tài sản và nợ phải trả phải được trình bày riêng biệt. Chỉ thực hiện bù trừ
+      Khoản 6 — Các  khoản  mục  doanh  thu,  thu  nhập,  chi  phí  phải  được  trình  bày  theo
+      Khoản 7 — Khi lập Báo cáo tài  chính tổng hợp giữa doanh nghiệp và các đơn vị cấp
+    Điều 103 — Nguyên tắc lập và trình bày Báo cáo tài chính khi thay đổi kỳ  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Việc  thay  đổi  kỳ kế  toán phải  tuân thủ theo  quy  định  của Luật kế  toán.
+      Khoản 2 — Đối  với  Bảng  Cân đối kế toán:  Toàn bộ  số  dư tài  sản, nợ phải trả và vốn
+      Khoản 3 — Đối  với  Báo  cáo  Kết  quả hoạt  động  kinh  doanh  và  báo  cáo  lưu  chuyển
+    Điều 104 — Nguyên tắc lập và trình bày Báo cáo tài chính  khi chuyển đổi  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Đối với  sổ kế toán phản ánh tài  sản, nợ phải trả và vốn chủ sở hữu:  Toàn
+      Khoản 2 — Đối  với  Bảng Cân  đối kế toán:  Toàn bộ  số dư tài  sản, nợ phải trả và vốn
+      Khoản 3 — Đối  với  Báo  cáo  Kết  quả  hoạt  động  kinh  doanh và Báo  cáo  lưu  chuyển
+    Điều 105 — Nguyên  tắc lập và  trình  bày Báo  cáo  tài  chính  khi  chia  tách,  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Đối với sổ kế toán phản ánh tài sản, nợ phải trả và vốn chủ sở hữu: Toàn
+      Khoản 2 — Đối với Bảng Cân đối kế toán:  Toàn bộ số dư tài sản, nợ phải trả và vốn
+      Khoản 3 — Đối  với  Báo  cáo  Kết quả hoạt động kinh doanh và Báo  cáo Lưu chuyển
+    Điều 106 — Lập  và  trình  bày  Báo  cáo  tài  chính  khỉ  doanh  nghiệp  không  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Khi  lập  và  trình  bày  Báo  cáo  tài  chính,  doanh  nghiệp  phải  xem  xét  giả
+      Khoản 2 — Trong một số trường họp sau đơn vị vẫn được coi là hoạt động liên tục:
+      Khoản 3 — Khi  không  đáp  ứng  giả  định hoạt  động  liên  tục,  doanh  nghiệp  vẫn phải
+      Khoản 4 — Trường hợp giả định về sự hoạt động liên tục không còn phù hợp tại thời
+      Khoản 5 — Trường hợp giả định về sự hoạt động liên tục không còn phù hợp tại thời
+        Điểm a — Trường hợp một đơn vị giải thể để sáp nhập vào đơn vị khác, nếu đơn vị
+        Điểm b — Trường hợp một đơn vị giải thể để chia tách thành các đơn vị khác, nếu
+        Điểm c — Từng khoản mục tài sản cụ thể được một bên khác cam kết, bảo lãnh thu
+        Điểm d — Từng  khoản mục  nợ phải  trả cụ thể  được  một  bên thứ ba cam kết,  bảo
+        Điểm b — Đối với nợ phải trả:  Trường hợp có sự thỏa thuận giữa các bên bằng văn
+        Điểm c — Các khoản mục tiền tệ có gốc ngoại tệ được đánh giá lại theo tỷ giá thực
+      Khoản 6 — Phương pháp kế toán một số khoản mục tài  sản khi  doanh nghiệp không
+        Điểm a — Việc trích lập dự phòng hoặc đánh giá tổn thất tài sản được ghi giảm trực
+        Điểm b — Việc tính khấu hao hoặc ghi nhận tổn thất của TSCĐ, Bất động sản đầu
+      Khoản 7 — Khi giả định hoạt động liên tục không còn phù hợp, doanh nghiệp phải xử
+      Khoản 8 — Trường hợp giả định về sự hoạt động liên tục không còn phù hợp tại thời
+    Điều 107 — Đồng  tiền  sử  dụng  để  lập  Báo  cáo  tài  chính  khi  công  bố  ra  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Báo cáo tài chính được sử dụng để công bổ ra công chúng và nộp các cơ
+      Khoản 2 — Phương pháp chuyển đổi Báo cáo tài chính lập bằng ngoại tệ sang Đồng
+        Điểm a — Khi  chuyển đổi Báo  cáo tài  chính được  lập  bằng  đồng ngoại  tệ ra Đồng
+        Điểm b — Phương pháp kế toán chênh lệch tỷ giá do chuyển  đổi  Báo  cáo tài  chính
+    Điều 108 — Nguyên  tắc  lập  Báo  cáo  tài  chính  khi  thay  đổi  đơn  vị  tiền  tệ  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Khi thay đổi đơn vị tiền tệ kế toán, tại kỳ đầu tiên kể từ khi thay đổi, kế
+      Khoản 2 — Tỷ giá áp dụng đối với thông tin so sánh (cột kỳ trước) trên Báo cáo kết
+      Khoản 3 — Khi  thay đổi  đơn vị tiền tệ trong kế toán,  doanh nghiệp phải  trình  bày rõ
+    Điều 109 — Thòi hạn nộp Báo cáo tài chính  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Đối với doanh nghiệp nhà nước
+        Điểm a — Thời hạn nộp Báo cáo tài chính quý:
+        Điểm b — Thời hạn nộp Báo cáo tài chính năm:
+      Khoản 2 — Đối với các loại doanh nghiệp khác
+        Điểm a — Đơn vị  kế  toán  là  doanh  nghiệp  tư nhân và  công  ty  hợp  danh phải  nộp
+        Điểm b — Đơn vị kế toán trực thuộc nộp Báo cáo tài chính năm cho đơn vị kế toán
+    Điều 110 — Nơỉ nhân Báo cáo tài chính  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Doanh nghiệp Nhà nước Quý, X X X X X
+      Khoản 2 — Doanh nghiệp có vôn đâu tư  Năm X X X X X
+      Khoản 3 — Các loại doanh nghiệp khác Năm X X X X
+      Khoản 1 — Đối  với  các  doanh  nghiệp  Nhà  nước  đóng  trên  địa  bàn  tỉnh,  thành  phố
+      Khoản 2 — Các  doanh nghiệp phải  gửi  Báo  cáo tài  chính  cho  cơ quan thuế trực tiếp
+      Khoản 3 — Doanh nghiệp có đơn vị kế toán cấp trên phải nộp Báo cáo tài chính cho
+      Khoản 4 — Đối với các doanh nghiệp mà pháp luật quy định phải kiểm toán Báo cáo
+      Khoản 5 — Cơ quan tài  chính mà doanh nghiệp  có vốn đầu tư trực tiếp nước ngoài
+      Khoản 6 — Đối với  các  doanh nghiệp Nhà nước  sở hữu  100% vốn điều lệ, ngoài các
+      Khoản 7 — Các  doanh nghiệp (kể  cả các  doanh nghiệp trong nước  và doanh nghiệp
+  Mục 2
+    Điều 111 — Những thông tin chung về doanh nghiệp  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 112 — Hướng dẫn lập và trình bày Bảng cân đối kế toán năm  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Lập  và  trình  Bảng  cân  đối  kế  toán  của  doanh  nghiệp  đáp  ứng  giả
+        Điểm a — 0 é i   vợi  doanh nghiệp  có  chu kỳ kinh  doanh bình  thường trong vòng  12
+        Điểm b — Đối  với  doanh  nghiệp  có  chu  kỳ  kinh  doanh  bình  thường  dài  hon  12
+        Điểm c — Đối với  các  doanh nghiệp  do tính chất hoạt động không thể dựa vào chu
+        Điểm a — Tài sản ngắn hạn (Mã số 100)
+        Điểm b — Tài sản dài hạn (Mã số 200)
+        Điểm c — Tổng cộng tài sản (Mã số 270)
+        Điểm d — Nợ  phải trả (Mã số 300)
+        Điểm e — Nợ ngắn hạn (Mã sổ 310)
+        Điểm g — Nợ dài hạn (Mã sổ 330)
+        Điểm h — Vốn chủ sở hữu (Mã sổ 400 = Mã sổ 410 + Mã số 430)
+        Điểm k — Tổng cộng nguồn vốn (Mã số 440)
+      Khoản 2 — Lập và trình Bảng cân đối kế toán của doanh  nghiệp không đáp ứng
+        Điểm a — Chỉ tiêu 'Chứng khoán kinh doanh' (Mã số  121)
+        Điểm b — Các chỉ tiêu liên quan đến các khoản đầu tư vào công ty con, công ty liên
+        Điểm c — Các chỉ tiêu liên quan đến các khoản phải thu phản ánh theo giá trị ghi sổ
+        Điểm d — Chỉ tiêu 'Hàng tồn kho' Mã số  140:
+        Điểm e — Các chỉ tiêu liên quan đến TSCĐ hữu hình, TSCĐ vô hình, TSCĐ thuê tài
+    Điều 113 — Hướng dẫn lập và trình  bày Báo cáo kết quả  hoạt động kinh  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Nội dung và kết cấu báo cáo:
+        Điểm a — Báo cáo kết quả hoạt động kinh doanh phản ánh tình hình và kết quả hoạt
+        Điểm b — Báo cáo kết quả hoạt động kinh doanh gồm có 5 cột:
+      Khoản 2 — Cơ sở lập báo cáo
+      Khoản 3 — Nội  dung  và  phương  pháp  lập  các  chỉ  tiêu  trong  Báo  cáo  Kết  quả
+        Điểm a — Các  khoản  điều  chỉnh  giảm  lợi  nhuận hoặc  lỗ  sau thuế  thu  nhập  doanh
+        Điểm b — Xác định các khoản điều chỉnh tăng lợi nhuận hoặc lỗ sau thuế thu nhập
+        Điểm a — Việc xác định số lượng bình quân gia quyền của cổ phiếu phổ thông đang
+        Điểm b — Xác  định số  lượng bình quân gia quyền của cổ phiếu phổ thông sẽ được
+    Điều 114 — Hướng dẫn lập và trình  bày Bảo cáo lưu chuyển tiền tệ (Mầu  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc lập và trình bày Báo cáo lưu chuyển tiền tệ
-      Khoản 12 — Đối với luồng tiền từ  giao dịch mua, bán lại trái phiếu Chính phủ  và các
+      Khoản 12 — Đối  với  luồng tiền từ giao dịch mua,  bán lại trái phiếu chính phủ và các
       Khoản 2 — Cơ sở lập Báo cáo lưu chuyển tiền tệ
-      Khoản 3 — Yêu cầu về mở và ghi sổ kế toán phục vụ lập Báo cáo lưu chuyển tiền tệ
+      Khoản 3 — Yêu cầu về mở và ghi sổ kế toán phục vụ lập Báo cáo lưu chuyển tiền
       Khoản 4 — Phương pháp lập Báo cáo lưu chuyển tiền tệ năm
         Điểm a — Nguyên tắc lập:
         Điểm b — Phương pháp lập các chỉ tiêu cụ thể
         Điểm a — Nguyên tắc lập:
         Điểm b — Phương pháp lập các chỉ tiêu cụ thể
+      Khoản 50 — trên Báo cáo kết quả hoạt động kinh doanh trong kỳ báo cáo. Nếu số liệu này
         Điểm a — Nguyên tắc lập:
-        Điểm b — Phương pháp lập các chỉ tiêu cụ thể theo phương pháp trực tiếp (Xem Mẫu
+        Điểm b — Phương pháp  lập  các  chỉ  tiêu  cụ  thể  theo  phương  pháp  trực  tiếp  (Xem
         Điểm a — Nguyên tắc lập:
-        Điểm b — Phương pháp lập các chỉ tiêu cụ thể theo phương pháp trực tiếp (Xem Mẫu
-    Điều 115 — Phương pháp lập và trình bày Thuyết minh BCTC (Mẫu số B09 - DN)  <<< BẤT THƯỜNG ĐÁNH SỐ
+        Điểm b — Phương  pháp  lập  các  chỉ  tiêu  cụ  thể  theo  phương  pháp  trực  tiếp  (Xem
+    Điều 115 — Phương  pháp  lập và  trình  bày  Thuyết  minh  BCTC  (Mau  số  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Mục đích của Bản thuyết minh Báo cáo tài chính:
-        Điểm a — Bản thuyết minh Báo cáo tài chính là một bộ phận hợp thành không thể tách
-        Điểm b — Bản thuyết  minh Báo cáo tài chính cũng có thể  trình bày những thông tin
+        Điểm a — Bản thuyết minh Báo cáo tài chính là một bộ phận hợp thành không thể
+        Điểm b — Bản thuyết minh Báo cáo tài chính cũng có thể trình bày những thông tin
       Khoản 2 — Nguyên tắc lập và trình bày Bản thuyết minh Báo cáo tài chính
-        Điểm a — Khi lập Báo cáo tài chính năm, doanh nghiệp phải lập Bản thuyết minh Báo
-        Điểm b — Khi lập Báo cáo tài chính giữa niên độ (kể cả dạng đầy đủ và dạng tóm lược)
-        Điểm c — Bản thuyết minh Báo cáo tài chính của doanh nghiệp phải trình bày những
-        Điểm d — Bản  thuyết  minh  Báo  cáo  tài  chính  phải  được  trình  bày  một  cách  có  hệ
+        Điểm a — Khi  lập  Báo  cáo  tài  chính năm,  doanh nghiệp phải  lập  Bản thuyết minh
+        Điểm b — Khi  lập Báo  cáo tài  chính giữa niên độ  (kể  cả dạng đầy đủ và dạng tóm
+        Điểm c — Bản  thuyết  minh  Báo  cáo  tài  chính  của  doanh  nghiệp  phải  trình  bày
+        Điểm d — Bản  thuyết  minh Báo  cáo tài  chính phải  được trình  bày  một  cách  có  hệ
       Khoản 3 — Cơ sở lập Bản thuyết minh Báo cáo tài chính
       Khoản 4 — Nội dung và phương pháp lập các chỉ tiêu
-        Điểm a — Hình thức sở hữu vốn: Là công ty Nhà nước, công ty cổ phần, công ty trách
-        Điểm b — Lĩnh vực kinh doanh: Nêu rõ là sản xuất  công nghiệp, kinh doanh thương
+        Điểm a — Hình  thức  sở hữu  vốn:  Là  công  ty  Nhà  nước,  công  ty  cổ  phần,  công  ty
+        Điểm b — Lĩnh vực kinh doanh: Nêu rõ là sản xuất công nghiệp, kinh doanh thương
         Điểm c — Ngành  nghề  kinh  doanh:  Nêu  rõ  hoạt  động  kinh  doanh  chính  (Nội  dung
-        Điểm d — Chu kỳ  sản xuất,  kinh  doanh thông thường: Trường hợp chu kỳ  kéo  dài
-        Điểm đ — Đặc điểm hoạt động của doanh nghiệp trong năm tài chính có  ảnh hưởng
+        Điểm d — Chu kỳ  sản xuất,  kinh  doanh thông thường:  Trường hợp  chu kỳ kéo  dài
+        Điểm đ — Đặc điểm hoạt động của doanh nghiệp trong năm tài chính có ảnh hưởng
         Điểm e — Cấu trúc doanh nghiệp
-        Điểm a — Kỳ kế toán năm ghi rõ kỳ kế toán năm theo năm dương lịch bắt đầu từ ngày
-        Điểm b — Đơn vị  tiền tệ  sử  dụng trong kế  toán: ghi rõ là Đồng Việt Nam, hoặc một
-        Điểm a — Chế độ kế toán áp dụng: Nêu rõ doanh nghiệp áp dụng chế độ kế toán nào:
-        Điểm b — Tuyên bố  về việc tuân thủ  Chuẩn mực kế  toán và Chế độ kế  toán: Nêu rõ
+        Điểm a — Kỳ  kế  toán năm  ghi  rõ  kỳ  kế  toán năm  theo  năm  dương  lịch bắt  đầu  từ
+        Điểm b — Đơn vị tiền tệ sử dụng trong kế toán:  ghi rõ là Đồng Việt Nam, hoặc một
+        Điểm a — Chế  độ  kế  toán  áp  dụng:  Nêu  rõ  doanh  nghiệp  áp  dụng  chế  độ  kế  toán
+        Điểm b — Tuyên bố về việc tuân thủ Chuẩn mực kế toán và Chế độ ké toán: Nêu rõ
         Điểm a — Đối với chứng khoán kinh doanh:
-        Điểm b — Đối với các khoản đầu tư nắm giữ đến ngày đáo hạn:
+        Điểm b — Đổi với các khoản đầu tư nắm giữ đến ngày đáo hạn:
         Điểm c — Đối với các khoản cho vay:
         Điểm d — Đối với các khoản đầu tư vào công ty con, công ty liên doanh, liên kết:
-        Điểm đ — Đối với các khoản đầu tư vào công cụ vốn của đơn vị khác:
-        Điểm e — Các phương pháp kế toán đối với các giao dịch khác liên quan đến đầu tư tài chính:
+        Điểm đ — Đối với các khoản đầu tư vào công cụ vốn của đon vị khác:
+        Điểm e — Các phương pháp kế toán đối với các giao dịch khác liên quan đến đầu tư
         Điểm a — Nguyên tắc kế toán TSCĐ hữu hình, TSCĐ vô hình:
         Điểm b — Nguyên tắc kế toán TSCĐ thuê tài chính:
         Điểm c — Nguyên tắc kế toán Bất động sản đầu tư.
         Điểm a — Đối với bên góp vốn
-        Điểm b — Đối với bên nhận vốn góp (bên thực hiện việc điều hành, phát sinh chi phí chung)
+        Điểm b — Đối  với  bên nhận vốn góp  (bên thực hiện việc điều hành, phát sinh chi
         Điểm a — Nguyên tắc kế toán tài sản thuế thu nhập hoãn lại
         Điểm b — Nguyên tắc kế toán thuế TNDN hoãn lại phải trả
         Điểm a — Chính sách tái phân loại tài sản và nợ phải trả dài hạn thành ngắn hạn
@@ -17583,610 +17878,53 @@ Chương III
 Chương IV
     Điều 116 — Quy định chung về chứng từ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
     Điều 117 — Hệ thống biểu mẫu chứng từ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
-      Khoản 1 — Các loại chứng từ kế toán tại phụ lục 3 Thông tư này đều thuộc loại hướng
-      Khoản 2 — Trường hợp  không tự  xây  dựng và thiết  kế  biểu  mẫu  chứng từ  cho  riêng
-      Khoản 3 — Các  doanh  nghiệp  có  các  nghiệp  vụ  kinh  tế,  tài  chính  đặc  thù  thuộc  đối
+      Khoản 1 — Các  loại  chứng  từ  kế  toán  tại  phụ  lục  3  Thông  tư  này  đều  thuộc  loại
+      Khoản 2 — Trường hợp không tự xây dựng và thiết kế biểu mẫu chứng từ cho riêng
+      Khoản 3 — Các  doanh nghiệp  có  các  nghiệp vụ kinh tế,  tài  chính  đặc thù thuộc  đối
     Điều 118 — Lập và ký chứng từ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
-      Khoản 1 — Mọi  nghiệp  vụ  kinh  tế,  tài  chính  phát  sinh  liên  quan  đến  hoạt  động  của
-      Khoản 2 — Chứng từ kế toán phải được lập đủ số liên theo quy định cho mỗi chứng từ.
-      Khoản 3 — Mọi chứng từ kế toán phải có đủ chữ ký theo chức danh quy định trên chứng
-      Khoản 4 — Các doanh nghiệp chưa có chức danh kế toán trưởng thì phải cử người phụ
-      Khoản 5 — Chữ ký của người đứng đầu doanh nghiệp (Tổng Giám đốc, Giám đốc hoặc
-      Khoản 6 — Kế toán trưởng (hoặc người được ủy quyền) không được ký 'thừa ủy quyền'
-      Khoản 7 — Các doanh nghiệp phải mở sổ đăng ký mẫu chữ ký của thủ quỹ, thủ kho, các
-      Khoản 8 — Những cá nhân có quyền hoặc được ủy quyền ký chứng từ, không được ký
-      Khoản 9 — Việc  phân  cấp  ký  trên  chứng  từ  kế  toán  do  Tổng  Giám  đốc  (Giám  đốc)
+      Khoản 1 — Mọi  nghiệp  vụ kinh tế,  tài  chính phát  sinh  liên  quan  đến  hoạt động  của
+      Khoản 2 — Chứng từ kế toán phải được lập đủ số liên theo quy định cho mỗi  chứng
+      Khoản 3 — Mọi  chứng  từ  kế  toán  phải  có  đủ  chữ ký  theo  chức  danh  quy  định  trên
+      Khoản 4 — Các  doanh  nghiệp  chưa  có  chức  danh  kế  toán trưởng  thì  phải  cử  người
+      Khoản 5 — Chữ  ký  của  người  đứng  đầu  doanh  nghiệp  (Tổng  Giám  đốc,  Giám  đốc
+      Khoản 6 — Ke  toán  trưởng  (hoặc  người  được  uỷ  quyền)  không  được  ký  'thừa  uỷ
+      Khoản 7 — Các doanh nghiệp phải mở sổ đăng ký mầu chữ ký của thủ quỳ, thủ kho,
+      Khoản 8 — Những  cá nhân  có  quyền hoặc  được  uỷ quyền ký chứng từ, không được
+      Khoản 9 — Việc  phân  cấp  ký trên  chứng từ kế  toán  do  Tổng  Giám  đốc  (Giám  đốc)
     Điều 119 — Trình tự luân chuyển và kiểm tra chứng từ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
-      Khoản 1 — Tất cả các chứng từ kế toán do doanh nghiệp lập hoặc từ bên ngoài chuyển
+      Khoản 1 — Tất  cả  các  chứng  từ  kế  toán  do  doanh  nghiệp  lập  hoặc  từ  bên  ngoài
       Khoản 2 — Trình tự luân chuyển chứng từ kế toán bao gồm các bước sau:
       Khoản 3 — Trình tự kiểm tra chứng từ kế toán.
-      Khoản 4 — Khi kiểm tra chứng từ  kế  toán nếu phát hiện hành vi vi phạm chính sách,
+      Khoản 4 — Khi kiểm tra chứng từ kế toán nếu phát hiện hành vi vi phạm chính sách,
     Điều 120 — Dịch chứng từ kế toán ra tiếng Việt  <<< BẤT THƯỜNG ĐÁNH SỐ
-    Điều 121 — Sử dụng, quản lý, in và phát hành biểu mẫu chứng từ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
-      Khoản 1 — Các doanh nghiệp có thể  mua sẵn hoặc tự  thiết  kế  mẫu, tự  in,  nhưng phải
-      Khoản 2 — Chứng từ phải được bảo quản cẩn thận, không được để  hư  hỏng, mục nát.
+    Điều 121 — Sử dụng, quản lý, ỉn và phát hành biểu mẫu chứng từ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
+      Khoản 1 — Các doanh nghiệp có thể mua sẵn hoặc tự thiết kế mẫu, tự in, nhưng phải
+      Khoản 2 — Chứng từ phải được bảo quản cẩn thận, không được để hư hỏng, mục nát.
 Chương V
     Điều 122 — Sổ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
-      Khoản 1 — Sổ kế toán dùng để ghi chép, hệ thống và lưu giữ toàn bộ các nghiệp vụ kinh
-      Khoản 2 — Doanh nghiệp được tự xây dựng biểu mẫu sổ kế toán cho riêng mình nhưng phải
-      Khoản 3 — Tùy theo đặc điểm hoạt động và yêu cầu quản lý, doanh nghiệp được tự xây
+      Khoản 1 — Sổ kế toán dùng để ghi chép, hệ thống và lưu giữ toàn bộ  các nghiệp vụ
+      Khoản 2 — Doanh  nghiệp  được  tự  xây  dựng  biểu  mẫu  sổ  kế  toán  cho  riêng  mình
+      Khoản 3 — Tùy theo  đặc  điểm  hoạt động và yêu  cầu quản lý,  doanh nghiệp được tự
     Điều 123 — Trách nhiệm của người giữ và ghi sổ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
     Điều 124 — Mở, ghi sổ kế toán và chữ ký  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Mở sổ
-      Khoản 2 — Ghi sổ: Việc ghi sổ kế toán phải căn cứ vào chứng từ kế toán đã được kiểm
-      Khoản 3 — Khóa sổ:  Cuối  kỳ  kế  toán phải  khóa sổ  kế  toán  trước khi lập Báo cáo tài
-      Khoản 4 — Đối với người ghi sổ thuộc các đơn vị dịch vụ kế toán phải ký và ghi rõ Số
+      Khoản 2 — Ghi  sổ:  Việc  ghi  sổ  kế  toán  phải  căn  cứ vào  chứng  từ kế  toán  đã  được
+      Khoản 3 — Khoá sổ:  Cuối kỳ kế toán phải khoá sổ kế toán trước khi lập Báo cáo tài
+      Khoản 4 — Đối với người ghi sổ thuộc các đơn vị dịch vụ kế toán phải ký và ghi rõ
     Điều 125 — Sửa chữa sổ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
-      Khoản 1 — Khi phát hiện sổ kế  toán của kỳ  báo cáo có sai sót thì phải sửa chữa bằng
-      Khoản 2 — Trường hợp  phát  hiện  sai  sót  trong  các  kỳ  trước,  doanh nghiệp  phải  điều
+      Khoản 1 — Khi phát hiện sổ kế toán của kỳ báo cáo có sai sót thì phải sửa chữa bằng
+      Khoản 2 — Trường hợp phát hiện sai  sót trong các kỳ trước, doanh nghiệp phải điều
 Chương VI
     Điều 126 — Chuyển đổi số dư trên sổ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Doanh nghiệp thực hiện chuyển đổi số dư các tài khoản sau:
-      Khoản 2 — Các nội dung khác đang phản ánh chi tiết trên các tài khoản có liên quan nếu
+      Khoản 2 — Các nội dung khác đang phản ánh chi tiết trên các tài khoản có liên quan
     Điều 127 — Điều khoản hồi tố  <<< BẤT THƯỜNG ĐÁNH SỐ
-      Khoản 1 — Các doanh nghiệp là chủ đầu tư bất động sản (kể cả trường hợp tự thi công
-      Khoản 2 — Các doanh nghiệp  đã ghi nhận doanh thu đối  với  khoản cổ  tức,  lợi  nhuận
-      Khoản 3 — Doanh nghiệp không tiếp tục  trích  khấu hao  đối  với  Bất  động sản  đầu tư
+      Khoản 1 — Các  doanh  nghiệp  là  chủ  đầu  tư  bất  động  sản  (kể  cả  trường  hợp  tự thi
+      Khoản 2 — Các doanh nghiệp đã ghi nhận doanh thu đối với khoản cổ tức, lợi nhuận
+      Khoản 3 — Doanh nghiệp không tiếp tục trích khấu hao đối với Bất động sản đầu tư
       Khoản 4 — Doanh nghiệp báo cáo lại thông tin so sánh trên Báo cáo tài chính đối với
-    Điều 128 — Thông tư này có hiệu lực áp dụng sau 45 ngày kể từ ngày ký và áp  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 128 — Thông tư này có hiệu lực áp dụng sau 45  ngày kể từ ngày ký và  <<< BẤT THƯỜNG ĐÁNH SỐ
     Điều 129 — Các Tổng công ty, Công ty có chế độ kế toán đặc thù đã được Bộ  <<< BẤT THƯỜNG ĐÁNH SỐ
-    Điều 130 — Các Bộ, ngành, Ủy ban nhân dân, Sở Tài chính, Cục Thuế các Tỉnh,  <<< BẤT THƯỜNG ĐÁNH SỐ
-      Khoản 1 — Bảng cân đối kế toán năm của doanh nghiệp hoạt động liên tục
-      Khoản 1 — Tiền   111
-      Khoản 2 — Các khoản tương đương tiền  112
-      Khoản 1 — Chứng khoán kinh doanh  121
-      Khoản 2 — Dự phòng giảm giá chứng khoán kinh doanh (*)   122  (...)  (...)
-      Khoản 3 — Đầu tư nắm giữ đến ngày đáo hạn  123
-      Khoản 1 — Phải thu ngắn hạn của khách hàng   131
-      Khoản 2 — Trả trước cho người bán ngắn hạn  132
-      Khoản 3 — Phải thu nội bộ ngắn hạn  133
-      Khoản 4 — Phải thu theo tiến độ kế hoạch hợp đồng xây dựng  134
-      Khoản 5 — Phải thu về cho vay ngắn hạn  135
-      Khoản 6 — Phải thu ngắn hạn khác  136
-      Khoản 7 — Dự phòng phải thu ngắn hạn khó đòi (*)  137
-      Khoản 8 — Tài sản thiếu chờ xử lý  139
-      Khoản 1 — Hàng tồn kho  141
-      Khoản 2 — Dự phòng giảm giá hàng tồn kho (*)  149 (...)  (...)
-      Khoản 1 — Chi phí trả trước ngắn hạn  151
-      Khoản 2 — Thuế GTGT được khấu trừ 152
-      Khoản 3 — Thuế và các khoản khác phải thu Nhà nước  153
-      Khoản 4 — Giao dịch mua bán lại trái phiếu Chính phủ 154
-      Khoản 5 — Tài sản ngắn hạn khác  155
-      Khoản 1 — Phải thu dài hạn của khách hàng  211
-      Khoản 2 — Trả trước cho người bán dài hạn  212
-      Khoản 3 — Vốn kinh doanh ở đơn vị trực thuộc  213
-      Khoản 4 — Phải thu nội bộ dài hạn  214
-      Khoản 5 — Phải thu về cho vay dài hạn  215
-      Khoản 6 — Phải thu dài hạn khác  216
-      Khoản 7 — Dự phòng phải thu dài hạn khó đòi (*)  219  (...)  (...)
-      Khoản 1 — Tài sản cố định hữu hình  221
-      Khoản 2 — Tài sản cố định thuê tài chính  224
-      Khoản 3 — Tài sản cố định vô hình  227
-      Khoản 1 — Chi phí sản xuất, kinh doanh dở dang dài hạn   241
-      Khoản 2 — Chi phí xây dựng cơ bản dở dang  242
-      Khoản 1 — Đầu tư vào công ty con   251
-      Khoản 2 — Đầu tư vào công ty liên doanh, liên kết  252
-      Khoản 3 — Đầu tư góp vốn vào đơn vị khác  253
-      Khoản 4 — Dự phòng đầu tư tài chính dài hạn (*)  254
-      Khoản 5 — Đầu tư nắm giữ đến ngày đáo hạn  255  (...)  (...)
-      Khoản 1 — Chi phí trả trước dài hạn  261
-      Khoản 2 — Tài sản thuế thu nhập hoãn lại  262
-      Khoản 3 — Thiết bị, vật tư, phụ tùng thay thế dài hạn  263
-      Khoản 4 — Tài sản dài hạn khác  268
-      Khoản 1 — Phải trả người bán ngắn hạn  311
-      Khoản 2 — Người mua trả tiền trước ngắn hạn  312
-      Khoản 3 — Thuế và các khoản phải nộp Nhà nước  313
-      Khoản 4 — Phải trả người lao động  314
-      Khoản 5 — Chi phí phải trả ngắn hạn  315
-      Khoản 6 — Phải trả nội bộ ngắn hạn  316
-      Khoản 7 — Phải trả theo tiến độ kế hoạch hợp đồng xây dựng  317
-      Khoản 8 — Doanh thu chưa thực hiện ngắn hạn   318
-      Khoản 9 — Phải trả ngắn hạn khác  319
-      Khoản 10 — Vay và nợ thuê tài chính ngắn hạn  320
-      Khoản 11 — Dự phòng phải trả ngắn hạn   321
-      Khoản 12 — Quỹ khen thưởng, phúc lợi   322
-      Khoản 13 — Quỹ bình ổn giá  323
-      Khoản 14 — Giao dịch mua bán lại trái phiếu Chính phủ 324
-      Khoản 1 — Phải trả người bán dài hạn  331
-      Khoản 2 — Người mua trả tiền trước dài hạn  332
-      Khoản 3 — Chi phí phải trả dài hạn  333
-      Khoản 4 — Phải trả nội bộ về vốn kinh doanh  334
-      Khoản 5 — Phải trả nội bộ dài hạn  335
-      Khoản 6 — Doanh thu chưa thực hiện dài hạn   336
-      Khoản 7 — Phải trả dài hạn khác  337
-      Khoản 8 — Vay và nợ thuê tài chính dài hạn   338
-      Khoản 9 — Trái phiếu chuyển đổi  339
-      Khoản 10 — Cổ phiếu ưu đãi  340
-      Khoản 11 — Thuế thu nhập hoãn lại phải trả 341
-      Khoản 12 — Dự phòng phải trả dài hạn   342
-      Khoản 13 — Quỹ phát triển khoa học và công nghệ 343
-      Khoản 1 — Vốn góp của chủ sở hữu  411
-      Khoản 2 — Thặng dư vốn cổ phần  412
-      Khoản 3 — Quyền chọn chuyển đổi trái phiếu  413
-      Khoản 4 — Vốn khác của chủ sở hữu   414
-      Khoản 5 — Cổ phiếu quỹ (*)  415  (...)  (...)
-      Khoản 6 — Chênh lệch đánh giá lại tài sản  416
-      Khoản 7 — Chênh lệch tỷ giá hối đoái  417
-      Khoản 8 — Quỹ đầu tư phát triển  418
-      Khoản 9 — Quỹ hỗ trợ sắp xếp doanh nghiệp  419
-      Khoản 10 — Quỹ khác thuộc vốn chủ sở hữu  420
-      Khoản 11 — Lợi nhuận sau thuế chưa phân phối  421
-      Khoản 12 — Nguồn vốn đầu tư XDCB  422
-      Khoản 1 — Nguồn kinh phí   431
-      Khoản 2 — Nguồn kinh phí đã hình thành TSCĐ 432
-      Khoản 2 — Bảng cân đối  kế  toán của doanh nghiệp không đáp ứng giả định hoạt động
-      Khoản 1 — Tiền   111
-      Khoản 2 — Các khoản tương đương tiền  112
-      Khoản 1 — Chứng khoán kinh doanh  121
-      Khoản 2 — Đầu tư nắm giữ đến ngày đáo hạn  122
-      Khoản 3 — Đầu tư vào công ty con   123
-      Khoản 4 — Đầu tư vào công ty liên doanh, liên kết  124
-      Khoản 5 — Đầu tư góp vốn vào đơn vị khác  125
-      Khoản 1 — Phải thu của khách hàng   131
-      Khoản 2 — Trả trước cho người bán   132
-      Khoản 3 — Vốn kinh doanh ở đơn vị trực thuộc  133
-      Khoản 4 — Phải thu nội bộ 134
-      Khoản 5 — Phải thu về cho vay  135
-      Khoản 6 — Phải thu theo tiến độ kế hoạch hợp đồng xây dựng  136
-      Khoản 7 — Phải thu khác  137
-      Khoản 8 — Tài sản thiếu chờ xử lý  138
-      Khoản 1 — Tài sản cố định hữu hình  151
-      Khoản 2 — Tài sản cố định thuê tài chính  152
-      Khoản 3 — Tài sản cố định vô hình  153
-      Khoản 1 — Chi phí trả trước  181
-      Khoản 2 — Thuế GTGT được khấu trừ 182
-      Khoản 3 — Thuế và các khoản khác phải thu Nhà nước  183
-      Khoản 4 — Giao dịch mua bán lại trái phiếu Chính phủ 184
-      Khoản 5 — Tài sản thuế thu nhập hoãn lại  185
-      Khoản 6 — Tài sản khác  186
-      Khoản 1 — Phải trả người bán   311
-      Khoản 2 — Người mua trả tiền trước   312
-      Khoản 3 — Thuế và các khoản phải nộp Nhà nước  313
-      Khoản 4 — Phải trả người lao động  314
-      Khoản 5 — Chi phí phải trả 315
-      Khoản 6 — Phải trả nội bộ về vốn kinh doanh
-      Khoản 7 — Phải trả nội bộ khác  316
-      Khoản 8 — Phải trả theo tiến độ kế hoạch hợp đồng xây dựng  317
-      Khoản 9 — Doanh thu chưa thực hiện   318
-      Khoản 10 — Phải trả khác  319
-      Khoản 11 — Vay và nợ thuê tài chính   320
-      Khoản 12 — Trái phiếu chuyển đổi  339
-      Khoản 13 — Cổ phiếu ưu đãi  340
-      Khoản 14 — Thuế thu nhập hoãn lại phải trả 341
-      Khoản 15 — Dự phòng phải trả 321
-      Khoản 16 — Quỹ khen thưởng, phúc lợi   322
-      Khoản 17 — Quỹ phát triển khoa học và công nghệ 343
-      Khoản 18 — Quỹ bình ổn giá  323
-      Khoản 19 — Giao dịch mua bán lại trái phiếu Chính phủ 324
-      Khoản 1 — Vốn góp của chủ sở hữu  411
-      Khoản 2 — Thặng dư vốn cổ phần  412
-      Khoản 3 — Quyền chọn chuyển đổi trái phiếu  413
-      Khoản 4 — Vốn khác của chủ sở hữu   414
-      Khoản 5 — Cổ phiếu quỹ (*)  415  (...)  (...)
-      Khoản 6 — Quỹ đầu tư phát triển  418
-      Khoản 7 — Quỹ hỗ trợ sắp xếp doanh nghiệp  419
-      Khoản 8 — Quỹ khác thuộc vốn chủ sở hữu  420
-      Khoản 9 — Lợi nhuận sau thuế chưa phân phối  421
-      Khoản 10 — Nguồn vốn đầu tư XDCB  422
-      Khoản 1 — Nguồn kinh phí   431
-      Khoản 2 — Nguồn kinh phí đã hình thành TSCĐ 432
-      Khoản 3 — Báo cáo kết quả hoạt động kinh doanh năm
-      Khoản 1 — Doanh thu bán hàng và cung cấp dịch vụ 01
-      Khoản 2 — Các khoản giảm trừ doanh thu 02
-      Khoản 3 — Doanh thu thuần về bán hàng và cung cấp dịch vụ 10
-      Khoản 4 — Giá vốn hàng bán 11
-      Khoản 5 — Lợi nhuận gộp về bán hàng và cung cấp dịch vụ 20
-      Khoản 6 — Doanh thu hoạt động tài chính  21
-      Khoản 7 — Chi phí tài chính  22
-      Khoản 8 — Chi phí bán hàng  25
-      Khoản 9 — Chi phí quản lý doanh nghiệp 26
-      Khoản 10 — Lợi nhuận thuần từ hoạt động kinh doanh  30
-      Khoản 11 — Thu nhập khác  31
-      Khoản 12 — Chi phí khác  32
-      Khoản 13 — Lợi nhuận khác (40 = 31 - 32)  40
-      Khoản 14 — Tổng lợi nhuận kế toán trước thuế (50 = 30 + 40)  50
-      Khoản 15 — Chi phí thuế TNDN hiện hành  51
-      Khoản 16 — Chi phí thuế TNDN hoãn lại  52
-      Khoản 17 — Lợi nhuận sau thuế thu nhập doanh nghiệp   60
-      Khoản 18 — Lãi cơ bản trên cổ phiếu (*)  70
-      Khoản 19 — Lãi suy giảm trên cổ phiếu (*)  71
-      Khoản 4 — Báo cáo lưu chuyển tiền tệ năm
-      Khoản 1 — Tiền thu từ bán hàng, cung cấp dịch vụ và doanh thu khác  01
-      Khoản 2 — Tiền chi trả cho người cung cấp hàng hóa và dịch vụ 02
-      Khoản 3 — Tiền chi trả cho người lao động  03
-      Khoản 4 — Tiền lãi vay đã trả 04
-      Khoản 5 — Thuế thu nhập doanh nghiệp đã nộp  05
-      Khoản 6 — Tiền thu khác từ hoạt động kinh doanh  06
-      Khoản 7 — Tiền chi khác cho hoạt động kinh doanh  07
-      Khoản 1 — Tiền chi để  mua sắm, xây dựng TSCĐ  và các tài sản  21
-      Khoản 2 — Tiền thu từ thanh lý, nhượng bán TSCĐ và các tài sản  22
-      Khoản 3 — Tiền chi cho vay, mua các công cụ nợ của đơn vị khác  23
-      Khoản 4 — Tiền thu hồi cho vay, bán lại các công cụ  nợ của đơn  24
-      Khoản 5 — Tiền chi đầu tư góp vốn vào đơn vị khác  25
-      Khoản 6 — Tiền thu hồi đầu tư góp vốn vào đơn vị khác  26
-      Khoản 7 — Tiền thu lãi cho vay, cổ tức và lợi nhuận được chia  27
-      Khoản 1 — Tiền thu từ phát hành cổ phiếu, nhận vốn góp của chủ 31
-      Khoản 2 — Tiền trả  lại  vốn góp cho các chủ  sở  hữu,  mua lại  cổ 32
-      Khoản 3 — Tiền thu từ đi vay  33
-      Khoản 4 — Tiền trả nợ gốc vay  34
-      Khoản 5 — Tiền trả nợ gốc thuê tài chính  35
-      Khoản 6 — Cổ tức, lợi nhuận đã trả cho chủ sở hữu  36
-      Khoản 1 — Lợi nhuận trước thuế 01
-      Khoản 2 — Điều chỉnh cho các khoản
-      Khoản 3 — Lợi  nhuận từ  hoạt động kinh doanh trước thay đổi  08
-      Khoản 1 — Tiền chi để mua sắm, xây dựng TSCĐ và các tài sản  21
-      Khoản 2 — Tiền thu từ thanh lý, nhượng bán TSCĐ và các tài sản  22
-      Khoản 3 — Tiền chi cho vay, mua các công cụ nợ của đơn vị khác  23
-      Khoản 4 — Tiền thu hồi cho vay, bán lại các công cụ nợ của đơn  24
-      Khoản 5 — Tiền chi đầu tư góp vốn vào đơn vị khác  25
-      Khoản 6 — Tiền thu hồi đầu tư góp vốn vào đơn vị khác  26
-      Khoản 7 — Tiền thu lãi cho vay, cổ tức và lợi nhuận được chia  27
-      Khoản 1 — Tiền thu từ phát hành cổ phiếu, nhận vốn góp của chủ 31
-      Khoản 2 — Tiền trả  lại  vốn góp cho các chủ  sở  hữu,  mua lại  cổ 32
-      Khoản 3 — Tiền thu từ đi vay  33
-      Khoản 4 — Tiền trả nợ gốc vay  34
-      Khoản 5 — Tiền trả nợ gốc thuê tài chính  35
-      Khoản 6 — Cổ tức, lợi nhuận đã trả cho chủ sở hữu  36
-      Khoản 5 — Bản thuyết minh Báo cáo tài chính năm của doanh nghiệp hoạt động liên tục
-      Khoản 1 — Hình thức sở hữu vốn.
-      Khoản 2 — Lĩnh vực kinh doanh.
-      Khoản 3 — Ngành nghề kinh doanh.
-      Khoản 4 — Chu kỳ sản xuất, kinh doanh thông thường.
-      Khoản 5 — Đặc điểm hoạt động của doanh nghiệp trong năm tài chính có ảnh hưởng đến Báo
-      Khoản 6 — Cấu trúc doanh nghiệp
-      Khoản 7 — Tuyên bố về khả năng so sánh thông tin trên Báo cáo tài chính (có so sánh được
-      Khoản 1 — Kỳ kế toán năm (bắt đầu từ ngày..../..../.... kết thúc vào ngày..../..../...).
-      Khoản 2 — Đơn vị  tiền tệ  sử  dụng trong kế  toán.  Trường hợp có sự  thay đổi đơn vị  tiền tệ
-      Khoản 1 — Chế độ kế toán áp dụng
-      Khoản 2 — Tuyên bố về việc tuân thủ Chuẩn mực kế toán và Chế độ kế toán
-      Khoản 1 — Nguyên tắc chuyển đổi Báo cáo tài chính lập bằng ngoại tệ sang Đồng Việt Nam
-      Khoản 2 — Các loại tỷ giá hối đoái áp dụng trong kế toán.
-      Khoản 3 — Nguyên tắc xác định lãi suất thực tế (lãi suất hiệu lực) dùng để chiết khấu dòng tiền.
-      Khoản 4 — Nguyên tắc ghi nhận các khoản tiền và các khoản tương đương tiền.
-      Khoản 5 — Nguyên tắc kế toán các khoản đầu tư tài chính
-        Điểm a — Chứng khoán kinh doanh;
-        Điểm b — Các khoản đầu tư nắm giữ đến ngày đáo hạn;
-        Điểm c — Các khoản cho vay;
-        Điểm d — Đầu tư vào công ty con; công ty liên doanh, liên kết;
-        Điểm đ — Đầu tư vào công cụ vốn của đơn vị khác;
-        Điểm e — Các phương pháp kế toán đối với các giao dịch khác liên quan đến đầu tư tài chính.
-      Khoản 6 — Nguyên tắc kế toán nợ phải thu
-      Khoản 7 — Nguyên tắc ghi nhận hàng tồn kho:
-      Khoản 8 — Nguyên tắc ghi nhận và các khấu hao TSCĐ, TSCĐ thuê tài chính, bất động sản
-      Khoản 9 — Nguyên tắc kế toán các hợp đồng hợp tác kinh doanh.
-      Khoản 10 — Nguyên tắc kế toán thuế TNDN hoãn lại.
-      Khoản 11 — Nguyên tắc kế toán chi phí trả trước.
-      Khoản 12 — Nguyên tắc kế toán nợ phải trả.
-      Khoản 13 — Nguyên tắc ghi nhận vay và nợ phải trả thuê tài chính.
-      Khoản 14 — Nguyên tắc ghi nhận và vốn hóa các khoản chi phí đi vay.
-      Khoản 15 — Nguyên tắc ghi nhận chi phí phải trả.
-      Khoản 16 — Nguyên tắc và phương pháp ghi nhận các khoản dự phòng phải trả.
-      Khoản 17 — Nguyên tắc ghi nhận doanh thu chưa thực hiện.
-      Khoản 18 — Nguyên tắc ghi nhận trái phiếu chuyển đổi.
-      Khoản 19 — Nguyên tắc ghi nhận vốn chủ sở hữu:
-      Khoản 20 — Nguyên tắc và phương pháp ghi nhận doanh thu:
-      Khoản 21 — Nguyên tắc kế toán các khoản giảm trừ doanh thu.
-      Khoản 22 — Nguyên tắc kế toán giá vốn hàng bán.
-      Khoản 23 — Nguyên tắc kế toán chi phí tài chính.
-      Khoản 24 — Nguyên tắc kế toán chi phí bán hàng, chi phí quản lý doanh nghiệp.
-      Khoản 25 — Nguyên tắc và phương pháp ghi nhận chi phí thuế  thu nhập doanh nghiệp hiện
-      Khoản 26 — Các nguyên tắc và phương pháp kế toán khác.
-      Khoản 1 — Có tái phân loại tài sản dài hạn và nợ phải trả dài hạn thành ngắn hạn không?
-      Khoản 2 — Nguyên tắc xác định giá trị từng loại tài sản và nợ phải trả (theo giá trị thuần có
-      Khoản 3 — Nguyên tắc xử lý tài chính đối với:
-      Khoản 1 — Tiền   Cuối năm  Đầu năm
-      Khoản 2 — Các khoản đầu tư tài chính
-        Điểm a — Chứng khoán kinh doanh  ...  ...  ...  ...  ...  ...
-        Điểm b — Đầu tư nắm giữ đến ngày đáo hạn  ...  ...  ...  ...
-        Điểm c — Đầu tư góp vốn vào đơn vị khác (chi  ...  ...  ...  ...  ...  ...
-      Khoản 3 — Phải thu của khách hàng  Cuối năm  Đầu năm
-        Điểm a — Phải thu của khách hàng ngắn hạn
-        Điểm b — Phải thu của khách hàng dài hạn (tương tự ngắn hạn)  ...  ...
-        Điểm c — Phải thu của khách hàng là các bên liên quan (chi tiết từng  ...  ...
-      Khoản 4 — Phải thu khác
-        Điểm a — Ngắn hạn  trị phòng  trị phòng
-        Điểm b — Dài hạn (tương tự các khoản mục ngắn hạn)
-      Khoản 5 — Tài sản thiếu chờ xử lý (Chi tiết từng loại tài  Cuối năm  Đầu năm
-        Điểm a — Tiền;  ...  ...  ...  ...
-        Điểm b — Hàng tồn kho;  ...  ...  ...  ...
-        Điểm c — TSCĐ;  ...  ...  ...  ...
-        Điểm d — Tài sản khác.  ...  ...  ...  ...
-      Khoản 6 — Nợ xấu  Cuối năm  Đầu năm
-      Khoản 7 — Hàng tồn kho  Cuối năm  Đầu năm
-      Khoản 8 — Tài sản dở dang dài hạn    Giá   Giá trị  Giá   Giá trị
-        Điểm a — Chi phí sản xuất, kinh doanh dở dang dài hạn    gốc   có thể  gốc   có thể
-        Điểm b — Xây dựng cơ bản dở dang (Chi tiết cho các công  Cuối năm  Đầu năm
-      Khoản 9 — Tăng, giảm tài sản cố định hữu hình:
-      Khoản 10 — Tăng, giảm tài sản cố định vô hình
-      Khoản 11 — Tăng, giảm tài sản cố định thuê tài chính
-      Khoản 12 — Tăng, giảm bất động sản đầu tư
-        Điểm a — Bất động sản đầu tư cho thuê
-        Điểm b — Bất động sản đầu tư năm giữ chờ
-      Khoản 13 — Chi phí trả trước  Cuối năm   Đầu năm
-        Điểm a — Ngắn hạn (chi tiết theo từng khoản mục)  ...  ...
-        Điểm b — Dài hạn
-      Khoản 14 — Tài sản khác  Cuối năm   Đầu năm
-        Điểm a — Ngắn hạn (chi tiết theo từng khoản mục)  ...  ...
-        Điểm b — Dài hạn (chi tiết theo từng khoản mục)
-      Khoản 15 — Vay và nợ thuê tài chính   Cuối năm  Trong năm   Đầu năm
-        Điểm a — Vay ngắn hạn    ...           ...  ...  ...      ...        ...
-        Điểm b — Vay dài hạn (Chi tiết theo kỳ hạn)    ...           ...  ...  ...      ...        ...
-        Điểm c — Các khoản nợ thuê tài chính
-        Điểm d — Số vay và nợ thuê tài chính quá hạn chưa thanh toán  Cuối năm  Đầu năm
-        Điểm đ — Thuyết minh chi tiết về các khoản vay và nợ thuê tài chính đối với các bên liên quan
-      Khoản 16 — Phải trả người bán  Cuối năm  Đầu năm
-        Điểm a — Các khoản phải trả người bán ngắn hạn   trị            trả nợ  trị             trả nợ
-        Điểm b — Các khoản phải trả người bán dài hạn    ...              ...    ...              ...
-        Điểm c — Số nợ quá hạn chưa thanh toán
-        Điểm c — Phải  trả  người  bán là các bên liên quan
-      Khoản 17 — Thuế và các khoản phải nộp nhà nước  Đầu  Số phải  Số đã thực  Cuối
-        Điểm a — Phải nộp (chi tiết theo từng loại thuế)  ...  ...  ...  ...
-        Điểm b — Phải thu (chi tiết theo từng loại thuế)  ...  ...  ...  ...
-      Khoản 18 — Chi phí phải trả Cuối năm  Đầu năm
-        Điểm a — Ngắn hạn
-        Điểm b — Dài hạn
-      Khoản 19 — Phải trả khác  Cuối năm  Đầu năm
-        Điểm a — Ngắn hạn  ...  ...
-        Điểm b — Dài hạn (chi tiết từng khoản mục)  ...  ...
-        Điểm c — Số nợ quá hạn chưa thanh toán (chi tiết từng khoản mục, lý do
-      Khoản 20 — Doanh thu chưa thực hiện  Cuối năm  Đầu năm
-        Điểm a — Ngắn hạn  ...  ...
-        Điểm b — Dài hạn (chi tiết từng khoản mục như ngắn hạn)  ...  ...
-        Điểm c — Khả năng không thực hiện được hợp đồng với khách hàng (chi  ...  ...
-      Khoản 21 — Trái phiếu phát hành
-        Điểm a — Trái phiếu phát hành     ...         ...          ...  .........
-        Điểm b — Thuyết minh chi tiết về trái phiếu các
-        Điểm a — Trái phiếu chuyển đổi tại thời điểm đầu kỳ:
-        Điểm b — Trái phiếu chuyển đổi phát hành thêm trong kỳ:
-        Điểm c — Trái phiếu chuyển đổi được chuyển thành cổ phiếu trong kỳ:
-        Điểm d — Trái phiếu chuyển đổi đã đáo hạn không được chuyển thành cổ phiếu trong kỳ:
-        Điểm e — Trái phiếu chuyển đổi tại thời điểm cuối kỳ:
-        Điểm g — Thuyết minh chi tiết về trái phiếu các bên liên quan nắm giữ (theo từng loại trái phiếu)
-      Khoản 22 — Cổ phiếu ưu đãi phân loại là nợ phải trả
-      Khoản 23 — Dự phòng phải trả Cuối năm  Đầu năm
-        Điểm a — Ngắn hạn  ...  ...
-        Điểm b — Dài hạn (chi tiết từng khoản mục như ngắn hạn)  ...  ...
-      Khoản 24 — Tài sản thuế thu nhập hoãn lại và thuế thu nhập hoãn lại phải trả
-        Điểm a — Tài sản thuế thu nhập hoãn lại:  Cuối năm  Đầu năm
-        Điểm b — Thuế thu nhập hoãn lại phải trả Cuối năm  Đầu năm
-      Khoản 25 — Vốn chủ sở hữu
-        Điểm a — Bảng đối chiếu biến động của vốn chủ sở hữu
-        Điểm b — Chi tiết vốn góp của chủ sở hữu  Cuối năm  Đầu năm
-        Điểm c — Các giao dịch về vốn với các chủ sở hữu và phân phối cổ Năm nay  Năm trước
-        Điểm d — Cổ phiếu  Cuối năm  Đầu năm
-        Điểm đ — Cổ tức
-        Điểm e — Các quỹ của doanh nghiệp:
-        Điểm g — Thu nhập và chi phí, lãi hoặc lỗ được ghi nhận trực tiếp vào vốn chủ sở hữu theo quy
-      Khoản 26 — Chênh lệch đánh giá lại tài sản  Năm nay  Năm trước
-      Khoản 27 — Chênh lệch tỷ giá  Năm nay  Năm trước
-      Khoản 28 — Nguồn kinh phí  Năm nay  Năm trước
-      Khoản 29 — Các khoản mục ngoài Bảng Cân đối kế toán  Cuối năm  Đầu năm
-        Điểm a — Tài sản thuê ngoài: Tổng số tiền thuê tối thiểu trong tương  ...  ...
-        Điểm b — Tài sản nhận giữ hộ: Doanh nghiệp phải thuyết minh chi tiết về số lượng, chủng
-        Điểm c — Ngoại tệ các loại: Doanh nghiệp phải thuyết minh chi tiết số lượng từng loại ngoại
-        Điểm d — Kim khí quý, đá quý: Doanh nghiệp phải  thuyết  minh chi tiết  giá gốc, số  lượng
-        Điểm đ — Nợ khó đòi đã xử lý: Doanh nghiệp phải thuyết minh chi tiết giá trị (theo nguyên
-        Điểm e — Các thông tin khác về các khoản mục ngoài Bảng cân đối kế toán
-      Khoản 30 — Các thông tin khác do doanh nghiệp tự thuyết minh, giải trình.
-      Khoản 1 — Tổng doanh thu bán hàng và cung cấp dịch vụ ...  ...
-        Điểm a — Doanh thu  ...  ...
-        Điểm b — Doanh thu đối với các bên liên quan (chi tiết từng đối tượng)
-        Điểm c — Trường hợp ghi nhận doanh thu cho thuê tài sản là tổng số
-      Khoản 2 — Các khoản giảm trừ doanh thu   ...  ...
-      Khoản 3 — Giá vốn hàng bán  Năm nay  Năm trước
-      Khoản 4 — Doanh thu hoạt động tài chính Năm nay  Năm trước
-      Khoản 5 — Chi phí tài chính Năm nay  Năm trước
-      Khoản 6 — Thu nhập khác Năm nay  Năm trước
-      Khoản 7 — Chi phí khác Năm nay  Năm trước
-      Khoản 8 — Chi phí bán hàng và chi phí quản lý doanh nghiệp   Năm nay  Năm trước
-        Điểm a — Các khoản chi phí quản lý doanh nghiệp phát sinh trong kỳ
-        Điểm b — Các khoản chi phí bán hàng phát sinh trong kỳ
-        Điểm c — Các  khoản  ghi  giảm chi  phí  bán  hàng  và  chi  phí  quản  lý
-      Khoản 9 — Chi phí sản xuất, kinh doanh theo yếu tố Năm nay  Năm trước
-      Khoản 10 — Chi phí thuế thu nhập doanh nghiệp hiện hành Năm nay  Năm trước
-      Khoản 11 — Chi phí thuế thu nhập doanh nghiệp hoãn lại Năm nay  Năm trước
-      Khoản 1 — Các  giao  dịch  không  bằng  tiền  ảnh  hưởng  đến  báo  cáo  lưu  chuyển  tiền  tệ  trong
-      Khoản 2 — Các khoản tiền do doanh nghiệp nắm giữ  nhưng không được sử dụng: Trình bày
-      Khoản 3 — Số tiền đi vay thực thu trong kỳ:
-      Khoản 4 — Số tiền đã thực trả gốc vay trong kỳ:
-      Khoản 1 — Những khoản nợ tiềm tàng, khoản cam kết và những thông tin tài chính khác:........
-      Khoản 2 — Những sự kiện phát sinh sau ngày kết thúc kỳ kế toán năm:......................................
-      Khoản 3 — Thông tin về  các bên liên quan (ngoài các thông tin đã được thuyết  minh ở  các
-      Khoản 4 — Trình bày tài sản, doanh thu, kết quả kinh doanh theo bộ phận (theo lĩnh vực kinh
-      Khoản 5 — Thông tin so sánh (những thay đổi  về  thông tin trong Báo cáo tài chính của các
-      Khoản 6 — Thông tin về hoạt động liên tục:.................................................................................
-      Khoản 7 — Những thông tin khác.................................................................................................
-      Khoản 6 — Bản thuyết minh Báo cáo tài chính năm của doanh nghiệp không đáp ứng giả
-      Khoản 1 — Hình thức sở hữu vốn.
-      Khoản 2 — Lĩnh vực kinh doanh.
-      Khoản 3 — Ngành nghề kinh doanh.
-      Khoản 4 — Chu kỳ sản xuất, kinh doanh thông thường.
-      Khoản 5 — Lý do không đáp ứng giả định hoạt động: Vì doanh nghiệp chuẩn bị giải thể, phá
-      Khoản 6 — Cấu trúc doanh nghiệp
-      Khoản 7 — Tuyên bố về khả năng so sánh của thông tin trên Báo cáo tài chính (có sánh được
-      Khoản 1 — Kỳ kế toán năm (bắt đầu từ ngày..../..../.... kết thúc vào ngày..../..../...).
-      Khoản 2 — Đơn vị  tiền tệ  sử  dụng trong kế  toán.  Trường hợp có sự  thay đổi đơn vị  tiền tệ
-      Khoản 1 — Nguyên tắc chuyển đổi Báo cáo tài chính lập bằng ngoại tệ sang Đồng Việt Nam
-      Khoản 2 — Các loại tỷ giá hối đoái áp dụng trong kế toán.
-      Khoản 3 — Nguyên tắc xác định lãi suất thực tế (lãi suất hiệu lực) dùng để chiết khấu dòng tiền.
-      Khoản 4 — Nguyên tắc ghi nhận các khoản tiền và các khoản tương đương tiền.
-      Khoản 5 — Nguyên tắc kế toán các khoản đầu tư tài chính
-        Điểm a — Chứng khoán kinh doanh;
-        Điểm b — Các khoản đầu tư nắm giữ đến ngày đáo hạn;
-        Điểm c — Các khoản cho vay;
-        Điểm d — Đầu tư vào công ty con; công ty liên doanh, liên kết;
-        Điểm đ — Đầu tư vào công cụ vốn của đơn vị khác;
-        Điểm e — Các phương pháp kế toán đối với các giao dịch khác liên quan đến đầu tư tài chính.
-      Khoản 6 — Nguyên tắc kế toán nợ phải thu
-      Khoản 7 — Nguyên tắc ghi nhận hàng tồn kho:
-      Khoản 8 — Nguyên tắc ghi nhận và các khấu hao TSCĐ, TSCĐ thuê tài chính, bất động sản đầu tư:
-      Khoản 9 — Nguyên tắc kế toán các hợp đồng hợp tác kinh doanh.
-      Khoản 10 — Nguyên tắc kế toán thuế TNDN hoãn lại.
-      Khoản 11 — Nguyên tắc kế toán chi phí trả trước.
-      Khoản 12 — Nguyên tắc kế toán nợ phải trả.
-      Khoản 13 — Nguyên tắc ghi nhận vay và nợ phải trả thuê tài chính.
-      Khoản 14 — Nguyên tắc ghi nhận và vốn hóa các khoản chi phí đi vay.
-      Khoản 15 — Nguyên tắc ghi nhận chi phí phải trả.
-      Khoản 16 — Nguyên tắc và phương pháp ghi nhận các khoản dự phòng phải trả.
-      Khoản 17 — Nguyên tắc ghi nhận doanh thu chưa thực hiện.
-      Khoản 18 — Nguyên tắc ghi nhận trái phiếu chuyển đổi.
-      Khoản 19 — Nguyên tắc ghi nhận vốn chủ sở hữu:
-      Khoản 20 — Nguyên tắc và phương pháp ghi nhận doanh thu:
-      Khoản 21 — Nguyên tắc kế toán các khoản giảm trừ doanh thu
-      Khoản 22 — Nguyên tắc kế toán giá vốn hàng bán.
-      Khoản 23 — Nguyên tắc kế toán chi phí tài chính.
-      Khoản 24 — Nguyên tắc kế toán chi phí bán hàng, chi phí quản lý doanh nghiệp.
-      Khoản 25 — Nguyên tắc và phương pháp ghi nhận chi phí thuế  thu nhập doanh nghiệp hiện
-      Khoản 26 — Các nguyên tắc và phương pháp kế toán khác.
-      Khoản 1 — Tiền   Cuối năm  Đầu năm
-      Khoản 2 — Các khoản đầu tư tài chính   Giá         Giá  Giá  Giá trị Dự
-        Điểm a — Chứng khoán kinh doanh (nêu rõ căn cứ đánh giá
-        Điểm b — Đầu  tư  nắm giữ đến  ngày  đáo  hạn  (nêu  rõ  căn  cứ Giá        Giá  Giá  Giá trị
-        Điểm c — Đầu tư góp vốn vào đơn vị khác (chi tiết từng  Giá   Giá  Giá  Dự Giá trị
-      Khoản 3 — Phải thu của khách hàng (Nêu rõ căn cứ đánh giá  Cuối năm  Đầu năm
-        Điểm a — Phải thu của khách hàng   ...  ...  ...
-        Điểm b — Phải thu của khách hàng là các bên liên quan
-      Khoản 4 — Phải thu khác (Nêu rõ căn cứ đánh giá lại, không  Cuối năm  Đầu năm
-      Khoản 5 — Tài sản thiếu chờ xử lý (Chi tiết từng loại tài  Cuối năm  Đầu năm
-        Điểm a — Tiền;  ...  ...  ...  ...
-        Điểm b — Hàng tồn kho;  ...  ...  ...  ...
-        Điểm c — TSCĐ;  ...  ...  ...  ...
-        Điểm d — Tài sản khác.  ...  ...  ...  ...
-      Khoản 6 — Nợ xấu  Cuối năm  Đầu năm
-      Khoản 7 — Hàng tồn kho (Nêu rõ căn cứ đánh giá lại, không  Cuối năm  Đầu năm
-      Khoản 9 — Tăng, giảm tài sản cố định hữu hình (Nêu rõ căn cứ đánh giá lại, không đánh giá lại
-      Khoản 10 — Tăng, giảm tài sản cố định vô hình (Nêu rõ căn cứ đánh giá lại, không đánh giá
-      Khoản 11 — Tăng, giảm tài sản cố định thuê tài chính (Nêu rõ căn cứ đánh giá lại,  không
-      Khoản 12 — Tăng, giảm bất động sản đầu tư (Nêu rõ căn cứ đánh giá lại, không đánh giá lại
-        Điểm a — Bất động sản đầu tư cho thuê
-        Điểm b — Bất động sản đầu tư nắm giữ chờ
-      Khoản 13 — Chi phí trả trước  Cuối  Đầu
-      Khoản 14 — Tài sản khác (Nêu rõ căn cứ đánh giá lại, không đánh  Cuối năm   Đầu
-      Khoản 15 — Vay và nợ thuê tài chính   Cuối năm  Trong năm   Đầu năm
-        Điểm a — Vay   ...  ...  ...  ...  ...  ...
-        Điểm b — Các khoản nợ thuê tài chính đã thanh toán
-        Điểm c — Giá trị nợ thuê tài chính  Cuối năm  Đầu năm
-        Điểm d — Số vay và nợ thuê tài chính quá hạn chưa thanh toán  Cuối năm  Đầu năm
-        Điểm đ — Thuyết minh chi tiết về các khoản vay và nợ thuê tài chính đối với các bên liên quan
-      Khoản 16 — Phải trả người bán Cuối năm  Đầu năm
-        Điểm a — Các khoản phải trả người bán   Giá   Số có khả năng    Giá   Số có khả năng
-        Điểm b — Số nợ quá hạn chưa thanh toán
-        Điểm c — Phải  trả  người  bán  là  các  bên  liên  quan  ...  ...
-      Khoản 17 — Trái phiếu phát hành
-        Điểm a — Trái phiếu phát hành  ...  ...  ...  ...  ...  ...
-        Điểm b — Thuyết minh chi tiết về trái phiếu
-        Điểm a — Trái phiếu chuyển đổi tại thời điểm đầu kỳ:
-        Điểm b — Trái phiếu chuyển đổi phát hành thêm trong kỳ:
-        Điểm c — Trái phiếu chuyển đổi được chuyển thành cổ phiếu trong kỳ:
-        Điểm d — Trái phiếu chuyển đổi đã đáo hạn không được chuyển thành cổ phiếu trong kỳ:
-        Điểm e — Trái phiếu chuyển đổi tại thời điểm cuối kỳ:
-        Điểm g — Thuyết minh chi tiết về trái phiếu các bên liên quan nắm giữ (theo từng loại trái phiếu)
-      Khoản 18 — Cổ phiếu ưu đãi phân loại là nợ phải trả
-      Khoản 19 — Thuế và các khoản phải nộp nhà nước  Đầu  Số phải  Số đã  Cuối
-        Điểm a — Phải nộp (chi tiết theo từng loại thuế)  ...  ...  ...  ...
-        Điểm b — Phải thu (chi tiết theo từng loại thuế)  ...  ...  ...  ...
-      Khoản 20 — Chi phí phải trả Cuối năm  Đầu năm
-      Khoản 21 — Phải trả khác  Cuối năm  Đầu năm
-        Điểm a — Các khoản phải trả
-        Điểm b — Số nợ quá hạn chưa thanh toán (chi tiết từng khoản
-      Khoản 22 — Doanh thu chưa thực hiện  Cuối năm  Đầu năm
-        Điểm a — Các khoản doanh thu chưa thực hiện
-        Điểm b — Khả năng không thực hiện được hợp đồng với khách
-      Khoản 23 — Dự phòng phải trả Cuối năm  Đầu năm
-      Khoản 24 — Tài sản thuế thu nhập hoãn lại và thuế thu nhập hoãn lại phải trả
-        Điểm a — Tài sản thuế thu nhập hoãn lại:  Cuối năm  Đầu năm
-        Điểm b — Thuế thu nhập hoãn lại phải trả Cuối năm  Đầu năm
-      Khoản 25 — Vốn chủ sở hữu
-        Điểm a — Bảng đối chiếu biến động của vốn chủ sở hữu
-        Điểm b — Chi tiết vốn góp của chủ sở hữu  Cuối năm  Đầu năm
-        Điểm c — Các giao dịch về vốn với các chủ sở hữu và phân phối cổ Năm nay  Năm trước
-        Điểm d — Cổ phiếu  Cuối năm  Đầu năm
-        Điểm đ — Cổ tức
-        Điểm e — Các quỹ của doanh nghiệp:
-        Điểm g — Thu nhập và chi phí, lãi hoặc lỗ được ghi nhận trực tiếp vào vốn chủ sở hữu theo quy
-      Khoản 26 — Chênh lệch đánh giá lại tài sản   Năm nay  Năm trước
-      Khoản 27 — Chênh lệch tỷ giá  Năm nay  Năm trước
-      Khoản 28 — Nguồn kinh phí  Năm nay  Năm trước
-      Khoản 29 — Các khoản mục ngoài Bảng Cân đối kế toán  Cuối năm  Đầu năm
-        Điểm a — Tài sản thuê ngoài: Tổng số tiền thuê tối thiểu trong tương  ...  ...
-        Điểm b — Tài sản nhận giữ hộ: Doanh nghiệp phải thuyết minh chi tiết về số lượng, chủng
-        Điểm c — Ngoại tệ các loại: Doanh nghiệp phải thuyết minh chi tiết số lượng từng loại ngoại
-        Điểm d — Kim khí quý, đá quý: Doanh nghiệp phải  thuyết  minh chi tiết  giá gốc, số  lượng
-        Điểm đ — Nợ khó đòi đã xử lý: Doanh nghiệp phải thuyết minh chi tiết giá trị (theo nguyên
-        Điểm e — Các thông tin khác về các khoản mục ngoài Bảng cân đối kế toán
-      Khoản 30 — Các thông tin khác do doanh nghiệp tự thuyết minh, giải trình
-      Khoản 1 — Tổng doanh thu bán hàng và cung cấp dịch vụ ...  ...
-        Điểm a — Doanh thu
-        Điểm b — Doanh thu đối với các bên liên quan (chi tiết từng đối tượng)
-        Điểm c — Trường hợp ghi nhận doanh thu cho thuê tài sản là tổng số ...  ...
-      Khoản 2 — Các khoản giảm trừ doanh thu   ...  ...
-      Khoản 3 — Giá vốn hàng bán  Năm  Năm
-      Khoản 4 — Doanh thu hoạt động tài chính Năm nay  Năm trước
-      Khoản 5 — Chi phí tài chính Năm nay  Năm trước
-      Khoản 6 — Thu nhập khác Năm nay  Năm trước
-      Khoản 7 — Chi phí khác Năm nay  Năm trước
-      Khoản 8 — Chi phí bán hàng và chi phí quản lý doanh nghiệp   Năm nay  Năm trước
-        Điểm a — Các khoản chi phí quản lý doanh nghiệp phát sinh trong kỳ
-        Điểm b — Các khoản chi phí bán hàng phát sinh trong kỳ
-        Điểm c — Các khoản ghi giảm chi phí bán hàng và chi phí quản lý
-      Khoản 9 — Chi phí sản xuất, kinh doanh theo yếu tố Năm nay  Năm trước
-      Khoản 10 — Chi phí thuế thu nhập doanh nghiệp hiện hành Năm nay  Năm trước
-      Khoản 11 — Chi phí thuế thu nhập doanh nghiệp hoãn lại Năm nay  Năm trước
-      Khoản 1 — Các giao dịch không bằng tiền ảnh hưởng đến BCLCTT trong tương lai
-      Khoản 2 — Các khoản tiền do doanh nghiệp nắm giữ nhưng không được sử dụng:
-      Khoản 3 — Số tiền đi vay thực thu trong kỳ:
-      Khoản 4 — Số tiền đã thực trả gốc vay trong kỳ:
-      Khoản 1 — Những khoản nợ tiềm tàng, khoản cam kết và những thông tin tài chính khác:...............
-      Khoản 2 — Những sự kiện phát sinh sau ngày kết thúc kỳ kế toán năm:............................................
-      Khoản 3 — Thông tin về các bên liên quan (ngoài các thông tin đã được thuyết minh ở các phần trên).
-      Khoản 4 — Trình bày tài sản, doanh thu, kết  quả kinh doanh theo bộ phận (theo lĩnh vực kinh doanh
-      Khoản 5 — Thông tin so sánh (những thay đổi về thông tin trong Báo cáo tài chính của các niên độ
-      Khoản 6 — Những thông tin khác........................................................................................................
-      Khoản 7 — Bảng cân đối kế toán giữa niên độ (dạng đầy đủ)
-        Điểm a — TÀI SẢN NGẮN HẠN   100
-      Khoản 1 — Tiền   111
-      Khoản 8 — Báo cáo kết quả hoạt động kinh doanh giữa niên độ (dạng đầy đủ)
-      Khoản 1 — Doanh thu bán hàng và cung
-      Khoản 9 — Báo cáo lưu chuyển tiền tệ giữa niên độ (dạng đầy đủ)
-      Khoản 1 — Tiền thu từ bán hàng, cung cấp dịch vụ và doanh  01
-      Khoản 2 — Tiền chi trả cho người cung cấp hàng hóa và  02
-      Khoản 1 — Lợi nhuận trước thuế 01
-      Khoản 2 — Điều chỉnh cho các khoản
-      Khoản 10 — Bản thuyết minh Báo cáo tài chính chọn lọc
-      Khoản 1 — Hình thức sở hữu vốn.
-      Khoản 2 — Lĩnh vực kinh doanh.
-      Khoản 3 — Ngành nghề kinh doanh.
-      Khoản 4 — Đặc điểm hoạt động kinh doanh của doanh nghiệp trong kỳ kế toán có ảnh hưởng
-      Khoản 1 — Kỳ kế toán năm (bắt đầu từ ngày.../.../... kết thúc vào ngày.../.../...).
-      Khoản 2 — Đơn vị tiền tệ sử dụng trong kế toán.
-      Khoản 1 — Chế độ kế toán áp dụng.
-      Khoản 2 — Tuyên bố về việc tuân thủ chuẩn mực kế toán và chế độ kế toán
-      Khoản 3 — Hình thức kế toán áp dụng.
-      Khoản 1 — Giải thích về tính thời vụ hoặc tính chu kỳ của các hoạt động kinh doanh trong kỳ
-      Khoản 2 — Trình bày tính chất và giá trị của các khoản mục ảnh hưởng đến tài sản, nợ phải
-      Khoản 3 — Trình bày những biến động trong nguồn vốn chủ sở hữu và giá trị lũy kế tính đến
-      Khoản 4 — Tính chất và giá trị của những thay đổi trong các ước tính kế toán đã được báo cáo
-      Khoản 5 — Trình bày việc phát hành, mua lại và hoàn trả các chứng khoán nợ và chứng khoán vốn.
-      Khoản 6 — Cổ tức đã trả (tổng số hay trên mỗi cổ phần) của cổ phiếu phổ thông và cổ phiếu
-      Khoản 7 — Trình bày doanh thu và kết  quả  kinh doanh bộ  phận theo lĩnh vực kinh doanh
-      Khoản 8 — Trình bày những sự  kiện trọng yếu phát sinh sau ngày kết  thúc  kỳ  kế  toán giữa
-      Khoản 9 — Trình bày những thay đổi trong các khoản nợ tiềm tàng hoặc tài sản tiềm tàng kể
-      Khoản 10 — Các thông tin khác.
-      Khoản 11 — Bảng cân đối kế toán giữa niên độ (dạng tóm lược)
-      Khoản 12 — Báo cáo kết quả hoạt động kinh doanh giữa niên độ (dạng tóm lược)
-      Khoản 1 — Doanh thu bán hàng và cung cấp  01
-      Khoản 2 — Doanh thu hoạt động tài chính và  31
-      Khoản 3 — Tổng lợi nhuận kế toán trước thuế 50
-      Khoản 4 — Lợi  nhuận sau thuế  thu nhập doanh  60
-      Khoản 13 — Báo cáo lưu chuyển tiền tệ giữa niên độ (dạng tóm lược)
-      Khoản 1 — Lưu chuyển tiền thuần từ hoạt động
-      Khoản 2 — Lưu chuyển tiền thuần từ hoạt động  30
-      Khoản 3 — Lưu chuyển tiền thuần từ hoạt động  40
-      Khoản 4 — Lưu chuyển tiền thuần trong kỳ 50
-      Khoản 5 — Tiền và tương đương tiền đầu kỳ 60
-      Khoản 6 — Ảnh hưởng của  thay  đổi  tỷ  giá  hối  61
-      Khoản 7 — Ảnh  hưởng  của  việc  tái  phân  loại  62
-      Khoản 8 — Tiền và tương đương tiền cuối kỳ 70
-      Khoản 14 — Bản thuyết minh Báo cáo tài chính chọn lọc (Thực hiện theo Mẫu số B09a-DN)
+    Điều 130 — Các  Bộ,  ngành,  Uỷ ban Nhân dân,  Sở Tài  chính,  Cục  Thuế  các  <<< BẤT THƯỜNG ĐÁNH SỐ
 ```
 

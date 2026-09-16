@@ -57,10 +57,18 @@ EXTERNAL` — **không đổi**.
 .venv/bin/python tools/infra/do_substring.py
 ```
 
-Văn bản cắt từ `Thông-tư-200-2014-TT-BTC.pdf` trong tập thử T0.3. PostgreSQL
-cùng máy (loopback), trung vị trên 60 lượt, đoạn đọc 400 ký tự, đọc ở **giữa**
-tài liệu (đọc ở đầu sẽ cho số đẹp giả tạo). Mỗi lượt đều `assert` hai cách cho
-ra **đúng cùng một đoạn**.
+Văn bản cắt từ `Thông-tư-200-2014-TT-BTC.pdf` trong tập thử T0.3.
+
+> ⚠️ **Số đo dưới đây lấy trên bản nguồn ĐÃ BỊ THAY.** PO đã thay file đó bằng
+> `tt-200-btc-22-12-2014.pdf` (16/9/2026). Phép đo vẫn có giá trị vì nó đo
+> **độ dài văn bản**, không đo nội dung cụ thể — nhưng **chưa chạy lại** trên
+> bản mới vì PostgreSQL hiện không khởi động được (xem ghi chú cuối trang).
+> `tools/infra/do_substring.py` đã trỏ sang file mới, chạy lại được ngay khi
+> có Postgres.
+
+PostgreSQL cùng máy (loopback), trung vị trên 60 lượt, đoạn đọc 400 ký tự, đọc
+ở **giữa** tài liệu (đọc ở đầu sẽ cho số đẹp giả tạo). Mỗi lượt đều `assert`
+hai cách cho ra **đúng cùng một đoạn**.
 
 | Độ dài văn bản | Ký tự | Byte | `SUBSTRING` | Lấy cả trường | Chênh | **Chênh tuyệt đối** |
 |---|---:|---:|---:|---:|---:|---:|
@@ -111,3 +119,30 @@ là một hành động nhìn thấy được, không phải một dòng cấu h
   tường lửa, không kiểm được ở T0.1.
 - **Không** khẳng định mô hình sinh câu trả lời chạy nội bộ — R2 áp cho Retrieval,
   ngoài phạm vi hai kho.
+
+
+---
+
+## ⚠️ 16/9/2026 — KHÔNG chạy lại được bộ thử T0.1 trên máy này
+
+`rosetta` đã bị gỡ khỏi máy dev: mọi binary x86_64 báo *"Bad CPU type in
+executable"*. PostgreSQL 14 ở đây là bản **Homebrew Intel**, nên **không khởi
+động được**, và máy chưa có bản ARM nào.
+
+Hệ quả khi chạy `pytest tests/t0_1_stores`:
+
+| | |
+|---|---|
+| 9 ca chỉ dùng Qdrant | ✅ vẫn đạt — Qdrant là **binary ARM native**, không ảnh hưởng |
+| 10 ca cần PostgreSQL | ❌ `Connection refused` |
+
+**Không ca nào hỏng vì mã nguồn hay vì đổi tập thử** — đã kiểm: mọi lỗi đều
+truy về đúng một nguyên nhân là Postgres không chạy.
+
+Việc dựng PostgreSQL bản ARM là thay đổi ở mức máy (và cơ sở dữ liệu hiện có
+của dự án khác đang nằm trong thư mục dữ liệu của bản Intel), nên **chưa tự
+làm** — cần PO quyết.
+
+> 📌 Ghi lại một điều đã đúng: chọn **binary ARM native** cho Qdrant ở T0.1
+> thay vì Docker/Rosetta hoá ra là quyết định giữ cho một nửa bộ thử vẫn chạy
+> được sau khi Rosetta biến mất.

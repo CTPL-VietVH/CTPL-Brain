@@ -34,7 +34,7 @@ DOAN_DOC = 400          # cỡ một đơn vị ĐỌC điển hình đem trích
 
 # Nguồn để RÚT ra bốn độ dài thật. Không chế văn bản — cắt từ chính tập thử,
 # vì chi phí của SUBSTRING phụ thuộc cách mã hoá UTF-8 của chữ thật.
-NGUON_RUT = "data/test-corpus-vn-admin/tai-chinh-ke-toan/Thông-tư-200-2014-TT-BTC.pdf"
+NGUON_RUT = "data/test-corpus-vn-admin/tai-chinh-ke-toan/tt-200-btc-22-12-2014.pdf"
 
 # ~8192 token ngữ cảnh BGE-M3 ≈ chừng này ký tự tiếng Việt (đo ở T0.2:
 # 7.799 token ứng với ~25.000 ký tự)
