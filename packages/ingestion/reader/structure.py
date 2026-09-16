@@ -45,6 +45,58 @@ class Level(enum.IntEnum):
         }[self]
 
 
+class BatThuongDanhSo(enum.Enum):
+    """**Bất thường đánh số Điều — cần người kiểm để xác định thuộc loại nào.**
+
+    ⛔ **Cờ này KHÔNG phán quyết nguyên nhân, và KHÔNG nói mốc đó sai.** Nó chỉ
+    nói: *số hiệu ở đây không nối tiếp mốc trước, hãy nhìn vào chỗ này.* Bản
+    trước của lớp này tên là "nghi ngờ nhận thừa" — tên đó **sai**, vì nó ngụ ý
+    một nguyên nhân duy nhất, trong khi xác minh tay cho thấy có ít nhất **ba**
+    nguyên nhân khác hẳn nhau, và **hai trong ba không phải lỗi bộ đọc**.
+
+    **Ba loại đã xác minh tay** (chi tiết và số liệu: `tests/t0_3_reader/README.md`):
+
+    * **(a) Dẫn chiếu giữa câu rơi xuống đầu dòng** bị nhận nhầm thành mốc thật.
+      Đây là loại *duy nhất* thật sự là lỗi nhận dạng.
+      Ca đã xác minh: `2023/nghi-dinh-35` — 8/8 cờ đều thuộc loại này.
+    * **(b) Văn bản nguồn KHUYẾT một dải số** vì thiếu trang / thiếu kỳ Công
+      báo. **Không phải lỗi bộ đọc** — bản PDF vốn đã thiếu.
+      Ca đã xác minh: `Thông-tư-200-2014-TT-BTC.pdf` — 17 cờ, tất cả thuộc loại
+      này (bản hiện có thiếu Điều 88–113).
+    * **(c) Phụ lục là MẪU VĂN BẢN LỒNG**, tự đánh số Điều lại từ 1. **Không
+      phải lỗi** — đó là cấu trúc thật, chỉ nằm ngoài phạm vi mô hình cây phẳng
+      hiện tại. Hẹn xử lý ở T1.1 / GĐ2, không phải bug của T0.3.
+      Ca đã xác minh: `nghi-dinh-145-2020` — 18 cờ, tất cả thuộc loại này.
+
+    ⛔ **Chỉ GẮN CỜ, tuyệt đối không tự xoá hay sửa cây.** Cùng nguyên tắc với
+    `Outcome.TIEU_DE_PHONG_DOAN`: chỗ nào hệ thống đoán thì chỗ đó phải hiện ra
+    được. Riêng ở đây lý do còn mạnh hơn — với loại (b) và (c) thì mốc bị gắn cờ
+    là **mốc thật**, xoá đi là mất hẳn một Điều có thật, im lặng.
+
+    **Luật đang dùng — "số kế tiếp"** (chốt 16/9/2026, KHÔNG tinh chỉnh thêm ở
+    T0.3): một mốc `Điều` được coi là nối tiếp khi số hiệu đúng bằng số kế tiếp
+    của mốc nối tiếp liền trước. Cơ sở: 15/21 văn bản không lỗi đều đánh số Điều
+    **liên tục tuyệt đối 1..N**, kể cả `Bộ-luật-45-2019-QH14` (17 Chương, 220
+    Điều). Văn bản pháp luật VN không đánh số lại Điều theo từng Chương.
+
+    ⚠️ **Hai giới hạn đã biết, KHÔNG có kế hoạch chữa ở T0.3:**
+
+    1. **Bản hợp nhất có Điều bị bãi bỏ** để lại lỗ hổng số cố ý (…Điều 12, Điều
+       14…) sẽ bị gắn cờ oan — cùng hình dạng với loại (b). Tập 21 văn bản hiện
+       tại không có ca nào, nên đây là rủi ro **chưa gặp**, không phải đã xử lý.
+    2. **Dẫn chiếu rơi ĐÚNG số kỳ vọng vẫn lọt, và kéo cờ sang mốc thật.** Đã
+       gặp thật ở `2021_113+114`: dẫn chiếu *"khoản 19 Điều 4 Luật Doanh
+       nghiệp"* rơi đúng lúc đang chờ Điều 4 nên được nhận là thật, còn **Điều 4
+       thật thì bị gắn cờ**. Cờ nằm lên đúng mốc vô tội. Số đếm vẫn đúng, nhưng
+       **ranh giới khối sai chỗ**.
+
+    → Vì vậy: **cờ là gợi ý để người nhìn, không phải phán quyết.** Và *không có
+    cờ* cũng **không** có nghĩa là đúng.
+    """
+
+    KHONG_NOI_TIEP = "số hiệu không nối tiếp mốc Điều liền trước — cần người phân loại"
+
+
 @dataclass
 class Node:
     """Một khối cấu trúc, kèm vị trí ĐẦU/CUỐI trong toàn văn.
@@ -60,6 +112,13 @@ class Node:
     char_start: int
     char_end: int
     children: list[Node] = field(default_factory=list)
+
+    # ⚠️ GỢI Ý CHO NGƯỜI SOÁT, không phải phán quyết. `None` nghĩa là "luật số
+    # kế tiếp không thấy bất thường", KHÔNG có nghĩa là "chắc chắn đúng"; và có
+    # cờ KHÔNG có nghĩa là mốc này sai — xem ba loại nguyên nhân ở
+    # `BatThuongDanhSo`, hai trong ba không phải lỗi bộ đọc. Khối luôn nằm
+    # nguyên trong cây.
+    bat_thuong: BatThuongDanhSo | None = None
 
     @property
     def path(self) -> list[str]:
@@ -128,6 +187,15 @@ class ReadResult:
 
     def blocks(self, level: Level) -> list[Node]:
         return [n for n in self.root.walk() if n.level is level]
+
+    def bi_gan_co(self) -> list[Node]:
+        """Các khối mang cờ bất thường đánh số, theo thứ tự xuất hiện.
+
+        ⚠️ Danh sách rỗng **không** có nghĩa là cây đúng — chỉ có nghĩa là luật
+        "số kế tiếp" không thấy gì. Xem hai giới hạn đã biết ở `BatThuongDanhSo`.
+        """
+        return sorted((n for n in self.root.walk() if n.bat_thuong is not None),
+                      key=lambda n: n.char_start)
 
     def kiem_vi_tri(self) -> None:
         """Tự kiểm: mọi vị trí phải nằm trong văn bản và con phải nằm trong cha.

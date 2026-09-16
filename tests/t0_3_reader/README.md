@@ -399,40 +399,59 @@ ngồi soát với bản gốc.
 
 ---
 
-## ⚠️ Một lớp sai lệch CÒN MỞ — PO cần biết trước khi đối chiếu
+## ⚠️ Cờ BẤT THƯỜNG ĐÁNH SỐ — ba loại nguyên nhân, hai trong ba KHÔNG phải lỗi
 
-Trong lúc xuất cây đầy đủ, phát hiện một lớp lỗi **chưa được sửa** và **không
-nằm trong phạm vi lần làm này** (ghi lại để PO quyết, không tự sửa hướng).
+Bộ đọc gắn cờ mỗi mốc `Điều` có số hiệu **không nối tiếp** mốc trước (luật *"số
+kế tiếp"*). Cờ **chỉ gắn, không bao giờ xoá hay sửa cây**.
 
-**Hiện tượng.** Văn bản *sửa đổi, bổ sung* và văn bản *hướng dẫn thi hành* trích
-nguyên văn điều khoản của văn bản khác, nên thân bài đầy dẫn chiếu kiểu
-*"…Điều 19; Điều 31; Điều 32…"*. Khi ngắt dòng làm cụm `Điều <số>` rơi xuống
-**đầu dòng**, regex neo đầu dòng bắt nhầm nó thành một mốc cấu trúc thật.
+> ### ⛔ Cờ là GỢI Ý CẦN NGƯỜI PHÂN LOẠI, không phải phán quyết
+>
+> Có cờ **không** có nghĩa là mốc đó sai. Không có cờ **không** có nghĩa là
+> đúng. Xác minh tay 6/6 file cho thấy **ba** nguyên nhân khác hẳn nhau, và
+> **hai trong ba không phải lỗi bộ đọc**:
+>
+> | | Loại | Có phải lỗi bộ đọc? |
+> |---|---|---|
+> | **(a)** | Dẫn chiếu giữa câu rơi xuống đầu dòng, bị nhận nhầm thành mốc thật | ✅ **có** — loại duy nhất là lỗi |
+> | **(b)** | Văn bản nguồn **khuyết một dải số** vì thiếu trang / thiếu kỳ Công báo | ❌ không — bản PDF vốn đã thiếu |
+> | **(c)** | Phụ lục là **mẫu văn bản lồng**, tự đánh số Điều lại từ 1 | ❌ không — cấu trúc thật, ngoài phạm vi mô hình cây phẳng |
 
-Ví dụ rõ nhất: `2023_nghi-dinh-35_...pdf` đếm ra **25 Điều** trong khi văn bản
-thật chỉ có **17** (Điều 1 → Điều 17). Tám Điều thừa đều là dẫn chiếu.
+### Kết quả phân loại tay — 63 cờ / 6 file, đã soi hết
 
-**Hai dấu hiệu nhận ra bằng mắt**: số hiệu **trùng lặp**, hoặc tiêu đề **bắt đầu
-bằng dấu câu** (`;` `,`).
+| File | Cờ | (a) | (b) | (c) | Ghi chú |
+|---|---:|---:|---:|---:|---|
+| `2023_nghi-dinh-35_…pdf` | 8 | **8** | – | – | Cờ trùng khít ground-truth 8/8. Thật có 17 Điều, dựng ra 25 |
+| `Thông-tư-200-2014-TT-BTC.pdf` | 18 | 1 | **17** | – | ⛔ Bản hiện có **thiếu Điều 88–113** |
+| `nghi-dinh-145-2020-…docx` | 18 | – | – | **18** | Mẫu Quyết định + mẫu Hợp đồng lao động trong phụ lục |
+| `2021_291 + 292_…pdf` | 6 | **6** | – | – | Đều là dẫn chiếu *"…quy định tại khoản N…"* |
+| `VanBanGoc_01_2011_TT-BNV.pdf` | 9 | 1 | – | **8** | Thông tư hướng dẫn thể thức → phụ lục toàn văn bản mẫu |
+| `2021_113 + 114_…pdf` | 4 | **4** | – | – | ⚠️ một cờ nằm nhầm lên mốc thật — xem dưới |
+| **Tổng** | **63** | **20** | **17** | **26** | |
 
-| File | Điều đếm được | Số hiệu trùng | Tiêu đề mở đầu bằng dấu câu |
-|---|---:|---:|---:|
-| `VanBanGoc_01_2011_TT-BNV.pdf` | 28 | 9 | 8 |
-| `nghi-dinh-145-2020-...docx` | 133 | 18 | 1 |
-| `2021_291 + 292_06-2021-NĐ-CP.pdf` | 60 | 5 | 0 |
-| `2023_nghi-dinh-35_...pdf` | 25 | 4 | 4 |
-| `2021_113 + 114_01-2021-NĐ-CP.pdf` | 105 | 2 | 1 |
-| `Thông-tư-200-2014-TT-BTC.pdf` | 105 | 1 | 0 |
-| *15 file còn lại* | — | **0** | **0** |
+**Chỉ 20/63 cờ (32%) là lỗi nhận dạng thật.** 43 cờ còn lại trỏ vào mốc **có
+thật** — hoặc vì nguồn khuyết, hoặc vì đó là văn bản lồng.
 
-> ⚠️ **"Không có dấu hiệu" không có nghĩa là "đúng".** Hai dấu hiệu trên chỉ bắt
-> được phần dễ thấy. Một dẫn chiếu tới một số hiệu **chưa từng xuất hiện** trong
-> văn bản, rơi đúng đầu dòng, và **không** mở đầu bằng dấu câu — thì không dấu
-> hiệu nào bắt được. Đó vẫn là việc của đối chiếu tay.
+### Hai giới hạn đã biết, KHÔNG có kế hoạch chữa ở T0.3
 
-> 📌 **Phép kiểm chéo độc lập của PO không bắt được lớp này**, vì nó áp *cùng
-> một quy tắc neo đầu dòng*. Kiểm chéo đó loại trừ rủi ro **bỏ sót** một Điều,
-> không loại trừ rủi ro **nhận thừa**. Hai loại rủi ro khác nhau.
+**1. Dẫn chiếu rơi ĐÚNG số kỳ vọng vẫn lọt — và kéo cờ sang mốc thật.**
+Gặp thật ở `2021_113+114`: dẫn chiếu *"…khoản 19 **Điều 4** Luật Doanh nghiệp
+là hệ thống thông tin…"* rơi đúng lúc đang chờ Điều 4 nên được nhận là nối
+tiếp, còn `Điều 4. Nguyên tắc áp dụng giải quyết thủ tục đăng ký doanh nghiệp`
+— **Điều thật** — thì bị gắn cờ. Số đếm vẫn đúng, nhưng **ranh giới khối sai
+chỗ**.
+
+**2. Bản hợp nhất có Điều bị bãi bỏ** để lại lỗ hổng số cố ý (…Điều 12, Điều
+14…) sẽ bị gắn cờ oan, cùng hình dạng với loại (b). Tập 21 văn bản hiện tại
+không có ca nào → rủi ro **chưa gặp**, không phải **đã xử lý**.
+
+> 📌 **Không tinh chỉnh luật dò thêm ở T0.3.** Ba lượt tinh chỉnh liên tiếp mỗi
+> lượt lộ ra một loại vấn đề khác — không hội tụ. Loại **(c)** là **giới hạn mô
+> hình**, hẹn xử lý ở **T1.1 / GĐ2** (phụ lục / văn bản lồng), **không phải bug**.
+
+> 📌 Phép **kiểm chéo độc lập** của PO (21/21 khớp số Chương/Điều) **không** bắt
+> được lớp này, vì nó áp *cùng một quy tắc neo đầu dòng*. Nó loại trừ rủi ro
+> **bỏ sót**, không loại trừ rủi ro **nhận thừa**.
+
 
 ---
 
@@ -489,12 +508,32 @@ mang một giá trị `Outcome` riêng.
 
 ## Việc còn lại để T0.3 nghiệm thu đầy đủ
 
-1. ⛔ **PO đối chiếu tay 21 văn bản** — mở từng bản gốc, so với
+1. ⛔ **PO cần tải lại `Thông-tư-200-2014-TT-BTC.pdf` bản đầy đủ — bản hiện tại
+   THIẾU Điều 88–113, không dùng để đối chiếu tay / nghiệm thu cho tới khi thay
+   bằng bản đủ.**
+
+   Bản hiện có là **Công báo đăng nhiều kỳ**. Các số **có mặt** trong file:
+
+   | Số Công báo | Số trang trong file |
+   |---|---:|
+   | 279 + 280 | 90 |
+   | 281 + 282 | 102 |
+   | 283 + 284 | 90 |
+   | 285 + 286 | 86 |
+   | **287 + 288** | **0 — THIẾU** |
+   | 289 + 290 | 106 |
+
+   File có mốc *"(Tiếp theo Công báo số 287 + 288)"* nhưng **không có trang nào
+   thuộc số 287 + 288** → đó là kỳ bị thiếu. Điều có mặt: **1–87** và
+   **114–130**; **thiếu chính xác Điều 88 → 113**.
+
+   > Lưu ý: giả định ban đầu là thiếu số 285+286 — **không đúng**, số đó có đủ
+   > 86 trang trong file. Số thiếu là **287+288**.
+
+2. ⛔ **PO đối chiếu tay 21 văn bản** — mở từng bản gốc, so với
    [`cay_day_du_21_van_ban.md`](cay_day_du_21_van_ban.md), xác nhận "dựng đúng
-   **hoàn toàn**". Cần ≥90%. Ưu tiên soát 6 file đã liệt kê ở mục *"Một lớp sai
-   lệch còn mở"*.
-2. ⛔ **Quyết hướng xử lý lớp nhận thừa `Điều`** ở văn bản sửa đổi/hướng dẫn —
-   chưa sửa, chưa tự chọn hướng.
+   **hoàn toàn**". Cần ≥90%. Sáu file mang cờ đã có sẵn phân loại (a)/(b)/(c)
+   ngay tại mục của chúng trong file đó.
 3. ~~PO quyết có tính 11 bản `.docx` chuyển đổi vào tập thử không~~ — ✅ **đã
    chốt 15/9/2026: CÓ tính.** Xem lý do ở `MANIFEST.md`.
 

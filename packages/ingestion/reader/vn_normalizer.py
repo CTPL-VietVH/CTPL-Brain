@@ -17,7 +17,7 @@ from __future__ import annotations
 import re
 import unicodedata
 
-from .structure import Level, Node, Outcome, ReadResult
+from .structure import Level, BatThuongDanhSo, Node, Outcome, ReadResult
 
 # --- Bảng chữ cái tiếng Việt dùng đánh Điểm: a, b, c, d, đ, e, ê, g, ... ---
 CHU_CAI_DIEM = "abcdđeêghiklmnoôơpqrstuưvxy"
@@ -143,6 +143,64 @@ def _dung_cay(text: str, moc: list[Moc]) -> Node:
     return root
 
 
+_SO_HIEU_DIEU = re.compile(r"^(\d+)([a-zđ]*)$", re.IGNORECASE)
+
+
+def _khoa_so_hieu(marker: str) -> tuple[int, str] | None:
+    """'12' → (12, ''), '3a' → (3, 'a'). Trả None nếu không đọc được số."""
+    m = _SO_HIEU_DIEU.match(marker.strip())
+    return (int(m.group(1)), m.group(2).lower()) if m else None
+
+
+def gan_co_bat_thuong_danh_so(kq: ReadResult) -> None:
+    """Gắn cờ những mốc `Điều` có số hiệu KHÔNG NỐI TIẾP mốc liền trước.
+
+    ⛔ **CHỈ GẮN CỜ. Không xoá, không sửa, không dời khối nào.** Cây trả ra
+    giống hệt như khi không chạy hàm này; chỉ thêm thông tin.
+
+    **Luật "số kế tiếp"** (chốt 16/9/2026 sau khi đo so với luật "không tăng
+    dần"): một mốc `Điều` là **thật** khi số hiệu của nó đúng bằng **số kế
+    tiếp** của Điều thật liền trước. Mọi mốc khác bị gắn cờ, và **mốc so sánh
+    không nhích theo mốc bị gắn cờ** — nhờ vậy một dẫn chiếu tới số lớn không
+    kéo oan được hàng loạt Điều thật phía sau.
+
+    Chấp nhận **biến thể hậu tố** (`Điều 3a`, `Điều 3b`) vì đó là cách chèn điều
+    khoản mới mà không đánh số lại cả văn bản.
+
+    Cơ sở đo đạc và giới hạn còn lại: xem `BatThuongDanhSo`.
+
+    Mốc không đọc được số hiệu thì **bỏ qua**, không gắn cờ — thà bỏ sót còn
+    hơn gắn oan, vì cờ oan làm người soát mất niềm tin vào chính cái cờ.
+    """
+    dieu = sorted(kq.blocks(Level.DIEU), key=lambda n: n.char_start)
+    truoc: tuple[int, str] | None = None
+
+    for node in dieu:
+        khoa = _khoa_so_hieu(node.marker)
+        if khoa is None:
+            continue
+
+        if truoc is None:
+            # Mốc đầu tiên đọc được số: nhận làm gốc, không có gì để so
+            hop_le = True
+        else:
+            so, hau_to = khoa
+            so_truoc, hau_to_truoc = truoc
+            hop_le = (
+                # 12 → 13
+                (so == so_truoc + 1 and not hau_to)
+                # 3 → 3a, 3a → 3b
+                or (so == so_truoc and hau_to > hau_to_truoc)
+                # 3 → 4a (hiếm, nhưng hợp lệ)
+                or (so == so_truoc + 1 and bool(hau_to))
+            )
+
+        if hop_le:
+            truoc = khoa
+        else:
+            node.bat_thuong = BatThuongDanhSo.KHONG_NOI_TIEP
+
+
 def dung_cau_truc(raw: str, source_format: str) -> ReadResult:
     """Dựng cây cấu trúc từ văn bản thô. Không dựng được thì NÓI RA."""
     text = chuan_hoa_van_ban(raw)
@@ -159,6 +217,12 @@ def dung_cau_truc(raw: str, source_format: str) -> ReadResult:
         notes.append(f"{so_chuong} Chương, {so_dieu} Điều")
         kq = ReadResult(text, root, Outcome.DIEU_KHOAN, source_format, notes)
         kq.kiem_vi_tri()
+        gan_co_bat_thuong_danh_so(kq)
+        if co := kq.bi_gan_co():
+            notes.append(
+                f"⚠️ {len(co)} mốc Điều mang cờ BẤT THƯỜNG ĐÁNH SỐ — cần người "
+                f"phân loại (dẫn chiếu nhận nhầm / nguồn khuyết dải số / mẫu "
+                f"văn bản lồng). Đã giữ NGUYÊN trong cây, chỉ gắn cờ.")
         return kq
 
     # Đường 2 — tài liệu không có điều khoản: chuỗi tiêu đề lồng nhau (07 Mục 2.2)

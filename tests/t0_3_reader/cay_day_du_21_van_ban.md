@@ -15,6 +15,7 @@ Cách dùng: mở bản gốc bên cạnh, soát từng Điều — đặc biệ
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 6 Chương · 35 Điều · 141 Khoản · 64 Điểm · 68,300 ký tự
 
+
 ```
 Chương I
     Điều 1 — Phạm vi điều chỉnh và đối tượng áp dụng.
@@ -273,6 +274,7 @@ Chương V
 - **Nguồn**: docx gốc
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 10 Chương · 135 Điều · 511 Khoản · 656 Điểm · 211,102 ký tự
+
 
 ```
 Chương I
@@ -1608,6 +1610,7 @@ Chương X
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 7 Chương · 77 Điều · 348 Khoản · 392 Điểm · 155,483 ký tự
 
+
 ```
 Chương I
     Điều 1 — Phạm vi điều chỉnh
@@ -2450,6 +2453,7 @@ Chương VII
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 6 Chương · 36 Điều · 88 Khoản · 45 Điểm · 23,383 ký tự
 
+
 ```
 Chương I
     Điều 1 — Phạm vi và đối tượng điều chỉnh
@@ -2638,6 +2642,7 @@ Chương VI
 - **Nguồn**: docx chuyển đổi
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 10 Chương · 134 Điều · 474 Khoản · 389 Điểm · 140,585 ký tự
+
 
 ```
 Chương I
@@ -3672,6 +3677,7 @@ Chương X
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 7 Chương · 42 Điều · 133 Khoản · 101 Điểm · 36,673 ký tự
 
+
 ```
 Chương I
     Điều 1 — Phạm vi điều chỉnh và đối tượng áp dụng
@@ -3968,6 +3974,19 @@ Chương VII
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 5 Chương · 60 Điều · 380 Khoản · 393 Điểm · 171,621 ký tự
 
+- **⚠️ 6 mốc Điều mang cờ BẤT THƯỜNG ĐÁNH SỐ** (đánh dấu `<<<` trong cây dưới) — cờ là **gợi ý cần người phân loại**, không phải phán quyết. Ba loại đã biết: (a) dẫn chiếu nhận nhầm · (b) nguồn khuyết dải số · (c) mẫu văn bản lồng đánh số lại.
+
+> ### Phân loại 6 cờ: **6/6 thuộc loại (a)** — dẫn chiếu nhận nhầm
+>
+> | Mốc | Ngữ cảnh ngay trước |
+> |---|---|
+> | `Điều 19` | *"…trách nhiệm tổ chức thực hiện các quy định tại khoản 8"* |
+> | `Điều 25` | dẫn chiếu kết thúc câu, câu sau mở đầu *"Hội đồng do Thủ tướng…"* |
+> | `Điều 123` | *"…quy định tại điểm a khoản 4"* → `Điều 123 Luật số 50/2014/QH13` |
+> | `Điều 1` | *"…được sửa đổi, bổ sung tại khoản 46"* → `Điều 1 Luật số 62/2020/QH14` |
+> | `Điều 39` | *"…cơ quan quy định tại khoản 4"* |
+> | `Điều 39` | *"…báo cáo cơ quan nhà nước có thẩm quyền quy định tại khoản 4"* |
+
 ```
 Chương I
     Điều 1 — Phạm vi điều chỉnh và đối tượng áp dụng
@@ -4064,7 +4083,7 @@ Chương I
       Khoản 9 — Đối với dự án PPP:
         Điểm a — Doanh nghiệp dự án PPP thực hiện trách nhiệm của chủ đầu tư về quản lý
         Điểm b — Cơ quan ký kết hợp đồng theo quy định pháp luật về đầu tư theo phương
-    Điều 19 — Nghị định này. Trường hợp cơ  quan  có  thẩm quyền  ủy  quyền  cho  cơ
+    Điều 19 — Nghị định này. Trường hợp cơ  quan  có  thẩm quyền  ủy  quyền  cho  cơ  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 10 — Quyền, nghĩa vụ và việc phân định trách nhiệm của các chủ thể quy định
     Điều 8 — Giải thưởng về chất lượng công trình xây dựng
       Khoản 1 — Giải thưởng về chất lượng công trình xây dựng bao gồm các hình thức sau:
@@ -4341,9 +4360,9 @@ Chương II
       Khoản 7 — Việc kiểm tra công tác nghiệm thu của cơ quan có thẩm quyền quy định tại
       Khoản 8 — Chi phí cho việc kiểm tra công tác nghiệm thu trong quá trình thi công và
       Khoản 9 — Bộ trưởng Bộ Xây dựng hướng dẫn về chi phí kiểm tra công tác nghiệm thu
-    Điều 25 — Hội  đồng do Thủ  tướng Chính phủ  thành lập tổ  chức  kiểm tra
+    Điều 25 — Hội  đồng do Thủ  tướng Chính phủ  thành lập tổ  chức  kiểm tra  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Thủ tướng Chính phủ quyết định thành lập Hội đồng kiểm tra nhà nước về
-    Điều 123 — Luật số 50/2014/QH13 được sửa đổi, bổ sung tại khoản 45 Điều 1 Luật
+    Điều 123 — Luật số 50/2014/QH13 được sửa đổi, bổ sung tại khoản 45 Điều 1 Luật  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 2 — Hàng  năm,  Hội  đồng  đề  xuất  danh  mục  công  trình  do  Hội  đồng  tổ  chức
       Khoản 3 — Các bộ, cơ quan ngang bộ, cơ quan thuộc Chính phủ, Ủy ban nhân dân cấp
     Điều 26 — Lập và lưu trữ hồ sơ hoàn thành công trình xây dựng
@@ -4354,7 +4373,7 @@ Chương II
       Khoản 5 — Hồ sơ nộp Lưu trữ lịch sử của công trình thực hiện theo quy định của pháp
     Điều 27 — Bàn giao hạng mục công trình, công trình xây dựng
       Khoản 1 — Việc  bàn  giao  hạng mục  công  trình,  công  trình  xây  dựng  được  thực  hiện
-    Điều 1 — Luật số 62/2020/QH14.
+    Điều 1 — Luật số 62/2020/QH14.  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 2 — Tùy theo điều kiện cụ  thể  của công trình, từng phần công trình, hạng mục
       Khoản 3 — Chủ đầu tư  tổ  chức lập 01 bộ  hồ  sơ  phục vụ  quản lý, vận hành và bảo trì
       Khoản 4 — Trường  hợp  đưa  hạng  mục  công  trình,  công  trình  xây  dựng  vào  sử  dụng
@@ -4493,7 +4512,7 @@ Chương III
         Điểm a — Ban hành các quy chuẩn kỹ  thuật,  tiêu  chuẩn,  quy  trình  đánh giá an toàn
         Điểm b — Công bố các tổ chức kiểm định đủ điều kiện năng lực thực hiện đánh giá an
         Điểm c — Quy định danh mục các công trình phải được cơ quan quy định tại khoản 4
-    Điều 39 — Nghị định này xem xét và thông báo ý kiến về kết quả đánh giá an toàn
+    Điều 39 — Nghị định này xem xét và thông báo ý kiến về kết quả đánh giá an toàn  <<< BẤT THƯỜNG ĐÁNH SỐ
     Điều 38 — Trách nhiệm tổ chức thực hiện đánh giá an toàn công trình
       Khoản 1 — Trách nhiệm của chủ sở hữu hoặc người quản lý, sử dụng công trình:
         Điểm a — Tổ chức thực hiện việc đánh giá an toàn công trình theo quy định tại Điều 36
@@ -4541,7 +4560,7 @@ Chương III
     Điều 41 — Xử lý đối với công trình hết thời hạn sử dụng theo thiết kế
       Khoản 1 — Chủ  sở  hữu hoặc  người  quản lý  sử  dụng công trình xác  định thời  hạn sử
       Khoản 2 — Đối với công trình có ảnh hưởng lớn đến an toàn, lợi ích cộng đồng theo quy
-    Điều 39 — Nghị định này về  thời điểm hết  thời  hạn sử  dụng công trình và dự  kiến
+    Điều 39 — Nghị định này về  thời điểm hết  thời  hạn sử  dụng công trình và dự  kiến  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 3 — Sau  khi  nhận  được  báo  cáo  quy  định tại  khoản  2  Điều  này,  cơ  quan  nhà
       Khoản 4 — Đối với công trình hết thời hạn sử dụng nhưng có nhu cầu sử dụng tiếp trừ
         Điểm a — Tổ  chức  kiểm tra, kiểm  định  để đánh giá chất  lượng hiện trạng của  công
@@ -4822,48 +4841,23 @@ Chương V
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 0 Chương · 25 Điều · 177 Khoản · 261 Điểm · 138,107 ký tự
 
+- **⚠️ 8 mốc Điều mang cờ BẤT THƯỜNG ĐÁNH SỐ** (đánh dấu `<<<` trong cây dưới) — cờ là **gợi ý cần người phân loại**, không phải phán quyết. Ba loại đã biết: (a) dẫn chiếu nhận nhầm · (b) nguồn khuyết dải số · (c) mẫu văn bản lồng đánh số lại.
+
 > ### ✅ Xác nhận `Chương = 0`: ĐÚNG BẢN CHẤT VĂN BẢN, không phải lỗi dựng cây
 >
-> Đây là **nghị định sửa đổi, bổ sung** — tiêu đề: *"Sửa đổi, bổ sung một số
-> điều của các Nghị định thuộc lĩnh vực quản lý nhà nước của Bộ Xây dựng"*.
-> Loại văn bản này sửa từng Điều rời rạc của nhiều nghị định khác, nên **tự nó
-> không có Chương**; cấp ngoài cùng là Điều 1 → Điều 17, mỗi Điều sửa một nghị
-> định.
+> Nghị định **sửa đổi, bổ sung** — sửa từng Điều rời rạc của nhiều nghị định
+> khác nên **tự nó không có Chương**; cấp ngoài cùng là Điều 1 → Điều 17. Toàn
+> văn có 38 chỗ chứa chữ "chương" nhưng **không chỗ nào là tiêu đề Chương** —
+> tất cả là danh từ thường *"chương trình"*. Không có Chương nào bị bỏ sót.
 >
-> Đã kiểm bằng máy: toàn văn có 38 chỗ chứa chữ "chương", nhưng **không chỗ nào
-> là tiêu đề Chương** — tất cả đều là danh từ thường *"chương trình"* (chương
-> trình phát triển đô thị), trong đó 4 chỗ rơi xuống đầu dòng do ngắt dòng.
-> Regex `CHƯƠNG <số>` loại đúng cả 38 chỗ. **Không có Chương nào bị bỏ sót.**
+> ### Phân loại 8 cờ: **8/8 thuộc loại (a)** — dẫn chiếu nhận nhầm
 >
-> ### ⚠️ NHƯNG: ở file này có một sai lệch KHÁC, PO cần biết khi đối chiếu
+> Văn bản thật có **17 Điều**; công cụ dựng 25 mốc. Tám mốc thừa đều là dẫn
+> chiếu tới điều khoản của nghị định bị sửa, rơi xuống đầu dòng: `Điều 3`(lần 2),
+> `Điều 19`, `Điều 40`, `Điều 8`(lần 1), `Điều 18`, `Điều 50`, `Điều 1`(lần 2),
+> `Điều 1`(lần 3). Nhận ra bằng mắt: tiêu đề mở đầu bằng `;` hoặc `,`.
 >
-> Công cụ đếm **25 Điều**, còn văn bản thật chỉ có **17 Điều** (Điều 1 → Điều
-> 17, đánh số liên tục). **8 Điều là nhận nhầm**, đến từ một đặc điểm riêng của
-> văn bản sửa đổi: nó **trích nguyên văn** điều khoản của nghị định bị sửa, nên
-> trong thân bài đầy dẫn chiếu kiểu *"…Điều 19; Điều 31; Điều 32…"*. Khi ngắt
-> dòng làm cụm `Điều <số>` rơi xuống đầu dòng, regex neo đầu dòng bắt nhầm.
->
-> Tám chỗ nhận nhầm, nhận ra được bằng mắt vì **tiêu đề bắt đầu bằng dấu câu**
-> hoặc **số hiệu trùng lặp**:
->
-> | Nhận nhầm | Dấu hiệu |
-> |---|---|
-> | `Điều 3` (lần 2) | trùng số hiệu; nội dung là *"Luật Xây dựng số 50/2014/QH13 đã được sửa đổi…"* |
-> | `Điều 19` | tiêu đề bắt đầu bằng `;` |
-> | `Điều 40` | tiêu đề bắt đầu bằng `;` |
-> | `Điều 8` (lần 2) | trùng số hiệu; tiêu đề bắt đầu bằng `,` |
-> | `Điều 18` | nội dung là dẫn chiếu Luật Giám định tư pháp |
-> | `Điều 50` | nội dung là dẫn chiếu Luật Xây dựng |
-> | `Điều 1` (lần 2) | trùng số hiệu; dẫn chiếu Luật 62/2020/QH14 |
-> | `Điều 1` (lần 3) | trùng số hiệu; tiêu đề bắt đầu bằng `,` |
->
-> **Đây KHÔNG phải lỗi đã được sửa** — nó vẫn còn nguyên trong bản này. Ghi lại
-> theo đúng phạm vi việc được giao: **báo, không tự sửa hướng**. Xem thêm ở
-> `README.md` mục *"Một lớp sai lệch còn mở"*.
->
-> Đáng chú ý: phép **kiểm chéo độc lập** của PO (21/21 khớp số Chương/Điều)
-> **không bắt được** lớp này, vì nó áp *cùng một quy tắc neo đầu dòng*. Kiểm
-> chéo đó loại trừ rủi ro **bỏ sót**, không loại trừ rủi ro **nhận thừa**.
+> **Đây là ca duy nhất trong 6 file mà cờ trùng khít ground-truth (8/8).**
 
 ```
     Điều 1 — Sửa đổi, bổ sung một số khoản của Điều 14 Nghị định
@@ -4901,7 +4895,7 @@ Chương V
       Khoản 1 — Sửa đổi, bổ sung một số khoản của Điều 2 như sau:
         Điểm a — Sửa đổi, bổ sung khoản 8 như sau:
         Điểm b — Sửa đổi, bổ sung khoản 9 như sau:
-    Điều 3 — Luật Xây dựng số 50/2014/QH13 đã được sửa đổi, bổ sung tại điểm đ
+    Điều 3 — Luật Xây dựng số 50/2014/QH13 đã được sửa đổi, bổ sung tại điểm đ  <<< BẤT THƯỜNG ĐÁNH SỐ
         Điểm c — Sửa đổi, bổ sung khoản 12 như sau:
       Khoản 2 — Sửa đổi, bổ sung khoản 1 Điều 3 như sau:
       Khoản 3 — Bổ sung Điều 3a vào sau Điều 3 như sau:
@@ -4976,11 +4970,11 @@ Chương V
         Điểm d — Sửa đổi, bổ sung khoản 5 như sau:
         Điểm đ — Sửa đổi, bổ sung khoản 6 như sau:
       Khoản 10 — Bãi bỏ các điều, khoản, điểm sau: khoản 11 Điều 2; khoản 1 Điều 4;
-    Điều 19 — ; Điều 31; Điều 32; Điều 36; Điều 37; khoản 2, khoản 3, khoản 4, khoản 5
-    Điều 40 — ; khoản 5, khoản 6 Điều 41; khoản 3 Điều 50.
+    Điều 19 — ; Điều 31; Điều 32; Điều 36; Điều 37; khoản 2, khoản 3, khoản 4, khoản 5  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 40 — ; khoản 5, khoản 6 Điều 41; khoản 3 Điều 50.  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 11 — Thay thế các cụm từ tại một số điều, khoản, điểm như sau:
         Điểm a — Thay thế cụm từ  'quy hoạch tổng thể  phát triển  kinh tế  -  xã hội' tại
-    Điều 8 — , điểm a khoản 3 Điều 9 bằng cụm từ 'quy hoạch cấp quốc gia, quy hoạch
+    Điều 8 — , điểm a khoản 3 Điều 9 bằng cụm từ 'quy hoạch cấp quốc gia, quy hoạch  <<< BẤT THƯỜNG ĐÁNH SỐ
         Điểm b — Thay thế  cụm từ  'quy hoạch tổng thể  hệ  thống đô thị  quốc gia' tại
     Điều 5 — Sửa đổi, bổ sung một số điều của Nghị định số 99/2015/NĐ-CP
       Khoản 1 — Sửa đổi, bổ sung khoản 1, khoản 2 Điều 18 như sau:
@@ -5007,7 +5001,7 @@ Chương V
       Khoản 2 — Bỏ cụm từ 'không thuộc sở hữu nhà nước' tại tên Điều 21.
     Điều 8 — Sửa đổi, bổ sung một số điều của Nghị định số 62/2016/NĐ-CP
       Khoản 1 — Sửa đổi, bổ sung Điều 2 như sau:
-    Điều 18 — Luật Giám định tư pháp số 13/2012/QH13; trong đó, tiêu chuẩn hoạt
+    Điều 18 — Luật Giám định tư pháp số 13/2012/QH13; trong đó, tiêu chuẩn hoạt  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Trường hợp giám định tư pháp về sự tuân thủ các quy định của pháp luật
         Điểm a — Đối  với  giám  định sự  tuân  thủ  các  quy  định của pháp luật  về  quy
         Điểm b — Đối với giám định sự tuân thủ các quy định của pháp luật về hoạt động
@@ -5138,8 +5132,8 @@ Chương V
         Điểm d — Sửa đổi, bổ sung điểm a khoản 4 như sau:
         Điểm đ — Sửa đổi, bổ sung khoản 5 như sau:
         Điểm e — Bổ sung khoản 6 như sau:
-    Điều 50 — Luật Xây dựng số 50/2014/QH13 đã được sửa đổi, bổ sung tại khoản 9
-    Điều 1 — Luật số 62/2020/QH14 và bảo đảm tiến độ theo kế hoạch xây dựng đối
+    Điều 50 — Luật Xây dựng số 50/2014/QH13 đã được sửa đổi, bổ sung tại khoản 9  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 1 — Luật số 62/2020/QH14 và bảo đảm tiến độ theo kế hoạch xây dựng đối  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 6 — Sửa đổi, bổ sung điểm d khoản 3 Điều 14 như sau:
       Khoản 7 — Sửa đổi, bổ sung một số khoản, điểm của Điều 15 như sau:
         Điểm a — Sửa đổi, bổ sung điểm a khoản 7 như sau:
@@ -5318,7 +5312,7 @@ Chương V
         Điểm a — Dự án, công trình xây dựng đã trình cơ quan chuyên môn về xây dựng
         Điểm b — Dự án, công trình xây dựng đã trình cơ quan chuyên môn về xây dựng
         Điểm c — Dự án đầu tư xây dựng quy định tại khoản 4 Điều 14 Nghị định
-    Điều 1 — , Điều 2 Nghị định này;
+    Điều 1 — , Điều 2 Nghị định này;  <<< BẤT THƯỜNG ĐÁNH SỐ
         Điểm d — Ban quản lý dự án đầu tư xây dựng chuyên ngành, Ban quản lý dự án
         Điểm đ — Nhà thầu nước ngoài đã trình hồ sơ đề nghị cấp Giấy phép hoạt động xây
         Điểm e — Tổ chức, cá nhân đã nộp hồ sơ đề nghị cấp chứng chỉ năng lực, chứng
@@ -5337,6 +5331,7 @@ Chương V
 - **Nguồn**: docx gốc
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 10 Chương · 168 Điều · 658 Khoản · 599 Điểm · 200,550 ký tự
+
 
 ```
 Chương I
@@ -6804,6 +6799,7 @@ Chương X
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 5 Chương · 12 Điều · 151 Khoản · 40 Điểm · 33,323 ký tự
 
+
 ```
 Chương I
     Điều 1 — Phạm vi điều chỉnh
@@ -7025,6 +7021,7 @@ Phần II
 - **Nguồn**: docx gốc
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 17 Chương · 220 Điều · 645 Khoản · 287 Điểm · 189,425 ký tự
+
 
 ```
 Chương I
@@ -8229,6 +8226,7 @@ Chương XVII
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 5 Chương · 80 Điều · 291 Khoản · 251 Điểm · 125,074 ký tự
 
+
 ```
 Chương I
     Điều 1 — Phạm vi điều chỉnh
@@ -8880,6 +8878,21 @@ Chương V
 - **Nguồn**: docx chuyển đổi
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 12 Chương · 133 Điều · 447 Khoản · 400 Điểm · 237,864 ký tự
+
+- **⚠️ 18 mốc Điều mang cờ BẤT THƯỜNG ĐÁNH SỐ** (đánh dấu `<<<` trong cây dưới) — cờ là **gợi ý cần người phân loại**, không phải phán quyết. Ba loại đã biết: (a) dẫn chiếu nhận nhầm · (b) nguồn khuyết dải số · (c) mẫu văn bản lồng đánh số lại.
+
+> ### Phân loại 18 cờ: **18/18 thuộc loại (c)** — mẫu văn bản lồng
+>
+> **Không cờ nào là dẫn chiếu.** Cả 18 là Điều **thật** của các **biểu mẫu
+> trong phụ lục** — mỗi biểu mẫu là một văn bản lồng, tự đánh số Điều lại từ 1:
+>
+> * mẫu Quyết định trích tiền ký quỹ — `Điều 1, 2, 3`
+> * mẫu Quyết định thu hồi giấy phép — `Điều 1, 2, 3, 4`
+> * mẫu Hợp đồng lao động — `Điều 1` → `Điều 11`
+>
+> Chúng không thuộc thân Nghị định 145, nên tách ra là **có ích**; nhưng đây là
+> **cấu trúc thật**, không phải lỗi. Mô hình cây phẳng hiện tại chưa có khái
+> niệm "văn bản lồng trong phụ lục" — hẹn xử lý ở **T1.1 / GĐ2**.
 
 ```
 Chương I
@@ -9795,12 +9808,12 @@ Chương XI
       Khoản 2 — Thông tin tình hình sử dụng lao động của đơn vị:
       Khoản 1 — Đồng ý với đề nghị rút tiền ký quỹ hoạt động cho thuê lại lao động của ...(3)....., địa chỉ doanh nghiệp........., mã số doanh nghiệp:.............., mã số giấy phép (nếu có): ................ để thực hiện .......(5)............
       Khoản 2 — .........(3)..., Ngân hàng ...(4), Sở Lao động - Thương binh và Xã hội tỉnh/thành phố .......... có trách nhiệm thực hiện đúng các quy định về ký quỹ của doanh nghiệp cho thuê lại lao động./.
-    Điều 1 — Trích tiền từ tài khoản ký quỹ hoạt động cho thuê lại lao động của ...(2).., mã số doanh nghiệp ...(3).., địa chỉ trụ sở chính .... (4) ..... để thực hiện thanh toán chế độ, quyền lợi của người lao động theo danh sách kèm theo Quyết định này.
+    Điều 1 — Trích tiền từ tài khoản ký quỹ hoạt động cho thuê lại lao động của ...(2).., mã số doanh nghiệp ...(3).., địa chỉ trụ sở chính .... (4) ..... để thực hiện thanh toán chế độ, quyền lợi của người lao động theo danh sách kèm theo Quyết định này.  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Số tài khoản ký quỹ	(5)	tại	(6)
       Khoản 2 — Số tiền trích:	(7)
       Khoản 3 — Ngân hàng	(6)	thực hiện trích tiền ký quỹ và thanh toán chế độ cho người lao động thuê lại.
-    Điều 2 — Giám đốc Sở Lao động - Thương binh và Xã hội tỉnh, thành phố ...... (9)... Ngân hàng ...(6)..„ Giám đốc ...(2)...... chịu trách nhiệm thi hành Quyết định này.
-    Điều 3 — Quyết định này có hiệu lực kể từ ngày...tháng năm /.
+    Điều 2 — Giám đốc Sở Lao động - Thương binh và Xã hội tỉnh, thành phố ...... (9)... Ngân hàng ...(6)..„ Giám đốc ...(2)...... chịu trách nhiệm thi hành Quyết định này.  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 3 — Quyết định này có hiệu lực kể từ ngày...tháng năm /.  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Tên doanh nghiệp
       Khoản 2 — Mã số doanh nghiệp: ...(9)
       Khoản 3 — Địa chỉ trụ sở chính:
@@ -9828,10 +9841,10 @@ Chương XI
       Khoản 10 — Làm việc ở Việt Nam
       Khoản 11 — Vi phạm pháp luật Việt Nam (Thời gian vi phạm, mức độ vi phạm, hình thức xử lý)
       Khoản 12 — Vi phạm pháp luật nước ngoài (Thời gian vi phạm, mức độ vi phạm, hình thức xử lý)
-    Điều 1 — Thu hồi giấy phép hoạt động cho thuê lại lao động mã số giấy phép ............. cấp lần đầu ngày .... tháng .... năm ...., thay đổi lần thứ........., ngày ....tháng .... năm .... cấp cho  .............(3)........, địa chỉ trụ sở chính tại................, mã số doanh nghiệp..................
-    Điều 2 — ...(3)...thực hiện các trách nhiệm theo quy định tại Nghị định số........../2020/NĐ-CP ngày .... tháng .... năm .... của Chính phủ.
-    Điều 3 — Trách nhiệm tổ chức thực hiện ...(6)..
-    Điều 4 — Quyết định này có hiệu lực kể từ ngày...tháng .... năm.... ./.
+    Điều 1 — Thu hồi giấy phép hoạt động cho thuê lại lao động mã số giấy phép ............. cấp lần đầu ngày .... tháng .... năm ...., thay đổi lần thứ........., ngày ....tháng .... năm .... cấp cho  .............(3)........, địa chỉ trụ sở chính tại................, mã số doanh nghiệp..................  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 2 — ...(3)...thực hiện các trách nhiệm theo quy định tại Nghị định số........../2020/NĐ-CP ngày .... tháng .... năm .... của Chính phủ.  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 3 — Trách nhiệm tổ chức thực hiện ...(6)..  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 4 — Quyết định này có hiệu lực kể từ ngày...tháng .... năm.... ./.  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Tình hình sử dụng lao động của doanh nghiệp cho thuê lại
       Khoản 1 — Tổng số lao động theo hợp đồng lao động của doanh nghiệp, trong đó: |  |  |  |  |  |
         Điểm a — Số lao động làm việc tại doanh nghiệp cho thuê lại (4), chia ra: |  |  |  |  |  |
@@ -9854,21 +9867,21 @@ Chương XI
       Khoản 3 — Cam kết khi tổ chức thực hiện làm thêm từ trên 200 giờ đến 300 giờ/năm (2)
       Khoản 1 — BÊN A: NGƯỜI SỬ DỤNG LAO ĐỘNG
       Khoản 2 — BÊN B: NGƯỜI LAO ĐỘNG LÀ NGƯỜI GIÚP VIỆC GIA ĐÌNH
-    Điều 1 — Thời hạn hợp đồng
-    Điều 2 — Công việc và địa điểm làm việc
-    Điều 3 — Tiền lương, thưởng và các khoản phụ cấp, bổ sung khác
-    Điều 4 — Thời giờ làm việc, thời giờ nghỉ ngơi
-    Điều 5 — Điều kiện làm việc
-    Điều 6 — Quyền và nghĩa vụ của người lao động
+    Điều 1 — Thời hạn hợp đồng  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 2 — Công việc và địa điểm làm việc  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 3 — Tiền lương, thưởng và các khoản phụ cấp, bổ sung khác  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 4 — Thời giờ làm việc, thời giờ nghỉ ngơi  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 5 — Điều kiện làm việc  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 6 — Quyền và nghĩa vụ của người lao động  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Quyền của người lao động:
       Khoản 2 — Nghĩa vụ của người lao động:
-    Điều 7 — Quyền và nghĩa vụ của người sử dụng lao động
+    Điều 7 — Quyền và nghĩa vụ của người sử dụng lao động  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Quyền của người sử dụng lao động:
       Khoản 2 — Nghĩa vụ của người sử dụng lao động:
-    Điều 8 — Kỷ luật lao động
-    Điều 9 — Bồi thường thiệt hại (nếu có)
-    Điều 10 — Thỏa thuận khác (nếu có)
-    Điều 11 — Điều khoản thi hành
+    Điều 8 — Kỷ luật lao động  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 9 — Bồi thường thiệt hại (nếu có)  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 10 — Thỏa thuận khác (nếu có)  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 11 — Điều khoản thi hành  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Người lao động:
       Khoản 2 — Người đại diện theo pháp luật của người lao động (nếu có):
       Khoản 3 — Địa điểm làm việc:
@@ -9901,6 +9914,7 @@ Chương XI
 - **Nguồn**: docx chuyển đổi
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 4 Chương · 55 Điều · 332 Khoản · 910 Điểm · 254,227 ký tự
+
 
 ```
 Chương I
@@ -11221,6 +11235,7 @@ Chương IV
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 7 Chương · 38 Điều · 116 Khoản · 94 Điểm · 35,927 ký tự
 
+
 ```
 Chương I
     Điều 1 — Phạm vi điều chỉnh
@@ -11490,6 +11505,7 @@ Chương VII
 - **Nguồn**: docx chuyển đổi
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 10 Chương · 218 Điều · 897 Khoản · 822 Điểm · 320,551 ký tự
+
 
 ```
 Chương I
@@ -13450,6 +13466,18 @@ Chương X
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 5 Chương · 28 Điều · 56 Khoản · 43 Điểm · 98,870 ký tự
 
+- **⚠️ 9 mốc Điều mang cờ BẤT THƯỜNG ĐÁNH SỐ** (đánh dấu `<<<` trong cây dưới) — cờ là **gợi ý cần người phân loại**, không phải phán quyết. Ba loại đã biết: (a) dẫn chiếu nhận nhầm · (b) nguồn khuyết dải số · (c) mẫu văn bản lồng đánh số lại.
+
+> ### Phân loại 9 cờ: **1 × loại (a)**, **8 × loại (c)**
+>
+> * **(a)** `Điều 9` — dẫn chiếu: *"…thực hiện theo hướng dẫn tại **Điều 9**,
+>   12, 13 và 14 của Thông tư này."*
+> * **(c)** 8 mốc `Điều 1` / `Điều 2` còn lại — đều đứng ngay sau
+>   `QUYẾT NGHỊ:` hoặc `QUYẾT ĐỊNH:` và có nội dung là dấu chấm lửng điền chỗ
+>   trống (`......(6)......`). Đây là **mẫu văn bản** trong phụ lục — hợp lý,
+>   vì chính Thông tư 01/2011/TT-BNV là thông tư *hướng dẫn thể thức trình bày
+>   văn bản*, nên phụ lục của nó toàn văn bản mẫu.
+
 ```
 Chương I
     Điều 1 — Phạm vi và đối tượng áp dụng
@@ -13523,7 +13551,7 @@ Chương III
       Khoản 2 — Tên cơ quan, tổ chức sao văn bản
       Khoản 3 — Số, ký hiệu bản sao bao gồm số thứ tự đăng ký được đánh chung cho các loại
       Khoản 4 — Các thành phần thể  thức khác của bản sao văn bản gồm địa danh và ngày,
-    Điều 9 — , 12, 13 và 14 của Thông tư này.
+    Điều 9 — , 12, 13 và 14 của Thông tư này.  <<< BẤT THƯỜNG ĐÁNH SỐ
     Điều 17 — Kỹ thuật trình bày
       Khoản 1 — Vị trí trình bày các thành phần thể thức bản sao (trên trang giấy khổ A4)
       Khoản 2 — Kỹ thuật trình bày bản sao
@@ -13536,16 +13564,16 @@ Chương IV
       Khoản 1 — Ph Đố TM.
       Khoản 1 — Mẫu trình bày văn bản hành chính
       Khoản 2 — Mẫu trình bày bản sao văn bản
-    Điều 1 — ...............................................(6).............................................................
-    Điều 1 — .......................................... (5)..................................................................
-    Điều 1 — .............................................. (6)..............................................................
+    Điều 1 — ...............................................(6).............................................................  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 1 — .......................................... (5)..................................................................  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 1 — .............................................. (6)..............................................................  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Tên cơ quan, tổ chức chủ quản trực tiếp (nếu có) hoặc Công ty mẹ (nếu cần).
-    Điều 1 — ........................................... (10) .............................................................
-    Điều 1 — Ban hành (Phê duyệt) kèm theo Quyết định này ........ (5) ......................
+    Điều 1 — ........................................... (10) .............................................................  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 1 — Ban hành (Phê duyệt) kèm theo Quyết định này ........ (5) ......................  <<< BẤT THƯỜNG ĐÁNH SỐ
 Chương I
-    Điều 1 — ..................................................................................................................
-    Điều 2 — ..................................................................................................................
-    Điều 1 — ........................................ (6) ...................................................................
+    Điều 1 — ..................................................................................................................  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 2 — ..................................................................................................................  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 1 — ........................................ (6) ...................................................................  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 2 — ....................................................(7)..................................................................
       Khoản 1 — Phụ cấp đi đường:……………………………………………………….….đ
       Khoản 2 — Phụ cấp lưu trú:……………………………….…………………….………đ
@@ -13592,6 +13620,23 @@ Chương I
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 9 Chương · 105 Điều · 393 Khoản · 219 Điểm · 206,615 ký tự
 
+- **⚠️ 4 mốc Điều mang cờ BẤT THƯỜNG ĐÁNH SỐ** (đánh dấu `<<<` trong cây dưới) — cờ là **gợi ý cần người phân loại**, không phải phán quyết. Ba loại đã biết: (a) dẫn chiếu nhận nhầm · (b) nguồn khuyết dải số · (c) mẫu văn bản lồng đánh số lại.
+
+> ### Phân loại 4 cờ: **4/4 thuộc loại (a)** — nhưng MỘT cờ nằm NHẦM CHỖ
+>
+> * `Điều 135` — *"…quy định tại khoản 1"* → `Điều 135 Luật Chứng khoán`
+> * `Điều 23` — *"…điểm b khoản 4 Điều 22, điểm c khoản 4"* → `Điều 23`
+> * `Điều 207` — *"…các điểm a, b và c khoản 1"* → `Điều 207 Luật Doanh nghiệp`
+>
+> ⚠️ **`Điều 4` — cờ rơi lên MỐC THẬT.** Dẫn chiếu *"…quy định tại khoản 19
+> **Điều 4** Luật Doanh nghiệp là hệ thống thông tin…"* rơi **đúng lúc đang
+> chờ Điều 4**, nên được nhận là nối tiếp; còn `Điều 4. Nguyên tắc áp dụng
+> giải quyết thủ tục đăng ký doanh nghiệp` — **Điều thật** — thì bị gắn cờ.
+>
+> Nguyên nhân vẫn là loại (a), nhưng hệ quả khác: **số đếm vẫn đúng, ranh giới
+> khối thì sai chỗ** — khối "Điều 4" bắt đầu ở câu dẫn chiếu thay vì ở tiêu đề
+> thật. Đây là giới hạn đã ghi ở `BatThuongDanhSo`, gặp thật trên tập thử.
+
 ```
 Chương I
     Điều 1 — Phạm vi điều chỉnh
@@ -13610,7 +13655,7 @@ Chương I
       Khoản 3 — Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp là tập hợp dữ liệu về đăng
       Khoản 4 — Người nộp hồ sơ là người có thẩm quyền ký văn bản đề nghị đăng ký doanh
       Khoản 5 — Số  hóa hồ  sơ  là việc quét (scan) dữ  liệu có sẵn trên giấy nhằm chuyển dữ
-    Điều 4 — Nguyên tắc áp dụng giải quyết thủ tục đăng ký doanh nghiệp
+    Điều 4 — Nguyên tắc áp dụng giải quyết thủ tục đăng ký doanh nghiệp  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Người thành lập doanh nghiệp hoặc doanh nghiệp tự kê khai hồ sơ đăng
       Khoản 2 — Trường hợp công ty trách nhiệm hữu hạn và công ty cổ  phần có nhiều
       Khoản 3 — Cơ quan đăng ký kinh doanh chịu trách nhiệm về tính hợp lệ của hồ sơ đăng
@@ -13705,7 +13750,7 @@ Chương II
       Khoản 2 — Bộ Tài chính:
         Điểm a — Phối hợp với Bộ Kế hoạch và Đầu tư trong việc kết nối giữa Hệ thống thông
         Điểm b — Ủy ban Chứng khoán Nhà nước có trách nhiệm chuyển đổi dữ liệu của các
-    Điều 135 — Luật  Chứng khoán cho Cơ  quan  đăng ký kinh doanh  để  thực  hiện
+    Điều 135 — Luật  Chứng khoán cho Cơ  quan  đăng ký kinh doanh  để  thực  hiện  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 3 — Các bộ,  cơ  quan ngang bộ,  cơ  quan thuộc  Chính phủ  trong phạm vi chức
       Khoản 4 — Ủy ban nhân dân tỉnh, thành phố trực thuộc Trung ương bố trí đủ nhân lực,
 Chương III
@@ -13806,7 +13851,7 @@ Chương IV
       Khoản 5 — Hồ sơ, trình tự, thủ tục chia, tách, hợp nhất, sáp nhập doanh nghiệp xã hội
       Khoản 6 — Hồ sơ, trình tự, thủ tục giải thể doanh nghiệp xã hội được thực hiện theo quy
       Khoản 7 — Việc đăng ký thành lập doanh nghiệp xã hội trên cơ sở chuyển đổi từ cơ sở
-    Điều 23 — , điểm c khoản 3 Điều 24 Nghị định này. Kèm theo hồ sơ phải có các giấy
+    Điều 23 — , điểm c khoản 3 Điều 24 Nghị định này. Kèm theo hồ sơ phải có các giấy  <<< BẤT THƯỜNG ĐÁNH SỐ
         Điểm a — Quyết định cho phép chuyển đổi thành doanh nghiệp xã hội  bằng văn bản
         Điểm b — Giấy chứng nhận đăng ký thành lập đối với cơ sở bảo trợ xã hội, giấy phép
         Điểm c — Bản sao Giấy chứng nhận đăng ký thuế;
@@ -14096,7 +14141,7 @@ Chương VII
         Điểm b — Trường hợp thông tin kê khai trong hồ sơ đăng ký thay đổi nội dung đăng
       Khoản 3 — Việc xử lý đối với trường hợp cấp Giấy chứng nhận đăng ký hoạt động chi
     Điều 70 — Đăng ký giải thể  doanh nghiệp đối với trường hợp quy định tại
-    Điều 207 — Luật Doanh nghiệp được thực hiện theo trình tự, thủ tục sau đây:
+    Điều 207 — Luật Doanh nghiệp được thực hiện theo trình tự, thủ tục sau đây:  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Trong thời  hạn 07 ngày làm việc kể  từ  ngày thông qua nghị  quyết,  quyết
         Điểm a — Nghị quyết, quyết định và biên bản họp của Hội đồng thành viên đối với
         Điểm b — Phương án giải quyết nợ (nếu có).
@@ -14327,6 +14372,7 @@ Chương IX
 - **Nguồn**: docx chuyển đổi
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 10 Chương · 96 Điều · 428 Khoản · 552 Điểm · 172,047 ký tự
+
 
 ```
 Chương I
@@ -15436,6 +15482,7 @@ Chương X
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 6 Chương · 74 Điều · 287 Khoản · 216 Điểm · 75,166 ký tự
 
+
 ```
 Chương I
     Điều 1 — Phạm vi điều chỉnh
@@ -16035,6 +16082,26 @@ Chương VI
 - **Kết cục**: `DIEU_KHOAN`
 - **Đếm được**: 9 Chương · 105 Điều · 750 Khoản · 1221 Điểm · 1,000,857 ký tự
 
+- **⚠️ 18 mốc Điều mang cờ BẤT THƯỜNG ĐÁNH SỐ** (đánh dấu `<<<` trong cây dưới) — cờ là **gợi ý cần người phân loại**, không phải phán quyết. Ba loại đã biết: (a) dẫn chiếu nhận nhầm · (b) nguồn khuyết dải số · (c) mẫu văn bản lồng đánh số lại.
+
+> ### ⛔ BẢN NÀY THIẾU ĐIỀU 88–113 — KHÔNG DÙNG ĐỂ ĐỐI CHIẾU/NGHIỆM THU
+>
+> ### Phân loại 18 cờ: **1 × loại (a)**, **17 × loại (b)**
+>
+> * **(a)** `Điều 69` — dẫn chiếu thật: *"…theo quy định tại **Điều 69** -
+>   hướng dẫn phương pháp kế toán chênh lệch tỷ giá hối đoái."*
+> * **(b)** `Điều 114` → `Điều 130` (17 mốc) — **đều là Điều THẬT**, có tiêu đề
+>   đầy đủ, nằm ngay sau các mốc `Chương III`…`Chương VI`. Bị gắn cờ vì **bản
+>   PDF khuyết dải Điều 88–113**, không phải vì bộ đọc sai.
+>
+> **Bằng chứng khuyết:** đây là bản **Công báo đăng nhiều kỳ**. Các số có mặt
+> trong file: **279+280** (90 trang) · **281+282** (102) · **283+284** (90) ·
+> **285+286** (86) · **289+290** (106). File có mốc *"(Tiếp theo Công báo số
+> 287 + 288)"* nhưng **không có trang nào của số 287+288** → đó chính là kỳ bị
+> thiếu, và Điều 88–113 nằm trong đó.
+>
+> 📌 PO cần tải lại bản đầy đủ. Chi tiết: `tests/t0_3_reader/README.md`.
+
 ```
 Chương I
     Điều 1 — Đối tượng áp dụng
@@ -16515,7 +16582,7 @@ Chương II
         Điểm b — Tài sản cố định hữu hình là những tài sản có hình thái vật  chất  do doanh
         Điểm c — Những tài sản hữu hình có kết cấu độc lập, hoặc nhiều bộ phận tài sản riêng
         Điểm d — Giá trị  TSCĐ  hữu  hình  được  phản  ánh  trên  TK 211 theo nguyên giá. Kế
-    Điều 69 — - hướng dẫn phương pháp kế toán chênh lệch tỷ giá hối đoái.
+    Điều 69 — - hướng dẫn phương pháp kế toán chênh lệch tỷ giá hối đoái.  <<< BẤT THƯỜNG ĐÁNH SỐ
         Điểm đ — Chỉ được thay đổi nguyên giá TSCĐ hữu hình trong các trường hợp:
         Điểm e — Các  chi  phí  bảo  dưỡng,  sửa  chữa,  duy  trì  cho  TSCĐ  hoạt  động  bình
         Điểm g — TSCĐ hữu hình cho thuê hoạt động vẫn phải trích khấu hao theo quy định
@@ -17463,7 +17530,7 @@ Chương II
         Điểm l — Đối với chi phí sản xuất chung sử dụng chung cho hợp đồng hợp tác kinh doanh
         Điểm m — Cuối kỳ  kế  toán, căn cứ  vào Bảng phân bổ  chi phí sản xuất chung để  kết
 Chương III
-    Điều 114 — Hướng dẫn lập và trình bày Báo cáo lưu chuyển tiền tệ (Mẫu số
+    Điều 114 — Hướng dẫn lập và trình bày Báo cáo lưu chuyển tiền tệ (Mẫu số  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Nguyên tắc lập và trình bày Báo cáo lưu chuyển tiền tệ
       Khoản 12 — Đối với luồng tiền từ  giao dịch mua, bán lại trái phiếu Chính phủ  và các
       Khoản 2 — Cơ sở lập Báo cáo lưu chuyển tiền tệ
@@ -17477,7 +17544,7 @@ Chương III
         Điểm b — Phương pháp lập các chỉ tiêu cụ thể theo phương pháp trực tiếp (Xem Mẫu
         Điểm a — Nguyên tắc lập:
         Điểm b — Phương pháp lập các chỉ tiêu cụ thể theo phương pháp trực tiếp (Xem Mẫu
-    Điều 115 — Phương pháp lập và trình bày Thuyết minh BCTC (Mẫu số B09 - DN)
+    Điều 115 — Phương pháp lập và trình bày Thuyết minh BCTC (Mẫu số B09 - DN)  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Mục đích của Bản thuyết minh Báo cáo tài chính:
         Điểm a — Bản thuyết minh Báo cáo tài chính là một bộ phận hợp thành không thể tách
         Điểm b — Bản thuyết  minh Báo cáo tài chính cũng có thể  trình bày những thông tin
@@ -17514,12 +17581,12 @@ Chương III
         Điểm a — Chính sách tái phân loại tài sản và nợ phải trả dài hạn thành ngắn hạn
         Điểm b — Nguyên tắc xác định giá trị
 Chương IV
-    Điều 116 — Quy định chung về chứng từ kế toán
-    Điều 117 — Hệ thống biểu mẫu chứng từ kế toán
+    Điều 116 — Quy định chung về chứng từ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 117 — Hệ thống biểu mẫu chứng từ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Các loại chứng từ kế toán tại phụ lục 3 Thông tư này đều thuộc loại hướng
       Khoản 2 — Trường hợp  không tự  xây  dựng và thiết  kế  biểu  mẫu  chứng từ  cho  riêng
       Khoản 3 — Các  doanh  nghiệp  có  các  nghiệp  vụ  kinh  tế,  tài  chính  đặc  thù  thuộc  đối
-    Điều 118 — Lập và ký chứng từ kế toán
+    Điều 118 — Lập và ký chứng từ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Mọi  nghiệp  vụ  kinh  tế,  tài  chính  phát  sinh  liên  quan  đến  hoạt  động  của
       Khoản 2 — Chứng từ kế toán phải được lập đủ số liên theo quy định cho mỗi chứng từ.
       Khoản 3 — Mọi chứng từ kế toán phải có đủ chữ ký theo chức danh quy định trên chứng
@@ -17529,41 +17596,41 @@ Chương IV
       Khoản 7 — Các doanh nghiệp phải mở sổ đăng ký mẫu chữ ký của thủ quỹ, thủ kho, các
       Khoản 8 — Những cá nhân có quyền hoặc được ủy quyền ký chứng từ, không được ký
       Khoản 9 — Việc  phân  cấp  ký  trên  chứng  từ  kế  toán  do  Tổng  Giám  đốc  (Giám  đốc)
-    Điều 119 — Trình tự luân chuyển và kiểm tra chứng từ kế toán
+    Điều 119 — Trình tự luân chuyển và kiểm tra chứng từ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Tất cả các chứng từ kế toán do doanh nghiệp lập hoặc từ bên ngoài chuyển
       Khoản 2 — Trình tự luân chuyển chứng từ kế toán bao gồm các bước sau:
       Khoản 3 — Trình tự kiểm tra chứng từ kế toán.
       Khoản 4 — Khi kiểm tra chứng từ  kế  toán nếu phát hiện hành vi vi phạm chính sách,
-    Điều 120 — Dịch chứng từ kế toán ra tiếng Việt
-    Điều 121 — Sử dụng, quản lý, in và phát hành biểu mẫu chứng từ kế toán
+    Điều 120 — Dịch chứng từ kế toán ra tiếng Việt  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 121 — Sử dụng, quản lý, in và phát hành biểu mẫu chứng từ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Các doanh nghiệp có thể  mua sẵn hoặc tự  thiết  kế  mẫu, tự  in,  nhưng phải
       Khoản 2 — Chứng từ phải được bảo quản cẩn thận, không được để  hư  hỏng, mục nát.
 Chương V
-    Điều 122 — Sổ kế toán
+    Điều 122 — Sổ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Sổ kế toán dùng để ghi chép, hệ thống và lưu giữ toàn bộ các nghiệp vụ kinh
       Khoản 2 — Doanh nghiệp được tự xây dựng biểu mẫu sổ kế toán cho riêng mình nhưng phải
       Khoản 3 — Tùy theo đặc điểm hoạt động và yêu cầu quản lý, doanh nghiệp được tự xây
-    Điều 123 — Trách nhiệm của người giữ và ghi sổ kế toán
-    Điều 124 — Mở, ghi sổ kế toán và chữ ký
+    Điều 123 — Trách nhiệm của người giữ và ghi sổ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 124 — Mở, ghi sổ kế toán và chữ ký  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Mở sổ
       Khoản 2 — Ghi sổ: Việc ghi sổ kế toán phải căn cứ vào chứng từ kế toán đã được kiểm
       Khoản 3 — Khóa sổ:  Cuối  kỳ  kế  toán phải  khóa sổ  kế  toán  trước khi lập Báo cáo tài
       Khoản 4 — Đối với người ghi sổ thuộc các đơn vị dịch vụ kế toán phải ký và ghi rõ Số
-    Điều 125 — Sửa chữa sổ kế toán
+    Điều 125 — Sửa chữa sổ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Khi phát hiện sổ kế  toán của kỳ  báo cáo có sai sót thì phải sửa chữa bằng
       Khoản 2 — Trường hợp  phát  hiện  sai  sót  trong  các  kỳ  trước,  doanh nghiệp  phải  điều
 Chương VI
-    Điều 126 — Chuyển đổi số dư trên sổ kế toán
+    Điều 126 — Chuyển đổi số dư trên sổ kế toán  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Doanh nghiệp thực hiện chuyển đổi số dư các tài khoản sau:
       Khoản 2 — Các nội dung khác đang phản ánh chi tiết trên các tài khoản có liên quan nếu
-    Điều 127 — Điều khoản hồi tố
+    Điều 127 — Điều khoản hồi tố  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Các doanh nghiệp là chủ đầu tư bất động sản (kể cả trường hợp tự thi công
       Khoản 2 — Các doanh nghiệp  đã ghi nhận doanh thu đối  với  khoản cổ  tức,  lợi  nhuận
       Khoản 3 — Doanh nghiệp không tiếp tục  trích  khấu hao  đối  với  Bất  động sản  đầu tư
       Khoản 4 — Doanh nghiệp báo cáo lại thông tin so sánh trên Báo cáo tài chính đối với
-    Điều 128 — Thông tư này có hiệu lực áp dụng sau 45 ngày kể từ ngày ký và áp
-    Điều 129 — Các Tổng công ty, Công ty có chế độ kế toán đặc thù đã được Bộ
-    Điều 130 — Các Bộ, ngành, Ủy ban nhân dân, Sở Tài chính, Cục Thuế các Tỉnh,
+    Điều 128 — Thông tư này có hiệu lực áp dụng sau 45 ngày kể từ ngày ký và áp  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 129 — Các Tổng công ty, Công ty có chế độ kế toán đặc thù đã được Bộ  <<< BẤT THƯỜNG ĐÁNH SỐ
+    Điều 130 — Các Bộ, ngành, Ủy ban nhân dân, Sở Tài chính, Cục Thuế các Tỉnh,  <<< BẤT THƯỜNG ĐÁNH SỐ
       Khoản 1 — Bảng cân đối kế toán năm của doanh nghiệp hoạt động liên tục
       Khoản 1 — Tiền   111
       Khoản 2 — Các khoản tương đương tiền  112

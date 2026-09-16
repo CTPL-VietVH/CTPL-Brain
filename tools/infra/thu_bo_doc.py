@@ -293,12 +293,21 @@ def chay_cay_day_du(dau_vao: list[str]) -> None:
               f"{len(kq.blocks(Level.DIEM))} Điểm · "
               f"{len(kq.full_text):,} ký tự")
         print()
+        co = kq.bi_gan_co()
+        if co:
+            print(f"- **⚠️ {len(co)} mốc Điều mang cờ BẤT THƯỜNG ĐÁNH SỐ** "
+                  f"(đánh dấu `<<<` trong cây dưới) — cờ là **gợi ý cần người "
+                  f"phân loại**, không phải phán quyết. Ba loại đã biết: "
+                  f"(a) dẫn chiếu nhận nhầm · (b) nguồn khuyết dải số · "
+                  f"(c) mẫu văn bản lồng đánh số lại.")
+        print()
         print("```")
         for n in nodes:
             thut = "  " * max(0, int(n.level) - 2)
             nhan = f"{n.level.nhan} {n.marker}".strip()
             tieu_de = n.heading.strip()
-            print(f"{thut}{nhan}{' — ' if tieu_de else ''}{tieu_de}")
+            danh_dau = "  <<< BẤT THƯỜNG ĐÁNH SỐ" if n.bat_thuong else ""
+            print(f"{thut}{nhan}{' — ' if tieu_de else ''}{tieu_de}{danh_dau}")
         print("```")
         print()
 
