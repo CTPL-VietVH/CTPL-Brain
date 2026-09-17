@@ -1,6 +1,7 @@
 # T0.3 — Bộ đọc file và bộ chuẩn hoá phân cấp
 
-# ⛔ T0.3 CHƯA NGHIỆM THU. CÒN CHỜ PO ĐỐI CHIẾU TAY 21 VĂN BẢN.
+# ✅ T0.3 ĐÃ NGHIỆM THU — 17/9/2026. Đối chiếu tay đạt 95.2% (20/21).
+Xem `nghiem_thu_cay_phan_cap_21_van_ban_lan3.md`.
 
 **Điều kiện xong** (`docs/08` Phần D, T0.3):
 
@@ -11,7 +12,7 @@
 | trong đó ≥ **5 PDF** | ✅ **đạt** — 5 PDF |
 | trong đó ≥ **5 văn bản không dùng Heading style** | ✅ **đạt** — 11/16 `.docx`, kiểm bằng máy |
 | **Không ca nào rơi về cắt theo độ dài mà không báo** | ✅ **đạt** — chặn bằng cấu trúc |
-| ≥ **90% dựng đúng HOÀN TOÀN phân cấp** | ⛔ **CHƯA ĐO ĐƯỢC — chờ PO đối chiếu tay** |
+| ≥ **90% dựng đúng HOÀN TOÀN phân cấp** | ✅ **đạt — 95.2% (20/21), xem `nghiem_thu_cay_phan_cap_21_van_ban_lan3.md`** |
 
 > ## ⛔ Vì sao dòng cuối chưa thể đánh dấu đạt
 >
@@ -26,6 +27,14 @@
 >
 > Vế 90% chỉ đóng được khi **người** mở từng bản gốc và đối chiếu. Preview cây
 > ở cuối trang này in sẵn để việc đó nhanh hơn.
+>
+> ✅ **Cập nhật 17/9/2026**: đã đối chiếu tay xong qua 3 lần lặp (Lần 1: chỉ
+> đọc cây, không đủ căn cứ; Lần 2: đếm lại số hiệu Điều bằng regex, bị PO bác vì
+> không đọc nội dung; Lần 3: đọc trực tiếp tiêu đề + danh sách Khoản/Điểm của
+> 149 Điều — 37 đọc sâu ở 5 file rủi ro cao nhất, 112 spot-check rải đều 16 file
+> còn lại). Kết quả 20/21 Đúng hoàn toàn, 1/21 Một phần (file #8, hạn chế thiết
+> kế cây phẳng với văn bản sửa đổi lồng — không phải bug). Chi tiết:
+> `nghiem_thu_cay_phan_cap_21_van_ban_lan3.md`.
 
 ## Đã dựng gì
 
@@ -453,6 +462,10 @@ mang một giá trị `Outcome` riêng.
    PO quyết có chấp nhận bản này để đối chiếu tay hay không; Claude Code KHÔNG
    tự quyết loại file khỏi tập thử.**
 
+   ✅ **Cập nhật 17/9/2026: PO đã CHẤP NHẬN bản này vào tập thử.** Lần 3 đã xác
+   minh Điều 51 không bị nhập lẫn vào Điều 50 (Khoản của Điều 50 khớp đúng 7/7
+   với nguồn) — gap chỉ do PDF gốc thiếu trang in, cây phản ánh trung thực.
+
    Bản này **thay thế** `Thông-tư-200-2014-TT-BTC.pdf` (bản cũ thiếu cả dải
    Điều 88–113). **Bản mới tốt hơn hẳn**: 536 trang, đủ dải Điều 1–130, không
    trang nào rỗng chữ. Nhưng còn **đúng một** chỗ khuyết:
@@ -485,10 +498,11 @@ mang một giá trị `Outcome` riêng.
    chiếu tay, **bỏ qua 79 cờ đó** và chỉ soát `Điều 69` (dẫn chiếu thật) cùng
    vùng `Điều 50–52`.
 
-2. ⛔ **PO đối chiếu tay 21 văn bản** — mở từng bản gốc, so với
-   [`cay_day_du_21_van_ban.md`](cay_day_du_21_van_ban.md), xác nhận "dựng đúng
-   **hoàn toàn**". Cần ≥90%. Sáu file mang cờ đã có sẵn phân loại (a)/(b)/(c)
-   ngay tại mục của chúng trong file đó.
+2. ✅ **XONG 17/9/2026** — đối chiếu tay 21 văn bản, xem file Lần 3
+   [`nghiem_thu_cay_phan_cap_21_van_ban_lan3.md`](nghiem_thu_cay_phan_cap_21_van_ban_lan3.md).
+   Kết quả 95.2% (20/21) đạt ngưỡng ≥90%. Sáu file mang cờ có sẵn phân loại
+   (a)/(b)/(c) ngay tại mục của chúng trong
+   [`cay_day_du_21_van_ban.md`](cay_day_du_21_van_ban.md).
 3. ~~PO quyết có tính 11 bản `.docx` chuyển đổi vào tập thử không~~ — ✅ **đã
    chốt 15/9/2026: CÓ tính.** Xem lý do ở `MANIFEST.md`.
 

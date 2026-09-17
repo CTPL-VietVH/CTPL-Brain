@@ -124,7 +124,7 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 
 *Xong khi*: mô hình chạy được trên phần cứng đích, đo được độ trễ một lượt biểu diễn; và tên mô hình, số chiều, thước đo đã nằm trong nhóm cấu hình hợp đồng ở T1.2.
 
-**T0.3 — Dựng bộ đọc file và CHỨNG MINH nó ra phân cấp.** ✅ Thư viện đã chốt 14/9; phần chứng minh thì chưa ai làm. PDF có lớp chữ, `.docx`, `.txt`, `.md`. **Yêu cầu sống còn: bộ đọc phải trả ra văn bản KÈM PHÂN CẤP** (Chương › Điều › Khoản › Điểm, hoặc chuỗi tiêu đề lồng nhau), không phải một khối chữ phẳng.
+**T0.3 — Dựng bộ đọc file và CHỨNG MINH nó ra phân cấp.** ✅ Thư viện đã chốt 14/9; phần chứng minh đã XONG 17/9/2026 — đối chiếu tay đạt 95.2% (20/21) trên 149 Điều kiểm tra, xem `tests/t0_3_reader/README.md` và `tests/t0_3_reader/nghiem_thu_cay_phan_cap_21_van_ban_lan3.md`. PDF có lớp chữ, `.docx`, `.txt`, `.md`. **Yêu cầu sống còn: bộ đọc phải trả ra văn bản KÈM PHÂN CẤP** (Chương › Điều › Khoản › Điểm, hoặc chuỗi tiêu đề lồng nhau), không phải một khối chữ phẳng.
 **Docling** cho PDF (**rút chữ kèm toạ độ** — xem cảnh báo dưới), **python-docx** cho .docx, parser markdown cho .md, regex cho .txt — cộng **một bộ chuẩn hoá cây cấu trúc chung** nhận diện Chương / Điều / Khoản / Điểm theo quy chuẩn hành chính Việt Nam.
 
 ⚠️ **Đừng tin Heading style của .docx.** Văn bản soạn tay ở Việt Nam thường in đậm và đánh số bằng tay chứ không gán style — bộ chuẩn hoá regex nhiều khả năng là **đường chính**, không phải dự phòng.
