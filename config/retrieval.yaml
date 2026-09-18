@@ -1,0 +1,48 @@
+# config/retrieval.yaml — nhóm "RETRIEVAL" (07 Mục 3.2 + 3.3, CLAUDE.md Mục 4)
+#
+# Ai đọc: CHỈ Retrieval v2. Lệch thì sao: không ảnh hưởng bên kia — khác hẳn
+# nhóm Hợp đồng, vốn lệch là hỏng ngầm cả hai phía (07 Mục 3.3 bảng 1).
+#
+# ⛔ Thiếu bất kỳ khoá nào dưới đây → TỪ CHỐI CHẠY. Không có giá trị mặc định
+#    trong mã (07 Mục 3.3 quy tắc 3; CLAUDE.md Mục 3 #2).
+# 📌 Ghi chú "Dấu hiệu đặt sai" cạnh từng giá trị là NGUYÊN VĂN cột cuối bảng
+#    07 Mục 3.2 — bắt buộc phải ở đây, vì v1 không phát sự kiện đo lường nào
+#    (06 Mục 9.6) nên dấu hiệu quan sát bằng mắt là cách DUY NHẤT biết mình đặt
+#    sai (07 Mục 3.3 quy tắc 4).
+# 📌 Giả định nằm dưới cả bảng: KHO CỠ VÀI NGHÌN TÀI LIỆU. Kho thật lớn hơn một
+#    bậc thì `cap_warning_multiple` phải tính lại.
+
+# `inheritance_decay` — hệ số giảm thừa hưởng điểm mỗi mắt xích (07 Mục 3.2)
+# ⚠️ Áp trên ĐIỂM ĐÃ CHUẨN HOÁ trên tập ứng viên, không phải điểm giống thô.
+#   07 Mục 3.2: "Điểm giống thô thường dồn cục trong một dải hẹp; nhân một hệ số
+#   vào đó thì con của tài liệu hạng nhất tụt xuống dưới cả chục tài liệu không
+#   liên quan, và cơ chế thừa hưởng mất tác dụng." (CLAUDE.md Mục 3 #12)
+# Dấu hiệu đặt sai (07 Mục 3.2, nguyên văn):
+#   "Người dùng gặp câu trả lời dựa trên văn bản đã bị sửa đổi mà bản sửa không
+#   được nhắc → giảm nhẹ hệ số"
+inheritance_decay: 0.5
+
+# `document_cap` — trần số tài liệu đưa vào ngữ cảnh (07 Mục 3.2)
+# ⚠️ Khử trùng theo khối cha TRƯỚC khi tính trần: một Điều trúng ba Khoản chỉ
+#   chiếm MỘT suất, không phải ba (07 Mục 2.2, CLAUDE.md Mục 3 #19).
+# Dấu hiệu đặt sai (07 Mục 3.2, nguyên văn):
+#   "Câu trả lời thường xuyên thiếu nguồn mà người hỏi biết là có → tăng lên 8"
+document_cap: 6
+
+# `cap_warning_multiple` — bội số kích hoạt cảnh báo chạm trần (07 Mục 3.2)
+# Giá trị 3 nghĩa là: báo khi có trên 18 ứng viên (= document_cap × 3).
+# Dấu hiệu đặt sai (07 Mục 3.2, nguyên văn):
+#   "Cảnh báo hiện ở quá nửa số câu trả lời → tăng. Không bao giờ hiện → giảm"
+cap_warning_multiple: 3
+
+# `relation_pull_threshold` — ngưỡng tin cậy để kéo liên kết chưa duyệt
+#   (07 Mục 3.2). ĐƠN VỊ: thang 0–1.
+# ⚠️ Ngưỡng này CHỈ áp cho liên kết máy suy ra (`origin=machine_inferred`).
+#   KHÔNG áp cho liên kết do người gắn, cũng KHÔNG áp cho liên kết đọc được từ
+#   dẫn chiếu tường minh — ngưỡng sinh ra để lọc phán đoán của MÁY, không phải
+#   để xét lại quyết định của NGƯỜI (07 Mục 2.3, CLAUDE.md Mục 3 #21).
+# ⚠️ Ngưỡng này chỉ chặn việc THÊM nên đặt sai luôn an toàn một chiều: thêm
+#   được ít hơn, không làm mất cái đã có (NT2 hệ quả 2).
+# Dấu hiệu đặt sai (07 Mục 3.2, nguyên văn):
+#   "Ngữ cảnh thường xuyên có văn bản họ hàng chẳng liên quan → nâng lên 0.5"
+relation_pull_threshold: 0.3

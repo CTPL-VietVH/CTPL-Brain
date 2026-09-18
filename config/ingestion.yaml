@@ -1,0 +1,57 @@
+# config/ingestion.yaml — nhóm "INGESTION" (07 Mục 3.2 + 3.3, CLAUDE.md Mục 4)
+#
+# Ai đọc: CHỈ Ingestion v2. Lệch thì sao: không ảnh hưởng bên kia — khác hẳn
+# nhóm Hợp đồng, vốn lệch là hỏng ngầm cả hai phía (07 Mục 3.3 bảng 1).
+#
+# ⛔ Thiếu bất kỳ khoá nào dưới đây → TỪ CHỐI CHẠY. Không có giá trị mặc định
+#    trong mã (07 Mục 3.3 quy tắc 3; CLAUDE.md Mục 3 #2).
+# 📌 Ghi chú "Dấu hiệu đặt sai" cạnh từng giá trị là NGUYÊN VĂN cột cuối bảng
+#    07 Mục 3.2 — bắt buộc phải ở đây, vì v1 không phát sự kiện đo lường nào
+#    (06 Mục 9.6) nên dấu hiệu quan sát bằng mắt là cách DUY NHẤT biết mình đặt
+#    sai (07 Mục 3.3 quy tắc 4).
+# 📌 Giả định nằm dưới cả bảng: KHO CỠ VÀI NGHÌN TÀI LIỆU. Kho thật lớn hơn một
+#    bậc thì `scan_pair_budget` và `scan_time_budget` phải tính lại.
+
+# `saturation_epsilon` — ngưỡng tỷ lệ phát hiện quan hệ mới (07 Mục 3.2)
+# ĐƠN VỊ: TỶ LỆ trên thang 0–1. 0.01 = 1% — đúng giá trị chốt 14/9/2026.
+#   (Ghi 1 vào đây là ghi 100%, không phải 1%.)
+# Dấu hiệu đặt sai (07 Mục 3.2, nguyên văn):
+#   "Quét chạy mãi không báo xong → nới. Manager liên tục phải gắn tay liên kết
+#   máy bỏ sót → siết"
+saturation_epsilon: 0.01
+
+# `saturation_rounds` — số vòng liên tiếp dưới ngưỡng (07 Mục 3.2)
+# Dấu hiệu đặt sai (07 Mục 3.2, nguyên văn):
+#   "Cùng dấu hiệu với `saturation_epsilon`"
+saturation_rounds: 3
+
+# `scan_pair_budget` — trần số cặp đối chiếu mỗi tài liệu mới (07 Mục 3.2)
+# ĐƠN VỊ: số CẶP trên mỗi tài liệu.
+# Dấu hiệu đặt sai (07 Mục 3.2, nguyên văn):
+#   "Thường xuyên chạm trần trước khi bão hoà → kho đã lớn hơn giả định thiết kế"
+scan_pair_budget: 500
+
+# `scan_time_budget` — trần thời gian mỗi tài liệu (07 Mục 3.2)
+# ĐƠN VỊ: PHÚT trên mỗi tài liệu (xem chú thích ngay cạnh giá trị bên dưới) —
+#   "10" trần trụi đọc thành 10 giây thì KHÔNG lỗi nào báo, đúng loại hỏng im
+#   lặng cả hai tài liệu nguồn dựng lên để chặn. Đây là MỘT nhà duy nhất của
+#   tham số đó (07 Mục 3.3 quy tắc 2) — tên khoá giữ đúng như 07 Mục 3.2 chốt,
+#   không còn hậu tố `_minutes` (PO chốt 18/9/2026).
+# Dấu hiệu đặt sai (07 Mục 3.2, nguyên văn):
+#   "Tài liệu mới lâu ngày vẫn mang nhãn "chưa đối chiếu xong" → nới"
+scan_time_budget: 10  # ĐƠN VỊ: PHÚT
+
+# `accepted_formats` — danh sách định dạng nhận
+# 07 Mục 3.3 bảng 1 xếp "danh sách định dạng nhận" vào ĐÚNG nhóm này, nên đây là
+# nhà của nó. Nó KHÔNG nằm trong tám giá trị của 07 Mục 3.2 nên không có cột
+# "dấu hiệu đặt sai" để chép — bốn định dạng dưới đây lấy từ công nghệ đã chốt
+# 14/9 (08 dòng T0.3: Docling cho PDF có lớp chữ, python-docx cho .docx, parser
+# markdown cho .md, regex cho .txt; CLAUDE.md Mục 5).
+# ⚠️ Thêm một định dạng vào đây KHÔNG tự làm bộ đọc hiểu nó — phải có bộ đọc
+#   tương ứng trước, nếu không tài liệu sẽ lặng lẽ rơi về cắt theo độ dài
+#   (08 T0.3, cảnh báo 06 Mục 5.2).
+accepted_formats:
+  - pdf
+  - docx
+  - md
+  - txt

@@ -1,0 +1,54 @@
+# config/contract.yaml — nhóm "HỢP ĐỒNG" (07 Mục 3.1 + 3.3, CLAUDE.md Mục 4)
+#
+# Ai đọc: CẢ HAI service (Ingestion v2 và Retrieval v2).
+# Lệch thì sao: HỎNG NGẦM — không lỗi nào báo, chỉ sai lệch âm thầm. Vì vậy mỗi
+# service lúc khởi động phải so ba giá trị dưới đây với CON DẤU TRÊN KHO nó đang
+# đọc, không khớp thì TỪ CHỐI CHẠY; không có chế độ cảnh báo rồi chạy tiếp
+# (07 Mục 3.1 ràng buộc 2). So với con dấu của KHO, không so với service kia —
+# vì so hai service với nhau thì lọt ca "cả hai cùng lệch với kho".
+#
+# ⛔ Thiếu bất kỳ khoá nào dưới đây → TỪ CHỐI CHẠY. Không có giá trị mặc định
+#    trong mã (07 Mục 3.3 quy tắc 3; CLAUDE.md Mục 3 #2).
+# 📌 File này có thẩm quyền LÚC CHẠY; docs/07 ghi LÝ DO và giá trị KHỞI ĐẦU
+#    (07 Mục 3.3 quy tắc 5).
+
+# Vì sao phải dùng chung — 07 Mục 3.1, nguyên văn:
+#   "Lệch mô hình mà **cùng số chiều** thì vector do Ingestion tạo và vector
+#   Retrieval tạo cho câu hỏi nằm ở hai không gian ngữ nghĩa khác nhau. Phép so
+#   vẫn chạy, kết quả sai lệch âm thầm, không lỗi nào báo. Đây là rủi ro nặng
+#   nhất trong nhóm"
+# ⚠️ Cấu hình collection của Qdrant KHÔNG mang tên mô hình — đã đo thật ở
+#   tests/t0_1_stores/test_b_store_stamp.py. Nên khoá này phải có NHÀ RIÊNG trên
+#   kho (điểm dữ liệu dành riêng trong collection, hoặc bảng Postgres khoá theo
+#   tên collection). Chọn nhà nào là việc của T1.3, không phải của file này.
+# ⚠️ Đổi giá trị này = BIỂU DIỄN LẠI TOÀN KHO (06 Mục 5.5) + đổi luôn
+#   `distance_metric` theo mô hình. Quy trình v1: dừng dịch vụ, nạp lại toàn
+#   kho, bật lại cùng lúc (07 Mục 3.1).
+embedding_model: BAAI/bge-m3
+
+# Vì sao phải dùng chung — 07 Mục 3.1, nguyên văn:
+#   "Lệch số chiều thì kho vector báo lỗi ngay — phát hiện nhanh, ít nguy hiểm
+#   hơn"
+# ⚠️ Khớp số chiều KHÔNG chứng minh khớp mô hình: BAAI/bge-m3 và
+#   intfloat/multilingual-e5-large đều 1024 chiều. Đó là ca khó nhất mà T1.3
+#   phải bắt được.
+embedding_dim: 1024
+
+# Vì sao phải dùng chung — 07 Mục 3.1, nguyên văn:
+#   "**CHỐT: cosine, và vector phải chuẩn hoá L2.** Phải khớp giữa lúc ghi và
+#   lúc tìm — xem S5"
+# ⚠️ Không có khoá `l2_normalize` riêng, và đó là CỐ Ý: chuẩn hoá L2 là điều
+#   kiện đi kèm của chính thước đo cosine trong pipeline này, không phải một
+#   lựa chọn độc lập bật/tắt được. Tách thành trường riêng là tạo ô thứ hai phải
+#   khớp với ô thứ nhất — cùng loại lỗi mà 07 Mục 2.3 đã cấm với `is_certain`.
+#   Ràng buộc "vector ghi vào kho và vector câu hỏi đều đã chuẩn hoá L2" thuộc
+#   về tầng biểu diễn (T0.2 đã chứng minh: cosine trên vector chuẩn hoá L2 ==
+#   tích vô hướng), không thuộc về một cờ cấu hình.
+# ⚠️ Thước đo là THUỘC TÍNH CỦA MÔ HÌNH, không phải lựa chọn tự do (07 Mục 3.1,
+#   nghiên cứu 14/9). Dùng dot không chuẩn hoá hoặc euclid thì KHÔNG có lỗi nào
+#   báo, chỉ tụt chất lượng tìm kiếm âm thầm. Đổi mô hình thì phải đổi cả thước
+#   đo THEO mô hình, không được giữ nguyên thước đo cũ.
+# Giá trị hợp lệ: cosine | dot | euclid (đúng tập Qdrant hiểu được). Ở v1 chốt
+# cosine; hai giá trị kia có mặt để R5 còn nghĩa — đổi mô hình bằng cấu hình,
+# không phải sửa mã.
+distance_metric: cosine
