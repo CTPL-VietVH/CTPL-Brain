@@ -175,10 +175,16 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 Đầu vào là `extracted_text` đã có trong hồ sơ — **không đọc lại file gốc**. Chạy lại được từ giữa chừng nếu đứt.
 *Xong khi*: đổi `embedding_model` trong cấu hình, chạy công cụ, đóng dấu lại kho, hai service khởi động được. Cùng công cụ này dùng lại khi **đổi cách cắt** (06 Mục 5.5).
 
+**Cập nhật 19/9 (PO):** phát hiện T1.5 cần `extracted_text` đã ghi trong hồ sơ Postgres — nhưng hồ sơ đó do T2.2 (Nhóm 2) tạo ra, chưa tồn tại ở thời điểm này. Quyết định: HOÃN T1.5 tới khi T2.2 xong; gate Nhóm 1→Nhóm 2 chỉ còn yêu cầu T1.1–T1.4 (đóng băng tên trường), không còn yêu cầu T1.5.
+
 ### Nhóm 2 — Ingestion v2
 
 **T2.1 — GĐ1 nhận và xác thực.** Vân tay nội dung; trùng khít cùng Space thì báo và không nạp lại; trùng khít khác Space thì hợp lệ và im lặng; người upload khai "đây là bản mới của X"; nếu không khai thì tạo `pending_version_claim` và nhắc **cả người upload lẫn Manager**. *Nguồn*: 06 Mục 5.7.
 *Xong khi*: nạp cùng một file hai lần vào một Space chỉ ra một tài liệu; vào hai Space ra hai tài liệu, không cảnh báo.
+
+**Cập nhật 19/9 (PO, theo N9):** `content_fingerprint` do GĐ2 (T2.2) tính sau khi đọc chữ ra (06 Mục 5.7, 07 Mục 2.1) — quyết định trùng/không-trùng của T2.1 phải đợi GĐ2 tính xong `content_fingerprint` rồi mới chốt, KHÔNG dùng hash file thô riêng (tránh bịa khái niệm mới ngoài hợp đồng).
+
+**Cập nhật 19/9 (PO, theo N9):** nhánh "người upload không khai thì máy tự phân tích đề xuất" thuộc T2.4 (GĐ5), không phải T2.1 (06 Mục 5.7). T2.1 chỉ xử lý khai báo tường minh của người dùng; `pending_version_claim` chỉ được tạo sau khi T2.4 phân tích xong và đề xuất.
 
 **T2.2 — GĐ2 đọc file.** Bốn định dạng, từ chối phần còn lại kèm thông báo rõ. Sinh `extracted_text` — **nguồn chân lý duy nhất của chữ nghĩa**. Đây là **điểm cắm**: mọi bước sau chỉ nhận văn bản, cấu trúc, vị trí; **không bước nào được rẽ nhánh theo định dạng gốc**. *Nguồn*: 06 Mục 5.2, 07 Mục 2.1.
 
@@ -267,6 +273,7 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 ## E. Ba việc song song, không thuộc đường găng
 
 1. **Ước lượng công sức lại từ đầu.** Con số 14.5–15.0 MD cũ chỉ tính thiết kế cơ bản. ⚠️ Đây là **chỗ duy nhất trong cả chuỗi việc mà đọc mã nguồn hệ đang chạy là hợp lệ** — quy tắc "cấm lấy code cũ làm chuẩn" bảo vệ *phán đoán thiết kế*, không áp cho việc ước lượng khối lượng.
+   > **Cập nhật 18/9/2026 (quyết định thay PO, theo uỷ quyền của Viet cùng ngày):** Đã có đề xuất đầy đủ tại `docs/09_Uoc_Luong_Cong_Suc_v2.md`. Dùng con số **ĐỀ XUẤT 85.5 MD** (dải 74–103) làm mốc lập kế hoạch từ nay. Nguồn đối chiếu hệ cũ dùng để soát quy mô (09 Mục 2) không ghi đường dẫn cụ thể — theo đúng yêu cầu bảo mật đã nêu trong chính tài liệu 09 — và chỉ dùng để **soát lại**, không dùng để **suy ra** số liệu, nên chấp nhận trạng thái này để không chặn tiến độ. Viet (PO) có thể yêu cầu ghi lại đường dẫn cụ thể bất kỳ lúc nào nếu thấy cần.
 2. **Cập nhật bốn tài liệu ở 06 Mục 11.** Nợ từ 5/9.
 > ⚠️ Riêng `research/R11_Phan_Quyen.md` có một việc **không phải dọn tài liệu mà là một tính năng thật**: cảnh báo hai chiều cho Manager khi thao tác với cờ kế thừa — bật thì báo ai sẽ đọc được, **tắt thì báo bao nhiêu người sẽ mất quyền đọc bao nhiêu tài liệu**. Nó ở đây vì việc thực thi thuộc tầng phân quyền chứ không thuộc hai service này, **không phải vì nó ít quan trọng**. Chiều tắt là chiều gây hỏng im lặng (06 Mục 7.3). Cần một người có tên phụ trách, nếu không nó sẽ rơi giữa hai kế hoạch.
 3. **Chạy phép đo tỷ lệ dẫn chiếu tường minh** ngay khi có kho tài liệu thật. Ngoài giá trị vốn có, nó là điều kiện để bật cảnh báo đang treo ở 06 Mục 6.2.
