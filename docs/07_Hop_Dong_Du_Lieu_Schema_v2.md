@@ -251,6 +251,8 @@ Lúc tạo kho vector, đóng dấu lên chính cái kho đó: tên mô hình, s
 
 Không khớp thì không khởi động, không có chế độ cảnh báo rồi chạy tiếp. Một service chạy với cấu hình lệch chính là loại trừ im lặng ở tầng thấp nhất — cùng loại với việc cắt bớt ngầm khi tràn ngữ cảnh mà 06 Mục 6.5 đã cấm.
 
+> 📌 **`model_version` (T1.3, `packages/schema/embedding_registry.py`)**: bảng catalog `embedding_models` trên PostgreSQL — nơi cư trú thật của `embedding_model` cho ràng buộc 2 ở trên — có thêm một cột `model_version` để ghi lịch sử/audit (biết chính xác bản nào từng active cho collection nào). Đây **KHÔNG phải trường thứ tư của hợp đồng mô hình**: hợp đồng vẫn đúng ba trường `embedding_model` / `embedding_dim` / `distance_metric` như bảng đầu Mục 3.1, và phép so khớp con dấu chỉ dựa trên ba trường đó. `model_version` không nằm trong `ContractConfig` hay `StoreStamp`.
+
 **3. Module schema mang HAI số phiên bản của chính nó.**
 
 | Số | Tăng khi | Hai bên lệch thì |
