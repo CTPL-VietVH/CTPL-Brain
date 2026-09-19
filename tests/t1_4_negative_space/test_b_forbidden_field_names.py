@@ -109,6 +109,9 @@ def test_5_no_document_title_or_status_fields_owned_by_document():
     }
     fields = _chunk_field_names()
     assert forbidden_exact.isdisjoint(fields)
+    for name in fields:
+        for bad in ("title", "doc_number", "effective_date", "issued_date", "removed", "superseded", "publication_state"):
+            assert bad not in name, f"'{name}' trông như mang tên/trạng thái tài liệu bị cấm đặt cạnh mẩu"
     _assert_whitelist_intact()
 
 
@@ -176,4 +179,7 @@ def test_9_no_verbatim_chunk_text_next_to_chunk():
     forbidden_exact = {"text", "chunk_text", "content", "extracted_text", "body", "raw_text"}
     fields = _chunk_field_names()
     assert forbidden_exact.isdisjoint(fields)
+    for name in fields:
+        assert "text" not in name, f"'{name}' trông như giữ bản sao chữ của mẩu"
+        assert "content" not in name, f"'{name}' trông như giữ bản sao chữ của mẩu"
     _assert_whitelist_intact()
