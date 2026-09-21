@@ -188,6 +188,8 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 
 **T2.2 — GĐ2 đọc file.** Bốn định dạng, từ chối phần còn lại kèm thông báo rõ. Sinh `extracted_text` — **nguồn chân lý duy nhất của chữ nghĩa**. Đây là **điểm cắm**: mọi bước sau chỉ nhận văn bản, cấu trúc, vị trí; **không bước nào được rẽ nhánh theo định dạng gốc**. *Nguồn*: 06 Mục 5.2, 07 Mục 2.1.
 
+**Cập nhật 21/9 (PO, từ escalation T2.1-E2):** `version_ordinal` phải DUY NHẤT trong một `version_chain_id` — không chỉ suy từ bản khai +1 (có race condition khi 2 người cùng khai "bản mới của v1" đồng thời). Bắt buộc ép bằng unique constraint (`version_chain_id`, `version_ordinal`) ở tầng lưu trữ, không chỉ kiểm tra ở tầng ứng dụng.
+
 **T2.3 — GĐ3 cắt thành mẩu.** **Cấu trúc quyết định ranh giới; ý nghĩa chỉ được chia nhỏ tiếp một khối cấu trúc quá dài.** Ba điều cấm: không gộp hai khối cấu trúc, không cắt ngang ranh giới điều/khoản, khối đủ ngắn thì là một mẩu. Sinh `structure_path` (**danh sách các đoạn**, không phải chuỗi nối), `parent_chunk_id`, `span_start`, `span_end`. *Nguồn*: 06 Mục 5.2 GĐ3, 07 Mục 2.2.
 *Xong khi*: một Điều dài nhiều trang **được chia nhỏ tiếp** thành nhiều mẩu con, và cả nhóm mẩu con đó cùng trỏ về một `parent_chunk_id`. Cắt theo cấu trúc rồi dừng là chưa xong.
 
@@ -207,6 +209,8 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 *Xong khi*: (1) cắt tiến trình **ở từng bước một** rồi chạy lại đều hoàn tất được, không để lại mẩu trỏ tới hồ sơ đã mất; (2) **chạy lệnh xoá hai lần liên tiếp** trên cùng một tài liệu không gây lỗi và không đổi kết quả.
 
 **T2.9 — Hàng việc chăm sóc tri thức.** Ba loại mục: đề nghị quan hệ chờ duyệt, đề nghị bản mới chờ xác nhận, và *"tài liệu này có thể đã lỗi thời"* khi có bản mới ở nơi khác trùng vân tay. Mục thứ ba **không được nêu Space nào, không nêu ai, không nêu ở đâu** — đó chính là cơ chế, không phải chi tiết. *Nguồn*: 06 Mục 5.4 và 5.7.
+
+**Cập nhật 21/9 (PO, từ escalation T2.1-E4):** hai cơ chế ở 06 Mục 5.7 (báo Manager các Space giữ bản trùng; bản mới thừa hưởng nhãn/quan hệ) chưa có task rõ chủ — cần gán trước khi triển khai.
 
 **T2.10 — Bề mặt ghi cho các thao tác của Manager.** Thiết kế nói Manager *đánh dấu gỡ vì sai*, *đánh dấu hết hiệu lực*, *duyệt hoặc từ chối liên kết*, *xác nhận đề nghị bản mới*, *xoá vĩnh viễn* — nhưng chưa hạng mục nào định nghĩa **các thao tác đó đi vào hệ thống bằng đường nào**. T3.1 có bộ lọc đọc cờ gỡ, T2.9 có hàng việc hiển thị; đường **ghi** thì chưa ai phụ trách.
 *Xong khi*: mỗi thao tác trên có một đường ghi xác định, và **đã chốt nó thuộc service nào** — Ingestion hay Backend. Ranh giới này nằm ngoài phạm vi hai tài liệu 06 và 07 (07 Mục 0 loại trừ hợp đồng với Backend), nên phải quyết tường minh chứ không mặc định.
