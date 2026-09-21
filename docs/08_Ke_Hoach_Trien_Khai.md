@@ -186,6 +186,8 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 
 **Cập nhật 19/9 (PO, theo N9):** nhánh "người upload không khai thì máy tự phân tích đề xuất" thuộc T2.4 (GĐ5), không phải T2.1 (06 Mục 5.7). T2.1 chỉ xử lý khai báo tường minh của người dùng; `pending_version_claim` chỉ được tạo sau khi T2.4 phân tích xong và đề xuất.
 
+**Cập nhật 21/9 (PO, từ audit #7 — không cần sửa):** tra vân tay trùng khít ở T2.1 không lọc theo `tenant_id`. Chấp nhận được: R6 (mỗi khách hàng một bản cài đặt độc lập) đã cách ly dữ liệu ở tầng hạ tầng, nên không cần thêm điều kiện đó ở câu truy vấn tầng ứng dụng. Ghi lại như một giới hạn thiết kế đã biết, để không bị audit sau này phát hiện lặp lại và tưởng là bỏ sót.
+
 **T2.2 — GĐ2 đọc file.** Bốn định dạng, từ chối phần còn lại kèm thông báo rõ. Sinh `extracted_text` — **nguồn chân lý duy nhất của chữ nghĩa**. Đây là **điểm cắm**: mọi bước sau chỉ nhận văn bản, cấu trúc, vị trí; **không bước nào được rẽ nhánh theo định dạng gốc**. *Nguồn*: 06 Mục 5.2, 07 Mục 2.1.
 
 **Cập nhật 21/9 (PO, từ escalation T2.1-E2):** `version_ordinal` phải DUY NHẤT trong một `version_chain_id` — không chỉ suy từ bản khai +1 (có race condition khi 2 người cùng khai "bản mới của v1" đồng thời). Bắt buộc ép bằng unique constraint (`version_chain_id`, `version_ordinal`) ở tầng lưu trữ, không chỉ kiểm tra ở tầng ứng dụng.
@@ -204,6 +206,8 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 **T2.7 — Tiền kiểm ở Space riêng.** Chạy GĐ2, GĐ3, GĐ5 rồi **dừng trước GĐ6 và GĐ7**; giữ trong vùng làm việc riêng của Ingestion. Manager duyệt xong mới chạy nốt và ghi ra ba kho. *Nguồn*: 06 Mục 5.2 GĐ1.
 *Xong khi*: tài liệu chưa duyệt trong Space riêng **không có mặt trong BẤT KỲ kho dùng chung nào** — kiểm bằng cách truy vấn thẳng vào cả Qdrant **và** PostgreSQL, không qua service.
 > ⚠️ Với hai kho vật lý (T0.1), **PostgreSQL cũng là kho dùng chung.** Ghi hồ sơ tài liệu vào đó rồi chỉ hoãn nạp vector là đã vi phạm bất biến. Vùng làm việc của Ingestion phải tách khỏi bảng hồ sơ chính thức.
+
+**Cập nhật 21/9 (PO, gộp T2.1-E2 + audit #2):** khi T2.2+/T2.7 thật sự xây bảng bền vững ở Postgres, cần ÍT NHẤT hai unique constraint tầng lưu trữ, không chỉ kiểm tra ở tầng ứng dụng: (1) `(version_chain_id, version_ordinal)` — từ escalation T2.1-E2, ngăn race condition khi hai người cùng khai "bản mới của v1"; (2) `(space_id, content_fingerprint)` — từ audit #2, khớp hành vi "trùng khít cùng Space thì báo và không nạp lại" ở T2.1. Cả hai chưa có task chủ; gán khi thật sự đụng tầng lưu trữ bền vững, không phải lúc này.
 
 **T2.8 — Xoá vĩnh viễn.** Với hai kho vật lý (T0.1), thứ tự rút gọn thành: **kho vector → (lớp quan hệ + hồ sơ tài liệu, MỘT giao dịch) → dọn nền**. Ranh giới duy nhất còn thiếu giao dịch chung là giữa Qdrant và PostgreSQL, nên chỉ chỗ đó cần làm lại được mà không hỏng thêm. Nhật ký giữ việc đã xoá, không giữ nội dung. *Nguồn*: 06 Mục 5.6, 07 Mục 6 (S6).
 *Xong khi*: (1) cắt tiến trình **ở từng bước một** rồi chạy lại đều hoàn tất được, không để lại mẩu trỏ tới hồ sơ đã mất; (2) **chạy lệnh xoá hai lần liên tiếp** trên cùng một tài liệu không gây lỗi và không đổi kết quả.
