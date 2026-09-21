@@ -34,6 +34,41 @@ from typing import Protocol
 from schema.document import DateSource, Document, VersionDeclaredBy
 
 
+class BanMoiKhacSpace(Exception):
+    """`declared_previous_version` ở khác Space với request (audit T2.1 #3).
+
+    Không kiểm điều này thì một chuỗi phiên bản có thể vắt qua ranh giới
+    Space — hai Space có thể có tập người đọc khác nhau, nên đó là một cách
+    rò rỉ cấu trúc tài liệu ra ngoài Space gốc.
+    """
+
+
+class VanTayNoiDungRong(Exception):
+    """`content_fingerprint` rỗng hoặc chỉ toàn khoảng trắng (audit T2.1 #5).
+
+    Đây là khoá tra trùng-lặp duy nhất (07 Mục 2.1) — một giá trị rỗng lọt
+    qua sẽ khiến mọi tài liệu "không vân tay" bị coi là trùng nhau trong
+    cùng một Space.
+    """
+
+
+def _active_match_in_space(matches: list[Document], space_id: str) -> Document | None:
+    """Tài liệu ĐẦU TIÊN cùng Space và CHƯA `removed_as_wrong` trong danh sách
+    trùng vân tay — dùng chung ở cả `decide_intake` và `receive_and_validate`.
+
+    Trước sửa audit T2.1 #1 (CRITICAL): hai chỗ tra trùng dùng hai bộ lọc
+    lệch nhau — `decide_intake` loại `removed_as_wrong`, còn lần tra lại thứ
+    hai trong `receive_and_validate` thì không. Khi bản `removed_as_wrong`
+    đăng ký TRƯỚC bản đang hoạt động trong cùng Space, `IntakeResult.document`
+    trỏ nhầm về bản đã gỡ vì sai. Gộp về một hàm thì không còn chỗ để hai bộ
+    lọc lệch nhau nữa.
+    """
+    for d in matches:
+        if d.space_id == space_id and not d.removed_as_wrong:
+            return d
+    return None
+
+
 class FingerprintIndex(Protocol):
     """Tra ngược vân tay nội dung ra danh sách tài liệu đã có, và ghi nhận
     tài liệu mới. T2.1 không chọn nơi cư trú thật — xem docstring module."""
@@ -89,21 +124,35 @@ def decide_intake(
     Retrieval đã lọc cứng nó khỏi mọi câu trả lời (NT4), nên trỏ upload mới
     về nó coi như trỏ vào hư không — phải coi như "không tồn tại" và cho
     tạo tài liệu mới, không phải báo trùng.
+
+    `declared_previous_version` phải cùng Space với request, nếu không raise
+    `BanMoiKhacSpace` (audit T2.1 #3). Nếu nó đã `removed_as_wrong`, coi như
+    KHÔNG khai báo — rơi về nhánh "không khai báo" (chuỗi phiên bản mới),
+    KHÔNG raise lỗi (audit T2.1 #4, PO chốt Phương án A 21/9: `removed_as_wrong`
+    là nguyên tắc "coi như không tồn tại" xuyên suốt module này, không riêng
+    nhánh chống-trùng).
     """
+    if not content_fingerprint or not content_fingerprint.strip():
+        raise VanTayNoiDungRong(f"content_fingerprint rỗng hoặc toàn khoảng trắng: {content_fingerprint!r}")
+
     exact_matches = fingerprint_index.find_by_fingerprint(content_fingerprint)
-    same_space = [
-        d for d in exact_matches if d.space_id == space_id and not d.removed_as_wrong
-    ]
-    if same_space:
-        return IntakeDecision(proceed=False, duplicate_of=same_space[0].document_id)
+    active_match = _active_match_in_space(exact_matches, space_id)
+    if active_match is not None:
+        return IntakeDecision(proceed=False, duplicate_of=active_match.document_id)
 
     if declared_previous_version is not None:
-        return IntakeDecision(
-            proceed=True,
-            version_chain_id=declared_previous_version.version_chain_id,
-            version_ordinal=declared_previous_version.version_ordinal + 1,
-            version_declared_by=VersionDeclaredBy.UPLOADER_DECLARED_AT_INGESTION,
-        )
+        if declared_previous_version.space_id != space_id:
+            raise BanMoiKhacSpace(
+                f"declared_previous_version ở Space {declared_previous_version.space_id!r}, "
+                f"khác Space của request {space_id!r}"
+            )
+        if not declared_previous_version.removed_as_wrong:
+            return IntakeDecision(
+                proceed=True,
+                version_chain_id=declared_previous_version.version_chain_id,
+                version_ordinal=declared_previous_version.version_ordinal + 1,
+                version_declared_by=VersionDeclaredBy.UPLOADER_DECLARED_AT_INGESTION,
+            )
 
     return IntakeDecision(
         proceed=True,
@@ -161,11 +210,25 @@ def receive_and_validate(
 
     if not decision.proceed:
         existing = fingerprint_index.find_by_fingerprint(request.content_fingerprint)
-        matched = next(d for d in existing if d.space_id == request.space_id)
+        matched = _active_match_in_space(existing, request.space_id)
+        if matched is None:
+            raise AssertionError(
+                "decide_intake báo trùng (proceed=False) nhưng tra lại không thấy bản "
+                "active cùng Space — chỉ mục vân tay đã đổi giữa hai lần đọc trong cùng "
+                "một lượt nạp"
+            )
         return IntakeResult(document=matched, created=False, duplicate_of=decision.duplicate_of)
 
-    assert decision.version_chain_id is not None
-    assert decision.version_ordinal is not None
+    if decision.version_chain_id is None:
+        raise AssertionError(
+            "decide_intake trả proceed=True nhưng version_chain_id là None — bất biến "
+            "nội bộ vi phạm"
+        )
+    if decision.version_ordinal is None:
+        raise AssertionError(
+            "decide_intake trả proceed=True nhưng version_ordinal là None — bất biến "
+            "nội bộ vi phạm"
+        )
     document = Document(
         document_id=request.document_id,
         space_id=request.space_id,
