@@ -84,9 +84,16 @@ def decide_intake(
     `declared_previous_version`: tài liệu người upload khai "đây là bản mới
     của X", đã tra sẵn theo `document_id` họ chọn. `None` nghĩa là không khai
     — module này KHÔNG tự đoán, nhánh máy đề xuất thuộc T2.4.
+
+    Tài liệu đã `removed_as_wrong` bị loại khỏi việc tra trùng-cùng-Space:
+    Retrieval đã lọc cứng nó khỏi mọi câu trả lời (NT4), nên trỏ upload mới
+    về nó coi như trỏ vào hư không — phải coi như "không tồn tại" và cho
+    tạo tài liệu mới, không phải báo trùng.
     """
     exact_matches = fingerprint_index.find_by_fingerprint(content_fingerprint)
-    same_space = [d for d in exact_matches if d.space_id == space_id]
+    same_space = [
+        d for d in exact_matches if d.space_id == space_id and not d.removed_as_wrong
+    ]
     if same_space:
         return IntakeDecision(proceed=False, duplicate_of=same_space[0].document_id)
 
