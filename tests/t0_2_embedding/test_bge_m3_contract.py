@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from conftest import (EXPECTED_DIM, EXPECTED_MAX_TOKENS, EXPECTED_METRIC,
+from .conftest import (EXPECTED_DIM, EXPECTED_MAX_TOKENS, EXPECTED_METRIC,
                       EXPECTED_MODEL_NAME)
 
 # Một Khoản hành chính VN, viết dài như ngoài đời
@@ -144,7 +144,7 @@ def test_above_the_ceiling_the_tail_IS_cut_and_only_warns(model):
 
 def test_dense_only_no_sparse_or_colbert_heads(model):
     """v1 CHỈ dùng dense. Hai đầu kia chưa tải về nên không thể vô tình bật."""
-    from conftest import MODEL_HOME
+    from .conftest import MODEL_HOME
 
     extra = list(MODEL_HOME.rglob("colbert_linear.pt")) + \
             list(MODEL_HOME.rglob("sparse_linear.pt"))

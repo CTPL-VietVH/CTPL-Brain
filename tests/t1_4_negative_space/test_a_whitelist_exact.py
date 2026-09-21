@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import dataclasses
 
-from conftest import CHUNK_WHITELIST
+from .conftest import CHUNK_WHITELIST
 from schema.chunk import Chunk
 
 
