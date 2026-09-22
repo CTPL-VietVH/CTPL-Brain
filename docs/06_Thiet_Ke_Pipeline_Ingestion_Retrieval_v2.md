@@ -800,7 +800,7 @@ Tám điểm đầu được đóng trước khi rút schema, vì mỗi cái đ�
 |---|---|---|
 | 1 | **Cách chấm điểm thừa hưởng cụ thể** — cơ chế đã chốt ở Mục 6.2. ✅ 14/9: **đã có giá trị khởi đầu** (0.5 trên điểm chuẩn hoá) kèm dấu hiệu nhận biết đặt sai — xem 07 Mục 3.2. Vẫn để mở vì con số thật cần đo trên dữ liệu thật | Không còn chặn việc lập trình |
 | 2 | **Giá trị cụ thể của trần** — cơ chế đã chốt ở Mục 6.5. ✅ 14/9: **đã có giá trị khởi đầu** (trần 6 tài liệu, cảnh báo ở bội số 3) — xem 07 Mục 3.2. Vẫn để mở vì con số thật cần đo | Không còn chặn việc lập trình |
-| 4 | **Trần và sàn độ dài đơn vị cắt** — cắt theo cấu trúc tạo ra đơn vị dài ngắn rất chênh nhau, gây thiên vị đoạn ngắn khi so khớp | Chất lượng tìm kiếm |
+| 4 | **Trần và sàn độ dài đơn vị cắt** — cắt theo cấu trúc tạo ra đơn vị dài ngắn rất chênh nhau, gây thiên vị đoạn ngắn khi so khớp. ✅ 22/9: **trần đã có giá trị khởi đầu** (5000 ký tự Unicode — T2.3 bước 2/2, `cat_thanh_mau()` chia nhỏ TIẾP Chunk LÁ vượt trần tại ranh giới đoạn/câu an toàn) — xem 07 Mục 3.2/3.3, khoá `chunk_length_cap`. **Sàn vẫn để mở**, chưa có tham số nào | Không còn chặn việc lập trình (trần); sàn vẫn ảnh hưởng chất lượng tìm kiếm |
 | 5 | **Gộp hạng khi agent mở rộng truy vấn** — với trần số lượng cố định, thêm từ khoá đồng nghĩa với đẩy tài liệu khác ra ngoài. Chỉ giữ được "chỉ thêm, không bớt" nếu chạy cả truy vấn gốc lẫn truy vấn mở rộng rồi gộp hạng | Cần trước khi cho agent góp vào cách tìm |
 | 7 | **Cơ chế truyền tải câu trả lời** — phát từng chữ hay theo khối. Ở v1 không còn bị che PII ràng buộc, nên đây thuần tuý là quyết định trải nghiệm | Thiết kế API và giao diện |
 | 12 | Có cho **đổi agent và viết lại** sau khi đọc câu trả lời không | UX |
