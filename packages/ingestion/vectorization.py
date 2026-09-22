@@ -51,6 +51,7 @@ from qdrant_client import QdrantClient, models
 from schema.chunk import Chunk
 from schema.config import ContractConfig
 from schema.embedding_registry import PgConnectionLike, assert_collection_ready_for_contract
+from schema.store_schema import CHUNK_PAYLOAD_FIELDS
 
 __all__ = [
     "ChunkVuotTranNguCanh",
@@ -158,13 +159,11 @@ def sinh_vector(
 
 def _payload_tu_chunk(chunk: Chunk) -> dict[str, Any]:
     """Mọi trường của `Chunk` TRỪ `chunk_id` (thành ID điểm) và `embedding`
-    (thành vector của điểm) — dùng `dataclasses.asdict` thay vì liệt kê tay
-    để một trường MỚI thêm vào `Chunk` sau này tự động có mặt trong payload,
-    tránh kiểu hỏng "quên thêm field mới vào payload, mất dữ liệu âm thầm"."""
+    (thành vector của điểm). Tập trường lấy từ `schema.store_schema`, không
+    liệt kê lại ở đây: một trường MỚI thêm vào `Chunk` tự động có mặt, và
+    quy tắc phủ payload chỉ có MỘT nhà (CLAUDE.md Mục 6)."""
     payload = dataclasses.asdict(chunk)
-    payload.pop("chunk_id")
-    payload.pop("embedding")
-    return payload
+    return {name: payload[name] for name in CHUNK_PAYLOAD_FIELDS}
 
 
 def ghi_vao_qdrant(
