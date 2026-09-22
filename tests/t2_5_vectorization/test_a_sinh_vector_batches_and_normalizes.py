@@ -27,7 +27,11 @@ Các từ ngữ trong quy chế này được hiểu theo quy định của phá
 def _chunks_that():
     read_result = dung_cau_truc(VAN_BAN, source_format="txt")
     chunks = cat_thanh_mau(
-        read_result, document_id=DOC_ID, space_id=SPACE_ID, tenant_id=TENANT_ID
+        read_result,
+        document_id=DOC_ID,
+        space_id=SPACE_ID,
+        tenant_id=TENANT_ID,
+        tran_do_dai_mau=5000,
     )
     return read_result, chunks
 

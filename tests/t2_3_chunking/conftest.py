@@ -15,6 +15,12 @@ DOC_ID = "doc-t2-3-1"
 SPACE_ID = "space-t2-3-1"
 TENANT_ID = "tenant-t2-3-1"
 
+# Trần độ dài mẩu (Điểm mở #4, 06 Mục 10) — PO chốt 5000 ký tự Unicode
+# (21/9/2026). `cat_thanh_mau` không cho giá trị này một mặc định trong mã
+# (CLAUDE.md Mục 4 quy tắc 2) nên MỌI lời gọi trong test đều phải truyền tay;
+# hằng số này chỉ để khỏi lặp lại con số ở từng test file.
+TRAN_DO_DAI_MAU_THU = 5000
+
 # ---------------------------------------------------------------------------
 # Văn bản thử — lồng 3 cấp: Chương › Điều › Khoản.
 #

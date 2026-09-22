@@ -11,13 +11,17 @@ from __future__ import annotations
 from ingestion.chunking import cat_thanh_mau
 from ingestion.reader.vn_normalizer import dung_cau_truc
 
-from .conftest import DOC_ID, SPACE_ID, TENANT_ID, VAN_BAN_LONG_NHAU
+from .conftest import DOC_ID, SPACE_ID, TENANT_ID, TRAN_DO_DAI_MAU_THU, VAN_BAN_LONG_NHAU
 
 
 def test_structure_path_ba_cap_dung_thu_tu_ngoai_vao_trong():
     read_result = dung_cau_truc(VAN_BAN_LONG_NHAU, source_format="txt")
     chunks = cat_thanh_mau(
-        read_result, document_id=DOC_ID, space_id=SPACE_ID, tenant_id=TENANT_ID
+        read_result,
+        document_id=DOC_ID,
+        space_id=SPACE_ID,
+        tenant_id=TENANT_ID,
+        tran_do_dai_mau=TRAN_DO_DAI_MAU_THU,
     )
 
     theo_path = {tuple(c.structure_path): c for c in chunks}
@@ -39,6 +43,10 @@ def test_moi_khoi_cau_truc_sinh_dung_mot_chunk():
     bản thử có 5 khối (1 Chương + 2 Điều + 2 Khoản) nên phải ra đúng 5 mẩu."""
     read_result = dung_cau_truc(VAN_BAN_LONG_NHAU, source_format="txt")
     chunks = cat_thanh_mau(
-        read_result, document_id=DOC_ID, space_id=SPACE_ID, tenant_id=TENANT_ID
+        read_result,
+        document_id=DOC_ID,
+        space_id=SPACE_ID,
+        tenant_id=TENANT_ID,
+        tran_do_dai_mau=TRAN_DO_DAI_MAU_THU,
     )
     assert len(chunks) == 5

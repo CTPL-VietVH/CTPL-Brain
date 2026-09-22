@@ -12,7 +12,7 @@ import pytest
 from ingestion.chunking import KhongDungDuocCauTruc, cat_thanh_mau
 from ingestion.reader.vn_normalizer import dung_cau_truc
 
-from .conftest import DOC_ID, SPACE_ID, TENANT_ID
+from .conftest import DOC_ID, SPACE_ID, TENANT_ID, TRAN_DO_DAI_MAU_THU
 
 VAN_BAN_KHONG_CAU_TRUC = (
     "Đây là một đoạn văn xuôi bình thường, không Chương không Điều, "
@@ -29,5 +29,9 @@ def test_khong_dung_duoc_thi_tu_choi_khong_cat_lang_le():
     read_result = dung_cau_truc(VAN_BAN_KHONG_CAU_TRUC, source_format="txt")
     with pytest.raises(KhongDungDuocCauTruc):
         cat_thanh_mau(
-            read_result, document_id=DOC_ID, space_id=SPACE_ID, tenant_id=TENANT_ID
+            read_result,
+            document_id=DOC_ID,
+            space_id=SPACE_ID,
+            tenant_id=TENANT_ID,
+            tran_do_dai_mau=TRAN_DO_DAI_MAU_THU,
         )

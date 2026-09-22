@@ -12,13 +12,17 @@ from __future__ import annotations
 from ingestion.chunking import cat_thanh_mau
 from ingestion.reader.vn_normalizer import dung_cau_truc
 
-from .conftest import DOC_ID, SPACE_ID, TENANT_ID, VAN_BAN_DIEU_TOP_LEVEL
+from .conftest import DOC_ID, SPACE_ID, TENANT_ID, TRAN_DO_DAI_MAU_THU, VAN_BAN_DIEU_TOP_LEVEL
 
 
 def test_dieu_top_level_khong_co_cha():
     read_result = dung_cau_truc(VAN_BAN_DIEU_TOP_LEVEL, source_format="txt")
     chunks = cat_thanh_mau(
-        read_result, document_id=DOC_ID, space_id=SPACE_ID, tenant_id=TENANT_ID
+        read_result,
+        document_id=DOC_ID,
+        space_id=SPACE_ID,
+        tenant_id=TENANT_ID,
+        tran_do_dai_mau=TRAN_DO_DAI_MAU_THU,
     )
 
     assert len(chunks) == 2

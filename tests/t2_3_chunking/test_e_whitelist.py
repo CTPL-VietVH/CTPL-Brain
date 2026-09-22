@@ -16,7 +16,7 @@ from schema.chunk import Chunk
 from ingestion.chunking import cat_thanh_mau
 from ingestion.reader.vn_normalizer import dung_cau_truc
 
-from .conftest import DOC_ID, SPACE_ID, TENANT_ID, VAN_BAN_LONG_NHAU
+from .conftest import DOC_ID, SPACE_ID, TENANT_ID, TRAN_DO_DAI_MAU_THU, VAN_BAN_LONG_NHAU
 
 # Chép tay, KHÔNG import từ nơi khác — cùng lý do
 # `tests/t1_4_negative_space/conftest.py` nêu: tự chứng minh vòng tròn thì
@@ -51,7 +51,11 @@ CAM_LOT_VAO_CHUNK = {
 def test_chunk_that_su_sinh_ra_chi_mang_dung_whitelist():
     read_result = dung_cau_truc(VAN_BAN_LONG_NHAU, source_format="txt")
     chunks = cat_thanh_mau(
-        read_result, document_id=DOC_ID, space_id=SPACE_ID, tenant_id=TENANT_ID
+        read_result,
+        document_id=DOC_ID,
+        space_id=SPACE_ID,
+        tenant_id=TENANT_ID,
+        tran_do_dai_mau=TRAN_DO_DAI_MAU_THU,
     )
     assert chunks, "văn bản thử phải sinh ra ít nhất một mẩu để test có ý nghĩa"
 

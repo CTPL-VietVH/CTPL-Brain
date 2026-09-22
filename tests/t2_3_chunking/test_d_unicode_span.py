@@ -12,7 +12,7 @@ from __future__ import annotations
 from ingestion.chunking import cat_thanh_mau
 from ingestion.reader.vn_normalizer import dung_cau_truc
 
-from .conftest import DOC_ID, SPACE_ID, TENANT_ID, VAN_BAN_LONG_NHAU
+from .conftest import DOC_ID, SPACE_ID, TENANT_ID, TRAN_DO_DAI_MAU_THU, VAN_BAN_LONG_NHAU
 
 # Đoạn kỳ vọng của khối "Điều 2" — chọn khối CUỐI văn bản để span_end trùng
 # đúng len(full_text), tránh mọi mập mờ về dòng trống ở ranh giới kế tiếp.
@@ -31,7 +31,11 @@ def test_tu_thu_van_ban_co_dau_that():
 def test_span_khop_dung_char_start_char_end_cua_node():
     read_result = dung_cau_truc(VAN_BAN_LONG_NHAU, source_format="txt")
     chunks = cat_thanh_mau(
-        read_result, document_id=DOC_ID, space_id=SPACE_ID, tenant_id=TENANT_ID
+        read_result,
+        document_id=DOC_ID,
+        space_id=SPACE_ID,
+        tenant_id=TENANT_ID,
+        tran_do_dai_mau=TRAN_DO_DAI_MAU_THU,
     )
     theo_path = {tuple(c.structure_path): c for c in chunks}
     dieu_2_node = next(
@@ -46,7 +50,11 @@ def test_span_khop_dung_char_start_char_end_cua_node():
 def test_cat_full_text_theo_span_ra_dung_doan_ky_vong():
     read_result = dung_cau_truc(VAN_BAN_LONG_NHAU, source_format="txt")
     chunks = cat_thanh_mau(
-        read_result, document_id=DOC_ID, space_id=SPACE_ID, tenant_id=TENANT_ID
+        read_result,
+        document_id=DOC_ID,
+        space_id=SPACE_ID,
+        tenant_id=TENANT_ID,
+        tran_do_dai_mau=TRAN_DO_DAI_MAU_THU,
     )
     theo_path = {tuple(c.structure_path): c for c in chunks}
     dieu_2_chunk = theo_path[("Chương I", "Điều 2")]
@@ -63,7 +71,11 @@ def test_nham_dung_chi_so_byte_thi_cat_sai():
     """
     read_result = dung_cau_truc(VAN_BAN_LONG_NHAU, source_format="txt")
     chunks = cat_thanh_mau(
-        read_result, document_id=DOC_ID, space_id=SPACE_ID, tenant_id=TENANT_ID
+        read_result,
+        document_id=DOC_ID,
+        space_id=SPACE_ID,
+        tenant_id=TENANT_ID,
+        tran_do_dai_mau=TRAN_DO_DAI_MAU_THU,
     )
     theo_path = {tuple(c.structure_path): c for c in chunks}
     dieu_2_chunk = theo_path[("Chương I", "Điều 2")]

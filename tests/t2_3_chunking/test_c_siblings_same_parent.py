@@ -13,13 +13,17 @@ from __future__ import annotations
 from ingestion.chunking import cat_thanh_mau
 from ingestion.reader.vn_normalizer import dung_cau_truc
 
-from .conftest import DOC_ID, SPACE_ID, TENANT_ID, VAN_BAN_LONG_NHAU
+from .conftest import DOC_ID, SPACE_ID, TENANT_ID, TRAN_DO_DAI_MAU_THU, VAN_BAN_LONG_NHAU
 
 
 def test_hai_khoan_cung_dieu_co_cung_parent_chunk_id():
     read_result = dung_cau_truc(VAN_BAN_LONG_NHAU, source_format="txt")
     chunks = cat_thanh_mau(
-        read_result, document_id=DOC_ID, space_id=SPACE_ID, tenant_id=TENANT_ID
+        read_result,
+        document_id=DOC_ID,
+        space_id=SPACE_ID,
+        tenant_id=TENANT_ID,
+        tran_do_dai_mau=TRAN_DO_DAI_MAU_THU,
     )
     theo_path = {tuple(c.structure_path): c for c in chunks}
 
@@ -38,7 +42,11 @@ def test_hai_dieu_cung_chuong_co_cung_parent_chunk_id():
     """Kiểm lại quy tắc ở một cấp khác: Điều 1 và Điều 2 cùng con Chương I."""
     read_result = dung_cau_truc(VAN_BAN_LONG_NHAU, source_format="txt")
     chunks = cat_thanh_mau(
-        read_result, document_id=DOC_ID, space_id=SPACE_ID, tenant_id=TENANT_ID
+        read_result,
+        document_id=DOC_ID,
+        space_id=SPACE_ID,
+        tenant_id=TENANT_ID,
+        tran_do_dai_mau=TRAN_DO_DAI_MAU_THU,
     )
     theo_path = {tuple(c.structure_path): c for c in chunks}
 

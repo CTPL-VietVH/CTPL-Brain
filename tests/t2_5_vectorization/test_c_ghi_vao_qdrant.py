@@ -30,7 +30,11 @@ def test_contract_config_that_khop_bge_m3():
 def test_ghi_vao_qdrant_upsert_dung_payload_whitelist(model, qdrant, pg, stamped_collection):
     read_result = dung_cau_truc(VAN_BAN, source_format="txt")
     chunks = cat_thanh_mau(
-        read_result, document_id=DOC_ID, space_id=SPACE_ID, tenant_id=TENANT_ID
+        read_result,
+        document_id=DOC_ID,
+        space_id=SPACE_ID,
+        tenant_id=TENANT_ID,
+        tran_do_dai_mau=5000,
     )
     chunks_co_vector = sinh_vector(chunks, full_text=read_result.full_text, model=model)
     contract_config = load_contract_config(CONTRACT_PATH)
