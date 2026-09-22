@@ -90,6 +90,7 @@ Nơi cư trú: kho hồ sơ (quan hệ). Retrieval đọc **sau khi** đã có k
 | `superseded_by` + `superseded_at` | định danh người + thời điểm | đổi được | Manager | dấu vết theo QT1 |
 | `category_labels` | danh sách nhãn | đổi được | Ingestion gợi ý (GĐ5) | 5.2 GĐ5, NT4 — tín hiệu mềm |
 | `labels_confirmed_by` + `labels_confirmed_at` | định danh người + thời điểm | đổi được | người đưa tài liệu vào | 5.2 GĐ5 — máy gợi ý, người xác nhận |
+| `subject_entities` | danh sách chuỗi | đổi được | Ingestion gợi ý (GĐ5) | 5.3, 6.2 K3 — tín hiệu mềm nuôi GĐ7 |
 | `version_chain_id` | định danh | bất biến | Ingestion | 5.7 |
 | `version_ordinal` | số | bất biến | Ingestion | 5.7 |
 | `version_declared_by` | người upload khai lúc nạp / người upload xác nhận đề nghị máy / **Manager xác nhận đề nghị máy** | bất biến sau khi chốt | 5.7 | 5.7 — hai đường tuyên bố, và cả hai người đều xác nhận được |
@@ -122,6 +123,18 @@ Nơi cư trú: kho hồ sơ (quan hệ). Retrieval đọc **sau khi** đã có k
 > **Quy tắc chung cho cả module: không trường nào được mô tả bằng một cụm gộp.** "Có/không + lý do + ai + khi nào" không phải một kiểu dữ liệu — nó là bốn trường viết tắt lại, và viết tắt ở đặc tả nghĩa là mỗi người lập trình tự chọn một hình dạng khác nhau. Mọi thành phần phải có tên riêng.
 
 > **Không có trường `is_latest_version`.** Cờ đó cũ đi ngay khi có bản mới nạp vào (NT3). "Bản nào mới nhất" được suy ra từ `version_chain_id` + `version_ordinal` lúc cần.
+
+> **⭐ `subject_entities` — TRƯỜNG MỚI, CHỐT 22/9/2026 (PO quyết, sau 2 vòng nghiên cứu Gemini có kiểm chứng trên corpus thật 21 văn bản).**
+>
+> Danh sách chuỗi — đối tượng được nói tới của tài liệu: chức danh/vị trí (KHÔNG phải tên người) cho văn bản áp dụng cá biệt, lĩnh vực/chuyên đề quản lý cho văn bản quy phạm chung (Luật/Nghị định/Thông tư). Dùng làm một trong ba tín hiệu của cơ chế K3 (5.3): *cùng đối tượng + cùng loại văn bản + ngày ban hành sau* → gợi ý quan hệ sửa đổi/thay thế. Ví dụ neo ở 6.2: "bổ nhiệm ông X làm giám đốc" và "bổ nhiệm bà Y làm giám đốc" chỉ nối được nếu đối tượng rút ra là CHỨC DANH ("Giám đốc"), không phải TÊN NGƯỜI — lấy tên người thì hai quyết định không có gì chung, máy không đề nghị được quan hệ.
+>
+> **Chỉ đặt ở `document`, KHÔNG đặt ở `chunk`** — khác `category_labels`. `category_labels` cần bản sao cạnh mẩu vì nó dùng để **xếp hạng lúc truy vấn**, mỗi lượt hỏi đều chạy (ngoại lệ QT2 đã quyết ở 6.4). `subject_entities` chỉ được dùng lúc **Ingestion so sánh tài liệu với tài liệu** ở GĐ7 (phát hiện quan hệ, 5.3) — một thao tác chạy khi có tài liệu mới, không phải mỗi truy vấn — nên không có lý do xin thêm một ngoại lệ QT2 thứ hai.
+>
+> **Tín hiệu mềm, không phải bộ lọc** — cùng vị trí với `category_labels` trong NT4/QT3: dùng để GỢI Ý quan hệ (qua Manager duyệt ở `relation.approval_state`, 5.3/2.3), không bao giờ dùng để loại trừ tài liệu khỏi kết quả tìm.
+>
+> **Không thêm cặp `subject_entities_confirmed_by`/`_at`** — khác `category_labels` (có `labels_confirmed_by`/`_at`). Lý do: `category_labels` là thứ người dùng cuối nhìn thấy và cần xác nhận trực tiếp; `subject_entities` chỉ là tín hiệu nội bộ nuôi đề nghị ở `relation`, và đề nghị đó đã tự có vòng duyệt riêng (`relation.approval_state`) — xác nhận thêm một lớp ở đây là dư, đi ngược "không trường nào được mô tả bằng một cụm gộp" nhưng theo chiều khác: thêm cơ chế xác nhận cho một thứ không ai trực tiếp nhìn vào.
+>
+> **Cách trích (theo vị trí neo: trích yếu "V/v", tiêu đề, Điều 1 dự phòng) và cách so khớp (chuỗi hay vector embedding cho các cách gọi tương đương như "Giám đốc"/"Viện trưởng") là chi tiết cài đặt của GĐ5/GĐ7, không phải quyết định schema** — để lại cho work-order cài đặt T2.6, không cố định ở đây.
 
 ### 2.2 Đơn vị cắt và vector — `chunk`
 
@@ -280,9 +293,9 @@ Cấu hình này phải đọc được từ bên ngoài mã nguồn (**R5** —
 
 ---
 
-### 3.2 Tám giá trị tham số — CHỐT 14/9/2026
+### 3.2 Chín giá trị tham số — CHỐT 14/9/2026
 
-Tám con số dưới đây trước nay chỉ có **cơ chế**, không có **giá trị**, vì đều ghi là "cần đo trên dữ liệu thật". Nhưng Mục 9.6 của tài liệu 06 chốt v1 không phát sự kiện đo lường nào — nên sẽ không có dữ liệu thật để đo, và vẫn phải có người điền số.
+Chín con số dưới đây trước nay chỉ có **cơ chế**, không có **giá trị**, vì đều ghi là "cần đo trên dữ liệu thật". Nhưng Mục 9.6 của tài liệu 06 chốt v1 không phát sự kiện đo lường nào — nên sẽ không có dữ liệu thật để đo, và vẫn phải có người điền số.
 
 Vì vậy mỗi giá trị đi kèm **một dấu hiệu con người nhìn thấy được**. Đó không phải phần trang trí: khi không có dòng số liệu nào, dấu hiệu quan sát bằng mắt là cách duy nhất biết mình đặt sai.
 
@@ -296,12 +309,15 @@ Vì vậy mỗi giá trị đi kèm **một dấu hiệu con người nhìn th�
 | `saturation_rounds` — số vòng liên tiếp dưới ngưỡng | **3** | Ingestion | Cùng dấu hiệu với `saturation_epsilon` |
 | `scan_pair_budget` — trần số cặp đối chiếu mỗi tài liệu mới | **500** | Ingestion | Thường xuyên chạm trần trước khi bão hoà → kho đã lớn hơn giả định thiết kế |
 | `scan_time_budget` — trần thời gian mỗi tài liệu | **10 phút** | Ingestion | Tài liệu mới lâu ngày vẫn mang nhãn "chưa đối chiếu xong" → nới |
+| `chunk_length_cap` — trần độ dài một mẩu (Điểm mở #4, 06 Mục 10) | **5000 ký tự Unicode** | Ingestion | Mẩu vượt trần bị chia tại ranh giới câu quá thường xuyên, làm mẩu quá ngắn và loãng so khớp → nới. Một khối cấu trúc dài (vài trang) vẫn lọt thành một mẩu duy nhất, so khớp không trúng → siết |
+
+> `chunk_length_cap` chốt **21/9/2026** — khác ngày với tám tham số còn lại trong bảng (14/9/2026): đây là giá trị đóng nửa **trần** của Điểm mở #4 (06 Mục 10 — "Trần và sàn độ dài đơn vị cắt"); nửa **sàn** vẫn còn mở.
 
 > **Giả định nằm dưới cả bảng: kho cỡ vài nghìn tài liệu** — chính con số mà 06 Mục 6.5 dùng khi lập luận về ngưỡng cảnh báo. Nếu kho thật lớn hơn một bậc thì ít nhất `cap_warning_multiple`, `scan_pair_budget` và `scan_time_budget` phải tính lại.
 
 > **Vì sao `inheritance_decay` phải áp trên điểm ĐÃ CHUẨN HOÁ.** Điểm giống thô thường dồn cục trong một dải hẹp; nhân một hệ số vào đó thì con của tài liệu hạng nhất tụt xuống dưới cả chục tài liệu không liên quan, và cơ chế thừa hưởng mất tác dụng. Chuẩn hoá về khoảng đầy trên tập ứng viên rồi mới nhân thì hệ số mới có ý nghĩa như thiết kế mô tả.
 
-**Tám tham số này chia sạch theo service** — bốn cái của Retrieval, bốn cái của Ingestion, không cái nào cần hai bên cùng biết. Khác hẳn cấu hình mô hình ở 3.1, vốn là **hợp đồng** mà lệch nhau là hỏng.
+**Chín tham số này chia sạch theo service** — bốn cái của Retrieval, năm cái của Ingestion, không cái nào cần hai bên cùng biết. Khác hẳn cấu hình mô hình ở 3.1, vốn là **hợp đồng** mà lệch nhau là hỏng.
 
 ### 3.3 Quy tắc cấu hình — CHỐT 14/9/2026
 

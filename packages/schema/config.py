@@ -150,6 +150,13 @@ class IngestionConfig:
     (PO chốt 18/9/2026, thay cho hậu tố `_minutes` trước đó).
 
     `saturation_epsilon` ĐƠN VỊ LÀ TỶ LỆ 0–1; giá trị chốt 1% ghi thành 0.01.
+
+    `chunk_length_cap` — trần độ dài một mẩu, Điểm mở #4 (06 Mục 10), PO chốt
+    5000 ký tự Unicode (21/9/2026). ĐƠN VỊ LÀ KÝ TỰ UNICODE, không phải byte
+    (CLAUDE.md Mục 3 #4) — đơn vị nêu trong comment cạnh giá trị ở
+    `config/ingestion.yaml`, không nhét vào tên khoá, cùng khuôn với
+    `scan_time_budget`. Đây là tham số bắt buộc của `cat_thanh_mau()`
+    (`packages/ingestion/chunking.py`) — module đó không hardcode giá trị.
     """
 
     saturation_epsilon: float
@@ -157,6 +164,7 @@ class IngestionConfig:
     scan_pair_budget: int
     scan_time_budget: float
     accepted_formats: tuple[str, ...]
+    chunk_length_cap: int
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -211,6 +219,7 @@ INGESTION_KEYS: tuple[str, ...] = (
     "scan_pair_budget",
     "scan_time_budget",
     "accepted_formats",
+    "chunk_length_cap",
 )
 
 RETRIEVAL_KEYS: tuple[str, ...] = (
@@ -436,12 +445,18 @@ def load_ingestion_config(path: Path) -> IngestionConfig:
         _require(data, "accepted_formats", path), "accepted_formats", path
     )
 
+    chunk_length_cap = _as_int(
+        _require(data, "chunk_length_cap", path), "chunk_length_cap", path
+    )
+    _require_positive(chunk_length_cap, "chunk_length_cap", path)
+
     return IngestionConfig(
         saturation_epsilon=saturation_epsilon,
         saturation_rounds=saturation_rounds,
         scan_pair_budget=scan_pair_budget,
         scan_time_budget=scan_time_budget,
         accepted_formats=accepted_formats,
+        chunk_length_cap=chunk_length_cap,
     )
 
 

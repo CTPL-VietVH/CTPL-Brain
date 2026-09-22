@@ -1,7 +1,7 @@
 """T1.2 (d) — Ba nhóm cấu hình THẬT: mỗi tham số ĐÚNG MỘT NHÀ, và dấu hiệu đặt
 sai phải NGAY CẠNH giá trị (07 Mục 3.3 quy tắc 2 và 4).
 
-⚠️ File này CỐ Ý không khẳng định giá trị cụ thể của tám tham số. 07 Mục 3.3
+⚠️ File này CỐ Ý không khẳng định giá trị cụ thể của chín tham số. 07 Mục 3.3
 quy tắc 5: "Tài liệu này ghi lý do; file cấu hình là nơi có thẩm quyền lúc
 chạy... Bảng 3.2 ghi giá trị khởi đầu và vì sao chọn nó, không phải trạng thái
 hiện hành." Một test ghim `document_cap == 6` sẽ hoá đỏ đúng vào ngày người vận
@@ -31,9 +31,10 @@ from schema.config import (
 
 #: Tham số trong bảng 07 Mục 3.2 → (file cấu hình, khoá trong file).
 #: Từ PO chốt 18/9/2026, tên khoá trong file cấu hình khớp Y HỆT tên trong
-#: 07 Mục 3.2 cho cả tám tham số — đơn vị của `scan_time_budget` (phút) nằm ở
-#: comment cạnh giá trị trong config/ingestion.yaml, không nằm trong tên khoá.
-EIGHT_PARAMS = {
+#: 07 Mục 3.2 cho cả chín tham số — đơn vị của `scan_time_budget` (phút) và
+#: `chunk_length_cap` (ký tự Unicode) nằm ở comment cạnh giá trị trong
+#: config/ingestion.yaml, không nằm trong tên khoá.
+NINE_PARAMS = {
     "inheritance_decay": ("retrieval.yaml", "inheritance_decay"),
     "document_cap": ("retrieval.yaml", "document_cap"),
     "cap_warning_multiple": ("retrieval.yaml", "cap_warning_multiple"),
@@ -42,6 +43,7 @@ EIGHT_PARAMS = {
     "saturation_rounds": ("ingestion.yaml", "saturation_rounds"),
     "scan_pair_budget": ("ingestion.yaml", "scan_pair_budget"),
     "scan_time_budget": ("ingestion.yaml", "scan_time_budget"),
+    "chunk_length_cap": ("ingestion.yaml", "chunk_length_cap"),
 }
 
 
@@ -91,16 +93,16 @@ def _wrong_value_signals_from_docs(repo_root: pathlib.Path) -> dict[str, str]:
     return signals
 
 
-def test_docs_07_still_lists_exactly_the_eight_parameters(repo_root):
+def test_docs_07_still_lists_exactly_the_nine_parameters(repo_root):
     """Lưới an toàn cho chính test dưới: nếu bảng 3.2 đổi hình dạng thì biết ngay."""
     signals = _wrong_value_signals_from_docs(repo_root)
-    assert set(signals) == set(EIGHT_PARAMS), (
-        "Bảng 07 Mục 3.2 không còn đúng tám tham số như test đang giả định: "
+    assert set(signals) == set(NINE_PARAMS), (
+        "Bảng 07 Mục 3.2 không còn đúng chín tham số như test đang giả định: "
         f"{sorted(signals)}"
     )
 
 
-@pytest.mark.parametrize("param", sorted(EIGHT_PARAMS))
+@pytest.mark.parametrize("param", sorted(NINE_PARAMS))
 def test_wrong_value_signal_sits_next_to_the_value_verbatim(repo_root, config_dir, param):
     """⭐ 07 Mục 3.3 quy tắc 4 + 08 T1.2: chép NGUYÊN VĂN cột "dấu hiệu đặt sai"
     vào file cấu hình, cạnh từng giá trị.
@@ -109,7 +111,7 @@ def test_wrong_value_signal_sits_next_to_the_value_verbatim(repo_root, config_di
     ở nơi người ta dùng tới" — nên xoá ghi chú đi phải làm test đỏ, y như xoá
     một trường bắt buộc.
     """
-    filename, key = EIGHT_PARAMS[param]
+    filename, key = NINE_PARAMS[param]
     path = config_dir / filename
     signal = _wrong_value_signals_from_docs(repo_root)[param]
 

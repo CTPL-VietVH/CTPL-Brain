@@ -6,7 +6,7 @@ Hai tài liệu nguồn chân lý là kết quả của **sáu vòng phản bi�
 
 ---
 
-## 0. ⛔ Ba điều tuyệt đối
+## 0. ⛔ Bốn điều tuyệt đối
 
 **1. KHÔNG đọc, không import, không lấy mã nguồn hệ cũ làm chuẩn.**
 Repo cũ đặt ở nơi khác và **cố ý không có mặt ở đây**. Hai service này viết lại từ đầu, cố tình không kế thừa cách làm cũ. Khi tài liệu nhắc tới "hệ thống hiện tại", đó luôn là dẫn chứng *một kiểu lỗi đã từng xảy ra thật*, **không phải chuẩn phải theo**. Ngoại lệ hợp lệ duy nhất là ước lượng khối lượng công việc — và việc đó không làm trong repo này.
@@ -16,6 +16,13 @@ Không phải file này, không phải code đã viết, không phải phiên tr
 
 **3. Không tự quyết điểm còn mở.**
 `docs/06` Mục 10 liệt kê **bảy điểm còn mở**. Chạm phải một trong số đó thì **dừng và hỏi PO**, không chọn bừa một hướng rồi đi tiếp.
+
+**4. Code chỉ dùng tiếng Anh — CHỐT 22/9/2026.**
+Tên định danh (hàm, biến, tham số, lớp, exception...), comment, docstring, và thông điệp lỗi (exception message) đều viết bằng **tiếng Anh** — kể cả khi sửa/mở rộng code cũ đang mang tên tiếng Việt (ví dụ `cat_thanh_mau`, `tran_do_dai_mau`, `KhongDungDuocCauTruc`): đổi tên luôn trong lúc work-order chạm tới đúng hàm/lớp đó (boy-scout rule), không để dành riêng cho một đợt refactor tổng thể. Mục tiêu: giảm khối lượng việc phải làm khi repo chuyển hẳn sang tiếng Anh sau này.
+
+**Ngoại lệ duy nhất**: trích dẫn nguyên văn từ `docs/06`/`docs/07`/`docs/08`/`docs/09` (các tài liệu nguồn chân lý này luôn viết bằng tiếng Việt) trong comment/docstring — giữ nguyên tiếng Việt, đặt trong ngoặc kép, kèm chỉ rõ Mục/dòng nguồn, để còn đối chiếu chính xác ký tự-với-ký tự với tài liệu gốc (dịch sang tiếng Anh ở đây có rủi ro dịch sai ý pháp lý/kỹ thuật).
+
+**Không áp dụng cho dữ liệu**: quy tắc này chỉ nói về **mã nguồn**. Giá trị chuỗi là nội dung thật trích từ văn bản tiếng Việt đang được xử lý (`structure_path`, `category_labels`, `extracted_text`, và mọi dữ liệu tương tự) vẫn giữ nguyên tiếng Việt — đó là dữ liệu của khách hàng, không phải code, và văn bản khách hàng đưa vào hệ thống không đổi ngôn ngữ theo quy tắc đặt tên của repo.
 
 ---
 
@@ -153,7 +160,7 @@ Mỗi dòng là một việc **trông hợp lý, gọn gàng hơn, và sai**. C�
 4. **`docs/07` ghi lý do; file cấu hình có thẩm quyền lúc chạy.** Bảng 3.2 ghi *giá trị khởi đầu*, không phải trạng thái hiện hành.
 5. ⛔ **Không con số cứng trong mã.** Đây là **R5** mở rộng từ mô hình sang mọi tham số điều chỉnh.
 
-### Tám giá trị khởi đầu (chốt 14/9/2026 — chi tiết + dấu hiệu đặt sai: `docs/07` Mục 3.2)
+### Chín giá trị khởi đầu (chốt 14/9/2026 — chi tiết + dấu hiệu đặt sai: `docs/07` Mục 3.2)
 
 | Tham số | Giá trị | Service |
 |---|---|---|
@@ -165,6 +172,7 @@ Mỗi dòng là một việc **trông hợp lý, gọn gàng hơn, và sai**. C�
 | `saturation_rounds` | **3** | Ingestion |
 | `scan_pair_budget` | **500** cặp/tài liệu | Ingestion |
 | `scan_time_budget` | **10** phút/tài liệu | Ingestion |
+| `chunk_length_cap` | **5000** ký tự Unicode/mẩu (chốt 21/9/2026, Điểm mở #4) | Ingestion |
 
 > Giả định nằm dưới cả bảng: **kho cỡ vài nghìn tài liệu**. Lớn hơn một bậc thì `cap_warning_multiple`, `scan_pair_budget`, `scan_time_budget` phải tính lại.
 

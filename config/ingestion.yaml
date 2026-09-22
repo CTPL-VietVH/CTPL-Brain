@@ -55,3 +55,16 @@ accepted_formats:
   - docx
   - md
   - txt
+
+# `chunk_length_cap` — trần độ dài một mẩu (Điểm mở #4, 06 Mục 10; PO chốt
+# 21/9/2026). Tham số bắt buộc của `cat_thanh_mau()` (packages/ingestion/
+# chunking.py) — module đó KHÔNG hardcode giá trị, bên lắp ráp pipeline đọc
+# từ đây rồi truyền vào.
+# ĐƠN VỊ: KÝ TỰ UNICODE, không phải byte (CLAUDE.md Mục 3 #4) — tiếng Việt có
+#   dấu, một ký tự nhiều byte, đếm nhầm thì đoạn cắt sai vị trí không lỗi nào
+#   báo.
+# Dấu hiệu đặt sai:
+#   Mẩu vượt trần bị chia tại ranh giới câu quá thường xuyên, làm mẩu quá
+#   ngắn và loãng so khớp → nới. Một khối cấu trúc dài (vài trang) vẫn lọt
+#   thành một mẩu duy nhất, so khớp không trúng → siết.
+chunk_length_cap: 5000
