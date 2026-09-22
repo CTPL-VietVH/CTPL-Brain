@@ -89,5 +89,12 @@ class Document:
     labels_confirmed_by: str | None = None
     labels_confirmed_at: datetime | None = None
 
+    # No `subject_entities_confirmed_by`/`_at` pair on purpose (unlike
+    # `category_labels` above) — internal signal feeding K3 relation
+    # suggestions (07 Section 2.1 line 93 callout, LOCKED 2026-09-22); the
+    # relation it feeds already has its own approval step, so a second
+    # confirmation layer here would be redundant.
+    subject_entities: list[str] = field(default_factory=list)
+
     version_declared_by: VersionDeclaredBy | None = None
     relations_scan_state: RelationsScanState = RelationsScanState.EXPANDING

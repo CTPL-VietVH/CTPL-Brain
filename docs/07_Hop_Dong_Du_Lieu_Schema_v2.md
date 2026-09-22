@@ -134,7 +134,7 @@ Nơi cư trú: kho hồ sơ (quan hệ). Retrieval đọc **sau khi** đã có k
 >
 > **Không thêm cặp `subject_entities_confirmed_by`/`_at`** — khác `category_labels` (có `labels_confirmed_by`/`_at`). Lý do: `category_labels` là thứ người dùng cuối nhìn thấy và cần xác nhận trực tiếp; `subject_entities` chỉ là tín hiệu nội bộ nuôi đề nghị ở `relation`, và đề nghị đó đã tự có vòng duyệt riêng (`relation.approval_state`) — xác nhận thêm một lớp ở đây là dư, đi ngược "không trường nào được mô tả bằng một cụm gộp" nhưng theo chiều khác: thêm cơ chế xác nhận cho một thứ không ai trực tiếp nhìn vào.
 >
-> **Cách trích (theo vị trí neo: trích yếu "V/v", tiêu đề, Điều 1 dự phòng) và cách so khớp (chuỗi hay vector embedding cho các cách gọi tương đương như "Giám đốc"/"Viện trưởng") là chi tiết cài đặt của GĐ5/GĐ7, không phải quyết định schema** — để lại cho work-order cài đặt T2.6, không cố định ở đây.
+> **Cách trích (theo vị trí neo: trích yếu "V/v", tiêu đề, Điều 1 dự phòng) — ĐÃ CÀI ĐẶT 22/9/2026** (`packages/ingestion/labeling.py`, hàm `extract_subject_entities()`, task `T2.4-add-subject-entities` — đúng nhà GĐ5 như dòng 93 ghi "Ingestion gợi ý (GĐ5)", không phải GĐ7). Cách so khớp (chuỗi hay vector embedding cho các cách gọi tương đương như "Giám đốc"/"Viện trưởng") **vẫn còn để mở**, là chi tiết cài đặt của GĐ7 khi K3 dùng trường này — chưa cố định ở đây, chờ work-order suy luận quan hệ ngầm định (T2.6 bước sau).
 
 ### 2.2 Đơn vị cắt và vector — `chunk`
 

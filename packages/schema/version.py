@@ -47,7 +47,9 @@ SCHEMA_BREAKING_VERSION = 1
 
 # Tăng khi: thêm trường mới mà bên cũ bỏ qua được.
 # Hai bên lệch số này → GHI NHẬT KÝ, VẪN CHẠY.
-SCHEMA_ADDITIVE_VERSION = 0
+# 0 → 1 (22/9/2026, T2.4-add-subject-entities): thêm `Document.subject_entities`
+# (07 Mục 2.1 dòng 93) — trường mới có mặc định, bên cũ bỏ qua được.
+SCHEMA_ADDITIVE_VERSION = 1
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)

@@ -24,6 +24,7 @@ DOCUMENT_FIELDS = {
     "removed_as_wrong", "removed_reason", "removed_by", "removed_at",
     "superseded", "superseded_by", "superseded_at",
     "category_labels", "labels_confirmed_by", "labels_confirmed_at",
+    "subject_entities",
     "version_chain_id", "version_ordinal", "version_declared_by",
     "relations_scan_state",
 }
@@ -83,6 +84,18 @@ def test_document_has_no_is_latest_version_or_publication_state_flag():
     fields = _field_names(Document)
     assert "is_latest_version" not in fields
     assert "publication_state" not in fields
+
+
+def test_subject_entities_has_no_confirmed_by_or_at_pair():
+    """07 Section 2.1 line 93 callout (LOCKED 2026-09-22): unlike
+    `category_labels`, `subject_entities` must NOT get a
+    `_confirmed_by`/`_at` pair — it is an internal signal for K3, not
+    something an end user confirms directly.
+    """
+    fields = _field_names(Document)
+    assert "subject_entities" in fields
+    assert "subject_entities_confirmed_by" not in fields
+    assert "subject_entities_confirmed_at" not in fields
 
 
 def test_relation_has_no_separate_is_certain_field():

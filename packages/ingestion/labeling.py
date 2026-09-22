@@ -17,6 +17,12 @@ hành cuối văn bản, và phải tránh nhầm với ngày của văn bản b
 nhắc trong cùng câu."* — hai độ khó khác hẳn nhau, hai khuôn khác nhau, dùng
 lại `trich_ngay_ky` khi cần (không viết lại logic trích ngày ký).
 
+A third section (`extract_subject_entities`, task T2.4-add-subject-entities)
+now also lives in this module — the `subject_entities` suggestion locked at
+`07` Section 2.1 line 93 + callout lines 127-135, 2026-09-22. Written in
+English per CLAUDE.md Section 0 #4; see that section's own comment block
+near the end of this file for the extraction method.
+
 **Module này chỉ TRẢ VỀ giá trị gợi ý — không ghi/persist vào `Document`,
 không tự đánh dấu đã xác nhận.** Đúng câu "máy gợi ý, người xác nhận":
 quyết định ghi vào `labels_confirmed_by`/`labels_confirmed_at` hay sửa
@@ -54,6 +60,8 @@ __all__ = [
     "goi_y_nhan",
     "trich_ngay_ky",
     "trich_ngay_hieu_luc",
+    "SubjectEntitySuggestion",
+    "extract_subject_entities",
 ]
 
 
@@ -296,3 +304,147 @@ def trich_ngay_hieu_luc(extracted_text: str) -> GoiYNgayHieuLuc:
     return GoiYNgayHieuLuc(
         effective_date=None, effective_date_source=DateSource.DEFAULT_INGESTION_DATE
     )
+
+
+# ---------------------------------------------------------------------------
+# Subject entities — schema decision at `docs/07` Section 2.1 line 93 +
+# callout lines 127-135 (LOCKED 2026-09-22, task T2.4-add-subject-entities).
+# Written in English per CLAUDE.md Section 0 #4 (LOCKED 2026-09-22): all new
+# identifiers/comments/docstrings in this section are English; the
+# surrounding Vietnamese functions above are untouched legacy code, not
+# renamed here (boy-scout rule applies only where this work-order touches).
+#
+# Suggestion only — feeds the K3 relation-suggestion mechanism at GĐ7
+# ("docs/06" Section 5.3, 6.2), NOT persisted to `Document` and NOT
+# confirmed by this module. No `_confirmed_by`/`_at` pair on the schema
+# field, unlike `category_labels`: this is an internal signal nobody
+# reviews directly, and the relation it feeds already carries its own
+# approval step (`relation.approval_state`) — see "docs/07" line 135.
+#
+# Three anchor positions, tried in PRIORITY ORDER — stop at the first anchor
+# that produces a signal, matching the "V/v"/title/Điều 1 order agreed for
+# this task:
+#   (1) the "V/v" subject line near the top of the document — individual
+#       acts (Quyết định/Công văn); the whole subject-line phrase IS the
+#       entity (e.g. "V/v: Bổ nhiệm ông Nguyễn Văn A giữ chức vụ Giám đốc").
+#   (2) UPPERCASE title — Luật/Nghị định/Thông tư/Nghị quyết/Pháp lệnh/Bộ
+#       luật; find the document-type keyword at the START of a line within
+#       the head-of-document window, then take the remainder of that same
+#       line if non-empty (e.g. "LUẬT XÂY DỰNG" -> "XÂY DỰNG"), else the
+#       next non-blank line (e.g. "NGHỊ ĐỊNH" followed on the next line by
+#       "Quy định về tuyển dụng, sử dụng và quản lý công chức").
+#   (3) fallback: Điều 1 "Phạm vi điều chỉnh"/"Phạm vi áp dụng" when (1) and
+#       (2) found no signal — take the clause after "quy định về"/"quy định
+#       việc" inside that article's text.
+#
+# Multi-valued: a document can name more than one subject, so every match
+# found via the WINNING anchor is returned, not just the first. No anchor
+# matches anywhere -> empty list, never guessed (project-wide "no silent
+# inference" principle, same spirit as `goi_y_nhan`/`trich_ngay_ky` above).
+# ---------------------------------------------------------------------------
+_TITLE_KEYWORDS = ("BỘ LUẬT", "LUẬT", "NGHỊ ĐỊNH", "NGHỊ QUYẾT", "THÔNG TƯ", "PHÁP LỆNH")
+
+# No anchor at line start: the real "V/v" line commonly follows a document
+# number prefix on the same line (e.g. "Số: 15/QĐ-UBND V/v: Bổ nhiệm ..."),
+# so anchoring at line start would miss it. Stops at a table-cell delimiter
+# ("|", used by the docx table-cell join in `ingestion.reader`) or newline.
+_SUBJECT_LINE_PATTERN = re.compile(r"[Vv]\s*/\s*[Vv][:.]?\s*(.+?)(?:\s*\||\n|$)")
+
+_UPPERCASE_TITLE_PATTERN = re.compile(
+    r"^(?:" + "|".join(re.escape(keyword) for keyword in _TITLE_KEYWORDS) + r")\b[ \t]*(.*)$",
+    re.MULTILINE,
+)
+
+# Terminates at the next "Điều N." heading or a blank line — a plain "\n\n"
+# terminator alone misses articles immediately followed by "Điều 2." on the
+# very next line with no blank line in between (observed in real corpus
+# files, e.g. Luật-50-2014-QH13.docx).
+_SCOPE_ARTICLE_PATTERN = re.compile(
+    r"Điều\s+1\.\s*Phạm\s+vi\s+(?:điều\s+chỉnh|áp\s+dụng)\s*\n?(.+?)(?:\n\s*Điều\s+\d|\n\n|\Z)",
+    re.IGNORECASE | re.DOTALL,
+)
+# Alternation order matters: "về việc" must be tried before the shorter "về"
+# alone, or the standalone "về" branch would win first and leave a stray
+# leading "việc" in the captured clause.
+_SCOPE_STATEMENT_PATTERN = re.compile(
+    r"quy\s+định\s+(?:về\s+việc|về|việc)\s+(.+?)(?:\.|$)",
+    re.IGNORECASE,
+)
+
+
+def _dedup_preserve_order(values: list[str]) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for value in values:
+        if value not in seen:
+            seen.add(value)
+            result.append(value)
+    return result
+
+
+def _entities_from_subject_line(extracted_text: str) -> list[str]:
+    head = extracted_text[:_DO_DAI_QUET_DAU_VAN_BAN]
+    candidates = [
+        match.group(1).strip(" .:") for match in _SUBJECT_LINE_PATTERN.finditer(head)
+    ]
+    return _dedup_preserve_order([candidate for candidate in candidates if candidate])
+
+
+def _entities_from_uppercase_title(extracted_text: str) -> list[str]:
+    head_lines = extracted_text[:_DO_DAI_QUET_DAU_VAN_BAN].split("\n")
+    candidates: list[str] = []
+    for index, line in enumerate(head_lines):
+        match = _UPPERCASE_TITLE_PATTERN.match(line.strip())
+        if match is None:
+            continue
+        remainder = match.group(1).strip(" .")
+        if remainder:
+            candidates.append(remainder)
+            continue
+        for next_line in head_lines[index + 1 :]:
+            next_line = next_line.strip()
+            if next_line:
+                candidates.append(next_line.strip(" ."))
+                break
+    return _dedup_preserve_order(candidates)
+
+
+def _entities_from_scope_article(extracted_text: str) -> list[str]:
+    article_match = _SCOPE_ARTICLE_PATTERN.search(extracted_text)
+    if article_match is None:
+        return []
+    statement_match = _SCOPE_STATEMENT_PATTERN.search(article_match.group(1))
+    if statement_match is None:
+        return []
+    candidate = statement_match.group(1).strip(" .")
+    return [candidate] if candidate else []
+
+
+@dataclass(frozen=True, slots=True, kw_only=True)
+class SubjectEntitySuggestion:
+    """Suggested `Document.subject_entities` — NOT written to `Document`, no
+    confirmation step recorded ("docs/07" line 135: internal signal feeding
+    K3, "docs/06" Section 5.3).
+    """
+
+    subject_entities: list[str]
+
+
+def extract_subject_entities(extracted_text: str) -> SubjectEntitySuggestion:
+    """Suggest `Document.subject_entities` — GĐ5 ("docs/06" Section 5.2),
+    schema decision at "docs/07" Section 2.1 line 93 + callout lines 127-135
+    (LOCKED 2026-09-22).
+
+    Tries the three anchors in priority order (see module comment above)
+    and returns every entity found via the first anchor that produced a
+    signal. No anchor matches anywhere -> empty list, never inferred.
+    """
+    for extractor in (
+        _entities_from_subject_line,
+        _entities_from_uppercase_title,
+        _entities_from_scope_article,
+    ):
+        entities = extractor(extracted_text)
+        if entities:
+            return SubjectEntitySuggestion(subject_entities=entities)
+    return SubjectEntitySuggestion(subject_entities=[])
