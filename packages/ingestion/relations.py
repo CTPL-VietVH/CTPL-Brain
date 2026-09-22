@@ -12,14 +12,21 @@ chắc chắn — hiện đầu hàng việc, duyệt nhanh."*
 
 Deliberately NOT built here (separate work-orders):
 
-- AMENDS_OR_REPLACES inferred from subject/type/date (06 Mục 5.3's K3 fix —
-  needs `subject_entities`, a parallel work-order).
-- SAME_TOPIC.
+- SAME_TOPIC — not a GĐ7 detector at all; TASKS.md Active (2026-09-22) traced
+  this back to `06` Mục 6.2's *"Cùng chủ đề... tìm theo độ giống đã làm việc
+  này rồi"*, which is query-time similarity search behaviour (T3.3), not a
+  relation to write at ingestion time. `06` Mục 5.3 lists exactly two
+  machine-proposal sources — explicit citation and K3 — and SAME_TOPIC is
+  neither.
 - The expanding-scope loop + `scan_pair_budget` / `scan_time_budget` /
   `saturation_epsilon` orchestration (06 Mục 5.3: *"Phạm vi xét: mở rộng
-  dần, chạy ngầm — bắt đầu từ Space chứa tài liệu"*) — `detect_explicit_relations`
-  takes a flat list of `Document` and treats it as one already-decided scan
-  set (one Space's candidates); the caller owns the expansion loop.
+  dần, chạy ngầm — bắt đầu từ Space chứa tài liệu"*) — both detectors in
+  this module take a flat list of `Document` and treat it as one
+  already-decided scan set (one Space's candidates); the caller owns the
+  expansion loop.
+
+AMENDS_OR_REPLACES (K3, `detect_inferred_amendment_relations` below) IS
+built here — see that function's docstring for the inference itself.
 
 Both patterns key on the standard Vietnamese administrative citation shape:
 "<document type> số <number> ngày D tháng M năm Y của <authority>" — e.g.
@@ -51,10 +58,10 @@ import uuid
 from dataclasses import dataclass
 from datetime import date
 
-from schema.document import Document
+from schema.document import DateSource, Document
 from schema.relation import ApprovalState, Relation, RelationOrigin, RelationType
 
-__all__ = ["detect_explicit_relations"]
+__all__ = ["detect_explicit_relations", "detect_inferred_amendment_relations"]
 
 # ---------------------------------------------------------------------------
 # Vietnamese administrative document-number shape: "<digits><opt letter>/
@@ -227,4 +234,148 @@ def detect_explicit_relations(documents: list[Document]) -> list[Relation]:
                 exclude_amendment_language=False,
             )
         )
+    return relations
+
+
+# ---------------------------------------------------------------------------
+# GĐ7, step 2/2 — K3: AMENDS_OR_REPLACES inferred from "same subject + same
+# document type + later issue date" (06 Mục 5.3's fix for the case explicit
+# citation alone would miss entirely: *"quyết định bổ nhiệm mới thường không
+# nhắc quyết định cũ"*). Unlike REFERENCES/ATTACHMENT above, nothing here is
+# read directly off the text — it is inferred from three independent signals
+# on two `Document` records, hence `origin=RelationOrigin.MACHINE_INFERRED`
+# (NOT the "chắc chắn" set of DX1 — 07 Mục 2.3).
+# ---------------------------------------------------------------------------
+
+# Confidence weights — work-order direction only ("trọng số áng chừng 50%
+# khớp đối tượng / 30% khớp loại / 20% tín hiệu ngày... không bắt buộc đúng
+# số"), not a verified formula. Two of the three weights are attached to
+# conditions that are already GATES (a candidate cannot exist at all unless
+# subject_entities overlap and the later-date ordering holds) — they are
+# still scored, not just gated, because "some shared subject" and "any later
+# date" are themselves real (if weak) evidence, same as the required
+# document-number match already scores 0.7 of `_citation_confidence` above
+# for REFERENCES/ATTACHMENT. `category_labels` overlap is the only signal
+# here that is NEVER a gate (work-order: explicitly "không phải điều kiện
+# gate") — a candidate with matching subject + later date but no shared type
+# label still gets created, just at the lower end of the scale.
+_SUBJECT_ENTITY_WEIGHT = 0.5
+_CATEGORY_LABEL_WEIGHT = 0.3
+_DATE_ORDER_WEIGHT = 0.2
+
+# Only these two `DateSource` values mean "the timeline can trust this date"
+# (06 Mục 6.4: *"trục thời gian chỉ tin ngày có nguồn tin được"*).
+# DEFAULT_INGESTION_DATE means nobody actually knows the real issue date, so
+# comparing it against another document's date would be comparing a real
+# date against a placeholder — not a "ngày ban hành sau" signal at all.
+_RELIABLE_ISSUED_DATE_SOURCES = (DateSource.EXTRACTED, DateSource.CONFIRMED)
+
+
+def _normalized_entity(raw: str) -> str:
+    """Uppercase + collapse whitespace (work-order gate, confirmed against
+    the required real pair below: "VỀ CÔNG TÁC VĂN THƯ" vs "Về công tác văn
+    thư" only match case-insensitively — a plain `==` on `subject_entities`
+    would silently miss this real pair).
+    """
+    return re.sub(r"\s+", " ", raw).strip().upper()
+
+
+def _normalized_entity_set(entities: list[str]) -> set[str]:
+    return {_normalized_entity(entity) for entity in entities if entity.strip()}
+
+
+def _jaccard_similarity(a: set[str], b: set[str]) -> float:
+    if not a or not b:
+        return 0.0
+    return len(a & b) / len(a | b)
+
+
+def _has_reliable_issued_date(document: Document) -> bool:
+    return document.issued_date_source in _RELIABLE_ISSUED_DATE_SOURCES
+
+
+def _amendment_confidence(later_document: Document, earlier_document: Document) -> float | None:
+    """`None` means "not a candidate at all" (the two gates below), not "low
+    confidence" — a rejected pair produces no `Relation`, never a
+    near-zero-confidence one (work-order: "không suy diễn" when a gate
+    fails).
+
+    Gate 1 — subject overlap: both documents need a NON-EMPTY
+    `subject_entities`, and at least one entity must match after
+    normalization. Empty on either side means K3 has nothing to reason from
+    (work-order: "Không suy luận khi thiếu subject_entities... không đoán").
+
+    Gate 2 — date order: both documents need a *reliable* `issued_date`
+    (`_has_reliable_issued_date`), and `later_document.issued_date` must be
+    strictly after `earlier_document.issued_date`. Equal dates, or either
+    date unreliable, is treated as "cannot tell" — not "assume no order" —
+    so no candidate is produced either way (work-order: "nếu bằng nhau hoặc
+    không xác định được cả hai ngày, KHÔNG tạo ứng viên").
+    """
+    later_subjects = _normalized_entity_set(later_document.subject_entities)
+    earlier_subjects = _normalized_entity_set(earlier_document.subject_entities)
+    if not later_subjects or not earlier_subjects or not (later_subjects & earlier_subjects):
+        return None
+
+    if not _has_reliable_issued_date(later_document) or not _has_reliable_issued_date(earlier_document):
+        return None
+    if later_document.issued_date <= earlier_document.issued_date:
+        return None
+
+    subject_score = _SUBJECT_ENTITY_WEIGHT * _jaccard_similarity(later_subjects, earlier_subjects)
+
+    shared_category_labels = _normalized_entity_set(later_document.category_labels) & _normalized_entity_set(
+        earlier_document.category_labels
+    )
+    type_score = _CATEGORY_LABEL_WEIGHT if shared_category_labels else 0.0
+
+    date_score = _DATE_ORDER_WEIGHT  # satisfied by construction — gate 2 above already holds
+
+    return min(round(subject_score + type_score + date_score, 2), 1.0)
+
+
+def detect_inferred_amendment_relations(documents: list[Document]) -> list[Relation]:
+    """K3 (06 Mục 5.3): propose AMENDS_OR_REPLACES for every ordered pair in
+    `documents` where a later document shares a subject with an earlier one
+    of the same type — WITHOUT requiring either to cite the other by number
+    (that is `detect_explicit_relations`'s job; the two detectors are
+    independent and neither excludes the other's output — see
+    `test_i_...cross_check` in the T2.6 test suite for the required proof
+    that `detect_explicit_relations` stays empty on the pair this function
+    is required to link).
+
+    Direction follows the CHỐT convention (`07` Mục 2.3): `from` = the
+    document issued LATER (the amendment), `to` = the one issued EARLIER
+    (the one amended) — *"Quyết định 15 sửa Quyết định 10 → from = QĐ15, to
+    = QĐ10."*
+
+    Every `documents` pair is checked in both orders; `_amendment_confidence`
+    returns `None` for the direction that fails the date-order gate, so each
+    qualifying pair yields at most one `Relation`, never two pointing both
+    ways. A document set with more than two related versions (v3 amends v2
+    amends v1) DOES produce every later→earlier pair, not just adjacent
+    ones (v3→v2 AND v3→v1) — deliberate: each pair is scored on its own
+    signals, and Manager approval (still `PENDING` here, same as
+    `detect_explicit_relations`) is where a redundant suggestion gets
+    rejected, not a chain-limit invented in this module.
+    """
+    relations: list[Relation] = []
+    for later_document in documents:
+        for earlier_document in documents:
+            if earlier_document.document_id == later_document.document_id:
+                continue
+            confidence = _amendment_confidence(later_document, earlier_document)
+            if confidence is None:
+                continue
+            relations.append(
+                Relation(
+                    relation_id=str(uuid.uuid4()),
+                    from_document_id=later_document.document_id,
+                    to_document_id=earlier_document.document_id,
+                    relation_type=RelationType.AMENDS_OR_REPLACES,
+                    origin=RelationOrigin.MACHINE_INFERRED,
+                    approval_state=ApprovalState.PENDING,
+                    confidence=confidence,
+                )
+            )
     return relations
