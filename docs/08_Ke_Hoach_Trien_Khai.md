@@ -2,11 +2,11 @@
 
 | | |
 |---|---|
-| **Phiên bản** | v1.3 |
-| **Ngày** | 14/9/2026 |
-| **Lịch sử** | v1.3 — sau vòng đánh giá độc lập kế hoạch: thêm bốn hạng mục còn thiếu (T1.5 nạp lại kho, T2.10 bề mặt ghi cho Manager, T3.10 lịch sử hội thoại, T3.11 ràng buộc R1); siết tám điều kiện nghiệm thu; thêm sáu điều cấm vào Phần B (nay 25); thêm bảy ca thử vào T4.2. v1.2 — chốt ba quyết định công nghệ; T0.1–T0.3 đổi từ "chọn" sang "dựng và nghiệm thu"; T0.3 thêm ba đường thoát nếu phần chứng minh thất bại; T2.8 rút gọn thứ tự xoá theo hai kho vật lý. v1.1 — ghép kết quả gói nghiên cứu công nghệ `cmd_fd7fae9e` vào T0.1–T0.3, kèm ba chỗ nghiên cứu nói chưa đủ |
+| **Phiên bản** | v1.4 |
+| **Ngày** | 23/9/2026 |
+| **Lịch sử** | v1.4 — 23/9/2026, theo `10_Hop_Dong_API_Backend_AI_Services.md`: T2.10 đóng bằng tài liệu 10 (tám thao tác, không phải năm); T3.1 thu nhỏ — Backend tính phạm vi Space; T3.3 thêm điều kiện họ hàng qua bộ lọc quyền; T3.6 đổi đầu vào và thêm trạng thái hội thoại; T3.10 chuyển sang Backend; T4.2 thêm ba ca. Hồ sơ cá nhân hoá không có hạng mục nào ở phiên bản hiện tại. v1.3 — sau vòng đánh giá độc lập kế hoạch: thêm bốn hạng mục còn thiếu (T1.5 nạp lại kho, T2.10 bề mặt ghi cho Manager, T3.10 lịch sử hội thoại, T3.11 ràng buộc R1); siết tám điều kiện nghiệm thu; thêm sáu điều cấm vào Phần B (nay 25); thêm bảy ca thử vào T4.2. v1.2 — chốt ba quyết định công nghệ; T0.1–T0.3 đổi từ "chọn" sang "dựng và nghiệm thu"; T0.3 thêm ba đường thoát nếu phần chứng minh thất bại; T2.8 rút gọn thứ tự xoá theo hai kho vật lý. v1.1 — ghép kết quả gói nghiên cứu công nghệ `cmd_fd7fae9e` vào T0.1–T0.3, kèm ba chỗ nghiên cứu nói chưa đủ |
 | **Đối tượng đọc** | Người hoặc agent lập trình sẽ viết hai service này |
-| **Nguồn chân lý** | `06_Thiet_Ke_Pipeline_Ingestion_Retrieval_v2.md` v1.9 (thiết kế) và `07_Hop_Dong_Du_Lieu_Schema_v2.md` v1.8 (hợp đồng dữ liệu). Tài liệu này **không thay thế** hai tài liệu đó — nó chỉ sắp xếp việc và cảnh báo bẫy |
+| **Nguồn chân lý** | `06_Thiet_Ke_Pipeline_Ingestion_Retrieval_v2.md` v1.10 (thiết kế), `07_Hop_Dong_Du_Lieu_Schema_v2.md` v1.10 (hợp đồng dữ liệu) và `10_Hop_Dong_API_Backend_AI_Services.md` (hợp đồng với Backend C.Brain). Tài liệu này **không thay thế** hai tài liệu đó — nó chỉ sắp xếp việc và cảnh báo bẫy |
 
 ---
 
@@ -220,14 +220,22 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 *Xong khi*: mỗi thao tác trên có một đường ghi xác định, và **đã chốt nó thuộc service nào** — Ingestion hay Backend. Ranh giới này nằm ngoài phạm vi hai tài liệu 06 và 07 (07 Mục 0 loại trừ hợp đồng với Backend), nên phải quyết tường minh chứ không mặc định.
 > Không quyết thì mỗi thao tác sẽ mọc ra ở chỗ nào tiện nhất lúc đó, và cờ gỡ — một trong **hai bộ lọc cứng** — không có chủ.
 
+**Cập nhật 23/9/2026 (PO) — ĐÓNG bằng `10_Hop_Dong_API_Backend_AI_Services.md`.** Mọi thao tác đi vào AI Services qua API do **Backend C.Brain** gọi (giao diện do đội khác làm, ngoài phạm vi repo này). Backend quyết ai được làm; AI tự kiểm đối tượng có thật nằm ở Space được nêu không (`10` Mục 1, T4). Danh sách đúng là **tám** thao tác, không phải năm — thiếu *duyệt/từ chối tài liệu ở Space riêng*, *xác nhận/sửa nhãn và ngày*, *Manager tự gắn liên kết* (`10` Mục 4.3, 4.4, 5.3). Phần việc phía AI là **tầng API** theo tài liệu 10 — chưa được ước lượng ở `09`.
+
 ### Nhóm 3 — Retrieval v2
 
 **T3.1 — Phạm vi quyền và hai bộ lọc cứng.** Duyệt cây Space **tươi tại thời điểm hỏi** (người + nhóm + kế thừa một chiều xuống, cắt tại nhánh riêng). Danh sách tài liệu **gỡ vì sai** cũng tính tươi rồi truyền vào như danh sách loại trừ. **Chỉ hai bộ lọc cứng này, không có cái thứ ba.** *Nguồn*: 06 Mục 6.2 bước 1, NT4, 07 Mục 6 (S7).
+
+**Cập nhật 23/9/2026 (PO, `10` Mục 1 và 3.3):** việc duyệt cây Space chuyển sang **Backend C.Brain** — Backend gửi `readable_space_ids` đã tính trọn ở **từng lượt hỏi**. Retrieval **không** tra cây Space, chỉ áp danh sách đó làm bộ lọc cứng **ngay trong lời gọi tìm** (lọc trong lúc tìm, không lọc sau khi đã lấy top-k). Danh sách tài liệu gỡ vì sai vẫn do Retrieval tự tính từ hồ sơ tài liệu.
+*Xong khi*: thiếu `readable_space_ids` → từ chối với lỗi, **không** chạy tìm không điều kiện; danh sách rỗng → từ chối theo R1 mà không gọi mô hình.
 
 **T3.2 — Tìm ở cấp mẩu** trong phạm vi đó.
 
 **T3.3 — Kéo họ hàng.** Hỏi kho quan hệ **tại thời điểm truy vấn**, chỉ hỏi cho tài liệu đã lọt hạng đầu. Bốn loại quan hệ xử lý khác nhau: sửa đổi đi hết chuỗi cả hai chiều; phụ lục kéo; dẫn chiếu **chỉ một bước**; cùng chủ đề **không kéo**. Xếp hạng bằng **thừa hưởng điểm trên điểm đã chuẩn hoá**, hệ số 0.5 mỗi mắt xích. *Nguồn*: 06 Mục 6.2, 6.4.
 *Xong khi*: ngưỡng `relation_pull_threshold` **chỉ áp cho liên kết có `origin` là máy suy luận**. Liên kết do người gắn và liên kết đọc từ dẫn chiếu tường minh luôn được kéo, bất kể điểm. Có test riêng cho điều này — gộp chung một điều kiện lọc là cách cài đặt ngắn hơn và sai.
+
+**Cập nhật 23/9/2026:** tài liệu kéo theo họ hàng đọc từ lớp quan hệ trong PostgreSQL, **không đi qua bộ lọc của Qdrant** — nên truy vấn quan hệ phải tự áp lại **cùng** `readable_space_ids` và **cùng** danh sách gỡ vì sai. Liên kết có thể nối sang Space người hỏi không đọc được, vì GĐ7 quét dọc cây kế thừa.
+*Xong khi* (bổ sung): thành viên chỉ có ở Space con kế thừa hỏi → không ra tài liệu của Space cha, kể cả khi tài liệu đó là họ hàng của một kết quả.
 
 **T3.4 — Trần và cảnh báo.** Trần 6 tài liệu; chạm trần thì trả lời bình thường và **nói rõ đã giới hạn**; cảnh báo chỉ hiện khi số ứng viên vượt trần từ 3 lần trở lên. Tràn ngữ cảnh thì **báo lỗi và ghi nhật ký**, tuyệt đối không cắt ngầm. *Nguồn*: 06 Mục 6.5.
 
@@ -236,15 +244,17 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 **T3.6 — Tách bước hiểu câu hỏi khỏi bước trả lời.** Lịch sử hội thoại **chỉ** đi vào bước một — bước biến *"còn điều khoản thứ hai thì sao"* thành một câu hỏi đứng một mình. Bước sinh câu trả lời **chỉ nhận câu hỏi đã đứng một mình cộng tài liệu vừa lấy lại**, không nhận lịch sử. *Nguồn*: 06 Mục 9.4.
 *Xong khi*: hỏi tiếp nối rồi thu hồi quyền giữa chừng — lượt sau không được trả lời bằng nội dung của lượt trước.
 
+**Cập nhật 23/9/2026 (PO, 06 Mục 9.4 v1.10):** lịch sử không còn đọc từ kho của Retrieval. Đầu vào của bước một là **K lượt gần nhất** (câu hỏi + phần chữ câu trả lời) và **trạng thái hội thoại** do Backend gửi kèm lời gọi; đầu ra thêm **trạng thái hội thoại mới** để Backend lưu. Trạng thái là **biểu mẫu** — tài liệu đang nói tới (chỉ `document_id`), chủ đề, đối tượng, mạch câu hỏi — dựng chỉ từ câu hỏi của người dùng và định danh/tên tài liệu được dẫn nguồn, **không đọc phần chữ câu trả lời**. Các `document_id` trong trạng thái được lấy lại và cho qua cùng bộ lọc quyền như kết quả tìm mới. K là khoá cấu hình (nhóm Retrieval) — thiếu khoá thì từ chối chạy, như mọi tham số khác.
+*Xong khi* (bổ sung): (1) trạng thái hội thoại không có trường nào chứa được con số hay trích đoạn — kiểm bằng schema, không bằng đọc đầu ra; (2) tài liệu trong trạng thái mà người hỏi vừa mất quyền → không vào ngữ cảnh lượt sau, không được nhắc tới, nhật ký có ghi việc loại.
+
 **T3.7 — Agent chuyên miền.** Agent **không gắn Space**, không ảnh hưởng việc tìm. Mọi ràng buộc bất khả xâm phạm phải là **bước** bao quanh mô hình, không phải câu trong lời nhắc. Bộ kiểm lúc tạo agent. *Nguồn*: 06 Mục 8.
 
 **T3.8 — Cảnh báo trong câu trả lời.** Năm loại, đều là dữ kiện đưa vào chứ không phải lời dặn mô hình: tài liệu mâu thuẫn nhau; quan hệ chưa đối chiếu xong; tài liệu **đã có bản mới hơn**; hai tài liệu trùng vân tay khác ngày; và **ngày không đáng tin** (nguồn là *mặc định ngày nạp*). *Nguồn*: 06 Mục 5.4, 5.7, 6.3, 6.4.
 
 **T3.9 — Nhật ký điều tra.** Ai hỏi, lúc nào, phạm vi quyền tại thời điểm đó, con trỏ tới các mẩu đã vào ngữ cảnh, tài liệu bị loại kèm lý do trong hai lý do cứng, agent nào được dùng. **Không nguyên văn câu hỏi, không nguyên văn câu trả lời.** Chỉ Admin đọc. *Nguồn*: 06 Mục 9.2.
 
-**T3.10 — Lịch sử hội thoại.** 06 Mục 9.4 chốt nó có ở v1, giữ **nguyên văn câu hỏi và câu trả lời**, **giữ nguyên kể cả khi quyền đã đổi**, và **chỉ chính người đó đọc**. Đây là kho riêng, không phải nhật ký điều tra, không phải hồ sơ cá nhân hoá (06 Mục 9.1) — ba kho có ba tính chất xoá khác nhau và **không được gộp**.
-*Xong khi*: người dùng đọc lại được mạch cũ của mình; đổi quyền rồi thì lịch sử **vẫn còn nguyên**; và T3.6 đọc được từ đây để hiểu câu hỏi tiếp nối.
-> Chưa có hạng mục nào phụ trách kho này trước hôm nay, trong khi T3.6 giả định nó tồn tại.
+**T3.10 — Lịch sử hội thoại. ⛔ CHUYỂN SANG BACKEND C.BRAIN — chốt 23/9/2026.** Backend lưu nguyên văn câu hỏi, câu trả lời và trạng thái hội thoại; giữ nguyên kể cả khi quyền đổi; chỉ chính người đó đọc; người dùng xoá được (06 Mục 9.1, 9.4 v1.10). AI Services **không** lưu kho này và không có API đọc/xoá lịch sử. Phần việc còn ở phía AI đã gộp vào T3.6. *Nguồn*: 06 Mục 9.4; `10` Mục 6.1–6.2.
+> Bản v1.3 tạo hạng mục này vì T3.6 giả định kho tồn tại. Giờ T3.6 nhận thẳng dữ liệu qua lời gọi — không còn phụ thuộc.
 
 **T3.11 — R1: không có nguồn thì không trả lời.** ⚠️ **Làm cùng lúc với T3.2, không để cuối.** 06 Mục 8.4 chốt cách thực thi: không tìm được tài liệu nào thì **không gọi mô hình**, trả lời từ chối luôn. Đây là ràng buộc đầu tiên trong sáu ràng buộc bất khả xâm phạm, và nó phải là một **bước** chứ không phải một câu dặn.
 *Xong khi*: hỏi một câu không có tài liệu nào trong phạm vi quyền trả lời được → hệ thống từ chối, và **mô hình sinh không được gọi lần nào** (kiểm bằng cách đếm lượt gọi, không kiểm bằng đọc câu trả lời).
@@ -270,11 +280,14 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 | Thiếu một khoá cấu hình | Service không khởi động |
 | Chuỗi tiếng Việt có dấu, cắt theo vị trí | Đoạn cắt ra đúng ký tự, không lệch |
 | Không tài liệu nào trong quyền trả lời được | Từ chối, và **mô hình sinh không được gọi lần nào** |
-| Quyền người dùng đổi sau khi đã hỏi vài lượt | Lịch sử hội thoại **vẫn còn nguyên** |
+| Quyền người dùng đổi sau khi đã hỏi vài lượt | Lịch sử hội thoại **vẫn còn nguyên** — *từ 23/9 là ca nghiệm thu của Backend (T3.10 chuyển sang Backend)* |
 | Liên kết do người gắn, điểm tin cậy để trống | Vẫn được kéo vào ngữ cảnh |
 | Một Điều dài nhiều trang | Bị chia nhỏ tiếp, các mẩu con cùng một `parent_chunk_id` |
 | Chạy lệnh xoá vĩnh viễn hai lần liên tiếp | Không lỗi, kết quả không đổi |
 | Cảnh báo tài liệu lỗi thời xuyên Space | **Không chứa tên Space nào** |
+| Lời gọi hỏi thiếu `readable_space_ids` | Từ chối với lỗi, **không** tìm không điều kiện |
+| Tài liệu trong trạng thái hội thoại, người hỏi vừa mất quyền | Không vào ngữ cảnh lượt sau, không được nhắc tới |
+| Thành viên chỉ có ở Space con kế thừa; tài liệu Space cha là họ hàng của kết quả | Không được kéo vào ngữ cảnh |
 
 ---
 
@@ -283,5 +296,5 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 1. **Ước lượng công sức lại từ đầu.** Con số 14.5–15.0 MD cũ chỉ tính thiết kế cơ bản. ⚠️ Đây là **chỗ duy nhất trong cả chuỗi việc mà đọc mã nguồn hệ đang chạy là hợp lệ** — quy tắc "cấm lấy code cũ làm chuẩn" bảo vệ *phán đoán thiết kế*, không áp cho việc ước lượng khối lượng.
    > **Cập nhật 18/9/2026 (quyết định thay PO, theo uỷ quyền của Viet cùng ngày):** Đã có đề xuất đầy đủ tại `docs/09_Uoc_Luong_Cong_Suc_v2.md`. Dùng con số **ĐỀ XUẤT 85.5 MD** (dải 74–103) làm mốc lập kế hoạch từ nay. Nguồn đối chiếu hệ cũ dùng để soát quy mô (09 Mục 2) không ghi đường dẫn cụ thể — theo đúng yêu cầu bảo mật đã nêu trong chính tài liệu 09 — và chỉ dùng để **soát lại**, không dùng để **suy ra** số liệu, nên chấp nhận trạng thái này để không chặn tiến độ. Viet (PO) có thể yêu cầu ghi lại đường dẫn cụ thể bất kỳ lúc nào nếu thấy cần.
 2. **Cập nhật bốn tài liệu ở 06 Mục 11.** Nợ từ 5/9.
-> ⚠️ Riêng `research/R11_Phan_Quyen.md` có một việc **không phải dọn tài liệu mà là một tính năng thật**: cảnh báo hai chiều cho Manager khi thao tác với cờ kế thừa — bật thì báo ai sẽ đọc được, **tắt thì báo bao nhiêu người sẽ mất quyền đọc bao nhiêu tài liệu**. Nó ở đây vì việc thực thi thuộc tầng phân quyền chứ không thuộc hai service này, **không phải vì nó ít quan trọng**. Chiều tắt là chiều gây hỏng im lặng (06 Mục 7.3). Cần một người có tên phụ trách, nếu không nó sẽ rơi giữa hai kế hoạch.
+> ⚠️ Riêng `research/R11_Phan_Quyen.md` có một việc **không phải dọn tài liệu mà là một tính năng thật**: cảnh báo hai chiều cho Manager khi thao tác với cờ kế thừa — bật thì báo ai sẽ đọc được, **tắt thì báo bao nhiêu người sẽ mất quyền đọc bao nhiêu tài liệu**. Nó ở đây vì việc thực thi thuộc tầng phân quyền chứ không thuộc hai service này, **không phải vì nó ít quan trọng**. Chiều tắt là chiều gây hỏng im lặng (06 Mục 7.3). Cần một người có tên phụ trách, nếu không nó sẽ rơi giữa hai kế hoạch. *(Cập nhật 23/9/2026: hiển thị cảnh báo thuộc Backend/giao diện; phần AI Services phải cung cấp là **số tài liệu theo Space** — `10` Mục 6.5.)*
 3. **Chạy phép đo tỷ lệ dẫn chiếu tường minh** ngay khi có kho tài liệu thật. Ngoài giá trị vốn có, nó là điều kiện để bật cảnh báo đang treo ở 06 Mục 6.2.

@@ -33,6 +33,7 @@ Tên định danh (hàm, biến, tham số, lớp, exception...), comment, docst
 | `docs/06_Thiet_Ke_Pipeline_Ingestion_Retrieval_v2.md` | Thiết kế — cơ chế nghiệp vụ và **lý do** đằng sau từng quyết định |
 | `docs/07_Hop_Dong_Du_Lieu_Schema_v2.md` | Hợp đồng dữ liệu — tên trường, kiểu, nơi cư trú, ai được ghi |
 | `docs/08_Ke_Hoach_Trien_Khai.md` | Kế hoạch — 32 hạng mục T0.1–T4.2 kèm điều kiện nghiệm thu |
+| `docs/10_Hop_Dong_API_Backend_AI_Services.md` | Hợp đồng API với Backend C.Brain — ⚠️ **bản nháp**: các điểm ở Mục 8 chưa chốt, chạm vào thì dừng hỏi PO |
 
 Vào việc mới: `06 Mục 0.1` (bối cảnh + R1–R6) → `06 Mục 2` (NT1–NT4) → `07 Mục 1` (QT1–QT3) → **Mục 3 của file này** (25 điều cấm) → mục cụ thể, tra theo cột *Nguồn chân lý* ở `08 Phần D`.
 
@@ -73,6 +74,14 @@ C.Brain là trợ lý hỏi–đáp trên kho tri thức nội bộ của doanh 
 | Tuyệt đối không | Không quyết định ai đọc được gì; **không che thông tin theo người** | Không suy diễn thêm về nội dung ngoài cái đã hiểu lúc nạp |
 
 Hai service **không chia sẻ quyết định nào** — chỉ chia sẻ một mô tả về nội dung.
+
+### Ranh giới với Backend C.Brain — chốt 23/9/2026 (`docs/10`)
+
+- AI Services **chỉ nhận lời gọi từ Backend C.Brain**. Giao diện do đội khác làm — repo này **không xây UI**.
+- **Backend quyết quyền, AI thực thi quyền.** Backend gửi `readable_space_ids` đã tính trọn ở **mỗi lượt hỏi**; Retrieval **không tra cây Space**, chỉ áp danh sách đó làm bộ lọc cứng ngay trong lời gọi tìm — và áp lại cho tài liệu kéo theo họ hàng. **Thiếu danh sách ≠ không lọc.**
+- Trước mọi thao tác ghi, AI tự kiểm **đối tượng có thật nằm ở Space được nêu** không.
+- **Lịch sử hội thoại do Backend lưu.** AI không giữ trạng thái giữa các lượt: nhận K lượt gần nhất + trạng thái hội thoại (biểu mẫu: chỉ `document_id`, chủ đề, đối tượng — không con số, không trích đoạn), trả trạng thái mới (06 Mục 9.4).
+- **Hồ sơ cá nhân hoá (06 Mục 9.3) không nằm trong phiên bản hiện tại** — không xây.
 
 ### ⚠️ Phạm vi v1: KHÔNG che thông tin cá nhân
 
