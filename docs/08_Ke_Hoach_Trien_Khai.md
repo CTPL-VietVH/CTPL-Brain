@@ -2,11 +2,11 @@
 
 | | |
 |---|---|
-| **Phiên bản** | v1.5 |
+| **Phiên bản** | v1.6 |
 | **Ngày** | 23/9/2026 |
-| **Lịch sử** | v1.5 — 23/9/2026 (tối), sau vòng phản biện độc lập `docs/10`: T2.6 lấy cây Space từ Backend; T2.9 đề nghị liên kết xuyên hai Space; T3.6 câu hỏi các lượt trước chỉ gồm câu hỏi người dùng + lọc trạng thái ngay đầu lượt; T3.8 cảnh báo chỉ từ tài liệu đã qua bộ lọc cứng + dẫn nguồn hợp lệ, v1 trả trọn một lần; T4.2 thêm hai ca (23 ca). v1.4 — 23/9/2026, theo `10_Hop_Dong_API_Backend_AI_Services.md`: T2.10 đóng bằng tài liệu 10 (tám thao tác, không phải năm); T3.1 thu nhỏ — Backend tính phạm vi Space; T3.3 thêm điều kiện họ hàng qua bộ lọc quyền; T3.6 đổi đầu vào và thêm trạng thái hội thoại; T3.10 chuyển sang Backend; T4.2 thêm ba ca. Hồ sơ cá nhân hoá không có hạng mục nào ở phiên bản hiện tại. v1.3 — sau vòng đánh giá độc lập kế hoạch: thêm bốn hạng mục còn thiếu (T1.5 nạp lại kho, T2.10 bề mặt ghi cho Manager, T3.10 lịch sử hội thoại, T3.11 ràng buộc R1); siết tám điều kiện nghiệm thu; thêm sáu điều cấm vào Phần B (nay 25); thêm bảy ca thử vào T4.2. v1.2 — chốt ba quyết định công nghệ; T0.1–T0.3 đổi từ "chọn" sang "dựng và nghiệm thu"; T0.3 thêm ba đường thoát nếu phần chứng minh thất bại; T2.8 rút gọn thứ tự xoá theo hai kho vật lý. v1.1 — ghép kết quả gói nghiên cứu công nghệ `cmd_fd7fae9e` vào T0.1–T0.3, kèm ba chỗ nghiên cứu nói chưa đủ |
+| **Lịch sử** | v1.6 — 23/9/2026 (khuya): T2.4 thêm nhãn lĩnh vực (danh mục trong cấu hình); T2.8 thêm kiểm tài liệu nằm đúng Space, chỉ xoá theo `document_id`; thêm **T2.11 — Đăng ký và xoá Space**. v1.5 — 23/9/2026 (tối), sau vòng phản biện độc lập `docs/10`: T2.6 lấy cây Space từ Backend; T2.9 đề nghị liên kết xuyên hai Space; T3.6 câu hỏi các lượt trước chỉ gồm câu hỏi người dùng + lọc trạng thái ngay đầu lượt; T3.8 cảnh báo chỉ từ tài liệu đã qua bộ lọc cứng + dẫn nguồn hợp lệ, v1 trả trọn một lần; T4.2 thêm hai ca (23 ca). v1.4 — 23/9/2026, theo `10_Hop_Dong_API_Backend_AI_Services.md`: T2.10 đóng bằng tài liệu 10 (tám thao tác, không phải năm); T3.1 thu nhỏ — Backend tính phạm vi Space; T3.3 thêm điều kiện họ hàng qua bộ lọc quyền; T3.6 đổi đầu vào và thêm trạng thái hội thoại; T3.10 chuyển sang Backend; T4.2 thêm ba ca. Hồ sơ cá nhân hoá không có hạng mục nào ở phiên bản hiện tại. v1.3 — sau vòng đánh giá độc lập kế hoạch: thêm bốn hạng mục còn thiếu (T1.5 nạp lại kho, T2.10 bề mặt ghi cho Manager, T3.10 lịch sử hội thoại, T3.11 ràng buộc R1); siết tám điều kiện nghiệm thu; thêm sáu điều cấm vào Phần B (nay 25); thêm bảy ca thử vào T4.2. v1.2 — chốt ba quyết định công nghệ; T0.1–T0.3 đổi từ "chọn" sang "dựng và nghiệm thu"; T0.3 thêm ba đường thoát nếu phần chứng minh thất bại; T2.8 rút gọn thứ tự xoá theo hai kho vật lý. v1.1 — ghép kết quả gói nghiên cứu công nghệ `cmd_fd7fae9e` vào T0.1–T0.3, kèm ba chỗ nghiên cứu nói chưa đủ |
 | **Đối tượng đọc** | Người hoặc agent lập trình sẽ viết hai service này |
-| **Nguồn chân lý** | `06_Thiet_Ke_Pipeline_Ingestion_Retrieval_v2.md` v1.11 (thiết kế), `07_Hop_Dong_Du_Lieu_Schema_v2.md` v1.10 (hợp đồng dữ liệu) và `10_Hop_Dong_API_Backend_AI_Services.md` (hợp đồng với Backend C.Brain). Tài liệu này **không thay thế** hai tài liệu đó — nó chỉ sắp xếp việc và cảnh báo bẫy |
+| **Nguồn chân lý** | `06_Thiet_Ke_Pipeline_Ingestion_Retrieval_v2.md` v1.12 (thiết kế), `07_Hop_Dong_Du_Lieu_Schema_v2.md` v1.10 (hợp đồng dữ liệu) và `10_Hop_Dong_API_Backend_AI_Services.md` (hợp đồng với Backend C.Brain). Tài liệu này **không thay thế** hai tài liệu đó — nó chỉ sắp xếp việc và cảnh báo bẫy |
 
 ---
 
@@ -69,6 +69,8 @@ Dựa trên gói nghiên cứu `cmd_fd7fae9e`. Tiêu chí đánh giá gốc vẫ
 | Bộ đọc file | **Docling** cho PDF (rút chữ kèm toạ độ, **không** dùng phần suy ra phân cấp — xem T0.3), **python-docx** cho .docx, parser markdown cho .md, regex cho .txt — cộng **một bộ chuẩn hoá cây cấu trúc chung** theo quy chuẩn hành chính Việt Nam | cao |
 | Mô hình biểu diễn | **BGE-M3** — 1024 chiều, ngữ cảnh 8192 token, ~2.5GB, chạy được trên GPU 8GB hoặc CPU | cao |
 | Kho dữ liệu | **Qdrant + PostgreSQL**, **không cần kho đồ thị riêng** | cao |
+
+> **Bổ sung 23/9/2026 (PO) — framework HTTP cho tầng API: FastAPI.** Lý do: sinh OpenAPI trực tiếp từ code (`10` Mục 3.1), kiểm kiểu dữ liệu vào bằng pydantic (lỗi vào sai thành lỗi rõ ràng, không im lặng). Là dependency mới — cài khi mở work-order tầng API, không trước.
 
 ### Ba chỗ nghiên cứu nói chưa đủ — phải xử lý khi triển khai
 
@@ -199,6 +201,8 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 *Xong khi*: trên một tập thử có tên gọi gồm văn bản thật, **ngày ký trích đúng ở từ 90% trở lên** — không chỉ là "chạy không lỗi". Và: không trích được ngày hiệu lực thì trường đó mang nguồn *mặc định ngày nạp* và **không** giả vờ là ngày thật.
 > Điều kiện tỷ lệ là bắt buộc, vì một hàm trích **luôn thất bại** cũng thoả được vế thứ hai mà không làm gì cả.
 
+**Cập nhật 23/9/2026 (PO, 06 GĐ5 v1.12):** thêm **gợi ý nhãn lĩnh vực** từ danh mục cố định trong file cấu hình (nhóm Ingestion; thiếu khoá thì từ chối chạy như mọi khoá khác). Máy chỉ chọn trong danh mục, không tự đặt nhãn mới. Trước khi code: quyết qua `schema-guardian` nhãn lĩnh vực đi chung `category_labels` hay trường riêng, rồi cập nhật 07 Mục 2.1/3 và CLAUDE.md Mục 4 cùng work-order (theo tiền lệ `chunk_length_cap`).
+
 **T2.5 — GĐ6 tạo vector.** Dùng cấu hình nhóm hợp đồng, không đọc biến môi trường riêng.
 
 **T2.6 — GĐ7 phát hiện quan hệ.** Bốn loại quan hệ có phân loại; điểm tin cậy; `origin` ba giá trị; chiều **`from` tác động lên `to`**. Nguồn đề nghị gồm cả dẫn chiếu tường minh **và** dấu hiệu *cùng đối tượng + cùng loại văn bản + ngày ban hành sau*. Tiêu chí dừng: **bão hoà VÀ trần chi phí, phải thoả đồng thời**. *Nguồn*: 06 Mục 5.3, 07 Mục 2.3 và 3.2.
@@ -214,6 +218,8 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 **T2.8 — Xoá vĩnh viễn.** Với hai kho vật lý (T0.1), thứ tự rút gọn thành: **kho vector → (lớp quan hệ + hồ sơ tài liệu, MỘT giao dịch) → dọn nền**. Ranh giới duy nhất còn thiếu giao dịch chung là giữa Qdrant và PostgreSQL, nên chỉ chỗ đó cần làm lại được mà không hỏng thêm. Nhật ký giữ việc đã xoá, không giữ nội dung. *Nguồn*: 06 Mục 5.6, 07 Mục 6 (S6).
 *Xong khi*: (1) cắt tiến trình **ở từng bước một** rồi chạy lại đều hoàn tất được, không để lại mẩu trỏ tới hồ sơ đã mất; (2) **chạy lệnh xoá hai lần liên tiếp** trên cùng một tài liệu không gây lỗi và không đổi kết quả.
 
+**Cập nhật 23/9/2026 (PO, `10` Mục 1 T4 và 5.6):** lời gọi xoá mang `space_id`; module **tự kiểm** tài liệu có `space_id` đó **trước bước xoá đầu tiên**, không khớp thì từ chối và không xoá gì. Chỉ xoá theo `document_id`. *Xong khi* (bổ sung): (3) xoá tài liệu có bản trùng khít ở Space khác → bản kia còn nguyên trong cả Qdrant lẫn PostgreSQL; (4) `space_id` sai → từ chối, cả hai kho không đổi.
+
 **T2.9 — Hàng việc chăm sóc tri thức.** Ba loại mục: đề nghị quan hệ chờ duyệt, đề nghị bản mới chờ xác nhận, và *"tài liệu này có thể đã lỗi thời"* khi có bản mới ở nơi khác trùng vân tay. Mục thứ ba **không được nêu Space nào, không nêu ai, không nêu ở đâu** — đó chính là cơ chế, không phải chi tiết. *Nguồn*: 06 Mục 5.4 và 5.7.
 
 **Cập nhật 23/9/2026 (PO, 06 Mục 5.4):** đề nghị liên kết nối tài liệu ở hai Space chỉ hiện cho Manager đọc được **cả hai đầu**; Admin luôn thấy. Lúc duyệt, AI kiểm lại cả hai tài liệu còn trong phạm vi quyền của người duyệt. *Xong khi* (bổ sung): Manager chỉ đọc được một đầu **không** thấy đề nghị đó trong hàng việc.
@@ -225,6 +231,9 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 > Không quyết thì mỗi thao tác sẽ mọc ra ở chỗ nào tiện nhất lúc đó, và cờ gỡ — một trong **hai bộ lọc cứng** — không có chủ.
 
 **Cập nhật 23/9/2026 (PO) — ĐÓNG bằng `10_Hop_Dong_API_Backend_AI_Services.md`.** Mọi thao tác đi vào AI Services qua API do **Backend C.Brain** gọi (giao diện do đội khác làm, ngoài phạm vi repo này). Backend quyết ai được làm; AI tự kiểm đối tượng có thật nằm ở Space được nêu không (`10` Mục 1, T4). Danh sách đúng là **tám** thao tác, không phải năm — thiếu *duyệt/từ chối tài liệu ở Space riêng*, *xác nhận/sửa nhãn và ngày*, *Manager tự gắn liên kết* (`10` Mục 4.3, 4.4, 5.3). Phần việc phía AI là **tầng API** theo tài liệu 10 — chưa được ước lượng ở `09`.
+
+**T2.11 — Đăng ký và xoá Space.** *(Thêm 23/9/2026 theo `10` Mục 4.0, 06 Mục 5.6 v1.12.)* (a) **Đăng ký**: lưu danh sách `space_id` Backend đã tạo cùng trạng thái *đang dùng / đang xoá / đã xoá* — **chỉ sự tồn tại**, không cây, không cờ kế thừa, không thành viên. T2.1 từ chối nộp tài liệu vào Space chưa đăng ký hoặc không ở trạng thái *đang dùng*. `space_id` đã xoá không được đăng ký lại. (b) **Xoá Space**: chạy nền, idempotent; chuyển *đang xoá* → xoá vĩnh viễn từng tài liệu có `space_id` đó bằng đúng module T2.8 (mỗi tài liệu một dòng nhật ký xoá) → xoá vùng đệm T2.7 và mục hàng việc T2.9 của Space → *đã xoá*. Không tự suy ra Space con. *Nguồn*: `10` Mục 4.0.
+*Xong khi*: xoá Space thì mọi tài liệu của nó biến khỏi **cả** Qdrant **và** PostgreSQL (kiểm thẳng kho, không qua service); tài liệu trùng khít ở Space khác không đổi; cắt tiến trình giữa chừng rồi chạy lại vẫn hoàn tất; gọi xoá lần hai không lỗi, không xoá lặp; nộp mới vào Space đang xoá bị từ chối.
 
 ### Nhóm 3 — Retrieval v2
 

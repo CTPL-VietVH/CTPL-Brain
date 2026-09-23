@@ -2,6 +2,8 @@
 
 > **⚠️ Cập nhật 23/9/2026 — các con số dưới đây CHƯA tính lại theo `10_Hop_Dong_API_Backend_AI_Services.md`.** Bốn thay đổi làm lệch ước lượng: (1) T3.10 (2.5 MD) chuyển sang Backend; (2) T2.10 chốt nghiêng về Backend nên phát sinh **tầng API phía AI Services** mà tài liệu này chưa tính — đúng cảnh báo ở dòng T2.10 bên dưới; (3) T3.6 thêm trạng thái hội thoại; (4) T4.2 thêm năm ca (18 → 23); T3.6/T3.8 thêm điều kiện nghiệm thu (23/9 tối). Cần ước lượng lại trước khi dùng tổng số cho lập kế hoạch.
 
+> **⚠️ Ước lượng lại sơ bộ 23/9/2026 (Gemini 3.1 Pro, task `EST-09-uoc-luong-lai-theo-10`; Cowork cộng lại vì báo cáo gốc cộng sai):** các hạng mục chịu tác động của `10` v0.4 — cũ **24.5 MD** → mới **41.5–46.5 MD** (T3.10 0; T3.1 3.0; T2.9 3.5; T3.6 4.5; T3.8 4.0; T4.2 8.5; tầng HTTP 10.0–15.0 gồm khung dịch vụ 2.0–3.5 + endpoint nhập liệu 3.5–5.0 + chăm sóc tri thức 2.5–3.5 + hỏi–đáp/agent/nhật ký 2.0–3.0; `GET /v1/meta` 0.5; T2.11 3.0; gọi ngược BE lấy cây Space 1.5; dòng sự kiện 1.0; nghiệm thu chung BE+AI 2.0). **Tổng kế hoạch: 85.5 → ~102.5–107.5 MD**, ngang hoặc vượt mốc "thận trọng" cũ (~103). Dải phụ thuộc framework HTTP (chưa chốt) và việc có giả lập được Backend cho nghiệm thu chung hay không. **Chưa phải con số PO chốt.**
+
 | | |
 |---|---|
 | **Phiên bản** | v1.0 |
