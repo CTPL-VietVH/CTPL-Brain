@@ -56,7 +56,11 @@ import dataclasses
 from .chunk import Chunk
 
 __all__ = [
+    "CHUNK_DOCUMENT_ID_FIELD",
     "CHUNK_PAYLOAD_FIELDS",
+    "DELETION_LOG_INDEXES_DDL",
+    "DELETION_LOG_TABLE",
+    "DELETION_LOG_TABLE_DDL",
     "DOCUMENT_ACTIVE_FINGERPRINT_INDEX",
     "DOCUMENT_VERSION_CHAIN_ORDINAL_CONSTRAINT",
     "DOCUMENT_INDEXES_DDL",
@@ -81,6 +85,14 @@ DOCUMENT_TABLE = "document"
 #: delete both in one atomic transaction (07 Mục 2, dòng 65).
 RELATION_TABLE = "relation"
 
+#: The permanent-deletion log (06 Mục 5.6). Keeps the EVENT, never the
+#: content: *"Nhật ký giữ lại: Việc đã xoá: ai, khi nào, tài liệu nào, lý
+#: do. Không giữ nội dung"* (06 Mục 5.6).
+#: ⚠️ NO foreign key to `document`, deliberately: this row must OUTLIVE the
+#: document it describes, and a cascading FK would delete the very record
+#: the deletion exists to leave behind.
+DELETION_LOG_TABLE = "deletion_log"
+
 
 # Constraint names, exported for the same reason the table names are: an error
 # message in `packages/ingestion/` that re-types one of these is the second
@@ -101,6 +113,12 @@ CHUNK_PAYLOAD_FIELDS = tuple(
     for field in dataclasses.fields(Chunk)
     if field.name not in {"chunk_id", "embedding"}
 )
+
+# The payload key every document-scoped Qdrant operation filters on (S6 step 1
+# deletes by filter, not by point id). Looked up from `Chunk` rather than
+# typed out a second time: renaming the field must raise a KeyError here, not
+# silently match nothing (CLAUDE.md Mục 6).
+CHUNK_DOCUMENT_ID_FIELD = Chunk.__dataclass_fields__["document_id"].name
 
 
 DOCUMENT_TABLE_DDL = f"""
@@ -211,6 +229,34 @@ CREATE INDEX IF NOT EXISTS relation_to_idx ON {RELATION_TABLE} (to_document_id)
 )
 
 
+DELETION_LOG_TABLE_DDL = f"""
+CREATE TABLE IF NOT EXISTS {DELETION_LOG_TABLE} (
+    document_id         text        NOT NULL PRIMARY KEY,
+    space_id            text,
+    tenant_id           text,
+    deleted_by          text        NOT NULL,
+    reason              text        NOT NULL,
+    requested_at        timestamptz NOT NULL,
+    purge_completed_at  timestamptz
+)
+"""
+
+DELETION_LOG_INDEXES_DDL = (
+    # R3 — the log must be searchable and exportable, and the natural lookup
+    # is by time ("who deleted what last month").
+    f"""
+CREATE INDEX IF NOT EXISTS deletion_log_requested_at_idx
+    ON {DELETION_LOG_TABLE} (requested_at)
+""",
+    # The worklist of a deletion interrupted mid-way: rows still open. Small
+    # by nature, so only the unfinished rows are worth indexing.
+    f"""
+CREATE INDEX IF NOT EXISTS deletion_log_unfinished_idx
+    ON {DELETION_LOG_TABLE} (document_id) WHERE purge_completed_at IS NULL
+""",
+)
+
+
 #: Everything, in dependency order — `relation` references `document`, so the
 #: document table must exist first.
 SHARED_STORE_DDL = (
@@ -218,4 +264,6 @@ SHARED_STORE_DDL = (
     *DOCUMENT_INDEXES_DDL,
     RELATION_TABLE_DDL,
     *RELATION_INDEXES_DDL,
+    DELETION_LOG_TABLE_DDL,
+    *DELETION_LOG_INDEXES_DDL,
 )
