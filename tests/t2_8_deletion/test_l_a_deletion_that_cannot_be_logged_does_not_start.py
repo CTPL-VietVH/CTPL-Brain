@@ -16,6 +16,8 @@ from ingestion.deletion import DeletionRequestIncomplete, purge_document_permane
 @pytest.mark.parametrize(
     ("field", "value"),
     [
+        ("space_id", ""),
+        ("space_id", "   "),
         ("deleted_by", ""),
         ("deleted_by", "   "),
         ("reason", ""),

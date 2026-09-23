@@ -53,6 +53,7 @@ def make_document(
     doc_number: str = "15/2021/QĐ-BNV",
     title: str = "Quyết định về công tác văn thư",
     extracted_text: str = BODY,
+    content_fingerprint: str | None = None,
 ) -> Document:
     return Document(
         document_id=document_id,
@@ -66,7 +67,7 @@ def make_document(
         effective_date_source=DateSource.EXTRACTED,
         ingested_at=INGESTED_AT,
         source_format="docx",
-        content_fingerprint=f"fingerprint-{document_id}",
+        content_fingerprint=content_fingerprint or f"fingerprint-{document_id}",
         extracted_text=extracted_text,
         version_chain_id=f"chain-{document_id}",
         version_ordinal=1,
@@ -176,8 +177,15 @@ def world() -> World:
 
 @pytest.fixture
 def deletion_kwargs(world: World) -> dict:
-    """The call every case makes, minus whichever port it wraps in a fault."""
+    """The call every case makes, minus whichever port it wraps in a fault.
+
+    `space_id` matches `world.doomed` (and `world.neighbour`, which shares
+    the same Space) — the T4 check (docs/10 §1) must pass for every case that
+    is not itself testing T4, so this fixture is the one place that value
+    lives.
+    """
     return {
+        "space_id": "space-hr",
         "deleted_by": "manager-lan",
         "reason": "Người upload đưa nhầm file của khách hàng khác",
         "profile_store": world.profile_store,

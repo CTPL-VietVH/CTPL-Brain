@@ -22,6 +22,7 @@ The order, and why each step is where it is
 S6 (07 Mục 6), as shortened by 08 dòng 212 for the two physical stores:
 **kho vector → (quan hệ + hồ sơ, MỘT giao dịch) → dọn nền.**
 
+   -1. _check_object_in_space(...)        ← T4, docs/10 §1; no store write
     0. deletion_log.record_started(...)   ← trace, not one of the three steps
     1. vector store  — the document stops being findable HERE
     2. PostgreSQL, ONE transaction — relations + profile
@@ -74,6 +75,14 @@ no owner yet and that *"phải quyết tường minh chứ không mặc định"
 a permission gate here would be that default decision. `deleted_by` arrives
 as a caller-supplied identity for the log; authorising it is the caller's job.
 
+**This is not the same thing as the `space_id` check the module DOES do.**
+docs/10 §1 T4 draws that line explicitly: BE (the caller) is trusted about
+*who* — role, vai trò, quyền; AI checks *where* — whether `document_id`
+actually lives in the `space_id` the caller named, because that fact belongs
+to AI's own data, not BE's. Checking role would be re-deciding BE's job;
+checking Space membership is this module refusing to act on a BE mistake
+that hands it mismatched `document_id`/`space_id`.
+
 **It does not clean conversation history.** 06 Mục 5.6 limit 2, and Điểm mở
 #15 (06 Mục 10) — a known, accepted v1 limitation, not a bug.
 """
@@ -98,6 +107,7 @@ __all__ = [
     "InMemoryDeletableProfileStore",
     "InMemoryDeletionLog",
     "InMemoryVectorStoreDeleter",
+    "ObjectNotInSpace",
     "ProfileDeletionCounts",
     "QdrantVectorStoreDeleter",
     "VectorStoreDeleter",
@@ -111,6 +121,22 @@ class DeletionRequestIncomplete(Exception):
     Refused before anything is touched. The log line is not paperwork around
     the deletion — it is the only thing left once the deletion has run, so a
     deletion that cannot be logged is a deletion that must not start.
+    """
+
+
+class ObjectNotInSpace(Exception):
+    """docs/10 §1 T4: the document does not actually live in `space_id`.
+
+    Mirrors the API's `OBJECT_NOT_IN_SPACE` (docs/10 §3.5) — the reason T4
+    exists at all: *"nếu BE có lỗi, ví dụ gửi space_id của Space A kèm
+    document_id của một tài liệu ở Space B, thì thiếu T4 AI sẽ để một Manager
+    của A gỡ tài liệu của B"*. Also raised when there is no evidence — no
+    profile, no deletion_log line — that the document ever belonged to any
+    Space; "unknown document_id" is not a softer case than "wrong Space".
+
+    Always raised before `deletion_log.record_started`, so a wrong `space_id`
+    leaves no trace of the attempt (docs/10 §1 T4: *"tránh xoá nhầm bản trùng
+    ở Space khác"*).
     """
 
 
@@ -221,6 +247,44 @@ def _utc_now() -> datetime:
     return datetime.now(timezone.utc)
 
 
+def _check_object_in_space(
+    *,
+    document_id: str,
+    space_id: str,
+    profile: Any | None,
+    previous: DeletionLogEntry | None,
+) -> None:
+    """docs/10 §1 T4: *"AI tự kiểm 'đối tượng này có thật sự nằm ở Space S
+    không'"*.
+
+    Checked against whichever piece of evidence survives the run:
+
+    1. the profile, when one is still present — the common case;
+    2. failing that, the deletion_log line a previous, interrupted call
+       already wrote — step 0 records `space_id` before step 2 removes the
+       profile, so the line outlives it (the whole point of the BẪY this
+       function exists to close: a resumed call cannot re-derive `space_id`
+       from a profile that is already gone);
+    3. failing both, the document has no evidence of ever belonging to any
+       Space, and is refused the same way a Space mismatch is — "does not
+       exist" is not a softer outcome than "wrong Space".
+    """
+    if profile is not None:
+        actual_space_id = getattr(profile, "space_id", None)
+    elif previous is not None:
+        actual_space_id = previous.space_id
+    else:
+        raise ObjectNotInSpace(
+            f"document_id={document_id!r} has no profile and no deletion_log "
+            f"line — nothing shows it ever belonged to space_id={space_id!r}."
+        )
+    if actual_space_id != space_id:
+        raise ObjectNotInSpace(
+            f"document_id={document_id!r} belongs to space_id={actual_space_id!r}, "
+            f"not the space_id={space_id!r} given for this deletion."
+        )
+
+
 # --------------------------------------------------------------------------- #
 # The deletion
 # --------------------------------------------------------------------------- #
@@ -229,6 +293,7 @@ def _utc_now() -> datetime:
 def purge_document_permanently(
     document_id: str,
     *,
+    space_id: str,
     deleted_by: str,
     reason: str,
     profile_store: DeletableProfileStore,
@@ -243,21 +308,37 @@ def purge_document_permanently(
     before acting — each step is a no-op when its work is already done, which
     is a stronger guarantee than a branch that has to be right.
 
-    `deleted_by` is recorded, NOT checked: see the module docstring on T2.10.
+    `deleted_by` is recorded, not checked — that identity is asserted by the
+    Backend (docs/10 §1 T1–T2: BE authenticates the person, AI executes).
+    `space_id` IS checked: this module verifies the document actually belongs
+    to the Space named, independent of who the caller claims to be (docs/10
+    §1 T4). See `_check_object_in_space` for the two-source, then-refuse
+    order that check follows.
 
     Raises:
-        DeletionRequestIncomplete: `document_id`, `deleted_by` or `reason` is
-            blank. Raised before the first step, so nothing is touched.
+        DeletionRequestIncomplete: `document_id`, `space_id`, `deleted_by` or
+            `reason` is blank. Raised before the first step, so nothing is
+            touched.
+        ObjectNotInSpace: the document belongs to a different Space than
+            `space_id` claims, or there is no evidence it belongs to any
+            Space at all. Raised before `deletion_log.record_started`, so a
+            wrong `space_id` leaves no trace of the attempt.
     """
     document_id = _require(document_id, "document_id")
+    space_id = _require(space_id, "space_id")
     deleted_by = _require(deleted_by, "deleted_by")
     reason = _require(reason, "reason")
 
     previous = deletion_log.get(document_id)
     already_completed = previous is not None and previous.purge_completed_at is not None
 
-    # ---- 0. The trace, before step 2 destroys what it needs to name ------
+    # ---- T4: the object must actually live where the caller says it does --
     profile = profile_store.get_document(document_id)
+    _check_object_in_space(
+        document_id=document_id, space_id=space_id, profile=profile, previous=previous
+    )
+
+    # ---- 0. The trace, before step 2 destroys what it needs to name ------
     log_entry = deletion_log.record_started(
         DeletionLogEntry(
             document_id=document_id,
