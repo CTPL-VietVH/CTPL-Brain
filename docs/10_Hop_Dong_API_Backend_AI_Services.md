@@ -2,10 +2,10 @@
 
 | | |
 |---|---|
-| **Phiên bản** | v0.2 — **BẢN NHÁP** (Cowork soạn 23/9/2026) |
-| **Lịch sử** | v0.2 — 23/9/2026, PO chốt: T1–T3 ở §1; lịch sử hội thoại do BE lưu, AI không giữ trạng thái giữa các lượt, thêm trạng thái hội thoại dạng biểu mẫu (§6.1–6.2); hồ sơ cá nhân hoá ra khỏi phiên bản hiện tại. Đã sửa theo: 06 v1.10, 07 v1.10, 08 v1.4, 09 (ghi chú), CLAUDE.md. v0.1 — bản nháp đầu |
-| **Trạng thái** | Đã chốt: §1 T1–T3, §2, §6.1–6.2. Còn chờ PO: T4–T6 ở §1, các mục **[Đề xuất]**, và 8 điểm mở ở §8 |
-| **Nguồn chân lý** | `06` v1.9+, `07` v1.8+, `08` v1.3 — tài liệu này **không** được đổi quyết định nào trong ba tài liệu đó; chỗ nào cần đổi thì ghi ở §9 |
+| **Phiên bản** | v0.3 — **BẢN NHÁP** (Cowork soạn 23/9/2026) |
+| **Lịch sử** | v0.3 — 23/9/2026 (tối), sau vòng phản biện độc lập (REVIEW-10) và nghiên cứu phương án (RESEARCH-10), PO chốt: `recent_turns` chỉ gồm câu hỏi người dùng; lọc trạng thái hội thoại ngay đầu lượt; Q1 liên kết xuyên Space; Q2 AI hỏi BE cây Space mỗi vòng quét; Q6 trả trọn một lần; định nghĩa dẫn nguồn hợp lệ; cảnh báo chỉ tính từ tài liệu đã qua bộ lọc cứng. Thêm `GET /v1/meta`. Sửa nhãn nguồn theo phản biện. Đã sửa theo: 06 v1.11, 08 v1.5. v0.2 — 23/9/2026, PO chốt: T1–T3 ở §1; lịch sử hội thoại do BE lưu, AI không giữ trạng thái giữa các lượt, thêm trạng thái hội thoại dạng biểu mẫu (§6.1–6.2); hồ sơ cá nhân hoá ra khỏi phiên bản hiện tại. Đã sửa theo: 06 v1.10, 07 v1.10, 08 v1.4, 09 (ghi chú), CLAUDE.md. v0.1 — bản nháp đầu |
+| **Trạng thái** | Đã chốt: §1 T1–T3, §2, §5.1–5.2, §6.1–6.2, §7.1. Còn chờ PO: T4–T6 ở §1, các mục **[Đề xuất]**, và các điểm mở còn lại ở §8 (Q3, Q4, Q5, Q7, Q8) |
+| **Nguồn chân lý** | `06` v1.11, `07` v1.10, `08` v1.5 — tài liệu này **không** được đổi quyết định nào trong ba tài liệu đó; chỗ nào cần đổi thì ghi ở §9 |
 | **Phạm vi** | Mọi lời gọi giữa Backend C.Brain (BE) và AI Services, theo **cả hai chiều**. Lấp đúng khoảng trống mà `07` Mục 0 loại trừ và `08` T2.10 yêu cầu phải chốt tường minh |
 
 **Ký hiệu nguồn gốc của từng mục** — để PO kiểm được tài liệu này không bịa thêm cơ chế sản phẩm:
@@ -32,12 +32,12 @@ Rút từ trao đổi ngày 23/9/2026. Viet nêu hai ý: AI Services chỉ nhậ
 
 | # | Luật | Loại |
 |---|---|---|
-| **T1** | AI Services **chỉ nhận lời gọi từ BE C.Brain**. Mọi lời gọi không qua xác thực dịch vụ đều bị từ chối. Cách xác thực (mTLS, khoá dịch vụ, chính sách mạng) do hạ tầng chọn. Chiều ngược lại (AI gọi BE ở §7) cũng phải xác thực như vậy. | [Suy ra từ PO 23/9] |
-| **T2** | **BE quyết quyền, AI thực thi quyền.** BE xác thực người dùng, tra vai trò, và tính phạm vi Space người đó đọc được **tươi tại thời điểm gọi**. AI **không kiểm lại** người dùng, vai trò hay cây Space. | [Suy ra từ PO 23/9] |
+| **T1** | AI Services **chỉ nhận lời gọi từ BE C.Brain**. Mọi lời gọi không qua xác thực dịch vụ đều bị từ chối. Cách xác thực (mTLS, khoá dịch vụ, chính sách mạng) do hạ tầng chọn. Chiều ngược lại (AI gọi BE ở §7) cũng phải xác thực như vậy. | [PO chốt 23/9] |
+| **T2** | **BE quyết quyền, AI thực thi quyền.** BE xác thực người dùng, tra vai trò, và tính phạm vi Space người đó đọc được **tươi tại thời điểm gọi**. AI **không kiểm lại** người dùng, vai trò hay cây Space. | [PO chốt 23/9] |
 | **T3** | AI **áp đúng phạm vi BE gửi sang làm bộ lọc cứng tại nơi lấy dữ liệu** (Qdrant và PostgreSQL), không lấy rộng ra rồi lọc sau. Với Qdrant, điều kiện `space_id` nằm **trong** lời gọi tìm, không lọc sau khi đã lấy top-k. Tài liệu kéo theo họ hàng đọc từ PostgreSQL nên phải áp lại cùng danh sách. Đây là cách đọc R4 dưới mô hình này: *quyết định* quyền ở BE, *kiểm quyền tại nơi lấy dữ liệu* vẫn ở AI. | [Suy ra — R4, NT4; PO chốt 23/9] |
 | **T4** | **Mỗi bên chỉ khẳng định sự thật thuộc dữ liệu của mình.** BE khẳng định *"người này có vai trò X ở Space S"*. AI tự kiểm *"đối tượng này có thật sự nằm ở Space S không"*. Nếu không nằm ở đó, AI từ chối với `OBJECT_NOT_IN_SPACE`. | [Đề xuất] |
-| **T5** | Mọi trường dấu vết `*_by` (07: `removed_by`, `approved_by`, `labels_confirmed_by`, người xoá trong nhật ký xoá…) lấy từ `actor.user_id` do BE khẳng định. AI lưu nó như một **định danh không trong suốt**: không tra, không diễn giải. | [Suy ra — QT1] |
-| **T6** | Không bên nào giữ bản sao dữ liệu của bên kia lâu hơn một lời gọi. Có hai ngoại lệ đã chốt: `space_id` trên tài liệu (nơi tài liệu nằm, bất biến ở v1), và "phạm vi quyền tại thời điểm đó" trong nhật ký điều tra (sự kiện lịch sử, 06 §9.2). | [Suy ra — NT3] |
+| **T5** | Mọi trường dấu vết `*_by` (07: `removed_by`, `approved_by`, `labels_confirmed_by`, người xoá trong nhật ký xoá…) lấy từ `actor.user_id` do BE khẳng định. AI lưu nó như một **định danh không trong suốt**: không tra, không diễn giải. | [Đề xuất — dựa trên QT1: `_by` là dấu vết, không phải phán quyết] |
+| **T6** | Không bên nào giữ bản sao dữ liệu của bên kia lâu hơn một lời gọi. Có hai ngoại lệ đã chốt: `space_id` trên tài liệu (nơi tài liệu nằm, bất biến ở v1), và "phạm vi quyền tại thời điểm đó" trong nhật ký điều tra (sự kiện lịch sử, 06 §9.2). | [Đề xuất — áp NT3 sang ranh giới BE ↔ AI] |
 
 > **Vì sao cần T4 dù đã có T2.** T2 tin BE về *con người*. Nhưng nếu BE có lỗi, ví dụ gửi `space_id` của Space A kèm `document_id` của một tài liệu ở Space B, thì thiếu T4 AI sẽ để một Manager của A gỡ tài liệu của B. Đây là loại lỗi truy cập đối tượng phổ biến nhất trong API. T4 chặn nó mà không bắt AI biết gì về người dùng, vì *tài liệu nằm ở Space nào* là dữ liệu của chính AI.
 
@@ -104,7 +104,7 @@ Mọi lỗi có mã máy đọc được (`code`) và thông điệp tiếng Vi�
 | Mã | HTTP | Khi nào | Truy về |
 |---|---|---|---|
 | `SCOPE_MISSING` | 400 | Thiếu `space_id`, `readable_space_ids` hoặc `actor` | §3.3 |
-| `OBJECT_NOT_IN_SPACE` | 404 | Đối tượng không nằm trong Space hoặc phạm vi khẳng định. Trả 404 chứ không trả 403, để không tiết lộ đối tượng tồn tại | T4; 06 §9.5 |
+| `OBJECT_NOT_IN_SPACE` | 404 | ⚠️ *Phụ thuộc T4 — còn chờ PO duyệt.* Đối tượng không nằm trong Space hoặc phạm vi khẳng định. Trả 404 chứ không trả 403, để không tiết lộ đối tượng tồn tại | T4; 06 §9.5 |
 | `UNSUPPORTED_FORMAT` | 422 | Không thuộc 4 định dạng v1, hoặc PDF chỉ có ảnh quét | 06 §5.2 GĐ2 |
 | `DUPLICATE_IN_SPACE` | 409 | Trùng khít vân tay trong cùng Space. Kèm `existing_document_id` | 06 §5.7 |
 | `NEW_VERSION_OTHER_SPACE` | 422 | Khai "bản mới của X" nhưng X ở Space khác | code `BanMoiKhacSpace`; 06 §5.7 |
@@ -117,7 +117,11 @@ Mọi lỗi có mã máy đọc được (`code`) và thông điệp tiếng Vi�
 
 Ngoài lỗi còn có các trạng thái **không phải lỗi nhưng phải hiển thị được**: từ chối theo R1, chạm trần, chưa đối chiếu xong. Các trạng thái này nằm trong thân phản hồi (§6.1), không nằm trong mã lỗi.
 
-### 3.6 Vị trí trong văn bản — [Đề xuất]
+### 3.6 Thông tin hợp đồng và trạng thái sẵn sàng — `GET /v1/meta` — [Đề xuất]
+
+Trả về: `ready` (bool) và `not_ready_reason` (ví dụ lệch con dấu kho vector, thiếu khoá cấu hình — 07 §3.1, §3.3); `contract_version`; `limits` gồm `max_recent_turns` (K), trần độ dài/số phần tử từng trường của `conversation_state`, `conversation_state_schema_version`, cỡ file tối đa. BE gọi lúc khởi động và định kỳ, để **không phải đoán K** và biết AI đang từ chối phục vụ trước khi người dùng gặp lỗi `503`. Không cần `actor`.
+
+### 3.7 Vị trí trong văn bản — [Đề xuất]
 
 API **không bắt BE hay giao diện tự cắt chuỗi**. Mọi trích dẫn trả về kèm sẵn đoạn chữ đã cắt (`excerpt`). `span_start`/`span_end` nếu có mặt thì đếm theo **ký tự Unicode (code point)** như 07 §2.2. JavaScript đếm theo đơn vị UTF-16, nên giao diện tự cắt theo vị trí này sẽ lệch khi gặp ký tự ngoài BMP hoặc chuỗi chưa chuẩn hoá NFC. Trả sẵn đoạn chữ là cách chặn lỗi này bằng cấu trúc.
 
@@ -188,19 +192,19 @@ Tám thao tác ghi của con người mà thiết kế nêu được liệt kê 
 
 ## 5. Chăm sóc tri thức — BE → AI
 
-### 5.1 Hàng việc — `GET /v1/work-items?managed_space_ids=&uploader_user_id=`
+### 5.1 Hàng việc — `GET /v1/work-items?managed_space_ids=&readable_space_ids=&uploader_user_id=`
 
 Có ba loại mục (08 T2.9). Mỗi mục mang `space_id` của Space mà nó thuộc về:
 
 | `kind` | Nội dung trả về | Ràng buộc |
 |---|---|---|
-| `relation_proposal` | `relation_id`, hai tài liệu, `relation_type`, `confidence`, `origin` (để giao diện xếp "chắc chắn" lên đầu, 06 §5.3) | ⚠️ **[Mở — §8 Q1]** liên kết xuyên Space |
+| `relation_proposal` | `relation_id`, hai tài liệu, `relation_type`, `confidence`, `origin` (để giao diện xếp "chắc chắn" lên đầu, 06 §5.3) | **Chốt 23/9 (06 §5.4):** đề nghị nối tài liệu ở **hai Space khác nhau** chỉ trả về khi **cả hai** Space nằm trong `readable_space_ids` BE gửi kèm cho người gọi, và người gọi là Manager của ít nhất một đầu. Gọi với `acting_as = admin` thì thấy mọi đề nghị xuyên Space (PO chốt: Admin được xem tên văn bản ở mọi Space cho mục đích quản trị), nên không đề nghị nào nằm mãi không ai duyệt. Đề nghị trong cùng một Space: Manager của Space đó |
 | `version_claim` | `claim_id`, `new_document_id`, `candidate_previous_document_id`, `similarity` | Hiện cho Manager của Space **và** cho người upload qua `uploader_user_id` (06 §5.7: nhắc cả hai) |
 | `possibly_outdated` | `document_id` trong Space của người đọc | **Không có trường nào trỏ sang Space khác, tài liệu khác hay người khác.** Đây là cả cơ chế, không phải chi tiết trình bày (08 Phần B điều 23) |
 
 ### 5.2 Duyệt, từ chối hoặc sửa loại một liên kết — `PATCH /v1/relations/{relation_id}`
 
-Vào: `space_id`, `actor(manager)`, `approval_state ∈ {approved, rejected}`, `relation_type` (tuỳ chọn, Manager sửa loại, 06 §5.3). Hiệu lực tức thì với câu hỏi kế tiếp, không nạp lại gì (06 §6.4). ⚠️ Câu hỏi *Manager của Space nào* được làm việc này đang là §8 Q1.
+Vào: `space_id`, `actor(manager)`, `approval_state ∈ {approved, rejected}`, `relation_type` (tuỳ chọn, Manager sửa loại, 06 §5.3). Hiệu lực tức thì với câu hỏi kế tiếp, không nạp lại gì (06 §6.4). **Ai được duyệt** theo đúng luật hiện đề nghị ở §5.1. Lời gọi mang thêm `readable_space_ids` của người duyệt; **AI kiểm lại lúc duyệt** rằng cả hai tài liệu còn trong phạm vi đó — không tin trạng thái lúc đề nghị được sinh ra (cờ kế thừa có thể đã bị tắt). Không thoả → `404 OBJECT_NOT_IN_SPACE`.
 
 ### 5.3 ★ Manager tự gắn liên kết — `POST /v1/relations`
 
@@ -236,7 +240,7 @@ Ai: `manager` của `space_id`.
 - `GET /v1/documents?space_ids=&include_removed=` — danh sách trong phạm vi.
 - `GET /v1/documents/{document_id}?readable_space_ids=` — hồ sơ tài liệu, đủ các trường người cần thấy trong 07 §2.1. Toàn văn chỉ trả theo đoạn khi có yêu cầu (07: "đọc theo đoạn").
 
-[Suy ra — mọi màn hình ở §4–§5 cần một chỗ để xem tài liệu. Đây không phải tính năng mới]
+[Đề xuất — các màn hình ở §4–§5 cần một chỗ để xem tài liệu; không truy về mục cụ thể nào của 06/07/08]
 
 ---
 
@@ -251,7 +255,7 @@ Ai: `manager` của `space_id`.
 | `actor` | `acting_as = viewer` trở lên |
 | `readable_space_ids` | BE tính **tươi ở từng lượt**, kể cả lượt tiếp nối trong cùng cuộc trò chuyện (06 §9.4: mỗi lượt kiểm quyền lại từ đầu) |
 | `question` | nguyên văn |
-| `recent_turns` | tuỳ chọn; tối đa K lượt gần nhất, mỗi lượt gồm `role` (`user`/`assistant`) và `text`. Lượt `assistant` chỉ gồm phần chữ câu trả lời, **không** kèm trích đoạn. K là khoá cấu hình của Retrieval và được công bố trong hợp đồng; gửi quá K thì AI trả `400 TOO_MANY_TURNS`, không tự cắt. Chỉ đi vào bước hiểu câu hỏi (06 §9.4) |
+| `recent_turns` | tuỳ chọn; **câu hỏi** của tối đa K lượt gần nhất, mỗi phần tử là một chuỗi — **chỉ câu hỏi của người dùng, không có phần chữ câu trả lời** (chốt 23/9 sau phản biện: phần chữ câu trả lời chứa nội dung tài liệu đã diễn đạt lại, đưa vào bước hiểu câu hỏi là cửa sau — 06 §9.4). K công bố qua `GET /v1/meta`; gửi quá K thì AI trả `400 TOO_MANY_TURNS`, không tự cắt |
 | `conversation_state` | tuỳ chọn; trạng thái AI trả về ở lượt trước, BE gửi lại nguyên vẹn. Thiếu thì coi là cuộc trò chuyện mới |
 | `conversation_ref` | tuỳ chọn; mã cuộc trò chuyện phía BE. AI **chỉ ghi vào nhật ký điều tra** để nối các lượt của một sự cố, không dùng để tra dữ liệu gì |
 | `agent_id` | tuỳ chọn; thiếu thì dùng agent tổng quát (06 §8.1–8.2: người dùng chọn trước khi hỏi) |
@@ -269,10 +273,10 @@ Ai: `manager` của `space_id`.
 }
 ```
 
-- **Không có ô nào chứa được con số, điều khoản hay trích đoạn.** AI dựng trạng thái chỉ từ câu hỏi của người dùng và định danh hoặc tên tài liệu được dẫn, **không đọc `answer_text`**. Hai thủ pháp này lấy từ 06 §9.3.
+- **Không có ô nào chứa được con số, điều khoản hay trích đoạn.** AI dựng trạng thái chỉ từ câu hỏi của người dùng và `document_id` của tài liệu được dẫn — **không đọc `answer_text`, không ghi tên văn bản** (kể cả vào `question_thread`). Hai thủ pháp này lấy từ 06 §9.3.
 - Mỗi trường có trần độ dài hoặc số phần tử, đặt bằng khoá cấu hình, để trạng thái không phình theo độ dài cuộc trò chuyện.
 - Với BE, đây là dữ liệu **không trong suốt về ý nghĩa**: BE lưu và gửi lại nguyên vẹn, không sửa. `schema_version` để AI từ chối rõ ràng khi gặp trạng thái của phiên bản cũ, thay vì đọc sai.
-- Ở lượt sau, `focus_document_ids` được lấy lại và cho qua **cùng bộ lọc quyền** như kết quả tìm mới. Còn quyền thì được **thêm** vào tập ứng viên và chịu chung trần. Mất quyền thì bị loại, không được nhắc tới, và nhật ký ghi lại việc loại. Tài liệu đã xoá vĩnh viễn tự rơi ra.
+- **Ngay đầu lượt sau, trước mọi bước khác kể cả bước hiểu câu hỏi**, `focus_document_ids` được cho qua **cùng bộ lọc quyền** như kết quả tìm mới (`readable_space_ids` mới + danh sách gỡ vì sai). Lọc muộn hơn thì tên của tài liệu vừa mất quyền có thể lọt vào câu hỏi viết lại (phát hiện của REVIEW-10). Còn quyền thì được **thêm** vào tập ứng viên và chịu chung trần. Mất quyền thì bị loại, không được nhắc tới, và nhật ký ghi lại việc loại. Tài liệu đã xoá vĩnh viễn tự rơi ra.
 - BE sửa `conversation_state` thì không phá được quyền, vì mọi `document_id` trong đó vẫn phải qua bộ lọc. Trường hợp xấu nhất chỉ là mạch hội thoại lệch.
 
 **Ra**
@@ -313,7 +317,9 @@ BE **lưu nguyên phản hồi** vào lịch sử (để mở lại cuộc trò 
 
 - Mọi mẩu tìm được **và mọi tài liệu kéo theo họ hàng** phải nằm trong `readable_space_ids`. Liên kết có thể nối sang Space mà người hỏi không đọc được (GĐ7 quét dọc cây kế thừa). Nếu kéo họ hàng không đi qua bộ lọc cứng, nội dung ngoài quyền lọt vào ngữ cảnh. 08 T3.3 chưa ghi rõ điều này (xem §9).
 - `readable_space_ids` rỗng, hoặc không tìm được tài liệu nào, thì `refused_no_source` **mà không gọi mô hình** (08 T3.11).
-- Trả lời theo kiểu phát từng chữ (streaming) hay trả trọn một lần là **[Mở — §8 Q6]**.
+- **Mọi cảnh báo chỉ được tính từ tài liệu đã qua hai bộ lọc cứng của lượt đó** (06 §9.5). Ví dụ bản mới hơn nằm ngoài quyền hoặc đã gỡ vì sai thì không có `newer_version_exists`.
+- **Dẫn nguồn hợp lệ — chốt 23/9 (06 §8.4):** mô hình chỉ được trỏ tới mã của đơn vị đọc **đã được đưa vào ngữ cảnh ở chính lượt đó**. AI tự dựng `citations` từ hồ sơ tài liệu và tự cắt `excerpt` từ `extracted_text`; mô hình không tự viết trích đoạn. Có trích dẫn trỏ ra ngoài tập ngữ cảnh thì **không phát** câu trả lời.
+- **v1 trả trọn câu trả lời một lần, không phát từng chữ — chốt 23/9.** Bước kiểm dẫn nguồn ở trên phải chạy xong trước khi phát bất kỳ chữ nào.
 
 ### 6.2 Lịch sử hội thoại — thuộc BE, chốt 23/9/2026
 
@@ -324,7 +330,7 @@ AI Services **không có API lịch sử hội thoại** và không lưu bản s
 - Chỉ chính người đó đọc. Người dùng xoá được, và xoá thì xoá luôn `conversation_state`.
 - Lượt hỏi tiếp nối vẫn **tính lại** `readable_space_ids`, không dùng lại danh sách của lượt trước.
 
-Vì lịch sử chỉ có một nhà, lời hứa "xoá được" chỉ cần thực thi ở một chỗ.
+Vì lịch sử chỉ có một nhà, lời hứa "xoá được" chỉ cần thực thi ở một chỗ. Lời hứa này áp cho **lịch sử hội thoại**. Nhật ký điều tra ở AI **cố ý không xoá được** (06 §9.1): nó ghi ai hỏi, lúc nào, tài liệu nào vào ngữ cảnh, nhưng **không** có nguyên văn câu hỏi hay câu trả lời (06 §9.2).
 
 ### 6.3 Agent chuyên miền — chỉ `admin`
 
@@ -351,7 +357,7 @@ Truy về R3 và 06 §9.2. Nội dung trả về đúng các trường ở 06 §
 
 Vào: `{ space_ids }`. Ra: số tài liệu đang dùng được trong từng Space.
 
-[Suy ra — R11] Khi Manager tắt kế thừa, BE phải cảnh báo *"bao nhiêu người mất quyền đọc bao nhiêu tài liệu"* (08 Phần E mục 2). BE biết phần *người*. Phần *tài liệu* chỉ AI biết. Không có endpoint này thì cảnh báo R11 **không làm được**, dù R11 đã được đẩy sang BE.
+[Suy ra — 06 §7.3; 08 Phần E mục 2] Dùng cho **cả hai chiều** của cảnh báo khi bật/tắt kế thừa: chiều bật (tài liệu của Space này sẽ được thêm những ai đọc) và chiều tắt. Khi Manager tắt kế thừa, BE phải cảnh báo *"bao nhiêu người mất quyền đọc bao nhiêu tài liệu"* (08 Phần E mục 2). BE biết phần *người*. Phần *tài liệu* chỉ AI biết. Không có endpoint này thì cảnh báo R11 **không làm được**, dù R11 đã được đẩy sang BE.
 
 ---
 
@@ -363,7 +369,9 @@ Ra: với mỗi Space: `space_id`, `parent_space_id`, `inherits_from_parent`, `c
 
 - **Ai dùng**: bản cài đặt thật của `SpaceScanScope.expand()` trong `relations_scan.py`, hiện chỉ là Protocol.
 - **Vì sao AI phải tự hỏi**: GĐ7 chạy ngầm, nhiều vòng, không có lời gọi nào của người dùng đi kèm. Chụp lại cây lúc nộp tài liệu sẽ cũ đi giữa chừng (NT3). Nếu một Space vừa chuyển sang riêng, vòng quét có thể đề nghị liên kết vượt nhánh riêng. **Đây là chỗ duy nhất AI đọc dữ liệu của BE ngoài lời gọi**, và nó chỉ đọc *cấu trúc*, không đọc *người*.
-- Phương án thay thế và đánh đổi: §8 Q2.
+- **Chốt 23/9 (Q2):** AI hỏi BE **ở mỗi vòng quét**, không lưu bản sao cây. Không dùng danh sách quyền của người upload: quan hệ là hiểu biết về nội dung, không phụ thuộc người (NT1), và vòng quét còn chạy tiếp khi người upload đã không liên quan.
+- **BE không trả lời:** hoãn vòng quét, giữ trạng thái "đang mở rộng", thử lại sau. Không đoán, không quét toàn kho. Trong lúc đó câu trả lời tự nói "chưa đối chiếu xong" — cơ chế đã có (06 §5.1).
+- PO lưu ý 23/9: việc tạo Space sẽ do BE gửi yêu cầu sang AI Services — xem §8 Q4.
 
 ### 7.2 Dòng sự kiện — [Đề xuất]: `GET /v1/events?after=<cursor>` (BE kéo về)
 
@@ -377,31 +385,32 @@ Dùng kiểu kéo (BE hỏi theo con trỏ) thay vì đẩy (AI gọi webhook), 
 
 | # | Mức | Câu hỏi | Vì sao chưa tự điền được |
 |---|---|---|---|
-| **Q1** | **CAO** | **Liên kết xuyên Space: ai thấy, ai duyệt?** GĐ7 quét dọc cây kế thừa, nên một liên kết có thể nối tài liệu ở Space con với tài liệu ở Space cha. Thành viên chỉ có ở Space con **không đọc được** Space cha. Nếu đưa đề nghị này vào hàng việc của Manager Space con, hàng việc tiết lộ sự tồn tại của tài liệu ngoài quyền, **vi phạm 06 §9.5**. | 06 §5.4 chỉ nói "Manager Space đó", mà một liên kết xuyên Space thì có hai Space. Ba hướng có thể: (a) chỉ hiện cho Manager đọc được cả hai đầu; (b) chỉ hiện cho Manager Space chứa tài liệu `from`, khi và chỉ khi họ đọc được `to`; (c) liên kết xuyên Space chỉ Admin duyệt. Cần BE gửi kèm `readable_space_ids` của Manager thì AI mới lọc được, và điều này ảnh hưởng hình dạng §5.1. |
-| **Q2** | **CAO** | GĐ7 lấy cấu trúc Space bằng cách nào: AI gọi ngược BE (§7.1, khuyến nghị) hay BE gửi ảnh chụp cây lúc nộp? | Gọi ngược: đúng NT3, nhưng AI phụ thuộc BE sẵn sàng khi chạy nền. Ảnh chụp: không phụ thuộc, nhưng cũ đi giữa các vòng quét. |
+| ~~Q1~~ | — | ~~Liên kết xuyên Space: ai thấy, ai duyệt?~~ | **Đã chốt 23/9** — xem §5.1, §5.2, 06 §5.4 |
+| ~~Q2~~ | — | ~~GĐ7 lấy cấu trúc Space bằng cách nào~~ | **Đã chốt 23/9** — AI hỏi BE mỗi vòng quét, xem §7.1 |
 | Q3 | TB | Tài liệu bị Manager từ chối ở tiền kiểm: bỏ khỏi vùng đệm ngay, hay giữ dấu vết ai từ chối và vì sao? | 06 §5.2 chỉ mô tả đường được duyệt. |
-| Q4 | TB | BE xoá một Space, hoặc đổi Space riêng ↔ kế thừa khi còn tài liệu (kể cả tài liệu trong vùng đệm): AI phải làm gì? | Chưa tài liệu nào nói. Nếu không quyết, tài liệu mồ côi vẫn nằm trong kho với một `space_id` không còn tồn tại. |
+| Q4 | TB | BE xoá một Space, hoặc đổi Space riêng ↔ kế thừa khi còn tài liệu (kể cả tài liệu trong vùng đệm): AI phải làm gì? | Chưa tài liệu nào nói. Nếu không quyết, tài liệu mồ côi vẫn nằm trong kho với một `space_id` không còn tồn tại. **PO 23/9: việc tạo Space sẽ do BE gửi yêu cầu sang AI Services.** Cần chốt tiếp: yêu cầu này để AI làm gì (ví dụ chỉ ghi nhận `space_id` tồn tại, để kiểm lời gọi nộp tài liệu và để xử lý tài liệu khi Space bị xoá), và có kéo theo lời gọi tương ứng khi xoá Space hay đổi loại Space không. AI **không** giữ cấu trúc cây hay thành viên (§7.1, T6). |
 | Q5 | TB | File đi sang AI bằng cách nào: gửi nguyên file trong lời gọi (khuyến nghị cho v1, ít phụ thuộc nhất) hay gửi tham chiếu tới kho lưu chung? | Hệ cũ dùng Kafka + MinIO. 07 Mục 0 để việc này cho lúc tráo v2 vào. |
-| **Q6** | **CAO** | Trả lời phát từng chữ hay trả trọn một lần? | 06 §8.4 bắt **kiểm dẫn nguồn trước khi phát ra** ("không có dẫn nguồn hợp lệ thì không phát ra"). Phát từng chữ mâu thuẫn trực tiếp với ràng buộc này, trừ khi giữ lại toàn bộ rồi mới phát, mà như vậy thì mất lợi ích của phát từng chữ. **Khuyến nghị: v1 trả trọn một lần.** |
+| ~~Q6~~ | — | ~~Phát từng chữ hay trả trọn?~~ | **Đã chốt 23/9** — v1 trả trọn một lần, xem §6.1 |
 | Q7 | TB | Hỏi theo mốc thời gian (06 §4): người dùng chọn mốc bằng tham số tường minh `as_of`, hay hệ thống tự hiểu từ câu hỏi, hay cả hai? | 06 §4 chốt "phải lùi về được" nhưng không chốt cách người dùng nói ra mốc đó. |
 | Q8 | THẤP | `notified_uploader`/`notified_manager` (07 §2.4) nghĩa là "AI đã phát sự kiện" hay "người đã thật sự được báo"? | Dưới §7.2, AI chỉ biết vế đầu. |
 | ~~Q9~~ | — | ~~"Lịch sử hội thoại đi theo người dùng khi nghỉ việc"~~ | **Không còn thuộc hợp đồng này (23/9).** Lịch sử ở BE, nên đây là việc nội bộ của BE. |
 
 ---
 
-## 9. Tài liệu phải sửa theo, nếu PO duyệt
+## 9. Tài liệu phải sửa theo
 
-| Tài liệu | Sửa |
-|---|---|
-| `06` §6.2 bước 1 | "Xác định phạm vi đọc được" chuyển từ Retrieval sang BE. Retrieval nhận danh sách và áp làm bộ lọc cứng |
-| `06` bảng R4 hoặc §3 | Thêm một dòng về cách đọc R4 theo §1 T2–T3 |
-| `07` Mục 0 | Trỏ sang tài liệu này cho hợp đồng với Backend |
-| `08` T2.10 | Đóng bằng tài liệu này. Sửa từ 5 thao tác thành 8 (§4.3, §4.4, §5.3) |
-| `08` T3.1 | Thu nhỏ còn "áp danh sách nhận được". Thêm ca thử cho §3.3 (thiếu trường ≠ không lọc) |
-| `08` T3.3 | Ghi rõ: tài liệu kéo theo họ hàng **cũng phải qua bộ lọc quyền** |
-| `08` Phần E mục 2 (R11) | Ghi phần việc phía AI: §6.5 |
-| `09` | Ước lượng lại. T2.10 nghiêng về Backend nên sinh ra phần việc tầng API này, đúng như 09 đã cảnh báo |
-| `TASKS.md` | E2 của T2.8 đổi lý do đóng: đóng nhờ T1+T2+T4, không phải vì "bên gọi tự lo" |
+| Tài liệu | Sửa | Trạng thái |
+|---|---|---|
+| `06` §5.3, §5.4, §8.4, §9.4, §9.5, điểm mở #7 | Các chốt tối 23/9 | ✅ 06 v1.11 |
+| `08` T2.6, T2.9, T3.6, T3.8, T4.2 | Các chốt tối 23/9 | ✅ 08 v1.5 |
+| `06` §6.2 bước 1 | Bước "xác định phạm vi đọc được" chuyển sang BE, Retrieval áp danh sách nhận được | ✅ 06 v1.10 |
+| `06` §9.1, §9.3, §9.4, §5.6, §11 | Lịch sử hội thoại ở BE; trạng thái hội thoại; hồ sơ cá nhân hoá ra khỏi phiên bản hiện tại | ✅ 06 v1.10 |
+| `06` bảng R4 hoặc §3 | Thêm một dòng về cách đọc R4 theo §1 T2–T3 | ⏳ chờ chốt T4–T6 rồi sửa một lần |
+| `07` Mục 0, Mục 4 | Trỏ sang tài liệu này; lịch sử hội thoại ra khỏi danh sách thực thể của AI | ✅ 07 v1.10 |
+| `08` T2.10, T3.1, T3.3, T3.6, T3.10, T4.2, Phần E | Như ghi ở từng hạng mục | ✅ 08 v1.4 |
+| `09` | Ước lượng lại (T3.10 rút ra; tầng API phát sinh) | ⚠️ Đã ghi chú, **chưa tính lại số** |
+| `CLAUDE.md` | Thêm tài liệu 10 vào bảng nguồn; thêm mục "Ranh giới với Backend C.Brain" | ✅ |
+| `TASKS.md` | E2 của T2.8 đổi lý do đóng: đóng nhờ T1+T2+T4, không phải vì "bên gọi tự lo" | ⏳ |
 
 ---
 
@@ -420,4 +429,9 @@ Các ca dưới đây **không bên nào tự nghiệm thu được một mình*
 | Mục "có thể lỗi thời" xuyên Space | Không chứa tên Space, tài liệu hay người nào của nơi khác | AI tạo mục, BE trình bày |
 | Tắt kế thừa một Space có tài liệu | Cảnh báo nêu đúng số tài liệu | BE + §6.5 |
 | Xoá vĩnh viễn gọi hai lần | Lần hai trả `already_deleted`, không lỗi | AI |
+| Hỏi hai lượt, rồi gỡ người hỏi khỏi Space chứa tài liệu trong `focus_document_ids`, rồi hỏi tiếp | Lượt ba không dùng và không nhắc tới tài liệu đó; lịch sử ở BE vẫn còn nguyên hai lượt đầu | BE (tính lại phạm vi, giữ lịch sử) + AI (lọc trạng thái) |
+| Hỏi → gỡ quyền → hỏi tiếp | Đầu vào của bước viết lại câu hỏi không chứa tên văn bản hay con số của tài liệu đã mất quyền | AI |
+| Mô hình trả trích dẫn tới đơn vị đọc không có trong ngữ cảnh | Không phát câu trả lời | AI |
+| Manager chỉ đọc được một đầu của đề nghị liên kết xuyên Space | Không thấy đề nghị đó | AI (lọc theo `readable_space_ids`) + BE (gửi đúng danh sách) |
+| BE không trả lời API cấu trúc Space | Vòng quét GĐ7 hoãn, không đoán; câu trả lời nói "chưa đối chiếu xong" | AI |
 | Đề nghị liên kết xuyên Space | Theo đúng phương án chốt ở Q1; không Manager nào thấy tài liệu ngoài quyền | cả hai |

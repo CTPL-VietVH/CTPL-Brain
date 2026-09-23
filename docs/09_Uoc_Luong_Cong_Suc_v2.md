@@ -1,6 +1,6 @@
 # 09 — Ước lượng công sức Ingestion v2 & Retrieval v2
 
-> **⚠️ Cập nhật 23/9/2026 — các con số dưới đây CHƯA tính lại theo `10_Hop_Dong_API_Backend_AI_Services.md`.** Bốn thay đổi làm lệch ước lượng: (1) T3.10 (2.5 MD) chuyển sang Backend; (2) T2.10 chốt nghiêng về Backend nên phát sinh **tầng API phía AI Services** mà tài liệu này chưa tính — đúng cảnh báo ở dòng T2.10 bên dưới; (3) T3.6 thêm trạng thái hội thoại; (4) T4.2 thêm ba ca (18 → 21). Cần ước lượng lại trước khi dùng tổng số cho lập kế hoạch.
+> **⚠️ Cập nhật 23/9/2026 — các con số dưới đây CHƯA tính lại theo `10_Hop_Dong_API_Backend_AI_Services.md`.** Bốn thay đổi làm lệch ước lượng: (1) T3.10 (2.5 MD) chuyển sang Backend; (2) T2.10 chốt nghiêng về Backend nên phát sinh **tầng API phía AI Services** mà tài liệu này chưa tính — đúng cảnh báo ở dòng T2.10 bên dưới; (3) T3.6 thêm trạng thái hội thoại; (4) T4.2 thêm năm ca (18 → 23); T3.6/T3.8 thêm điều kiện nghiệm thu (23/9 tối). Cần ước lượng lại trước khi dùng tổng số cho lập kế hoạch.
 
 | | |
 |---|---|

@@ -2,11 +2,11 @@
 
 | | |
 |---|---|
-| **Phiên bản** | v1.4 |
+| **Phiên bản** | v1.5 |
 | **Ngày** | 23/9/2026 |
-| **Lịch sử** | v1.4 — 23/9/2026, theo `10_Hop_Dong_API_Backend_AI_Services.md`: T2.10 đóng bằng tài liệu 10 (tám thao tác, không phải năm); T3.1 thu nhỏ — Backend tính phạm vi Space; T3.3 thêm điều kiện họ hàng qua bộ lọc quyền; T3.6 đổi đầu vào và thêm trạng thái hội thoại; T3.10 chuyển sang Backend; T4.2 thêm ba ca. Hồ sơ cá nhân hoá không có hạng mục nào ở phiên bản hiện tại. v1.3 — sau vòng đánh giá độc lập kế hoạch: thêm bốn hạng mục còn thiếu (T1.5 nạp lại kho, T2.10 bề mặt ghi cho Manager, T3.10 lịch sử hội thoại, T3.11 ràng buộc R1); siết tám điều kiện nghiệm thu; thêm sáu điều cấm vào Phần B (nay 25); thêm bảy ca thử vào T4.2. v1.2 — chốt ba quyết định công nghệ; T0.1–T0.3 đổi từ "chọn" sang "dựng và nghiệm thu"; T0.3 thêm ba đường thoát nếu phần chứng minh thất bại; T2.8 rút gọn thứ tự xoá theo hai kho vật lý. v1.1 — ghép kết quả gói nghiên cứu công nghệ `cmd_fd7fae9e` vào T0.1–T0.3, kèm ba chỗ nghiên cứu nói chưa đủ |
+| **Lịch sử** | v1.5 — 23/9/2026 (tối), sau vòng phản biện độc lập `docs/10`: T2.6 lấy cây Space từ Backend; T2.9 đề nghị liên kết xuyên hai Space; T3.6 câu hỏi các lượt trước chỉ gồm câu hỏi người dùng + lọc trạng thái ngay đầu lượt; T3.8 cảnh báo chỉ từ tài liệu đã qua bộ lọc cứng + dẫn nguồn hợp lệ, v1 trả trọn một lần; T4.2 thêm hai ca (23 ca). v1.4 — 23/9/2026, theo `10_Hop_Dong_API_Backend_AI_Services.md`: T2.10 đóng bằng tài liệu 10 (tám thao tác, không phải năm); T3.1 thu nhỏ — Backend tính phạm vi Space; T3.3 thêm điều kiện họ hàng qua bộ lọc quyền; T3.6 đổi đầu vào và thêm trạng thái hội thoại; T3.10 chuyển sang Backend; T4.2 thêm ba ca. Hồ sơ cá nhân hoá không có hạng mục nào ở phiên bản hiện tại. v1.3 — sau vòng đánh giá độc lập kế hoạch: thêm bốn hạng mục còn thiếu (T1.5 nạp lại kho, T2.10 bề mặt ghi cho Manager, T3.10 lịch sử hội thoại, T3.11 ràng buộc R1); siết tám điều kiện nghiệm thu; thêm sáu điều cấm vào Phần B (nay 25); thêm bảy ca thử vào T4.2. v1.2 — chốt ba quyết định công nghệ; T0.1–T0.3 đổi từ "chọn" sang "dựng và nghiệm thu"; T0.3 thêm ba đường thoát nếu phần chứng minh thất bại; T2.8 rút gọn thứ tự xoá theo hai kho vật lý. v1.1 — ghép kết quả gói nghiên cứu công nghệ `cmd_fd7fae9e` vào T0.1–T0.3, kèm ba chỗ nghiên cứu nói chưa đủ |
 | **Đối tượng đọc** | Người hoặc agent lập trình sẽ viết hai service này |
-| **Nguồn chân lý** | `06_Thiet_Ke_Pipeline_Ingestion_Retrieval_v2.md` v1.10 (thiết kế), `07_Hop_Dong_Du_Lieu_Schema_v2.md` v1.10 (hợp đồng dữ liệu) và `10_Hop_Dong_API_Backend_AI_Services.md` (hợp đồng với Backend C.Brain). Tài liệu này **không thay thế** hai tài liệu đó — nó chỉ sắp xếp việc và cảnh báo bẫy |
+| **Nguồn chân lý** | `06_Thiet_Ke_Pipeline_Ingestion_Retrieval_v2.md` v1.11 (thiết kế), `07_Hop_Dong_Du_Lieu_Schema_v2.md` v1.10 (hợp đồng dữ liệu) và `10_Hop_Dong_API_Backend_AI_Services.md` (hợp đồng với Backend C.Brain). Tài liệu này **không thay thế** hai tài liệu đó — nó chỉ sắp xếp việc và cảnh báo bẫy |
 
 ---
 
@@ -203,6 +203,8 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 
 **T2.6 — GĐ7 phát hiện quan hệ.** Bốn loại quan hệ có phân loại; điểm tin cậy; `origin` ba giá trị; chiều **`from` tác động lên `to`**. Nguồn đề nghị gồm cả dẫn chiếu tường minh **và** dấu hiệu *cùng đối tượng + cùng loại văn bản + ngày ban hành sau*. Tiêu chí dừng: **bão hoà VÀ trần chi phí, phải thoả đồng thời**. *Nguồn*: 06 Mục 5.3, 07 Mục 2.3 và 3.2.
 
+**Cập nhật 23/9/2026 (PO, `10` Mục 7.1):** bản cài đặt thật của `SpaceScanScope` hỏi Backend C.Brain cấu trúc cây Space **ở mỗi vòng quét** (không lưu bản sao, không dùng quyền của người upload). Backend không trả lời thì **hoãn vòng quét**, giữ trạng thái "đang mở rộng" — không đoán, không quét toàn kho. Phần code vòng lặp hiện có (commit `bbf72fa`) không đổi, chỉ thêm bản cài đặt Protocol.
+
 **T2.7 — Tiền kiểm ở Space riêng.** Chạy GĐ2, GĐ3, GĐ5 rồi **dừng trước GĐ6 và GĐ7**; giữ trong vùng làm việc riêng của Ingestion. Manager duyệt xong mới chạy nốt và ghi ra ba kho. *Nguồn*: 06 Mục 5.2 GĐ1.
 *Xong khi*: tài liệu chưa duyệt trong Space riêng **không có mặt trong BẤT KỲ kho dùng chung nào** — kiểm bằng cách truy vấn thẳng vào cả Qdrant **và** PostgreSQL, không qua service.
 > ⚠️ Với hai kho vật lý (T0.1), **PostgreSQL cũng là kho dùng chung.** Ghi hồ sơ tài liệu vào đó rồi chỉ hoãn nạp vector là đã vi phạm bất biến. Vùng làm việc của Ingestion phải tách khỏi bảng hồ sơ chính thức.
@@ -213,6 +215,8 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 *Xong khi*: (1) cắt tiến trình **ở từng bước một** rồi chạy lại đều hoàn tất được, không để lại mẩu trỏ tới hồ sơ đã mất; (2) **chạy lệnh xoá hai lần liên tiếp** trên cùng một tài liệu không gây lỗi và không đổi kết quả.
 
 **T2.9 — Hàng việc chăm sóc tri thức.** Ba loại mục: đề nghị quan hệ chờ duyệt, đề nghị bản mới chờ xác nhận, và *"tài liệu này có thể đã lỗi thời"* khi có bản mới ở nơi khác trùng vân tay. Mục thứ ba **không được nêu Space nào, không nêu ai, không nêu ở đâu** — đó chính là cơ chế, không phải chi tiết. *Nguồn*: 06 Mục 5.4 và 5.7.
+
+**Cập nhật 23/9/2026 (PO, 06 Mục 5.4):** đề nghị liên kết nối tài liệu ở hai Space chỉ hiện cho Manager đọc được **cả hai đầu**; Admin luôn thấy. Lúc duyệt, AI kiểm lại cả hai tài liệu còn trong phạm vi quyền của người duyệt. *Xong khi* (bổ sung): Manager chỉ đọc được một đầu **không** thấy đề nghị đó trong hàng việc.
 
 **Cập nhật 21/9 (PO, từ escalation T2.1-E4):** hai cơ chế ở 06 Mục 5.7 (báo Manager các Space giữ bản trùng; bản mới thừa hưởng nhãn/quan hệ) chưa có task rõ chủ — cần gán trước khi triển khai.
 
@@ -244,12 +248,15 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 **T3.6 — Tách bước hiểu câu hỏi khỏi bước trả lời.** Lịch sử hội thoại **chỉ** đi vào bước một — bước biến *"còn điều khoản thứ hai thì sao"* thành một câu hỏi đứng một mình. Bước sinh câu trả lời **chỉ nhận câu hỏi đã đứng một mình cộng tài liệu vừa lấy lại**, không nhận lịch sử. *Nguồn*: 06 Mục 9.4.
 *Xong khi*: hỏi tiếp nối rồi thu hồi quyền giữa chừng — lượt sau không được trả lời bằng nội dung của lượt trước.
 
-**Cập nhật 23/9/2026 (PO, 06 Mục 9.4 v1.10):** lịch sử không còn đọc từ kho của Retrieval. Đầu vào của bước một là **K lượt gần nhất** (câu hỏi + phần chữ câu trả lời) và **trạng thái hội thoại** do Backend gửi kèm lời gọi; đầu ra thêm **trạng thái hội thoại mới** để Backend lưu. Trạng thái là **biểu mẫu** — tài liệu đang nói tới (chỉ `document_id`), chủ đề, đối tượng, mạch câu hỏi — dựng chỉ từ câu hỏi của người dùng và định danh/tên tài liệu được dẫn nguồn, **không đọc phần chữ câu trả lời**. Các `document_id` trong trạng thái được lấy lại và cho qua cùng bộ lọc quyền như kết quả tìm mới. K là khoá cấu hình (nhóm Retrieval) — thiếu khoá thì từ chối chạy, như mọi tham số khác.
-*Xong khi* (bổ sung): (1) trạng thái hội thoại không có trường nào chứa được con số hay trích đoạn — kiểm bằng schema, không bằng đọc đầu ra; (2) tài liệu trong trạng thái mà người hỏi vừa mất quyền → không vào ngữ cảnh lượt sau, không được nhắc tới, nhật ký có ghi việc loại.
+**Cập nhật 23/9/2026 (PO, 06 Mục 9.4 v1.10):** lịch sử không còn đọc từ kho của Retrieval. Đầu vào của bước một là **câu hỏi của K lượt gần nhất** (chỉ câu hỏi người dùng — **không** có phần chữ câu trả lời, chốt 23/9 sau vòng phản biện độc lập) và **trạng thái hội thoại** do Backend gửi kèm lời gọi; đầu ra thêm **trạng thái hội thoại mới** để Backend lưu. Trạng thái là **biểu mẫu** — tài liệu đang nói tới (chỉ `document_id`), chủ đề, đối tượng, mạch câu hỏi — dựng chỉ từ câu hỏi của người dùng và `document_id` của tài liệu được dẫn nguồn, **không đọc phần chữ câu trả lời, không ghi tên văn bản**. Các `document_id` trong trạng thái được cho qua cùng bộ lọc quyền **ngay đầu lượt, trước bước hiểu câu hỏi**. K là khoá cấu hình (nhóm Retrieval) — thiếu khoá thì từ chối chạy, như mọi tham số khác.
+*Xong khi* (bổ sung): (1) trạng thái hội thoại không có trường nào chứa được con số hay trích đoạn — kiểm bằng schema, không bằng đọc đầu ra; (2) tài liệu trong trạng thái mà người hỏi vừa mất quyền → không vào ngữ cảnh lượt sau, không được nhắc tới, nhật ký có ghi việc loại; (3) hỏi → mất quyền → hỏi tiếp: **đầu vào của bước viết lại câu hỏi** không chứa tên văn bản hay con số nào của tài liệu đã mất quyền — kiểm trên dữ liệu đầu vào của bước đó, không kiểm bằng đọc câu trả lời.
 
 **T3.7 — Agent chuyên miền.** Agent **không gắn Space**, không ảnh hưởng việc tìm. Mọi ràng buộc bất khả xâm phạm phải là **bước** bao quanh mô hình, không phải câu trong lời nhắc. Bộ kiểm lúc tạo agent. *Nguồn*: 06 Mục 8.
 
 **T3.8 — Cảnh báo trong câu trả lời.** Năm loại, đều là dữ kiện đưa vào chứ không phải lời dặn mô hình: tài liệu mâu thuẫn nhau; quan hệ chưa đối chiếu xong; tài liệu **đã có bản mới hơn**; hai tài liệu trùng vân tay khác ngày; và **ngày không đáng tin** (nguồn là *mặc định ngày nạp*). *Nguồn*: 06 Mục 5.4, 5.7, 6.3, 6.4.
+
+**Cập nhật 23/9/2026 (PO, 06 Mục 9.5 và 8.4):** (1) mọi cảnh báo **chỉ được tính từ tài liệu đã qua hai bộ lọc cứng của lượt đó** — bản mới hơn ngoài quyền hoặc đã gỡ vì sai thì không cảnh báo. (2) **Dẫn nguồn hợp lệ**: mô hình chỉ được trỏ tới mã của đơn vị đọc đã vào ngữ cảnh lượt đó; AI tự dựng `citations` và tự cắt `excerpt` từ `extracted_text`; có trích dẫn trỏ ra ngoài tập ngữ cảnh thì **không phát** câu trả lời. v1 trả trọn một lần, không phát từng chữ.
+*Xong khi* (bổ sung): mô hình giả trả về trích dẫn tới một mã không có trong ngữ cảnh → câu trả lời bị chặn; bản mới hơn nằm ở Space ngoài quyền → không có cảnh báo `newer_version_exists`.
 
 **T3.9 — Nhật ký điều tra.** Ai hỏi, lúc nào, phạm vi quyền tại thời điểm đó, con trỏ tới các mẩu đã vào ngữ cảnh, tài liệu bị loại kèm lý do trong hai lý do cứng, agent nào được dùng. **Không nguyên văn câu hỏi, không nguyên văn câu trả lời.** Chỉ Admin đọc. *Nguồn*: 06 Mục 9.2.
 
@@ -288,6 +295,8 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 | Lời gọi hỏi thiếu `readable_space_ids` | Từ chối với lỗi, **không** tìm không điều kiện |
 | Tài liệu trong trạng thái hội thoại, người hỏi vừa mất quyền | Không vào ngữ cảnh lượt sau, không được nhắc tới |
 | Thành viên chỉ có ở Space con kế thừa; tài liệu Space cha là họ hàng của kết quả | Không được kéo vào ngữ cảnh |
+| Hỏi → mất quyền → hỏi tiếp | Đầu vào của bước viết lại câu hỏi không chứa tên hay con số của tài liệu đã mất quyền |
+| Mô hình trả trích dẫn tới đơn vị đọc không có trong ngữ cảnh | Không phát câu trả lời |
 
 ---
 

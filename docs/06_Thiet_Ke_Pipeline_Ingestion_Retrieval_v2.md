@@ -2,13 +2,13 @@
 
 | | |
 |---|---|
-| **Phiên bản** | v1.10 |
+| **Phiên bản** | v1.11 |
 | **Ngày** | 23/9/2026 |
 | **Trạng thái** | Bản thiết kế cấp khái niệm — đã chốt phần lớn quyết định, còn một số điểm mở được liệt kê ở Mục 10 |
 | **Người quyết định** | Viet (PO) |
 | **Phạm vi** | Thiết kế lại từ đầu hai service Ingestion và Retrieval. KHÔNG bao gồm schema/hợp đồng dữ liệu — schema là OUTPUT rút ra từ thiết kế này và **đã có ở `07_Hop_Dong_Du_Lieu_Schema_v2.md`**. |
 | **Liên quan** | `01_Kien_Truc_Muc_Tieu.md` (v1.1: **KHÔNG còn đề xuất sửa R4** — xem Mục 7.4), `04_Thiet_Ke_Phan_Quyen_PII.md`, `research/R11_Phan_Quyen.md` |
-| **Lịch sử** | v1.10 — 23/9/2026, theo `10_Hop_Dong_API_Backend_AI_Services.md`: phạm vi Space đọc được do Backend C.Brain tính và gửi kèm từng lượt hỏi (6.2 bước 1); lịch sử hội thoại do Backend lưu, AI Services không giữ trạng thái giữa các lượt, thêm trạng thái hội thoại dạng biểu mẫu (9.1, 9.4); hồ sơ cá nhân hoá ra khỏi kế hoạch phiên bản hiện tại (9.3). v1.9 — sửa câu "thừa hưởng gần trọn điểm" ở 6.2 vì nó mâu thuẫn với ví dụ ba dòng ngay trên, và thêm ràng buộc phép nhân phải áp trên điểm đã chuẩn hoá; ghi giá trị khởi đầu của ngưỡng kéo liên kết ở 5.3; chú thích điểm mở #1 và #2 đã có giá trị khởi đầu. v1.8 — sau vòng kiểm nhất quán và bàn giao (14/9): làm rõ "kết hợp" ở GĐ3 là có thứ tự (cấu trúc quyết định ranh giới, ý nghĩa chỉ chia nhỏ tiếp); biến quy tắc "lấy lại nguồn từ tài liệu" ở 9.4 thành một BƯỚC tách rời thay vì một câu dặn mô hình; sửa một chỗ đếm lệch ở Mục 10. v1.7 — xử lý xong bốn kịch bản pre-mortem còn lại: K1 ghi thành rủi ro tồn dư đã chấp nhận (5.2), K3 mở rộng nguồn đề nghị quan hệ và hoãn cảnh báo có điều kiện (5.3, 6.2), K4 cảnh báo hai chiều lúc Manager thao tác (7.3, đóng điểm mở #13), K5 hai cơ chế bù cho bản sao xuyên Space (5.7). v1.6 — hoãn GĐ4 ở v1 và sửa năm chỗ cho khớp (Mục 3, 5.1, 5.2, 5.5, 6.4); tách ngày ký khỏi ngày hiệu lực, mỗi ngày mang nguồn, trục thời gian chỉ tin ngày có nguồn tin được (6.4, GĐ5); Mục 12 ghi bốn kịch bản pre-mortem còn lại. v1.5 — chốt điểm dừng của chuỗi giai đoạn ở Space riêng (GĐ1) và bất biến "kho dùng chung chỉ chứa thứ đã dùng được"; thêm ghi chú ở NT4 giải thích vì sao "chờ duyệt" không thành bộ lọc cứng thứ ba; viết lại Mục 12 theo trạng thái sau khi rút schema và sau vòng pre-mortem. v1.4 — đóng tám điểm mở quyết định trực tiếp nội dung schema: bản mới của cùng tài liệu và trùng lặp (Mục 5.7 mới), ngưỡng tin cậy liên kết (5.3), quan hệ đọc lúc truy vấn (6.4), nhật ký không lưu nguyên văn câu trả lời (9.2), điểm cắm đo lường (9.6 mới), danh sách định dạng v1 (5.2). v1.3 — phát biểu lại NT2 thành ba ý, bổ sung Mục 5.6 (xoá vĩnh viễn). v1.0 — tổng hợp lần đầu. v1.1 — chốt phạm vi che thông tin cá nhân cho v1, rút đề xuất sửa R4, bổ sung điểm mở từ phản biện. v1.2 — bổ sung Mục 0.1 (bối cảnh tối thiểu để tài liệu đứng độc lập), Mục 6.2 (giới hạn kéo họ hàng + xếp hạng thừa hưởng điểm), Mục 6.5 (trần số lượng tài liệu), Mục 9 (nhật ký và bộ nhớ); sửa các chỗ không nhất quán còn sót |
+| **Lịch sử** | v1.11 — 23/9/2026 (tối), sau vòng phản biện độc lập `docs/10`: câu hỏi các lượt trước chỉ gồm câu hỏi người dùng, trạng thái hội thoại lọc quyền ngay đầu lượt (9.4); đề nghị liên kết xuyên hai Space (5.4); GĐ7 hỏi Backend cấu trúc cây Space (5.3); cảnh báo chỉ tính từ tài liệu đã qua bộ lọc cứng (9.5); định nghĩa dẫn nguồn hợp lệ (8.4); v1 trả trọn câu trả lời một lần (điểm mở #7). v1.10 — 23/9/2026, theo `10_Hop_Dong_API_Backend_AI_Services.md`: phạm vi Space đọc được do Backend C.Brain tính và gửi kèm từng lượt hỏi (6.2 bước 1); lịch sử hội thoại do Backend lưu, AI Services không giữ trạng thái giữa các lượt, thêm trạng thái hội thoại dạng biểu mẫu (9.1, 9.4); hồ sơ cá nhân hoá ra khỏi kế hoạch phiên bản hiện tại (9.3). v1.9 — sửa câu "thừa hưởng gần trọn điểm" ở 6.2 vì nó mâu thuẫn với ví dụ ba dòng ngay trên, và thêm ràng buộc phép nhân phải áp trên điểm đã chuẩn hoá; ghi giá trị khởi đầu của ngưỡng kéo liên kết ở 5.3; chú thích điểm mở #1 và #2 đã có giá trị khởi đầu. v1.8 — sau vòng kiểm nhất quán và bàn giao (14/9): làm rõ "kết hợp" ở GĐ3 là có thứ tự (cấu trúc quyết định ranh giới, ý nghĩa chỉ chia nhỏ tiếp); biến quy tắc "lấy lại nguồn từ tài liệu" ở 9.4 thành một BƯỚC tách rời thay vì một câu dặn mô hình; sửa một chỗ đếm lệch ở Mục 10. v1.7 — xử lý xong bốn kịch bản pre-mortem còn lại: K1 ghi thành rủi ro tồn dư đã chấp nhận (5.2), K3 mở rộng nguồn đề nghị quan hệ và hoãn cảnh báo có điều kiện (5.3, 6.2), K4 cảnh báo hai chiều lúc Manager thao tác (7.3, đóng điểm mở #13), K5 hai cơ chế bù cho bản sao xuyên Space (5.7). v1.6 — hoãn GĐ4 ở v1 và sửa năm chỗ cho khớp (Mục 3, 5.1, 5.2, 5.5, 6.4); tách ngày ký khỏi ngày hiệu lực, mỗi ngày mang nguồn, trục thời gian chỉ tin ngày có nguồn tin được (6.4, GĐ5); Mục 12 ghi bốn kịch bản pre-mortem còn lại. v1.5 — chốt điểm dừng của chuỗi giai đoạn ở Space riêng (GĐ1) và bất biến "kho dùng chung chỉ chứa thứ đã dùng được"; thêm ghi chú ở NT4 giải thích vì sao "chờ duyệt" không thành bộ lọc cứng thứ ba; viết lại Mục 12 theo trạng thái sau khi rút schema và sau vòng pre-mortem. v1.4 — đóng tám điểm mở quyết định trực tiếp nội dung schema: bản mới của cùng tài liệu và trùng lặp (Mục 5.7 mới), ngưỡng tin cậy liên kết (5.3), quan hệ đọc lúc truy vấn (6.4), nhật ký không lưu nguyên văn câu trả lời (9.2), điểm cắm đo lường (9.6 mới), danh sách định dạng v1 (5.2). v1.3 — phát biểu lại NT2 thành ba ý, bổ sung Mục 5.6 (xoá vĩnh viễn). v1.0 — tổng hợp lần đầu. v1.1 — chốt phạm vi che thông tin cá nhân cho v1, rút đề xuất sửa R4, bổ sung điểm mở từ phản biện. v1.2 — bổ sung Mục 0.1 (bối cảnh tối thiểu để tài liệu đứng độc lập), Mục 6.2 (giới hạn kéo họ hàng + xếp hạng thừa hưởng điểm), Mục 6.5 (trần số lượng tài liệu), Mục 9 (nhật ký và bộ nhớ); sửa các chỗ không nhất quán còn sót |
 
 ---
 
@@ -277,7 +277,7 @@ Bước này cũng **trích ngày ký và ngày có hiệu lực từ chính vă
 
 **Dẫn chiếu tường minh** trong văn bản ("sửa đổi Quyết định số X ngày Y"): vẫn qua Manager, nhưng **đánh dấu là chắc chắn** — hiện đầu hàng việc, duyệt nhanh.
 
-**Phạm vi xét**: mở rộng dần, chạy ngầm — bắt đầu từ Space chứa tài liệu, mở rộng dần cho tới khi xác định không nên mở thêm.
+**Phạm vi xét**: mở rộng dần, chạy ngầm — bắt đầu từ Space chứa tài liệu, mở rộng dần cho tới khi xác định không nên mở thêm. *(Cập nhật 23/9/2026: cây Space do Backend C.Brain sở hữu; GĐ7 hỏi Backend cấu trúc cây **ở mỗi vòng quét**, không dùng danh sách quyền của người upload — quan hệ là hiểu biết về nội dung, không phụ thuộc người (NT1). Backend không trả lời thì **hoãn vòng quét**, giữ trạng thái "đang mở rộng", và câu trả lời tự nói "chưa đối chiếu xong" như 5.1 — `10` Mục 7.1.)*
 
 **Hai vai của một liên kết:**
 
@@ -304,6 +304,8 @@ Không đặt ngưỡng riêng cho từng loại quan hệ: Mục 6.2 đã giớ
 Luồng "chăm sóc tri thức" (một trong ba luồng của kiến trúc mục tiêu) từ đây có cơ chế cụ thể, dùng đúng những vai và thao tác đã có, không thêm vai trò mới:
 
 máy phát hiện xung đột / quan hệ → **đưa vào hàng việc của Manager Space đó** → Manager duyệt liên kết, hoặc đánh dấu tài liệu hết hiệu lực, hoặc gỡ tài liệu sai.
+
+> **Đề nghị liên kết nối tài liệu ở hai Space khác nhau — chốt 23/9/2026.** GĐ7 quét dọc cây kế thừa, nên một đề nghị có thể nối tài liệu ở Space con với tài liệu ở Space cha. Đề nghị đó chỉ hiện cho **Manager đọc được cả hai đầu**, và **Admin luôn thấy** để không đề nghị nào nằm mãi không ai duyệt (PO chốt: Admin được xem tên văn bản ở mọi Space cho mục đích quản trị). Lúc duyệt, AI **kiểm lại** cả hai tài liệu còn trong phạm vi quyền của người duyệt. Hiện đề nghị cho Manager chỉ đọc được một đầu là tiết lộ tài liệu ngoài quyền (9.5). Chi tiết: `10` Mục 5.1–5.2.
 
 Song song, khi một câu trả lời phải dựa trên các tài liệu có mâu thuẫn, hệ thống **cảnh báo ngay trong câu trả lời**, nêu rõ có nhiều nguồn và ngày của từng nguồn.
 
@@ -650,7 +652,7 @@ Một hướng dẫn nằm trong prompt **không thể được bảo vệ bằn
 | Chỉ dùng tài liệu người hỏi được đọc | Lọc ngay khi lấy dữ liệu — mô hình không bao giờ nhìn thấy thứ ngoài quyền |
 | Không có nguồn thì không trả lời (R1) | Không tìm được tài liệu nào thì **không gọi mô hình**, trả lời từ chối luôn |
 | Che thông tin theo vai trò *(chưa áp dụng ở v1 — xem Mục 7)* | Khi làm ở phiên bản sau: lọc ngay lúc gom ngữ cảnh, **trước khi mô hình đọc** — lý do ở Mục 7.4 |
-| Luôn dẫn nguồn | Kiểm đầu ra — không có dẫn nguồn hợp lệ thì không phát ra |
+| Luôn dẫn nguồn | Kiểm đầu ra — không có dẫn nguồn hợp lệ thì không phát ra. *"Hợp lệ" — chốt 23/9/2026: mô hình chỉ được trỏ tới mã của đơn vị đọc **đã được đưa vào ngữ cảnh ở chính lượt đó**; AI tự dựng trích dẫn và tự cắt trích đoạn từ `extracted_text`, mô hình không tự viết. Có trích dẫn trỏ ra ngoài tập ngữ cảnh thì không phát. Vì bước kiểm này phải chạy trước khi phát bất kỳ chữ nào, v1 trả trọn câu trả lời một lần (`10` Mục 6.1)* |
 | Cảnh báo khi tài liệu mâu thuẫn | Bước so ngày / quan hệ trước khi sinh, đưa cảnh báo vào như dữ kiện |
 
 Nghĩa là "tầng hệ thống" chủ yếu **không phải là một prompt**, mà là các bước bao quanh mô hình. Phần còn lại nằm trong prompt chỉ hướng dẫn văn phong — và phần đó thì admin ghi đè cũng không gây hại. Cách này cũng xử lý trước nỗi lo về agent do người dùng tự tạo ở tương lai.
@@ -697,7 +699,7 @@ Trường biểu mẫu đề xuất: lĩnh vực chuyên môn; thuật ngữ và
 
 Lý do bắt buộc tách nằm ở hàng "xoá được không". Nhật ký điều tra mà xoá được thì mất giá trị làm chứng; dữ liệu cá nhân mà người dùng không xoá được thì không tôn trọng họ. Gộp làm một kho thì buộc phải hy sinh một trong hai.
 
-**Phạm vi v1**: tập trung hoàn thiện **nhật ký điều tra** và **lịch sử hội thoại**. **Hồ sơ cá nhân hoá KHÔNG nằm trong kế hoạch phiên bản hiện tại — chốt 23/9/2026**; thiết kế ở 9.3 giữ lại làm đặc tả cho phiên bản sau.
+**Phạm vi v1**: tập trung hoàn thiện **nhật ký điều tra** ở phía AI Services; **lịch sử hội thoại** đã chuyển hẳn sang Backend C.Brain — chốt 23/9/2026 (xem khung dưới). **Hồ sơ cá nhân hoá KHÔNG nằm trong kế hoạch phiên bản hiện tại — chốt 23/9/2026**; thiết kế ở 9.3 giữ lại làm đặc tả cho phiên bản sau.
 
 > **Nơi lưu — chốt 23/9/2026.** Ba kho vẫn tách như bảng trên, nhưng không cùng nằm ở AI Services: **nhật ký điều tra** do AI Services (Retrieval) ghi và giữ; **lịch sử hội thoại** do **Backend C.Brain** lưu — Backend vốn đã lưu lịch sử chat, và AI Services **không giữ bản sao nào**. Lý do: có hai bản thì lời hứa "xoá được" ở bảng trên chỉ đúng một nửa — người dùng xoá trên giao diện, bản ở phía kia vẫn còn mà không ai biết. Chi tiết ở 9.4 và `10` Mục 6.1–6.2.
 
@@ -762,13 +764,15 @@ Lượt trước cho biết "họ đang nói về hợp đồng nào"; còn nộ
 
 > **⭐ Nơi lưu lịch sử và trạng thái hội thoại — chốt 23/9/2026.**
 >
-> **Backend C.Brain lưu lịch sử hội thoại; AI Services không giữ trạng thái giữa các lượt.** Mỗi lượt hỏi, Backend gửi sang: câu hỏi mới, **K lượt gần nhất** (câu hỏi và phần chữ của câu trả lời — không kèm trích đoạn tài liệu), và **trạng thái hội thoại** của lượt trước. AI trả về câu trả lời kèm trạng thái hội thoại mới; Backend lưu cả hai. K là tham số cấu hình.
+> **Backend C.Brain lưu lịch sử hội thoại; AI Services không giữ trạng thái giữa các lượt.** Mỗi lượt hỏi, Backend gửi sang: câu hỏi mới, **câu hỏi của K lượt gần nhất** (chỉ câu hỏi người dùng — **không** kèm phần chữ câu trả lời, chốt 23/9/2026 sau vòng phản biện độc lập; lý do ở dưới), và **trạng thái hội thoại** của lượt trước. AI trả về câu trả lời kèm trạng thái hội thoại mới; Backend lưu cả hai. K là tham số cấu hình.
 >
-> **Trạng thái hội thoại là một BIỂU MẪU, không phải bản tóm tắt văn xuôi** — dùng để nối mạch khi cuộc trò chuyện dài hơn K lượt. Ba nhóm trường: *tài liệu đang được nói tới* (chỉ định danh `document_id`), *chủ đề và đối tượng đang bàn*, *mạch câu hỏi người dùng đang theo đuổi*. **Không có ô nào chứa được con số, điều khoản hay trích đoạn.** AI dựng trạng thái này chỉ từ **câu hỏi của người dùng và định danh/tên của tài liệu được dẫn nguồn** — không đọc phần chữ câu trả lời. Cả hai thủ pháp lấy nguyên từ 9.3.
+> **Trạng thái hội thoại là một BIỂU MẪU, không phải bản tóm tắt văn xuôi** — dùng để nối mạch khi cuộc trò chuyện dài hơn K lượt. Ba nhóm trường: *tài liệu đang được nói tới* (chỉ định danh `document_id`), *chủ đề và đối tượng đang bàn*, *mạch câu hỏi người dùng đang theo đuổi*. **Không có ô nào chứa được con số, điều khoản hay trích đoạn.** AI dựng trạng thái này chỉ từ **câu hỏi của người dùng và định danh (`document_id`) của tài liệu được dẫn nguồn** — không đọc phần chữ câu trả lời, và **không ghi tên văn bản** vào trạng thái. Cả hai thủ pháp lấy nguyên từ 9.3.
 >
 > **Vì sao phải chặt như vậy.** Một bản tóm tắt tự do sẽ tích luỹ nội dung tài liệu qua nhiều lượt (*"mức phí đã chốt là ..."*). Gỡ người đó khỏi Space thì tài liệu không còn tìm được, nhưng con số vẫn nằm trong bản tóm tắt, đi vào bước hiểu câu hỏi, được viết lại vào câu hỏi đứng một mình, rồi tới thẳng bước sinh câu trả lời — quyền "tức thì" bị phá qua đường vòng. Đó đúng là cửa sau 9.3 đã phải bịt, chỉ khác là nằm trong một cuộc trò chuyện.
 >
-> **Tài liệu đang được nói tới đi qua kiểm quyền lại mỗi lượt.** Ở lượt sau, AI lấy lại các `document_id` trong trạng thái và cho qua **cùng bộ lọc quyền** với kết quả tìm mới: còn quyền thì được **thêm** vào tập ứng viên (NT2 — phán đoán được thêm, không được loại) và chịu chung trần ở 6.5; mất quyền thì bị loại, không được nhắc tới (9.5), nhật ký ghi việc loại. Mạch được nối bằng cách **lấy lại tài liệu**, không bằng cách mang văn bản theo từng lượt — đúng quy tắc *mỗi lượt lấy lại nguồn* ở trên.
+> **Vì sao câu hỏi các lượt trước cũng chỉ gồm câu hỏi của người dùng — chốt 23/9/2026.** Phần chữ câu trả lời chứa nội dung tài liệu đã diễn đạt lại (*"mức phụ cấp là 2 triệu"*). Đưa nó vào bước hiểu câu hỏi thì con số được viết lại vào câu hỏi đứng một mình, rồi tới bước sinh câu trả lời — cùng cửa sau ở trên, chỉ khác đường vào. Chỉ bỏ trích đoạn là không đủ. *Cái giá*: không nối được tham chiếu chỉ xuất hiện trong câu trả lời (ví dụ một tên riêng người dùng chưa từng gõ); bước hiểu câu hỏi nối mạch bằng các câu hỏi trước cộng trạng thái hội thoại.
+>
+> **Tài liệu đang được nói tới đi qua kiểm quyền lại mỗi lượt.** **Ngay đầu lượt sau — trước mọi bước khác, kể cả bước hiểu câu hỏi —** AI cho các `document_id` trong trạng thái qua **cùng bộ lọc quyền** với kết quả tìm mới (chốt 23/9/2026: lọc muộn hơn thì tên của tài liệu vừa mất quyền có thể lọt vào câu hỏi viết lại): còn quyền thì được **thêm** vào tập ứng viên (NT2 — phán đoán được thêm, không được loại) và chịu chung trần ở 6.5; mất quyền thì bị loại, không được nhắc tới (9.5), nhật ký ghi việc loại. Mạch được nối bằng cách **lấy lại tài liệu**, không bằng cách mang văn bản theo từng lượt — đúng quy tắc *mỗi lượt lấy lại nguồn* ở trên.
 >
 > *Cái giá đã chấp nhận*: mạch hội thoại dài chỉ được nối ở mức "đang nói về tài liệu nào, chủ đề gì", không nhớ chi tiết đã trả lời — chi tiết thì lấy lại từ tài liệu.
 >
@@ -777,6 +781,8 @@ Lượt trước cho biết "họ đang nói về hợp đồng nào"; còn nộ
 ### 9.5 Không nói về tài liệu ngoài quyền
 
 Khi có tài liệu liên quan nhưng người hỏi không có quyền đọc: **không nói gì cả** — trả lời trong phạm vi họ đọc được, không đề cập tới phần còn lại.
+
+**Hệ quả cho cảnh báo — chốt 23/9/2026:** mọi cảnh báo trong câu trả lời (mâu thuẫn, bản mới hơn, trùng bản khác ngày, chưa đối chiếu xong, ngày không đáng tin) **chỉ được tính từ tài liệu đã qua hai bộ lọc cứng của lượt đó**. Ví dụ: bản mới hơn nằm ngoài quyền hoặc đã bị gỡ vì sai thì không cảnh báo "đã có bản mới".
 
 Cái giá đã chấp nhận: người dùng có thể tưởng tri thức đó không tồn tại, và không biết để đi xin quyền.
 
@@ -820,7 +826,7 @@ Tám điểm đầu được đóng trước khi rút schema, vì mỗi cái đ�
 | 2 | **Giá trị cụ thể của trần** — cơ chế đã chốt ở Mục 6.5. ✅ 14/9: **đã có giá trị khởi đầu** (trần 6 tài liệu, cảnh báo ở bội số 3) — xem 07 Mục 3.2. Vẫn để mở vì con số thật cần đo | Không còn chặn việc lập trình |
 | 4 | **Trần và sàn độ dài đơn vị cắt** — cắt theo cấu trúc tạo ra đơn vị dài ngắn rất chênh nhau, gây thiên vị đoạn ngắn khi so khớp. ✅ 22/9: **trần đã có giá trị khởi đầu** (5000 ký tự Unicode — T2.3 bước 2/2, `cat_thanh_mau()` chia nhỏ TIẾP Chunk LÁ vượt trần tại ranh giới đoạn/câu an toàn) — xem 07 Mục 3.2/3.3, khoá `chunk_length_cap`. **Sàn vẫn để mở**, chưa có tham số nào | Không còn chặn việc lập trình (trần); sàn vẫn ảnh hưởng chất lượng tìm kiếm |
 | 5 | **Gộp hạng khi agent mở rộng truy vấn** — với trần số lượng cố định, thêm từ khoá đồng nghĩa với đẩy tài liệu khác ra ngoài. Chỉ giữ được "chỉ thêm, không bớt" nếu chạy cả truy vấn gốc lẫn truy vấn mở rộng rồi gộp hạng | Cần trước khi cho agent góp vào cách tìm |
-| 7 | **Cơ chế truyền tải câu trả lời** — phát từng chữ hay theo khối. Ở v1 không còn bị che PII ràng buộc, nên đây thuần tuý là quyết định trải nghiệm | Thiết kế API và giao diện |
+| 7 | ~~**Cơ chế truyền tải câu trả lời**~~ — ✅ **Đã chốt cho v1 ngày 23/9/2026: trả trọn câu trả lời một lần.** Bước kiểm dẫn nguồn ở 8.4 phải chạy xong trước khi phát bất kỳ chữ nào; phát từng chữ thì hoặc vi phạm ràng buộc đó, hoặc phải giữ lại toàn bộ rồi mới phát (mất lợi ích). Phát từng chữ để phiên bản sau, khi đã đo thời gian chờ thực tế | Không còn mở cho v1 |
 | 12 | Có cho **đổi agent và viết lại** sau khi đọc câu trả lời không | UX |
 | 15 | **Dọn lịch sử hội thoại khi xoá tài liệu** — cơ chế xoá vĩnh viễn đã chốt ở Mục 5.6, nhưng nội dung vẫn còn trong lịch sử hội thoại của người từng hỏi. Cần khi có yêu cầu xoá dữ liệu cá nhân thật sự | Chưa có ở v1, đã ghi là giới hạn |
 
