@@ -68,3 +68,31 @@ accepted_formats:
 #   ngắn và loãng so khớp → nới. Một khối cấu trúc dài (vài trang) vẫn lọt
 #   thành một mẩu duy nhất, so khớp không trúng → siết.
 chunk_length_cap: 5000
+
+# `max_upload_bytes` — cỡ file tối đa AI chịu tải về từ đường dẫn Backend gửi
+# (docs/10 §4.1; PO chốt 24/9/2026). ĐƠN VỊ: BYTE. 104857600 = 100 MB.
+#   (Ghi 100 vào đây là ghi 100 byte, không phải 100 MB — không lỗi nào báo,
+#   chỉ là mọi tài liệu thật đều bị từ chối.)
+# ⚠️ Đếm NGAY TRONG LÚC GHI, vượt thì ngừng tải giữa chừng (`413
+#   FILE_TOO_LARGE`) — docs/10 §3.5: "Ngừng tải ngay khi vượt, không tải hết
+#   rồi mới kiểm". Tin `Content-Length` của bên gửi là không kiểm gì cả.
+# 📣 Đây là con số DUY NHẤT của nhóm này được công bố ra ngoài: docs/10 §3.6
+#   bắt `GET /v1/meta` nêu "cỡ file tối đa". Tám tham số điều chỉnh còn lại
+#   vẫn không đi qua API (docs/10 §2).
+# Dấu hiệu đặt sai (07 Mục 3.2, nguyên văn):
+#   "Người dùng thường xuyên nhận `413 FILE_TOO_LARGE` cho tài liệu có thật
+#   trong kho giấy tờ của họ → nới. Một lần nộp giữ hàng đợi rất lâu và chiếm
+#   hết đĩa tạm → siết"
+max_upload_bytes: 104857600  # ĐƠN VỊ: BYTE (= 100 MB)
+
+# `source_download_timeout_seconds` — trần thời gian tải một file từ đường dẫn
+# có chữ ký (docs/10 §4.1; PO chốt 24/9/2026). ĐƠN VỊ: GIÂY.
+#   Tên khoá mang sẵn đơn vị ở đây, KHÁC `scan_time_budget`: tham số kia có
+#   tên đã chốt trong 07 Mục 3.2 từ 14/9 nên giữ nguyên; tham số này mới, và
+#   "timeout" trần trụi đọc thành giây hay mili giây đều hợp lý như nhau.
+# ⚠️ Quá hạn thì trả `SOURCE_UNREACHABLE` và KHÔNG tạo đối tượng nạp — không
+#   có nhánh "tải được một nửa rồi đi tiếp" (docs/10 §4.1).
+# Dấu hiệu đặt sai (07 Mục 3.2, nguyên văn):
+#   "`SOURCE_UNREACHABLE` xuất hiện với file lớn mà tải tay vẫn được → nới.
+#   Lời gọi nộp tài liệu treo lâu rồi mới báo lỗi → siết"
+source_download_timeout_seconds: 120  # ĐƠN VỊ: GIÂY

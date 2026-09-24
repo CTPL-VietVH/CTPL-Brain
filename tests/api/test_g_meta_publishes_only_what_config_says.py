@@ -34,7 +34,16 @@ from conftest import TEST_SERVICE_KEY
 from fake_backend import FakeBackend
 from schema.version import LOCAL_SCHEMA_VERSION
 
-#: The nine tuning parameters of 07 Mục 3.2 — none of them may appear here.
+#: Ten of the eleven parameters of 07 Mục 3.2 — none of them may appear here.
+#:
+#: ⭐ The eleventh, `max_upload_bytes`, is deliberately ABSENT from this set:
+#: docs/10 §3.6 REQUIRES `/v1/meta` to publish *"cỡ file tối đa"*, so Backend
+#: can stop an upload it already knows will come back `413`. That is not a
+#: hole in docs/10 §2 (*"Cấu hình mô hình và tham số ... Không qua API"*) —
+#: the value is still changed only by editing `config/ingestion.yaml`; this
+#: endpoint merely reads it out. Its sibling
+#: `source_download_timeout_seconds` IS in the set: how patient AI is with
+#: Backend's object store is nothing Backend can act on.
 TUNING_PARAMETER_NAMES = frozenset(
     {
         "inheritance_decay",
@@ -46,6 +55,7 @@ TUNING_PARAMETER_NAMES = frozenset(
         "scan_pair_budget",
         "scan_time_budget",
         "chunk_length_cap",
+        "source_download_timeout_seconds",
     }
 )
 

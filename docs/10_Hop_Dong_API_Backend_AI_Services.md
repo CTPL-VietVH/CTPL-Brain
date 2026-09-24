@@ -2,9 +2,9 @@
 
 | | |
 |---|---|
-| **Phiên bản** | v0.5 — **BẢN NHÁP** (Cowork soạn 23/9/2026, sửa 24/9/2026) |
-| **Lịch sử** | v0.5 — 24/9/2026, sau khi dựng khung FastAPI (task API-khung-fastapi-va-be-gia), PO chốt: khoá dịch vụ T1 là biến môi trường `CBRAIN_API_SERVICE_KEY`, không nằm trong `config/`; `GET /v1/meta` vẫn đòi xác thực dịch vụ; thêm 4 mã lỗi tầng vận chuyển ở §3.5; thiếu `Idempotency-Key` trên lời gọi ghi thì từ chối; ghi nhận hai chỗ khung chưa đạt hợp đồng (xoá Space chạy đồng bộ, chưa đếm số tài liệu đã xoá) ở §4.0; thêm Q10 ở §8. v0.4 — 23/9/2026 (khuya), PO chốt: T4; đăng ký Space khi BE tạo Space (AI chỉ biết `space_id` tồn tại, không lưu cây); xoá Space (§4.0); xoá tài liệu chỉ theo `document_id`. Đóng Q4 (phần xoá/tạo Space). v0.3 — 23/9/2026 (tối), sau vòng phản biện độc lập (REVIEW-10) và nghiên cứu phương án (RESEARCH-10), PO chốt: `recent_turns` chỉ gồm câu hỏi người dùng; lọc trạng thái hội thoại ngay đầu lượt; Q1 liên kết xuyên Space; Q2 AI hỏi BE cây Space mỗi vòng quét; Q6 trả trọn một lần; định nghĩa dẫn nguồn hợp lệ; cảnh báo chỉ tính từ tài liệu đã qua bộ lọc cứng. Thêm `GET /v1/meta`. Sửa nhãn nguồn theo phản biện. Đã sửa theo: 06 v1.11, 08 v1.5. v0.2 — 23/9/2026, PO chốt: T1–T3 ở §1; lịch sử hội thoại do BE lưu, AI không giữ trạng thái giữa các lượt, thêm trạng thái hội thoại dạng biểu mẫu (§6.1–6.2); hồ sơ cá nhân hoá ra khỏi phiên bản hiện tại. Đã sửa theo: 06 v1.10, 07 v1.10, 08 v1.4, 09 (ghi chú), CLAUDE.md. v0.1 — bản nháp đầu |
-| **Trạng thái** | Đã chốt: §1 T1–T4, §2, §4.0, §5.1–5.2, §5.6, §6.1–6.2, §7.1. Còn chờ PO: T5–T6 ở §1, các mục **[Đề xuất]**, và các điểm mở còn lại ở §8 (Q3, Q4 phần đổi loại Space, Q5, Q7, Q8) |
+| **Phiên bản** | v0.6 — **BẢN NHÁP** (Cowork soạn 23/9/2026, sửa 24/9/2026) |
+| **Lịch sử** | v0.6 — 24/9/2026 (chiều), PO chốt: **Q5 — file đi bằng tham chiếu** (BE gửi đường dẫn có chữ ký, hạn ngắn, trỏ vào MinIO nơi FE đã lưu file), sửa §4.1 và §2; duyệt 9 escalation của kế hoạch API-nap-tai-lieu-va-chay-nen: `ingestion_id` khác `document_id`; `tenant_id` là biến môi trường; thân phản hồi `DELETE /v1/spaces` = thân `GET`; mã lỗi mới ở §3.5; tên và số hiệu văn bản do AI gợi ý, không thêm vào lời gọi của BE. v0.5 — 24/9/2026, sau khi dựng khung FastAPI (task API-khung-fastapi-va-be-gia), PO chốt: khoá dịch vụ T1 là biến môi trường `CBRAIN_API_SERVICE_KEY`, không nằm trong `config/`; `GET /v1/meta` vẫn đòi xác thực dịch vụ; thêm 4 mã lỗi tầng vận chuyển ở §3.5; thiếu `Idempotency-Key` trên lời gọi ghi thì từ chối; ghi nhận hai chỗ khung chưa đạt hợp đồng (xoá Space chạy đồng bộ, chưa đếm số tài liệu đã xoá) ở §4.0; thêm Q10 ở §8. v0.4 — 23/9/2026 (khuya), PO chốt: T4; đăng ký Space khi BE tạo Space (AI chỉ biết `space_id` tồn tại, không lưu cây); xoá Space (§4.0); xoá tài liệu chỉ theo `document_id`. Đóng Q4 (phần xoá/tạo Space). v0.3 — 23/9/2026 (tối), sau vòng phản biện độc lập (REVIEW-10) và nghiên cứu phương án (RESEARCH-10), PO chốt: `recent_turns` chỉ gồm câu hỏi người dùng; lọc trạng thái hội thoại ngay đầu lượt; Q1 liên kết xuyên Space; Q2 AI hỏi BE cây Space mỗi vòng quét; Q6 trả trọn một lần; định nghĩa dẫn nguồn hợp lệ; cảnh báo chỉ tính từ tài liệu đã qua bộ lọc cứng. Thêm `GET /v1/meta`. Sửa nhãn nguồn theo phản biện. Đã sửa theo: 06 v1.11, 08 v1.5. v0.2 — 23/9/2026, PO chốt: T1–T3 ở §1; lịch sử hội thoại do BE lưu, AI không giữ trạng thái giữa các lượt, thêm trạng thái hội thoại dạng biểu mẫu (§6.1–6.2); hồ sơ cá nhân hoá ra khỏi phiên bản hiện tại. Đã sửa theo: 06 v1.10, 07 v1.10, 08 v1.4, 09 (ghi chú), CLAUDE.md. v0.1 — bản nháp đầu |
+| **Trạng thái** | Đã chốt: §1 T1–T4, §2, §4.0, §5.1–5.2, §5.6, §6.1–6.2, §7.1. Còn chờ PO: T5–T6 ở §1, các mục **[Đề xuất]**, và các điểm mở còn lại ở §8 (Q3, Q4 phần đổi loại Space, Q7, Q8, Q10). §4.1 cách truyền file đã chốt 24/9 |
 | **Nguồn chân lý** | `06` v1.12, `07` v1.10, `08` v1.6 — tài liệu này **không** được đổi quyết định nào trong ba tài liệu đó; chỗ nào cần đổi thì ghi ở §9 |
 | **Phạm vi** | Mọi lời gọi giữa Backend C.Brain (BE) và AI Services, theo **cả hai chiều**. Lấp đúng khoảng trống mà `07` Mục 0 loại trừ và `08` T2.10 yêu cầu phải chốt tường minh |
 
@@ -57,7 +57,7 @@ Rút từ trao đổi ngày 23/9/2026. Viet nêu hai ý: AI Services chỉ nhậ
 | Tài khoản, nhóm, thành viên nhóm | BE | Chỉ `user_id` trong từng lời gọi |
 | Danh sách `space_id` đã đăng ký + trạng thái (đang dùng / đang xoá / đã xoá) | AI (chốt 23/9) | BE đăng ký và xoá qua §4.0. **Chỉ sự tồn tại** — không cây, không cờ, không thành viên |
 | Cây Space, cờ kế thừa, loại Space, thành viên và vai trò | BE | Trong từng lời gọi: phạm vi đọc được. Ngoài lời gọi: API cấu trúc Space (§7.1), chỉ phục vụ GĐ7 |
-| File gốc | BE, hoặc nơi công ty lưu file (06 §5.6: C.Brain không phải kho file) | AI nhận file để đọc, **không lưu file gốc**, chỉ giữ `extracted_text` |
+| File gốc | BE — nằm ở MinIO, nơi FE đã lưu khi người dùng tải lên (06 §5.6: C.Brain không phải kho file) | AI **tải về qua đường dẫn có chữ ký BE cấp** (§4.1), chỉ để đọc chữ; xoá bản tạm ngay sau khi đọc xong. **Không lưu file gốc**, chỉ giữ `extracted_text`. AI **không** cầm tài khoản MinIO |
 | `document`, `chunk`, `relation`, `pending_version_claim`, vùng đệm tiền kiểm | AI | Đọc và ghi qua §4–§5 |
 | Nhật ký xoá, nhật ký điều tra | AI | Admin đọc qua §6.4 |
 | Lịch sử hội thoại | **BE** (chốt 23/9) | AI nhận **câu hỏi** của K lượt gần nhất trong từng lời gọi hỏi, không lưu (§6.1) |
@@ -65,7 +65,7 @@ Rút từ trao đổi ngày 23/9/2026. Viet nêu hai ý: AI Services chỉ nhậ
 | Hồ sơ cá nhân hoá (06 §9.3) | — | **Không có ở phiên bản hiện tại** (chốt 23/9) |
 | Định nghĩa agent chuyên miền | AI (07 §4) | Admin quản lý qua §6.3 |
 | Cấu hình mô hình và tham số | AI (07 §3) | **Không qua API.** Chỉ đổi bằng file cấu hình. Cố ý không đưa lên giao diện quản trị |
-| `tenant_id` | Cấu hình cài đặt (R6: mỗi khách hàng một bản) | **Không truyền theo từng lời gọi** |
+| `tenant_id` | Cấu hình cài đặt (R6: mỗi khách hàng một bản) | **Không truyền theo từng lời gọi.** Bản cài v1 (chốt 24/9): biến môi trường `CBRAIN_TENANT_ID`, thiếu thì từ chối khởi động — cùng loại tham số triển khai với khoá dịch vụ T1 |
 
 ---
 
@@ -120,6 +120,10 @@ Mọi lỗi có mã máy đọc được (`code`) và thông điệp tiếng Vi�
 | `UNAUTHENTICATED` | 401 | Thiếu hoặc sai khoá dịch vụ. *Thêm 24/9* | T1 |
 | `IDEMPOTENCY_KEY_MISSING` | 400 | Lời gọi ghi thiếu `Idempotency-Key`. *Thêm 24/9* | §3.4 |
 | `IDEMPOTENCY_KEY_REUSED` | 422 | Cùng `Idempotency-Key` nhưng thân lời gọi khác lần đầu. *Thêm 24/9* | §3.4 |
+| `SOURCE_UNREACHABLE` | 422 | Không tải được file từ đường dẫn BE gửi: hết hạn, bị từ chối, quá thời gian. *Thêm 24/9* | §4.1 |
+| `SOURCE_INTEGRITY_MISMATCH` | 422 | File tải về lệch `sha256` hoặc `size_bytes` BE khai. *Thêm 24/9* | §4.1 |
+| `FILE_TOO_LARGE` | 413 | Vượt cỡ file tối đa (công bố ở `/v1/meta`). Ngừng tải ngay khi vượt, không tải hết rồi mới kiểm. *Thêm 24/9* | §4.1, §3.6 |
+| `DOCUMENT_NOT_STRUCTURABLE` | — (trả trong `code` của §4.2) | Đọc được file nhưng không cắt hoặc tạo vector được (ví dụ một mẩu vượt trần ngữ cảnh mô hình). Không cắt ngầm. *Thêm 24/9* | 08 T2.3, T2.5 |
 | `INTERNAL_ERROR` | 500 | Lỗi không lường trước. Luôn trả đúng dạng `code` + `message`, không lộ traceback. *Thêm 24/9* | — |
 
 Ngoài lỗi còn có các trạng thái **không phải lỗi nhưng phải hiển thị được**: từ chối theo R1, chạm trần, chưa đối chiếu xong. Các trạng thái này nằm trong thân phản hồi (§6.1), không nằm trong mã lỗi.
@@ -149,7 +153,7 @@ API **không bắt BE hay giao diện tự cắt chuỗi**. Mọi trích dẫn t
 3. Xoá các tài liệu còn trong vùng đệm tiền kiểm của Space, và các mục hàng việc thuộc Space.
 4. Chuyển Space sang *đã xoá*.
 
-`GET /v1/spaces/{space_id}` — trạng thái và tiến độ (số tài liệu đã xoá / còn lại). Gọi `DELETE` lần hai: trả tiến độ hiện tại, không lỗi, không xoá lặp.
+`GET /v1/spaces/{space_id}` — trạng thái và tiến độ (số tài liệu đã xoá / còn lại). Gọi `DELETE` lần hai: trả tiến độ hiện tại, không lỗi, không xoá lặp. **Thân phản hồi của `DELETE` (202) giống hệt thân của `GET`** (chốt 24/9), để BE chỉ phải hiểu một dạng.
 
 > **Khung code 24/9 chưa đạt hai điểm của mục này** (đã ghi vào TASKS.md, phải xong trước khi chạm dữ liệu thật): (1) `DELETE` đang chạy **đồng bộ** trong lời gọi vì repo chưa có bộ chạy nền, nên Space nhiều tài liệu sẽ giữ lời gọi rất lâu; (2) `GET` chưa trả được số tài liệu **đã xoá**, chỉ trả số còn lại. Cùng đợt đó phải thay kho idempotency trong bộ nhớ bằng kho bền.
 
@@ -160,15 +164,22 @@ API **không bắt BE hay giao diện tự cắt chuỗi**. Mọi trích dẫn t
 
 Tám thao tác ghi của con người mà thiết kế nêu được liệt kê trọn ở §4 và §5. `08` T2.10 hiện chỉ đếm 5. Ba thao tác thiếu được đánh dấu ★.
 
-### 4.1 Nộp tài liệu — `POST /v1/ingestions` (multipart)
+### 4.1 Nộp tài liệu — `POST /v1/ingestions` — file đi bằng tham chiếu, chốt 24/9/2026
 
 | | |
 |---|---|
 | **Ai** | `acting_as ∈ {contributor, manager}` ở `space_id`. `space_id` phải đã đăng ký và đang dùng (§4.0), nếu không trả `404 SPACE_NOT_REGISTERED` / `409 SPACE_BEING_DELETED` (06 §0.1: Contributor = đọc + đưa tài liệu vào) |
-| **Vào** | `file` · `space_id` · `space_is_private` (bool, loại Space *tại thời điểm nộp*) · `declared_previous_document_id` (tuỳ chọn, người upload khai "đây là bản mới của X") · `actor` |
+| **Vào** | `source = { url, sha256, size_bytes, filename, content_type }` · `space_id` · `space_is_private` (bool, loại Space *tại thời điểm nộp*) · `declared_previous_document_id` (tuỳ chọn, người upload khai "đây là bản mới của X") · `actor` |
 | **Ra** | `202` · `{ ingestion_id, status: "processing" }` |
 | **Truy về** | 06 §5.2 GĐ1, §5.7; 08 T2.1, T2.7 |
 
+- **File đi bằng tham chiếu** (Q5, PO chốt 24/9). Lý do PO nêu: FE đã lưu file lên MinIO lúc người dùng tải lên, nên gửi nguyên file sẽ khiến file đi mạng hai lần qua BE. Cách làm:
+  - `url` là **đường dẫn có chữ ký, hạn ngắn** (presigned GET) do BE sinh cho đúng một file. AI chỉ gọi HTTP GET, không dùng thư viện MinIO, không cầm tài khoản MinIO — BE vẫn là bên quyết ai đọc được gì (T2).
+  - **Thứ tự trong lời gọi, trước khi trả 202:** xác thực → kiểm thân → kiểm Space (§4.0) **trước khi tải byte nào** → tải thẳng ra file tạm, đếm byte khi ghi, vượt cỡ tối đa thì ngừng ngay (`413 FILE_TOO_LARGE`) → so `sha256` và `size_bytes` (lệch → `SOURCE_INTEGRITY_MISMATCH`) → tạo đối tượng nạp → trả 202. Tải trong lời gọi chứ không để cho bộ chạy nền, vì hàng đợi dài sẽ làm đường dẫn hết hạn.
+  - Không tải được → `SOURCE_UNREACHABLE`, không tạo đối tượng nạp, không còn file tạm.
+  - AI **không lưu `url`** ở bất cứ đâu (nhật ký, bảng, thông báo lỗi) — đường dẫn có chữ ký là một thứ quyền tạm thời. Bản tạm bị xoá ngay sau khi đọc xong chữ, kể cả khi từ chối giữa chừng.
+  - **Mạng:** AI Services phải với tới MinIO của bản cài. Đây là một dòng trong checklist triển khai.
+- `declared_previous_document_id` không tồn tại hoặc không nằm ở `space_id` này → từ chối `OBJECT_NOT_IN_SPACE`. **Không được** im lặng coi như tài liệu mới.
 - **Chạy bất đồng bộ** [Đề xuất]: GĐ2 phải đọc xong file mới biết trùng hay không (vân tay tính sau khi đọc chữ, 08 T2.1 cập nhật 19/9). GĐ6–GĐ7 còn lâu hơn nữa.
 - `space_is_private = true` thì chạy GĐ2, GĐ3, GĐ5 rồi dừng ở vùng đệm (T2.7). Ngược lại thì chạy trọn và ghi vào kho. **Luật "Space riêng thì tiền kiểm" nằm ở AI. BE chỉ gửi sự thật về loại Space.**
 - Vì sao BE gửi cờ này thay vì để AI tự tra: T2 (AI không giữ và không tra cây Space trong lời gọi của người dùng).
@@ -186,7 +197,9 @@ Tám thao tác ghi của con người mà thiết kế nêu được liệt kê 
 | `active` | đã vào kho dùng chung | `document_id`, `suggestions`, `relations_scan_state` |
 | `failed` | lỗi kỹ thuật | `code` |
 
-`suggestions` gồm `category_labels`, `issued_date` + `issued_date_source`, `effective_date` + `effective_date_source`, `title`, `doc_number`. Đây là đầu vào cho màn hình "máy gợi ý, người xác nhận" (06 §5.2 GĐ5).
+`ingestion_id` và `document_id` là **hai định danh khác nhau** (chốt 24/9): đối tượng nạp có thể kết thúc mà không sinh tài liệu (`rejected`, `duplicate`, `failed`). `duplicate` là một trạng thái duy nhất trên dây, dù bản trùng nằm ở kho dùng chung hay ở vùng đệm tiền kiểm; AI phân biệt hai trường hợp trong nhật ký nội bộ.
+
+`suggestions` gồm `category_labels`, `issued_date` + `issued_date_source`, `effective_date` + `effective_date_source`, `title`, `doc_number`. Đây là đầu vào cho màn hình "máy gợi ý, người xác nhận" (06 §5.2 GĐ5). `title` và `doc_number` do AI gợi ý (07 §2.1: nguồn là Ingestion, người sửa được qua §4.3) — BE **không** gửi chúng khi nộp. Khi bộ trích hai trường này chưa có, AI trả `null`, **không** lấy tên file giả làm tên văn bản.
 
 > Không có trường `publication_state` trong `document` (07 §2.1: mọi thứ trong kho đều đã dùng được). Trạng thái chờ duyệt chỉ tồn tại **trên đối tượng nạp**, không trên hồ sơ tài liệu. Hai khái niệm này tách rời nhau là có chủ ý.
 
@@ -418,7 +431,7 @@ Dùng kiểu kéo (BE hỏi theo con trỏ) thay vì đẩy (AI gọi webhook), 
 | ~~Q2~~ | — | ~~GĐ7 lấy cấu trúc Space bằng cách nào~~ | **Đã chốt 23/9** — AI hỏi BE mỗi vòng quét, xem §7.1 |
 | Q3 | TB | Tài liệu bị Manager từ chối ở tiền kiểm: bỏ khỏi vùng đệm ngay, hay giữ dấu vết ai từ chối và vì sao? | 06 §5.2 chỉ mô tả đường được duyệt. |
 | Q4 | TB | ~~Xoá Space~~ — **đã chốt 23/9, xem §4.0.** Còn lại: đổi Space riêng ↔ kế thừa khi còn tài liệu trong vùng đệm tiền kiểm — tài liệu đó vẫn chờ duyệt, hay được thả ra? | 06 §5.2 chỉ nói trạng thái ban đầu theo loại Space *lúc nộp* (§4.1 gửi `space_is_private`). |
-| Q5 | TB | File đi sang AI bằng cách nào: gửi nguyên file trong lời gọi (khuyến nghị cho v1, ít phụ thuộc nhất) hay gửi tham chiếu tới kho lưu chung? | Hệ cũ dùng Kafka + MinIO. 07 Mục 0 để việc này cho lúc tráo v2 vào. |
+| ~~Q5~~ | — | ~~File đi sang AI bằng cách nào?~~ | **Đã chốt 24/9** — tham chiếu qua đường dẫn có chữ ký tới MinIO, xem §4.1 |
 | ~~Q6~~ | — | ~~Phát từng chữ hay trả trọn?~~ | **Đã chốt 23/9** — v1 trả trọn một lần, xem §6.1 |
 | Q7 | TB | Hỏi theo mốc thời gian (06 §4): người dùng chọn mốc bằng tham số tường minh `as_of`, hay hệ thống tự hiểu từ câu hỏi, hay cả hai? | 06 §4 chốt "phải lùi về được" nhưng không chốt cách người dùng nói ra mốc đó. |
 | Q8 | THẤP | `notified_uploader`/`notified_manager` (07 §2.4) nghĩa là "AI đã phát sự kiện" hay "người đã thật sự được báo"? | Dưới §7.2, AI chỉ biết vế đầu. |
@@ -441,6 +454,9 @@ Dùng kiểu kéo (BE hỏi theo con trỏ) thay vì đẩy (AI gọi webhook), 
 | `08` T2.10, T3.1, T3.3, T3.6, T3.10, T4.2, Phần E | Như ghi ở từng hạng mục | ✅ 08 v1.4 |
 | `09` | Ước lượng lại (T3.10 rút ra; tầng API phát sinh) | ⚠️ Đã ghi chú, **chưa tính lại số** |
 | `CLAUDE.md` | Thêm tài liệu 10 vào bảng nguồn; thêm mục "Ranh giới với Backend C.Brain" | ✅ |
+| **Đội Backend C.Brain** | Sinh đường dẫn có chữ ký, hạn ngắn cho từng file trên MinIO; gửi kèm `sha256` và `size_bytes` (§4.1). Bảo đảm mạng từ AI Services tới MinIO | ⏳ báo đội BE |
+| `07` Mục 3.2, Mục 4 | Đối tượng nạp (`ingestion_record`) thuộc Ingestion; hai tham số cỡ file tối đa và thời gian tải tối đa | ⏳ bước A của API-nap-tai-lieu-va-chay-nen (qua `schema-guardian`) |
+| `08` T2.4 | Thêm gợi ý `title`, `doc_number` theo khuôn GĐ5 — hiện chưa hạng mục nào trích hai trường này | ⏳ PO giao task riêng |
 | `TASKS.md` | E2 của T2.8 đổi lý do đóng: đóng nhờ T1+T2+T4, không phải vì "bên gọi tự lo" | ⏳ |
 
 ---

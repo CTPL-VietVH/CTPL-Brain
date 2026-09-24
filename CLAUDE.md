@@ -169,7 +169,7 @@ Mỗi dòng là một việc **trông hợp lý, gọn gàng hơn, và sai**. C�
 4. **`docs/07` ghi lý do; file cấu hình có thẩm quyền lúc chạy.** Bảng 3.2 ghi *giá trị khởi đầu*, không phải trạng thái hiện hành.
 5. ⛔ **Không con số cứng trong mã.** Đây là **R5** mở rộng từ mô hình sang mọi tham số điều chỉnh.
 
-### Chín giá trị khởi đầu (chốt 14/9/2026 — chi tiết + dấu hiệu đặt sai: `docs/07` Mục 3.2)
+### Mười một giá trị khởi đầu (chốt 14/9/2026 — chi tiết + dấu hiệu đặt sai: `docs/07` Mục 3.2)
 
 | Tham số | Giá trị | Service |
 |---|---|---|
@@ -182,6 +182,8 @@ Mỗi dòng là một việc **trông hợp lý, gọn gàng hơn, và sai**. C�
 | `scan_pair_budget` | **500** cặp/tài liệu | Ingestion |
 | `scan_time_budget` | **10** phút/tài liệu | Ingestion |
 | `chunk_length_cap` | **5000** ký tự Unicode/mẩu (chốt 21/9/2026, Điểm mở #4) | Ingestion |
+| `max_upload_bytes` | **104857600** byte = 100 MB (chốt 24/9/2026, `docs/10` §4.1) — con số DUY NHẤT của bảng này được công bố qua `GET /v1/meta` | Ingestion |
+| `source_download_timeout_seconds` | **120** giây/file (chốt 24/9/2026, `docs/10` §4.1) | Ingestion |
 
 > Giả định nằm dưới cả bảng: **kho cỡ vài nghìn tài liệu**. Lớn hơn một bậc thì `cap_warning_multiple`, `scan_pair_budget`, `scan_time_budget` phải tính lại.
 

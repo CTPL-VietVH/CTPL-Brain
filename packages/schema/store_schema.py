@@ -1,4 +1,7 @@
-"""Persistent shape of the three shared entities (07 Mục 2, 08 T2.7).
+"""Persistent shape of the three shared entities (07 Mục 2, 08 T2.7), plus the
+Ingestion-owned tables that were added to PostgreSQL after them:
+`deletion_log` (06 Mục 5.6), `space_registry` and `ingestion_record` (docs/10
+§4.0, §4.1 — listed in 07 Mục 4 as living outside the shared contract).
 
 Table names, column names and DDL for the OFFICIAL stores — the first time
 this project writes any of them down. Exported as constants for the same
@@ -66,6 +69,9 @@ __all__ = [
     "DOCUMENT_INDEXES_DDL",
     "DOCUMENT_TABLE",
     "DOCUMENT_TABLE_DDL",
+    "INGESTION_RECORD_INDEXES_DDL",
+    "INGESTION_RECORD_TABLE",
+    "INGESTION_RECORD_TABLE_DDL",
     "RELATION_FROM_DOCUMENT_FK",
     "RELATION_INDEXES_DDL",
     "RELATION_PAIR_TYPE_CONSTRAINT",
@@ -101,6 +107,13 @@ DELETION_LOG_TABLE = "deletion_log"
 #: `inherits_from_parent` column here would be the frozen copy of a live flag
 #: that NT3 forbids and that `schema/space_registry.py` explains at length.
 SPACE_REGISTRY_TABLE = "space_registry"
+
+#: One row per `POST /v1/ingestions` (docs/10 §4.1, §4.2) — and the work queue
+#: the single background worker reads. ⛔ FOUR things this table may never
+#: carry, each for its own reason: the presigned `url`, any permission signal
+#: of the caller, `space_is_private`, and document content. The full argument
+#: is in `schema/ingestion_record.py`; read it before adding a column.
+INGESTION_RECORD_TABLE = "ingestion_record"
 
 
 # Constraint names, exported for the same reason the table names are: an error
@@ -303,6 +316,61 @@ CREATE TABLE IF NOT EXISTS {SPACE_REGISTRY_TABLE} (
 # maybe hundreds — and every read is a point lookup by `space_id`.
 
 
+INGESTION_RECORD_TABLE_DDL = f"""
+CREATE TABLE IF NOT EXISTS {INGESTION_RECORD_TABLE} (
+    ingestion_id                  text        NOT NULL PRIMARY KEY,
+    space_id                      text        NOT NULL,
+    tenant_id                     text        NOT NULL,
+    status                        text        NOT NULL,
+    submitted_by                  text        NOT NULL,
+    submitted_at                  timestamptz NOT NULL,
+    updated_at                    timestamptz NOT NULL,
+    requires_pre_approval         boolean     NOT NULL,
+    staged_filename               text,
+    declared_previous_document_id text,
+    document_id                   text,
+    existing_document_id          text,
+    code                          text
+)
+"""
+# ⚠️ **NO foreign key on `document_id`**, and it is the same decision
+# `DELETION_LOG_TABLE` makes: this row must OUTLIVE the document it names. A
+# document ingested here can be permanently deleted later (06 Mục 5.6), and a
+# cascading FK would erase the record that the ingestion ever happened.
+# `declared_previous_document_id` and `existing_document_id` are unreferenced
+# for the same reason, plus one more — both may name a document that was
+# already gone when the row was written, and the honest answer then is the
+# refusal in `code`, not a failed INSERT.
+#
+# `status` and `code` are plain `text`, no CHECK constraint, exactly as
+# `space_registry.state` and `document.relations_scan_state` are: the allowed
+# values live in ONE place — `IngestionStatus` / `IngestionFailureCode` in
+# `schema/ingestion_record.py` — and a CHECK listing them here would be the
+# second spelling CLAUDE.md Mục 6 exists to prevent.
+#
+# ⛔ There is no `url` column, no `acting_as`, no `space_is_private` and no
+# `extracted_text`. Each of those four is forbidden for its own reason — see
+# `schema/ingestion_record.py`, which states them.
+
+INGESTION_RECORD_INDEXES_DDL = (
+    # The queue read, and the ONLY one the worker makes: oldest unfinished job
+    # first. `status` leads because both readers start from it — the worker
+    # claiming the next `queued` row, and the startup sweep that finds every
+    # `running` row left by a process that died (PO chốt 24/9: with exactly one
+    # worker, such a row is orphaned by definition).
+    f"""
+CREATE INDEX IF NOT EXISTS ingestion_record_queue_idx
+    ON {INGESTION_RECORD_TABLE} (status, submitted_at)
+""",
+    # docs/10 §4.5 — *"Danh sách chờ duyệt"* per Space, and the T4 check on
+    # `GET /v1/ingestions/{{id}}?space_id=`. Both read by Space first.
+    f"""
+CREATE INDEX IF NOT EXISTS ingestion_record_space_idx
+    ON {INGESTION_RECORD_TABLE} (space_id, status)
+""",
+)
+
+
 #: Everything, in dependency order — `relation` references `document`, so the
 #: document table must exist first.
 SHARED_STORE_DDL = (
@@ -313,4 +381,6 @@ SHARED_STORE_DDL = (
     DELETION_LOG_TABLE_DDL,
     *DELETION_LOG_INDEXES_DDL,
     SPACE_REGISTRY_TABLE_DDL,
+    INGESTION_RECORD_TABLE_DDL,
+    *INGESTION_RECORD_INDEXES_DDL,
 )

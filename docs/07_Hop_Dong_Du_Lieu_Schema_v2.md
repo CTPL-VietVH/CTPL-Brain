@@ -293,9 +293,9 @@ Cấu hình này phải đọc được từ bên ngoài mã nguồn (**R5** —
 
 ---
 
-### 3.2 Chín giá trị tham số — CHỐT 14/9/2026
+### 3.2 Mười một giá trị tham số — CHỐT 14/9/2026
 
-Chín con số dưới đây trước nay chỉ có **cơ chế**, không có **giá trị**, vì đều ghi là "cần đo trên dữ liệu thật". Nhưng Mục 9.6 của tài liệu 06 chốt v1 không phát sự kiện đo lường nào — nên sẽ không có dữ liệu thật để đo, và vẫn phải có người điền số.
+Mười một con số dưới đây trước nay chỉ có **cơ chế**, không có **giá trị**, vì đều ghi là "cần đo trên dữ liệu thật". Nhưng Mục 9.6 của tài liệu 06 chốt v1 không phát sự kiện đo lường nào — nên sẽ không có dữ liệu thật để đo, và vẫn phải có người điền số.
 
 Vì vậy mỗi giá trị đi kèm **một dấu hiệu con người nhìn thấy được**. Đó không phải phần trang trí: khi không có dòng số liệu nào, dấu hiệu quan sát bằng mắt là cách duy nhất biết mình đặt sai.
 
@@ -310,14 +310,22 @@ Vì vậy mỗi giá trị đi kèm **một dấu hiệu con người nhìn th�
 | `scan_pair_budget` — trần số cặp đối chiếu mỗi tài liệu mới | **500** | Ingestion | Thường xuyên chạm trần trước khi bão hoà → kho đã lớn hơn giả định thiết kế |
 | `scan_time_budget` — trần thời gian mỗi tài liệu | **10 phút** | Ingestion | Tài liệu mới lâu ngày vẫn mang nhãn "chưa đối chiếu xong" → nới |
 | `chunk_length_cap` — trần độ dài một mẩu (Điểm mở #4, 06 Mục 10) | **5000 ký tự Unicode** | Ingestion | Mẩu vượt trần bị chia tại ranh giới câu quá thường xuyên, làm mẩu quá ngắn và loãng so khớp → nới. Một khối cấu trúc dài (vài trang) vẫn lọt thành một mẩu duy nhất, so khớp không trúng → siết |
+| `max_upload_bytes` — cỡ file tối đa AI chịu tải về (`10` Mục 4.1) | **104857600 byte** (100 MB) | Ingestion | Người dùng thường xuyên nhận `413 FILE_TOO_LARGE` cho tài liệu có thật trong kho giấy tờ của họ → nới. Một lần nộp giữ hàng đợi rất lâu và chiếm hết đĩa tạm → siết |
+| `source_download_timeout_seconds` — trần thời gian tải một file (`10` Mục 4.1) | **120 giây** | Ingestion | `SOURCE_UNREACHABLE` xuất hiện với file lớn mà tải tay vẫn được → nới. Lời gọi nộp tài liệu treo lâu rồi mới báo lỗi → siết |
 
-> `chunk_length_cap` chốt **21/9/2026** — khác ngày với tám tham số còn lại trong bảng (14/9/2026): đây là giá trị đóng nửa **trần** của Điểm mở #4 (06 Mục 10 — "Trần và sàn độ dài đơn vị cắt"); nửa **sàn** vẫn còn mở.
+> `chunk_length_cap` chốt **21/9/2026** — khác ngày với tám tham số đầu bảng (14/9/2026): đây là giá trị đóng nửa **trần** của Điểm mở #4 (06 Mục 10 — "Trần và sàn độ dài đơn vị cắt"); nửa **sàn** vẫn còn mở.
+
+> **Hai tham số cuối bảng chốt 24/9/2026** — cùng ngày với `10` Mục 4.1 ("file đi bằng tham chiếu"), và chỉ tồn tại vì quyết định đó: từ lúc Backend gửi **đường dẫn có chữ ký** thay vì gửi thẳng file, chính AI là bên tải byte về, nên phải có trần cỡ file và trần thời gian tải. Cả hai thuộc nhóm **Ingestion** vì chỉ đường nạp đọc tới — Retrieval không tải file nào.
+>
+> `max_upload_bytes` là **con số duy nhất trong bảng này được công bố ra ngoài**: `10` Mục 3.6 bắt `GET /v1/meta` nêu "cỡ file tối đa", để Backend biết trước thay vì để một lần tải 100 MB kết thúc bằng `413`. Đây không phải ngoại lệ của `10` Mục 2 ("cấu hình mô hình và tham số **không qua API**") theo nghĩa nới lỏng: giá trị vẫn **chỉ đổi được bằng file cấu hình**, API chỉ đọc ra. Chín tham số còn lại vẫn tuyệt đối không xuất hiện trên bất kỳ endpoint nào.
+>
+> ⚠️ `max_upload_bytes` phải được đếm **trong lúc ghi từng khối byte**, và vượt thì **ngừng tải ngay** (`10` Mục 3.5: *"Ngừng tải ngay khi vượt, không tải hết rồi mới kiểm"*). Tin `Content-Length` bên gửi khai là không kiểm gì cả.
 
 > **Giả định nằm dưới cả bảng: kho cỡ vài nghìn tài liệu** — chính con số mà 06 Mục 6.5 dùng khi lập luận về ngưỡng cảnh báo. Nếu kho thật lớn hơn một bậc thì ít nhất `cap_warning_multiple`, `scan_pair_budget` và `scan_time_budget` phải tính lại.
 
 > **Vì sao `inheritance_decay` phải áp trên điểm ĐÃ CHUẨN HOÁ.** Điểm giống thô thường dồn cục trong một dải hẹp; nhân một hệ số vào đó thì con của tài liệu hạng nhất tụt xuống dưới cả chục tài liệu không liên quan, và cơ chế thừa hưởng mất tác dụng. Chuẩn hoá về khoảng đầy trên tập ứng viên rồi mới nhân thì hệ số mới có ý nghĩa như thiết kế mô tả.
 
-**Chín tham số này chia sạch theo service** — bốn cái của Retrieval, năm cái của Ingestion, không cái nào cần hai bên cùng biết. Khác hẳn cấu hình mô hình ở 3.1, vốn là **hợp đồng** mà lệch nhau là hỏng.
+**Mười một tham số này chia sạch theo service** — bốn cái của Retrieval, bảy cái của Ingestion, không cái nào cần hai bên cùng biết. Khác hẳn cấu hình mô hình ở 3.1, vốn là **hợp đồng** mà lệch nhau là hỏng.
 
 ### 3.3 Quy tắc cấu hình — CHỐT 14/9/2026
 
@@ -362,6 +370,7 @@ Phần trên dễ đọc nhầm thành "đã xong". Không phải. Ba thực th�
 | ~~**Lịch sử hội thoại**~~ | **Không còn thuộc AI Services — chốt 23/9/2026: Backend C.Brain lưu.** Retrieval chỉ nhận K lượt gần nhất và trạng thái hội thoại qua lời gọi, không lưu | 06 Mục 9.1, 9.4 (v1.10); `10` Mục 6.1 | **không cần ở phía AI** |
 | **Sổ đăng ký Space** (`space_registry`) *(thêm 24/9/2026)* | Ingestion ghi và đọc; Retrieval không đọc | `10` Mục 4.0 — chỉ `space_id` + trạng thái đang dùng / đang xoá / đã xoá; **không** cây, cờ kế thừa hay thành viên | có trong mã: `packages/schema/space_registry.py`, DDL ở `store_schema.py` (commit `8751270`) |
 | **Nhật ký xoá** (`deletion_log`) *(thêm 24/9/2026)* | Ingestion ghi; Admin đọc qua `10` Mục 6.4 | 06 Mục 5.6 — ai, khi nào, tài liệu nào, `space_id`, lý do; không giữ nội dung | có trong mã: `packages/schema/deletion_log.py`, DDL ở `store_schema.py` |
+| **Đối tượng nạp** (`ingestion_record`) *(thêm 24/9/2026)* | Ingestion ghi và đọc; Retrieval không đọc | `10` Mục 4.1–4.2 — `ingestion_id` (**khác** `document_id`), `space_id`, trạng thái, người nộp, mã lỗi; **không** `url`, không dấu hiệu quyền của người gọi, không `space_is_private`, không nội dung | có trong mã: `packages/schema/ingestion_record.py`, DDL ở `store_schema.py` |
 | **Định nghĩa agent chuyên miền** | Retrieval | 06 Mục 8.2–8.5 — ai tạo, hai tầng hướng dẫn, ràng buộc bất khả xâm phạm là BƯỚC chứ không phải CÂU, bộ kiểm lúc tạo | **chưa có** |
 
 Hai thứ còn lại — nhật ký điều tra và định nghĩa agent — là **việc nội bộ của Retrieval v2**, cần một tài liệu riêng. *(Trạng thái hội thoại — 06 Mục 9.4 — cũng không phải dữ liệu dùng chung Ingestion–Retrieval: hình dạng của nó nằm ở `10` Mục 6.1, và nó chỉ mang `document_id` import từ module dùng chung.)* Chúng chỉ chạm tài liệu này ở một điểm: đều dùng lại `document_id` và `chunk_id` do module dùng chung định nghĩa, nên phải import từ đó chứ không tự khai báo lại.

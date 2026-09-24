@@ -157,6 +157,14 @@ class IngestionConfig:
     `config/ingestion.yaml`, không nhét vào tên khoá, cùng khuôn với
     `scan_time_budget`. Đây là tham số bắt buộc của `cat_thanh_mau()`
     (`packages/ingestion/chunking.py`) — module đó không hardcode giá trị.
+
+    `max_upload_bytes` và `source_download_timeout_seconds` — hai trần của
+    bước tải file theo tham chiếu (docs/10 §4.1, PO chốt 24/9/2026). ĐƠN VỊ
+    lần lượt là BYTE và GIÂY, nêu trong comment cạnh giá trị. Chúng thuộc
+    nhóm Ingestion vì chỉ đường nạp đọc tới: Retrieval không tải file nào.
+    `max_upload_bytes` là con số duy nhất trong nhóm này được công bố ra
+    ngoài — docs/10 §3.6 bắt `GET /v1/meta` nêu *"cỡ file tối đa"* để Backend
+    biết trước, thay vì để một lần tải 100 MB kết thúc bằng `413`.
     """
 
     saturation_epsilon: float
@@ -165,6 +173,8 @@ class IngestionConfig:
     scan_time_budget: float
     accepted_formats: tuple[str, ...]
     chunk_length_cap: int
+    max_upload_bytes: int
+    source_download_timeout_seconds: float
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -220,6 +230,8 @@ INGESTION_KEYS: tuple[str, ...] = (
     "scan_time_budget",
     "accepted_formats",
     "chunk_length_cap",
+    "max_upload_bytes",
+    "source_download_timeout_seconds",
 )
 
 RETRIEVAL_KEYS: tuple[str, ...] = (
@@ -450,6 +462,20 @@ def load_ingestion_config(path: Path) -> IngestionConfig:
     )
     _require_positive(chunk_length_cap, "chunk_length_cap", path)
 
+    max_upload_bytes = _as_int(
+        _require(data, "max_upload_bytes", path), "max_upload_bytes", path
+    )
+    _require_positive(max_upload_bytes, "max_upload_bytes", path)
+
+    source_download_timeout_seconds = _as_float(
+        _require(data, "source_download_timeout_seconds", path),
+        "source_download_timeout_seconds",
+        path,
+    )
+    _require_positive(
+        source_download_timeout_seconds, "source_download_timeout_seconds", path
+    )
+
     return IngestionConfig(
         saturation_epsilon=saturation_epsilon,
         saturation_rounds=saturation_rounds,
@@ -457,6 +483,8 @@ def load_ingestion_config(path: Path) -> IngestionConfig:
         scan_time_budget=scan_time_budget,
         accepted_formats=accepted_formats,
         chunk_length_cap=chunk_length_cap,
+        max_upload_bytes=max_upload_bytes,
+        source_download_timeout_seconds=source_download_timeout_seconds,
     )
 
 
