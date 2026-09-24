@@ -26,6 +26,7 @@ both services at once would undo CLAUDE.md Mục 6.
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping, Sequence
+from contextlib import AbstractAsyncContextManager
 from pathlib import Path
 
 from fastapi import APIRouter, FastAPI, Request, Response
@@ -143,6 +144,7 @@ def create_app(
     service_key: str,
     idempotency_store: IdempotencyStore,
     generate_request_id: Callable[[], str] = new_request_id,
+    lifespan: Callable[[FastAPI], AbstractAsyncContextManager[None]] | None = None,
 ) -> FastAPI:
     """Assemble the FastAPI application from already-resolved parts.
 
@@ -154,6 +156,12 @@ def create_app(
     inner-to-outer because `add_middleware` puts the most recently added one
     outermost. Changing this order changes behaviour — read that module's
     diagram before touching it.
+
+    `lifespan` is passed straight through to `FastAPI(...)` and defaults to
+    `None` (FastAPI's own no-op). This factory still constructs no store and
+    no worker — the composition root (`packages/api/main.py`) builds
+    `recover()` + `worker.start()`/`stop()` into an async context manager and
+    hands it in here, so THIS module still never touches a live store.
     """
     app = FastAPI(
         title="C.Brain AI Services",
@@ -163,6 +171,7 @@ def create_app(
         docs_url=None,
         redoc_url=None,
         openapi_url=None,
+        lifespan=lifespan,
     )
 
     for router in routers:
@@ -191,6 +200,7 @@ def build_app(
     readiness: ReadinessCheck,
     idempotency_store: IdempotencyStore,
     generate_request_id: Callable[[], str] = new_request_id,
+    lifespan: Callable[[FastAPI], AbstractAsyncContextManager[None]] | None = None,
 ) -> FastAPI:
     """Read configuration and the service key, then build the app.
 
@@ -235,4 +245,5 @@ def build_app(
         service_key=service_key,
         idempotency_store=idempotency_store,
         generate_request_id=generate_request_id,
+        lifespan=lifespan,
     )
