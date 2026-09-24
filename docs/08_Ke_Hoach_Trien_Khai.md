@@ -222,7 +222,7 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 
 **T2.9 — Hàng việc chăm sóc tri thức.** Ba loại mục: đề nghị quan hệ chờ duyệt, đề nghị bản mới chờ xác nhận, và *"tài liệu này có thể đã lỗi thời"* khi có bản mới ở nơi khác trùng vân tay. Mục thứ ba **không được nêu Space nào, không nêu ai, không nêu ở đâu** — đó chính là cơ chế, không phải chi tiết. *Nguồn*: 06 Mục 5.4 và 5.7.
 
-**Cập nhật 23/9/2026 (PO, 06 Mục 5.4):** đề nghị liên kết nối tài liệu ở hai Space chỉ hiện cho Manager đọc được **cả hai đầu**; Admin luôn thấy. Lúc duyệt, AI kiểm lại cả hai tài liệu còn trong phạm vi quyền của người duyệt. *Xong khi* (bổ sung): Manager chỉ đọc được một đầu **không** thấy đề nghị đó trong hàng việc.
+**Cập nhật 23/9/2026 (PO, 06 Mục 5.4):** đề nghị liên kết nối tài liệu ở hai Space chỉ hiện cho Manager đọc được **cả hai đầu**; Admin luôn thấy. Lúc duyệt, AI kiểm lại cả hai tài liệu còn trong phạm vi quyền của người duyệt. *Xong khi* (bổ sung): Manager chỉ đọc được một đầu **không** thấy đề nghị đó trong hàng việc. **Và (bổ sung 24/9/2026, từ T2.11):** `delete_space` (T2.11) phải dọn mọi mục hàng việc của Space bị xoá, giữa bước dọn vùng đệm và bước chuyển *đã xoá* — hiện có TODO đúng vị trí trong `packages/ingestion/space_deletion.py`; test: xoá Space xong không còn mục hàng việc nào trỏ tới tài liệu của Space đó.
 
 **Cập nhật 21/9 (PO, từ escalation T2.1-E4):** hai cơ chế ở 06 Mục 5.7 (báo Manager các Space giữ bản trùng; bản mới thừa hưởng nhãn/quan hệ) chưa có task rõ chủ — cần gán trước khi triển khai.
 

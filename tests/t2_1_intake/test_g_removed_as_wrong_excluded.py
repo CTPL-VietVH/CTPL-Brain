@@ -42,6 +42,7 @@ def _removed_as_wrong_document(*, document_id: str, space_id: str, content_finge
 
 def test_reupload_of_fingerprint_matching_only_a_removed_as_wrong_document_creates_new_document(
     fingerprint_index,
+    space_registry,
 ):
     removed = _removed_as_wrong_document(
         document_id="doc-removed", space_id="space-a", content_fingerprint="fp-x"
@@ -51,6 +52,7 @@ def test_reupload_of_fingerprint_matching_only_a_removed_as_wrong_document_creat
     result = receive_and_validate(
         make_request(document_id="doc-new", space_id="space-a", content_fingerprint="fp-x"),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     )
 
     assert result.created is True
@@ -60,6 +62,7 @@ def test_reupload_of_fingerprint_matching_only_a_removed_as_wrong_document_creat
 
 def test_reupload_still_reports_duplicate_against_a_non_removed_match_in_same_space(
     fingerprint_index,
+    space_registry,
 ):
     removed = _removed_as_wrong_document(
         document_id="doc-removed", space_id="space-a", content_fingerprint="fp-x"
@@ -68,11 +71,13 @@ def test_reupload_still_reports_duplicate_against_a_non_removed_match_in_same_sp
     valid = receive_and_validate(
         make_request(document_id="doc-valid", space_id="space-a", content_fingerprint="fp-x"),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     ).document
 
     third = receive_and_validate(
         make_request(document_id="doc-third", space_id="space-a", content_fingerprint="fp-x"),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     )
 
     assert third.created is False

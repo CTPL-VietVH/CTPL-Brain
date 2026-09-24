@@ -19,7 +19,7 @@ from ingestion.intake import InMemoryFingerprintIndex
 from ingestion.pre_approval_buffer import InMemoryPreApprovalBuffer
 from ingestion.pre_approval_runner import DuplicateLocation, run_pre_approval_ingestion
 
-from .conftest import CHUNK_LENGTH_CAP, make_request, write_sample
+from .conftest import CHUNK_LENGTH_CAP, make_request, registered_spaces, write_sample
 
 
 def test_second_pending_upload_of_one_file_is_refused(tmp_path) -> None:
@@ -31,6 +31,7 @@ def test_second_pending_upload_of_one_file_is_refused(tmp_path) -> None:
         make_request(path, document_id="doc-first"),
         fingerprint_index=fingerprint_index,
         buffer=buffer,
+        space_registry=registered_spaces(),
         chunk_length_cap=CHUNK_LENGTH_CAP,
     )
     assert first.buffered is not None
@@ -39,6 +40,7 @@ def test_second_pending_upload_of_one_file_is_refused(tmp_path) -> None:
         make_request(path, document_id="doc-second"),
         fingerprint_index=fingerprint_index,
         buffer=buffer,
+        space_registry=registered_spaces(),
         chunk_length_cap=CHUNK_LENGTH_CAP,
     )
 

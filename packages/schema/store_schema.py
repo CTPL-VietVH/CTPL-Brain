@@ -73,6 +73,8 @@ __all__ = [
     "RELATION_TABLE_DDL",
     "RELATION_TO_DOCUMENT_FK",
     "SHARED_STORE_DDL",
+    "SPACE_REGISTRY_TABLE",
+    "SPACE_REGISTRY_TABLE_DDL",
 ]
 
 
@@ -92,6 +94,13 @@ RELATION_TABLE = "relation"
 #: document it describes, and a cascading FK would delete the very record
 #: the deletion exists to leave behind.
 DELETION_LOG_TABLE = "deletion_log"
+
+#: The Space register (docs/10 §2, §4.0; T2.11). ⛔ TWO columns, and the
+#: second one is a state — *"**Chỉ sự tồn tại** — không cây, không cờ, không
+#: thành viên"* (docs/10 §2). A `parent_space_id` or an
+#: `inherits_from_parent` column here would be the frozen copy of a live flag
+#: that NT3 forbids and that `schema/space_registry.py` explains at length.
+SPACE_REGISTRY_TABLE = "space_registry"
 
 
 # Constraint names, exported for the same reason the table names are: an error
@@ -249,12 +258,41 @@ CREATE INDEX IF NOT EXISTS deletion_log_requested_at_idx
     ON {DELETION_LOG_TABLE} (requested_at)
 """,
     # The worklist of a deletion interrupted mid-way: rows still open. Small
-    # by nature, so only the unfinished rows are worth indexing.
+    # by nature, so only the unfinished rows are worth indexing — and it is a
+    # PARTIAL index, so enumerating it IS enumerating the open rows.
+    #
+    # Two readers, both of which need exactly that set:
+    # `deletion.InMemoryDeletionLog.open_entries_for_space` (and its real
+    # counterpart) filters these rows by `space_id`, because
+    # `space_deletion.delete_space` must still find a document whose purge got
+    # as far as removing the profile — after that, this row is the only trace
+    # left that work remains.
     f"""
 CREATE INDEX IF NOT EXISTS deletion_log_unfinished_idx
     ON {DELETION_LOG_TABLE} (document_id) WHERE purge_completed_at IS NULL
 """,
 )
+
+
+SPACE_REGISTRY_TABLE_DDL = f"""
+CREATE TABLE IF NOT EXISTS {SPACE_REGISTRY_TABLE} (
+    space_id text NOT NULL PRIMARY KEY,
+    state    text NOT NULL
+)
+"""
+# `space_id` is the primary key, which is the whole of "register the same
+# Space twice and nothing happens" AND of "a deleted code is never reused"
+# (docs/10 §4.0): the second INSERT has to meet the first row.
+#
+# `state` is plain `text`, no CHECK constraint, the same way
+# `document.relations_scan_state` and `relation.approval_state` are: the
+# allowed values live in exactly one place — `SpaceState` in
+# `schema/space_registry.py`, beside the two enums just named — and a CHECK
+# listing them here would be the second spelling CLAUDE.md Mục 6 exists to
+# prevent.
+#
+# No index beside the primary key: this table holds one row per Space — tens,
+# maybe hundreds — and every read is a point lookup by `space_id`.
 
 
 #: Everything, in dependency order — `relation` references `document`, so the
@@ -266,4 +304,5 @@ SHARED_STORE_DDL = (
     *RELATION_INDEXES_DDL,
     DELETION_LOG_TABLE_DDL,
     *DELETION_LOG_INDEXES_DDL,
+    SPACE_REGISTRY_TABLE_DDL,
 )

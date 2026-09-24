@@ -13,10 +13,11 @@ from ingestion.intake import BanMoiKhacSpace, receive_and_validate
 from .conftest import make_request
 
 
-def test_declared_previous_version_in_a_different_space_is_rejected(fingerprint_index):
+def test_declared_previous_version_in_a_different_space_is_rejected(fingerprint_index, space_registry):
     previous = receive_and_validate(
         make_request(document_id="doc-old", space_id="space-a", content_fingerprint="fp-v1"),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     ).document
 
     with pytest.raises(BanMoiKhacSpace):
@@ -28,4 +29,5 @@ def test_declared_previous_version_in_a_different_space_is_rejected(fingerprint_
                 declared_previous_version=previous,
             ),
             fingerprint_index=fingerprint_index,
+            space_registry=space_registry,
         )

@@ -17,18 +17,20 @@ from .conftest import make_request
 
 
 @pytest.mark.parametrize("bad_fingerprint", ["", "   ", "\t\n"])
-def test_decide_intake_rejects_empty_or_blank_fingerprint(fingerprint_index, bad_fingerprint):
+def test_decide_intake_rejects_empty_or_blank_fingerprint(fingerprint_index, space_registry, bad_fingerprint):
     with pytest.raises(VanTayNoiDungRong):
         decide_intake(
             space_id="space-a",
             content_fingerprint=bad_fingerprint,
             fingerprint_index=fingerprint_index,
+            space_registry=space_registry,
         )
 
 
-def test_receive_and_validate_inherits_the_same_rejection(fingerprint_index):
+def test_receive_and_validate_inherits_the_same_rejection(fingerprint_index, space_registry):
     with pytest.raises(VanTayNoiDungRong):
         receive_and_validate(
             make_request(document_id="doc-a", space_id="space-a", content_fingerprint=""),
             fingerprint_index=fingerprint_index,
+            space_registry=space_registry,
         )

@@ -14,12 +14,28 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT / "packages"))
 
 from ingestion.intake import IntakeRequest, InMemoryFingerprintIndex  # noqa: E402
+from ingestion.space_registry import InMemorySpaceRegistry  # noqa: E402
 from schema.document import DateSource  # noqa: E402
+
+#: Mọi Space mà các ca thử T2.1 dùng tới. T2.11 (docs/10 §4.0) đặt một cổng
+#: chặn ở `decide_intake`: `space_id` phải đã đăng ký và đang dùng. Các ca ở
+#: đây nói về trùng lặp và chuỗi phiên bản, không nói về cổng đó — nên chúng
+#: chạy trong một sổ đăng ký đã có sẵn cả hai Space. Chính cổng đó được kiểm
+#: ở `tests/t2_11_space_registry/`.
+SPACES_USED_BY_THESE_CASES = ("space-a", "space-b")
 
 
 @pytest.fixture
 def fingerprint_index() -> InMemoryFingerprintIndex:
     return InMemoryFingerprintIndex()
+
+
+@pytest.fixture
+def space_registry() -> InMemorySpaceRegistry:
+    registry = InMemorySpaceRegistry()
+    for space_id in SPACES_USED_BY_THESE_CASES:
+        registry.register(space_id)
+    return registry
 
 
 def make_request(

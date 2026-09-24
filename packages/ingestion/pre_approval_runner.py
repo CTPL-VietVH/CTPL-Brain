@@ -57,6 +57,7 @@ from ingestion.labeling import (
     trich_ngay_ky,
 )
 from ingestion.pre_approval_buffer import BufferedIngestion, PreApprovalBuffer
+from ingestion.space_registry import SpaceRegistry, assert_space_accepts_documents
 from schema.document import DateSource, Document
 
 __all__ = [
@@ -146,6 +147,7 @@ def run_pre_approval_ingestion(
     *,
     fingerprint_index: FingerprintIndex,
     buffer: PreApprovalBuffer,
+    space_registry: SpaceRegistry,
     chunk_length_cap: int,
 ) -> PreApprovalResult:
     """Run GĐ2, GĐ3 and GĐ5 for one upload into a private Space and park the
@@ -161,12 +163,23 @@ def run_pre_approval_ingestion(
     được chữ ra"*). `intake.py` says the same from the other side: calling GĐ1
     before GĐ2 has finished is calling it in the wrong order.
 
+    `space_registry` has no default either, and for a sharper reason (T2.11,
+    docs/10 §4.0): a private Space being deleted must stop taking uploads on
+    the pre-approval path exactly as it does on the official one. The check
+    runs BEFORE GĐ2 here rather than only inside `decide_intake`, so a file
+    aimed at a Space that is going away is not read and cut first.
+
     Raises:
+        SpaceNotRegistered / SpaceNotAcceptingDocuments: the Space is unknown
+            or no longer accepting documents (docs/10 §4.0).
         DinhDangKhongNhan / KhongDocDuocLopChu: GĐ2 refused the file.
         KhongDungDuocCauTruc / KhoiVuotTranKhongTheChia: GĐ3 could not cut.
         Nothing is buffered when any of these is raised — the single `put`
         happens after every stage has succeeded.
     """
+    # ---- T2.11 — the Space gate, before any work is done -----------------
+    assert_space_accepts_documents(request.space_id, space_registry=space_registry)
+
     # ---- GĐ2 — read the file out ----------------------------------------
     extraction = extract_file(request.path)
 
@@ -187,6 +200,7 @@ def run_pre_approval_ingestion(
         space_id=request.space_id,
         content_fingerprint=extraction.content_fingerprint,
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
         declared_previous_version=request.declared_previous_version,
     )
     if not decision.proceed:

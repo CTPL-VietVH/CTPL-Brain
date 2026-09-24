@@ -20,6 +20,23 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT / "packages"))
 
 from ingestion.pre_approval_runner import PreApprovalRequest  # noqa: E402
+from ingestion.space_registry import InMemorySpaceRegistry  # noqa: E402
+
+#: Every Space these cases submit into. T2.11 (docs/10 §4.0) made a live
+#: Space register a precondition of any upload, official path or
+#: pre-approval path alike; these cases are about the buffer, not about that
+#: gate, so they run against a register where both Spaces already exist. The
+#: gate itself is tested in `tests/t2_11_space_registry/`.
+SPACES_USED_BY_THESE_CASES = ("space-private", "space-other")
+
+
+def registered_spaces() -> InMemorySpaceRegistry:
+    """A fresh register holding exactly the Spaces above, all `IN_USE`."""
+    registry = InMemorySpaceRegistry()
+    for space_id in SPACES_USED_BY_THESE_CASES:
+        registry.register(space_id)
+    return registry
+
 
 # Trần độ dài mẩu — PO chốt 5000 ký tự Unicode (21/9/2026). `cat_thanh_mau`
 # và `run_pre_approval_ingestion` đều KHÔNG cho giá trị này một mặc định

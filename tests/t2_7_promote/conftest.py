@@ -21,6 +21,7 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT / "packages"))
 
 from ingestion.relations_scan import InMemorySpace, InMemorySpaceScanScope  # noqa: E402
+from ingestion.space_registry import InMemorySpaceRegistry  # noqa: E402
 from schema.document import DateSource, Document  # noqa: E402
 
 CHUNK_LENGTH_CAP = 5000
@@ -156,6 +157,13 @@ def buffer_a_document(
     path = tmp_path / name
     path.write_text(text, encoding="utf-8")
 
+    # T2.11 (docs/10 §4.0): the pre-approval chain refuses a Space that is not
+    # registered and in use. These cases are about the promote, so the Space
+    # they park into exists — the gate itself is tested in
+    # `tests/t2_11_space_registry/`.
+    space_registry = InMemorySpaceRegistry()
+    space_registry.register(space_id)
+
     result = run_pre_approval_ingestion(
         PreApprovalRequest(
             path=path,
@@ -168,6 +176,7 @@ def buffer_a_document(
         ),
         fingerprint_index=fingerprint_index,
         buffer=buffer,
+        space_registry=space_registry,
         chunk_length_cap=CHUNK_LENGTH_CAP,
     )
     assert result.buffered is not None, "the pre-approval chain must have buffered it"

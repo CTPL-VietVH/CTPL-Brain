@@ -12,10 +12,11 @@ from schema.document import VersionDeclaredBy
 from .conftest import make_request
 
 
-def test_declared_previous_version_extends_the_same_version_chain(fingerprint_index):
+def test_declared_previous_version_extends_the_same_version_chain(fingerprint_index, space_registry):
     previous = receive_and_validate(
         make_request(document_id="doc-old", space_id="space-a", content_fingerprint="fp-v1"),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     ).document
     assert previous.version_ordinal == 1
 
@@ -27,6 +28,7 @@ def test_declared_previous_version_extends_the_same_version_chain(fingerprint_in
             declared_previous_version=previous,
         ),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     ).document
 
     assert newer.version_chain_id == previous.version_chain_id
@@ -34,10 +36,11 @@ def test_declared_previous_version_extends_the_same_version_chain(fingerprint_in
     assert newer.version_declared_by is VersionDeclaredBy.UPLOADER_DECLARED_AT_INGESTION
 
 
-def test_declared_previous_version_chains_across_three_uploads(fingerprint_index):
+def test_declared_previous_version_chains_across_three_uploads(fingerprint_index, space_registry):
     v1 = receive_and_validate(
         make_request(document_id="doc-v1", space_id="space-a", content_fingerprint="fp-v1"),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     ).document
     v2 = receive_and_validate(
         make_request(
@@ -47,6 +50,7 @@ def test_declared_previous_version_chains_across_three_uploads(fingerprint_index
             declared_previous_version=v1,
         ),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     ).document
     v3 = receive_and_validate(
         make_request(
@@ -56,6 +60,7 @@ def test_declared_previous_version_chains_across_three_uploads(fingerprint_index
             declared_previous_version=v2,
         ),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     ).document
 
     assert v1.version_chain_id == v2.version_chain_id == v3.version_chain_id

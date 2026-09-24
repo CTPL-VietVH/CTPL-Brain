@@ -31,6 +31,7 @@ from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Protocol
 
+from ingestion.space_registry import SpaceRegistry, assert_space_accepts_documents
 from schema.document import DateSource, Document, VersionDeclaredBy
 
 
@@ -112,6 +113,7 @@ def decide_intake(
     space_id: str,
     content_fingerprint: str,
     fingerprint_index: FingerprintIndex,
+    space_registry: SpaceRegistry,
     declared_previous_version: Document | None = None,
 ) -> IntakeDecision:
     """Quyết định trùng lặp + gán chuỗi phiên bản cho một lượt nạp (06 Mục 5.7).
@@ -131,7 +133,28 @@ def decide_intake(
     KHÔNG raise lỗi (audit T2.1 #4, PO chốt Phương án A 21/9: `removed_as_wrong`
     là nguyên tắc "coi như không tồn tại" xuyên suốt module này, không riêng
     nhánh chống-trùng).
+
+    `space_registry` (T2.11, docs/10 §4.0/§4.1) KHÔNG có giá trị mặc định —
+    cùng lý do `chunk_length_cap` không có: một mặc định ở đây là một đường
+    vòng qua cổng chặn, và đường vòng đó im lặng. Cổng đặt ở `decide_intake`
+    chứ không ở `receive_and_validate` vì đây là chỗ CẢ HAI đường nộp đi qua:
+    đường chính thức (`receive_and_validate`) và đường tiền kiểm của Space
+    riêng (`pre_approval_runner.run_pre_approval_ingestion`) — đúng khuôn mà
+    `VanTayNoiDungRong` đã dùng (xem `tests/t2_1_intake/test_k`).
+
+    Raises:
+        SpaceNotRegistered: `space_id` chưa từng được Backend đăng ký.
+        SpaceNotAcceptingDocuments: Space đang xoá hoặc đã xoá — docs/10 §4.0
+            bước 1, *"mọi lời gọi nộp tài liệu ... trả 409
+            SPACE_BEING_DELETED"*.
+        VanTayNoiDungRong: `content_fingerprint` rỗng.
+        BanMoiKhacSpace: `declared_previous_version` ở Space khác.
     """
+    # Cổng Space đứng TRƯỚC mọi thứ khác: tra vân tay, tra chuỗi phiên bản đều
+    # là việc đọc kho dùng chung nhân danh một Space — làm chúng trước rồi mới
+    # hỏi "Space này có tồn tại không" là làm việc cho một Space không có thật.
+    assert_space_accepts_documents(space_id, space_registry=space_registry)
+
     if not content_fingerprint or not content_fingerprint.strip():
         raise VanTayNoiDungRong(f"content_fingerprint rỗng hoặc toàn khoảng trắng: {content_fingerprint!r}")
 
@@ -195,16 +218,21 @@ def receive_and_validate(
     request: IntakeRequest,
     *,
     fingerprint_index: FingerprintIndex,
+    space_registry: SpaceRegistry,
 ) -> IntakeResult:
     """GĐ1 trọn vẹn: quyết định rồi (nếu hợp lệ) dựng `Document` và ghi vào
     chỉ mục vân tay. Ca thử "Xong khi" của T2.1 (docs/08): nạp cùng một file
     hai lần vào một Space chỉ ra một tài liệu; vào hai Space ra hai tài liệu,
     không cảnh báo.
+
+    `space_registry` chỉ đi thẳng xuống `decide_intake` — cổng Space nằm ở đó,
+    không lặp lại ở đây (một lần kiểm, một chỗ kiểm).
     """
     decision = decide_intake(
         space_id=request.space_id,
         content_fingerprint=request.content_fingerprint,
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
         declared_previous_version=request.declared_previous_version,
     )
 

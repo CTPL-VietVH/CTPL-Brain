@@ -16,7 +16,7 @@ from ingestion.pre_approval_buffer import InMemoryPreApprovalBuffer
 from ingestion.pre_approval_runner import DuplicateLocation, run_pre_approval_ingestion
 from schema.document import DateSource, Document
 
-from .conftest import CHUNK_LENGTH_CAP, INGESTED_AT, make_request, write_sample
+from .conftest import CHUNK_LENGTH_CAP, INGESTED_AT, make_request, registered_spaces, write_sample
 
 
 def test_duplicate_already_in_the_shared_store_is_reported(tmp_path) -> None:
@@ -30,6 +30,7 @@ def test_duplicate_already_in_the_shared_store_is_reported(tmp_path) -> None:
         make_request(path, document_id="doc-probe"),
         fingerprint_index=fingerprint_index,
         buffer=InMemoryPreApprovalBuffer(),
+        space_registry=registered_spaces(),
         chunk_length_cap=CHUNK_LENGTH_CAP,
     )
     fingerprint = probe.buffered.document.content_fingerprint
@@ -58,6 +59,7 @@ def test_duplicate_already_in_the_shared_store_is_reported(tmp_path) -> None:
         make_request(path, document_id="doc-new"),
         fingerprint_index=fingerprint_index,
         buffer=buffer,
+        space_registry=registered_spaces(),
         chunk_length_cap=CHUNK_LENGTH_CAP,
     )
 

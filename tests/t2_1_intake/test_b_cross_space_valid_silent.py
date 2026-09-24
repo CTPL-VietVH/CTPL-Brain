@@ -14,14 +14,17 @@ from .conftest import make_request
 
 def test_same_fingerprint_in_two_spaces_creates_two_documents_without_warning(
     fingerprint_index,
+    space_registry,
 ):
     in_space_a = receive_and_validate(
         make_request(document_id="doc-1", space_id="space-a", content_fingerprint="fp-x"),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     )
     in_space_b = receive_and_validate(
         make_request(document_id="doc-2", space_id="space-b", content_fingerprint="fp-x"),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     )
 
     assert in_space_a.created is True

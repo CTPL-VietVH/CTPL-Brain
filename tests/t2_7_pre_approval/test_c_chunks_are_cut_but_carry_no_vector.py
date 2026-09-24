@@ -12,7 +12,7 @@ from ingestion.intake import InMemoryFingerprintIndex
 from ingestion.pre_approval_buffer import InMemoryPreApprovalBuffer
 from ingestion.pre_approval_runner import run_pre_approval_ingestion
 
-from .conftest import CHUNK_LENGTH_CAP, make_request, write_sample
+from .conftest import CHUNK_LENGTH_CAP, make_request, registered_spaces, write_sample
 
 
 def test_chunks_are_cut_but_carry_no_vector(tmp_path) -> None:
@@ -23,6 +23,7 @@ def test_chunks_are_cut_but_carry_no_vector(tmp_path) -> None:
         request,
         fingerprint_index=InMemoryFingerprintIndex(),
         buffer=buffer,
+        space_registry=registered_spaces(),
         chunk_length_cap=CHUNK_LENGTH_CAP,
     )
 

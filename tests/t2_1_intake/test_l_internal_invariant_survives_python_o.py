@@ -28,7 +28,11 @@ sys.path.insert(0, {packages_dir!r})
 from datetime import date, datetime
 
 import ingestion.intake as intake_mod
+from ingestion.space_registry import InMemorySpaceRegistry
 from schema.document import DateSource
+
+space_registry = InMemorySpaceRegistry()
+space_registry.register("space-a")
 
 def fake_decide_intake(**kwargs):
     return intake_mod.IntakeDecision(
@@ -56,7 +60,11 @@ request = intake_mod.IntakeRequest(
     extracted_text="x",
 )
 
-intake_mod.receive_and_validate(request, fingerprint_index=intake_mod.InMemoryFingerprintIndex())
+intake_mod.receive_and_validate(
+    request,
+    fingerprint_index=intake_mod.InMemoryFingerprintIndex(),
+    space_registry=space_registry,
+)
 """
 
 

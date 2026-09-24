@@ -234,6 +234,12 @@ class DeletionLog(Protocol):
     nhân đôi log": a retry must not create a second line, and must not
     overwrite the first — the first one names who actually ordered the
     deletion, and a retry by an operator is not that person.
+
+    ⭐ `open_entries_for_space` is the ONE read this module's callers make to
+    find work, and it is deliberately not the same thing as "what to do next"
+    for a single document: `purge_document_permanently` still never consults
+    the log to decide its own steps (see the module docstring). It exists
+    because a HALF-purged document leaves no other trace — see that method.
     """
 
     def get(self, document_id: str) -> DeletionLogEntry | None: ...
@@ -241,6 +247,8 @@ class DeletionLog(Protocol):
     def record_started(self, entry: DeletionLogEntry) -> DeletionLogEntry: ...
 
     def mark_purged(self, document_id: str, *, at: datetime) -> DeletionLogEntry: ...
+
+    def open_entries_for_space(self, space_id: str) -> list[DeletionLogEntry]: ...
 
 
 def _utc_now() -> datetime:
@@ -539,6 +547,31 @@ class InMemoryDeletionLog:
             return existing
         self._entries[entry.document_id] = entry
         return entry
+
+    def open_entries_for_space(self, space_id: str) -> list[DeletionLogEntry]:
+        """Every line of this Space whose `purge_completed_at` is still empty.
+
+        These are the deletions that STARTED and did not finish — and for a
+        document already past step 2 they are the only evidence left that work
+        remains: the profile is gone, so nothing that reads the `document`
+        table can see it any more. `space_deletion.delete_space` unions this
+        with the profile-derived worklist for exactly that reason.
+
+        `space_id` is compared against the value step 0 recorded, which is why
+        step 0 has to run before step 2 destroys the profile it reads it from.
+        Rows whose `space_id` is `None` (no profile at the time, 07's optional
+        column) belong to no Space and are never returned — a Space-wide sweep
+        must not adopt a deletion it cannot prove was in its own Space.
+
+        The real implementation reads the partial index
+        `deletion_log_unfinished_idx` (`schema/store_schema.py`), which holds
+        exactly the open rows and no others.
+        """
+        return [
+            entry
+            for entry in self._entries.values()
+            if entry.space_id == space_id and entry.purge_completed_at is None
+        ]
 
     def mark_purged(self, document_id: str, *, at: datetime) -> DeletionLogEntry:
         entry = self._entries[document_id]

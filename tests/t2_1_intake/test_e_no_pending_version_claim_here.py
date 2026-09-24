@@ -20,7 +20,7 @@ def test_intake_module_does_not_import_or_construct_pending_version_claim():
     assert "PendingVersionClaim(" not in source
 
 
-def test_undeclared_upload_is_never_flagged_as_needing_confirmation(fingerprint_index):
+def test_undeclared_upload_is_never_flagged_as_needing_confirmation(fingerprint_index, space_registry):
     from ingestion.intake import receive_and_validate
 
     from .conftest import make_request
@@ -28,6 +28,7 @@ def test_undeclared_upload_is_never_flagged_as_needing_confirmation(fingerprint_
     result = receive_and_validate(
         make_request(document_id="doc-1", space_id="space-a", content_fingerprint="fp-a"),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     )
 
     # `IntakeResult` không có, và không được có, một trường kiểu

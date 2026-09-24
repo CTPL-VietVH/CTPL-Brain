@@ -19,10 +19,21 @@ from .conftest import FIXTURES
 
 from ingestion.extraction import extract_file  # noqa: E402
 from ingestion.intake import InMemoryFingerprintIndex, IntakeRequest, receive_and_validate  # noqa: E402
+from ingestion.space_registry import InMemorySpaceRegistry  # noqa: E402
 from schema.document import DateSource  # noqa: E402
 
 
-def _nap_mot_file(ten_file: str, *, space_id: str, fingerprint_index):
+def _so_dang_ky_co_space(space_id: str) -> InMemorySpaceRegistry:
+    """Sổ đăng ký Space đã có sẵn Space của ca thử (T2.11, docs/10 §4.0).
+
+    Ca thử này nói về điểm cắm định dạng, không nói về cổng chặn Space —
+    cổng đó được kiểm ở `tests/t2_11_space_registry/`."""
+    registry = InMemorySpaceRegistry()
+    registry.register(space_id)
+    return registry
+
+
+def _nap_mot_file(ten_file: str, *, space_id: str, fingerprint_index, space_registry):
     """Đường nạp DUY NHẤT dùng cho mọi định dạng — không rẽ nhánh theo
     `source_format` ở bất kỳ đâu trong hàm này."""
     ket_qua_gd2 = extract_file(FIXTURES / ten_file)
@@ -41,7 +52,9 @@ def _nap_mot_file(ten_file: str, *, space_id: str, fingerprint_index):
         content_fingerprint=ket_qua_gd2.content_fingerprint,
         extracted_text=ket_qua_gd2.extracted_text,
     )
-    return receive_and_validate(request, fingerprint_index=fingerprint_index)
+    return receive_and_validate(
+        request, fingerprint_index=fingerprint_index, space_registry=space_registry
+    )
 
 
 @pytest.mark.parametrize("ten_file", [
@@ -49,7 +62,13 @@ def _nap_mot_file(ten_file: str, *, space_id: str, fingerprint_index):
 ])
 def test_bon_dinh_dang_cung_nap_duoc_qua_mot_duong_khong_re_nhanh(ten_file):
     fingerprint_index = InMemoryFingerprintIndex()
-    ket_qua = _nap_mot_file(ten_file, space_id="space-1", fingerprint_index=fingerprint_index)
+    space_registry = _so_dang_ky_co_space("space-1")
+    ket_qua = _nap_mot_file(
+        ten_file,
+        space_id="space-1",
+        fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
+    )
 
     assert ket_qua.created is True
     assert ket_qua.document.extracted_text != ""
@@ -62,9 +81,20 @@ def test_hai_dinh_dang_khac_nhau_cua_cung_mot_noi_dung_khong_bi_coi_la_hai_tai_l
     Space phải bị GĐ1 báo trùng — đúng ca "Xong khi" của T2.1, giờ đi qua
     trọn đường GĐ2 → GĐ1 thay vì `content_fingerprint` giả lập tay."""
     fingerprint_index = InMemoryFingerprintIndex()
+    space_registry = _so_dang_ky_co_space("space-1")
 
-    lan_1 = _nap_mot_file("quy_che.txt", space_id="space-1", fingerprint_index=fingerprint_index)
-    lan_2 = _nap_mot_file("quy_che.txt", space_id="space-1", fingerprint_index=fingerprint_index)
+    lan_1 = _nap_mot_file(
+        "quy_che.txt",
+        space_id="space-1",
+        fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
+    )
+    lan_2 = _nap_mot_file(
+        "quy_che.txt",
+        space_id="space-1",
+        fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
+    )
 
     assert lan_1.created is True
     assert lan_2.created is False

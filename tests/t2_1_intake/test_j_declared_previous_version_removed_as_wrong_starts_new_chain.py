@@ -41,6 +41,7 @@ def _removed_as_wrong_document(*, document_id: str, space_id: str, content_finge
 
 def test_declared_previous_version_removed_as_wrong_does_not_raise_and_starts_fresh_chain(
     fingerprint_index,
+    space_registry,
 ):
     removed = _removed_as_wrong_document(
         document_id="doc-removed", space_id="space-a", content_fingerprint="fp-old"
@@ -55,6 +56,7 @@ def test_declared_previous_version_removed_as_wrong_does_not_raise_and_starts_fr
             declared_previous_version=removed,
         ),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     )
 
     assert result.created is True

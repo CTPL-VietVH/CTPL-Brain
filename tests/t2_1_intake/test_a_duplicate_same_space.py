@@ -13,10 +13,12 @@ from .conftest import make_request
 
 def test_second_ingest_of_same_content_in_same_space_does_not_create_a_new_document(
     fingerprint_index,
+    space_registry,
 ):
     first = receive_and_validate(
         make_request(document_id="doc-1", space_id="space-a", content_fingerprint="fp-x"),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     )
     assert first.created is True
     assert first.duplicate_of is None
@@ -24,17 +26,19 @@ def test_second_ingest_of_same_content_in_same_space_does_not_create_a_new_docum
     second = receive_and_validate(
         make_request(document_id="doc-2", space_id="space-a", content_fingerprint="fp-x"),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     )
     assert second.created is False
     assert second.duplicate_of == first.document.document_id
     assert second.document.document_id == first.document.document_id
 
 
-def test_repeated_ingest_in_one_space_leaves_exactly_one_document_indexed(fingerprint_index):
+def test_repeated_ingest_in_one_space_leaves_exactly_one_document_indexed(fingerprint_index, space_registry):
     for i in range(3):
         receive_and_validate(
             make_request(document_id=f"doc-{i}", space_id="space-a", content_fingerprint="fp-x"),
             fingerprint_index=fingerprint_index,
+            space_registry=space_registry,
         )
 
     documents_in_space = fingerprint_index.find_by_fingerprint("fp-x")

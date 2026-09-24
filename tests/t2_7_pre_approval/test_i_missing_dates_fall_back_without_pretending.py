@@ -20,6 +20,7 @@ from .conftest import (
     INGESTED_AT,
     SAMPLE_DOCUMENT_WITHOUT_DATES,
     make_request,
+    registered_spaces,
     write_sample,
 )
 
@@ -35,6 +36,7 @@ def test_missing_dates_fall_back_without_pretending(tmp_path) -> None:
         request,
         fingerprint_index=InMemoryFingerprintIndex(),
         buffer=buffer,
+        space_registry=registered_spaces(),
         chunk_length_cap=CHUNK_LENGTH_CAP,
     )
 

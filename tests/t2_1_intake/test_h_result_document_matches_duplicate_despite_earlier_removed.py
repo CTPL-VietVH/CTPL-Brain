@@ -45,7 +45,7 @@ def _removed_as_wrong_document(*, document_id: str, space_id: str, content_finge
     )
 
 
-def test_document_field_points_to_the_active_match_not_the_earlier_removed_one(fingerprint_index):
+def test_document_field_points_to_the_active_match_not_the_earlier_removed_one(fingerprint_index, space_registry):
     removed = _removed_as_wrong_document(
         document_id="doc-removed", space_id="space-a", content_fingerprint="fp-x"
     )
@@ -53,11 +53,13 @@ def test_document_field_points_to_the_active_match_not_the_earlier_removed_one(f
     valid = receive_and_validate(
         make_request(document_id="doc-valid", space_id="space-a", content_fingerprint="fp-x"),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     ).document
 
     third = receive_and_validate(
         make_request(document_id="doc-third", space_id="space-a", content_fingerprint="fp-x"),
         fingerprint_index=fingerprint_index,
+        space_registry=space_registry,
     )
 
     assert third.created is False
