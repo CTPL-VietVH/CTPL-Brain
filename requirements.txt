@@ -1,0 +1,71 @@
+# requirements.txt — thư viện của repo C.Brain (Ingestion v2 + Retrieval v2)
+#
+# PYTHON: 3.12 (bản `.venv` của máy chính đang chạy: 3.12.13)
+#
+# ⛔ MỌI phiên bản dưới đây GHIM BẰNG `==`, và là phiên bản ĐANG CÀI THẬT trong
+#    `.venv` của repo này (đọc bằng `uv pip freeze --python .venv/bin/python`,
+#    24/9/2026) — KHÔNG phải bản mới nhất trên PyPI.
+#
+#    Lý do PO chốt 24/9/2026: server Ubuntu cài `docling==2.130.0` thì 6 ca thử
+#    đọc PDF hỏng (bản 2.130 bỏ `load_page()`), trong khi máy chính chạy
+#    `docling==2.127.0` và đúng. Ghim bản ĐANG CHẠY THẬT là cách duy nhất để hai
+#    môi trường cho cùng một kết quả; `>=` hay "bản mới nhất" thì hỏng lúc nào
+#    là do ngày cài, không do ai sửa mã — đúng loại hỏng im lặng mà cả hai tài
+#    liệu nguồn chân lý dựng lên để chặn.
+#
+# 📌 Đây KHÔNG phải một file khoá (lock) đầy đủ: nó ghim các gói repo import
+#    thẳng, CỘNG những gói kéo theo mà lệch bản là đổi hành vi (họ docling, họ
+#    torch/transformers, starlette, pydantic, psycopg-binary). Toàn bộ cây phụ
+#    thuộc còn lại vẫn tự giải. Muốn tái lập tuyệt đối thì cần thêm một file
+#    khoá riêng sinh bằng `uv pip freeze` — việc đó chưa được giao.
+#
+# Cài: uv pip install --python .venv/bin/python -r requirements.txt
+
+# ─── Nền: cấu hình, kho, dữ liệu ──────────────────────────────────────────────
+# `pyyaml` — ba nhóm cấu hình ở config/ (packages/schema/config.py).
+pyyaml==6.0.3
+# `qdrant-client` — kho vector (CLAUDE.md Mục 5).
+qdrant-client==1.19.0
+# `psycopg` — PostgreSQL: hồ sơ tài liệu, cắt đoạn, lớp quan hệ.
+# `psycopg-binary` ghim kèm: nó là phần nhị phân của chính psycopg, lệch bản
+# giữa hai gói này là lỗi lúc nạp thư viện, không phải lúc chạy truy vấn.
+psycopg==3.3.5
+psycopg-binary==3.3.5
+python-dotenv==1.2.3
+numpy==2.5.3
+
+# ─── Bộ đọc file (T0.3) ───────────────────────────────────────────────────────
+# ⚠️ Cả năm gói họ docling ghim cùng một đợt. `docling` 2.130 bỏ `load_page()`:
+#    nâng bản ở đây là một quyết định có kế hoạch, không phải một lần `pip
+#    install -U` tiện tay.
+docling==2.127.0
+docling-core==2.96.0
+docling-ibm-models==4.0.2
+docling-parse==7.19.1
+docling-slim==2.127.0
+python-docx==1.2.0
+
+# ─── Mô hình biểu diễn (T0.2) ─────────────────────────────────────────────────
+# ⚠️ BGE-M3 là hợp đồng (config/contract.yaml). Lệch bản `transformers` hay
+#    `torch` có thể đổi kết quả vector mà KHÔNG lỗi nào báo — đúng ca hỏng ngầm
+#    của 07 Mục 3.1. Ghim cả ba, và `torchvision` vì nó phải khớp `torch`.
+sentence-transformers==6.0.1
+transformers==5.17.0
+torch==2.14.0
+torchvision==0.29.0
+
+# ─── Tầng API với Backend C.Brain (docs/10) ───────────────────────────────────
+# PO duyệt 24/9/2026 cho work-order tầng API. `starlette` ghim tường minh vì
+# packages/api/middleware.py import thẳng nó (ASGI thuần), nên nó là phụ thuộc
+# TRỰC TIẾP chứ không phải kéo theo của fastapi.
+fastapi==0.141.1
+starlette==1.7.0
+pydantic==2.13.5
+uvicorn==0.53.0
+# `httpx` — TestClient của FastAPI gọi app trong tiến trình (tests/api/).
+httpx==0.28.1
+
+# ─── Kiểm thử ─────────────────────────────────────────────────────────────────
+pytest==9.1.1
+# `reportlab` — dựng PDF thật cho ca thử bộ đọc (tests/t2_2_file_reading).
+reportlab==5.0.1
