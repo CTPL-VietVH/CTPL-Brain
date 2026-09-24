@@ -257,16 +257,24 @@ DELETION_LOG_INDEXES_DDL = (
 CREATE INDEX IF NOT EXISTS deletion_log_requested_at_idx
     ON {DELETION_LOG_TABLE} (requested_at)
 """,
-    # The worklist of a deletion interrupted mid-way: rows still open. Small
-    # by nature, so only the unfinished rows are worth indexing — and it is a
-    # PARTIAL index, so enumerating it IS enumerating the open rows.
+    # Source 2 of `space_deletion.delete_space`'s worklist: deletions that
+    # STARTED and never reported `dọn nền` done. The log itself is
+    # append-only and grows forever — 06 Mục 5.6 keeps every line — but the
+    # OPEN subset stays tiny, and the WHERE clause is what keeps the index
+    # that size: scanning this index end to end IS enumerating the open rows.
     #
-    # Two readers, both of which need exactly that set:
-    # `deletion.InMemoryDeletionLog.open_entries_for_space` (and its real
-    # counterpart) filters these rows by `space_id`, because
-    # `space_deletion.delete_space` must still find a document whose purge got
-    # as far as removing the profile — after that, this row is the only trace
-    # left that work remains.
+    # ONE reader — `deletion.DeletionLog.open_entries_for_space` — called
+    # twice per `delete_space` run: once to build the worklist, once at the
+    # end to re-read it and decide `completed`. It wants the open rows OF ONE
+    # SPACE, yet `space_id` is deliberately NOT in this index: the partial
+    # predicate is the whole point, `space_id` is rechecked per row, and
+    # `document_id` is already the primary key. Do not read this as "lookup
+    # by space_id", and do not add columns to make it one before measuring.
+    #
+    # Why the open rows must be findable at all: a purge cut after step 2 has
+    # already destroyed the profile, so nothing reading the `document` table
+    # can see that document any more — this row is the only trace left that
+    # work remains (S6: the obligation is discharged only once dọn nền ran).
     f"""
 CREATE INDEX IF NOT EXISTS deletion_log_unfinished_idx
     ON {DELETION_LOG_TABLE} (document_id) WHERE purge_completed_at IS NULL

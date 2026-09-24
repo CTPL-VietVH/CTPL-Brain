@@ -352,7 +352,7 @@ Nhật ký điều tra do **Retrieval ghi**, Ingestion không đọc — nên n�
 
 Điểm cắm dòng sự kiện đo lường (Mục 9.6) cũng dùng lại các định danh này, nhưng **v1 chưa phát sự kiện nào** nên chưa cần đặc tả trường.
 
-### ⚠️ Ba thứ nằm NGOÀI phạm vi tài liệu này, và CHƯA có bảng trường ở bất kỳ đâu
+### ⚠️ Những thứ nằm NGOÀI phạm vi tài liệu này (không phải dữ liệu hai service trao cho nhau)
 
 Phần trên dễ đọc nhầm thành "đã xong". Không phải. Ba thực thể dưới đây đều đã được tài liệu 06 đặc tả ở mức khái niệm, nhưng **chưa ai chuyển thành bảng trường**, và chúng không thuộc tài liệu này vì không phải dữ liệu hai service trao cho nhau.
 
@@ -360,6 +360,8 @@ Phần trên dễ đọc nhầm thành "đã xong". Không phải. Ba thực th�
 |---|---|---|---|
 | **Nhật ký điều tra** | Retrieval ghi, Admin đọc | 06 Mục 9.2 — ai hỏi, lúc nào, phạm vi quyền tại thời điểm đó, tài liệu vào ngữ cảnh, tài liệu bị loại và lý do, agent nào được dùng | **chưa có** |
 | ~~**Lịch sử hội thoại**~~ | **Không còn thuộc AI Services — chốt 23/9/2026: Backend C.Brain lưu.** Retrieval chỉ nhận K lượt gần nhất và trạng thái hội thoại qua lời gọi, không lưu | 06 Mục 9.1, 9.4 (v1.10); `10` Mục 6.1 | **không cần ở phía AI** |
+| **Sổ đăng ký Space** (`space_registry`) *(thêm 24/9/2026)* | Ingestion ghi và đọc; Retrieval không đọc | `10` Mục 4.0 — chỉ `space_id` + trạng thái đang dùng / đang xoá / đã xoá; **không** cây, cờ kế thừa hay thành viên | có trong mã: `packages/schema/space_registry.py`, DDL ở `store_schema.py` (commit `8751270`) |
+| **Nhật ký xoá** (`deletion_log`) *(thêm 24/9/2026)* | Ingestion ghi; Admin đọc qua `10` Mục 6.4 | 06 Mục 5.6 — ai, khi nào, tài liệu nào, `space_id`, lý do; không giữ nội dung | có trong mã: `packages/schema/deletion_log.py`, DDL ở `store_schema.py` |
 | **Định nghĩa agent chuyên miền** | Retrieval | 06 Mục 8.2–8.5 — ai tạo, hai tầng hướng dẫn, ràng buộc bất khả xâm phạm là BƯỚC chứ không phải CÂU, bộ kiểm lúc tạo | **chưa có** |
 
 Hai thứ còn lại — nhật ký điều tra và định nghĩa agent — là **việc nội bộ của Retrieval v2**, cần một tài liệu riêng. *(Trạng thái hội thoại — 06 Mục 9.4 — cũng không phải dữ liệu dùng chung Ingestion–Retrieval: hình dạng của nó nằm ở `10` Mục 6.1, và nó chỉ mang `document_id` import từ module dùng chung.)* Chúng chỉ chạm tài liệu này ở một điểm: đều dùng lại `document_id` và `chunk_id` do module dùng chung định nghĩa, nên phải import từ đó chứ không tự khai báo lại.
