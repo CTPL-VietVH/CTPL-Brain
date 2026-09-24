@@ -2,8 +2,8 @@
 
 | | |
 |---|---|
-| **Phiên bản** | v0.4 — **BẢN NHÁP** (Cowork soạn 23/9/2026) |
-| **Lịch sử** | v0.4 — 23/9/2026 (khuya), PO chốt: T4; đăng ký Space khi BE tạo Space (AI chỉ biết `space_id` tồn tại, không lưu cây); xoá Space (§4.0); xoá tài liệu chỉ theo `document_id`. Đóng Q4 (phần xoá/tạo Space). v0.3 — 23/9/2026 (tối), sau vòng phản biện độc lập (REVIEW-10) và nghiên cứu phương án (RESEARCH-10), PO chốt: `recent_turns` chỉ gồm câu hỏi người dùng; lọc trạng thái hội thoại ngay đầu lượt; Q1 liên kết xuyên Space; Q2 AI hỏi BE cây Space mỗi vòng quét; Q6 trả trọn một lần; định nghĩa dẫn nguồn hợp lệ; cảnh báo chỉ tính từ tài liệu đã qua bộ lọc cứng. Thêm `GET /v1/meta`. Sửa nhãn nguồn theo phản biện. Đã sửa theo: 06 v1.11, 08 v1.5. v0.2 — 23/9/2026, PO chốt: T1–T3 ở §1; lịch sử hội thoại do BE lưu, AI không giữ trạng thái giữa các lượt, thêm trạng thái hội thoại dạng biểu mẫu (§6.1–6.2); hồ sơ cá nhân hoá ra khỏi phiên bản hiện tại. Đã sửa theo: 06 v1.10, 07 v1.10, 08 v1.4, 09 (ghi chú), CLAUDE.md. v0.1 — bản nháp đầu |
+| **Phiên bản** | v0.5 — **BẢN NHÁP** (Cowork soạn 23/9/2026, sửa 24/9/2026) |
+| **Lịch sử** | v0.5 — 24/9/2026, sau khi dựng khung FastAPI (task API-khung-fastapi-va-be-gia), PO chốt: khoá dịch vụ T1 là biến môi trường `CBRAIN_API_SERVICE_KEY`, không nằm trong `config/`; `GET /v1/meta` vẫn đòi xác thực dịch vụ; thêm 4 mã lỗi tầng vận chuyển ở §3.5; thiếu `Idempotency-Key` trên lời gọi ghi thì từ chối; ghi nhận hai chỗ khung chưa đạt hợp đồng (xoá Space chạy đồng bộ, chưa đếm số tài liệu đã xoá) ở §4.0; thêm Q10 ở §8. v0.4 — 23/9/2026 (khuya), PO chốt: T4; đăng ký Space khi BE tạo Space (AI chỉ biết `space_id` tồn tại, không lưu cây); xoá Space (§4.0); xoá tài liệu chỉ theo `document_id`. Đóng Q4 (phần xoá/tạo Space). v0.3 — 23/9/2026 (tối), sau vòng phản biện độc lập (REVIEW-10) và nghiên cứu phương án (RESEARCH-10), PO chốt: `recent_turns` chỉ gồm câu hỏi người dùng; lọc trạng thái hội thoại ngay đầu lượt; Q1 liên kết xuyên Space; Q2 AI hỏi BE cây Space mỗi vòng quét; Q6 trả trọn một lần; định nghĩa dẫn nguồn hợp lệ; cảnh báo chỉ tính từ tài liệu đã qua bộ lọc cứng. Thêm `GET /v1/meta`. Sửa nhãn nguồn theo phản biện. Đã sửa theo: 06 v1.11, 08 v1.5. v0.2 — 23/9/2026, PO chốt: T1–T3 ở §1; lịch sử hội thoại do BE lưu, AI không giữ trạng thái giữa các lượt, thêm trạng thái hội thoại dạng biểu mẫu (§6.1–6.2); hồ sơ cá nhân hoá ra khỏi phiên bản hiện tại. Đã sửa theo: 06 v1.10, 07 v1.10, 08 v1.4, 09 (ghi chú), CLAUDE.md. v0.1 — bản nháp đầu |
 | **Trạng thái** | Đã chốt: §1 T1–T4, §2, §4.0, §5.1–5.2, §5.6, §6.1–6.2, §7.1. Còn chờ PO: T5–T6 ở §1, các mục **[Đề xuất]**, và các điểm mở còn lại ở §8 (Q3, Q4 phần đổi loại Space, Q5, Q7, Q8) |
 | **Nguồn chân lý** | `06` v1.12, `07` v1.10, `08` v1.6 — tài liệu này **không** được đổi quyết định nào trong ba tài liệu đó; chỗ nào cần đổi thì ghi ở §9 |
 | **Phạm vi** | Mọi lời gọi giữa Backend C.Brain (BE) và AI Services, theo **cả hai chiều**. Lấp đúng khoảng trống mà `07` Mục 0 loại trừ và `08` T2.10 yêu cầu phải chốt tường minh |
@@ -32,7 +32,7 @@ Rút từ trao đổi ngày 23/9/2026. Viet nêu hai ý: AI Services chỉ nhậ
 
 | # | Luật | Loại |
 |---|---|---|
-| **T1** | AI Services **chỉ nhận lời gọi từ BE C.Brain**. Mọi lời gọi không qua xác thực dịch vụ đều bị từ chối. Cách xác thực (mTLS, khoá dịch vụ, chính sách mạng) do hạ tầng chọn. Chiều ngược lại (AI gọi BE ở §7) cũng phải xác thực như vậy. | [PO chốt 23/9] |
+| **T1** | AI Services **chỉ nhận lời gọi từ BE C.Brain**. Mọi lời gọi không qua xác thực dịch vụ đều bị từ chối. Cách xác thực (mTLS, khoá dịch vụ, chính sách mạng) do hạ tầng chọn. Chiều ngược lại (AI gọi BE ở §7) cũng phải xác thực như vậy. **Bản cài v1 (24/9):** khoá dịch vụ gửi trong header `X-Service-Key`, giá trị lấy từ biến môi trường `CBRAIN_API_SERVICE_KEY`. Đây là tham số triển khai, khác nhau ở từng bản cài (giống mật khẩu PostgreSQL), nên **không** nằm trong ba nhóm cấu hình của `config/`. Thiếu biến hoặc để rỗng thì AI Services từ chối khởi động; không có chế độ "không đặt khoá thì bỏ qua xác thực". | [PO chốt 23/9; cách cài PO chốt 24/9] |
 | **T2** | **BE quyết quyền, AI thực thi quyền.** BE xác thực người dùng, tra vai trò, và tính phạm vi Space người đó đọc được **tươi tại thời điểm gọi**. AI **không kiểm lại** người dùng, vai trò hay cây Space. | [PO chốt 23/9] |
 | **T3** | AI **áp đúng phạm vi BE gửi sang làm bộ lọc cứng tại nơi lấy dữ liệu** (Qdrant và PostgreSQL), không lấy rộng ra rồi lọc sau. Với Qdrant, điều kiện `space_id` nằm **trong** lời gọi tìm, không lọc sau khi đã lấy top-k. Tài liệu kéo theo họ hàng đọc từ PostgreSQL nên phải áp lại cùng danh sách. Đây là cách đọc R4 dưới mô hình này: *quyết định* quyền ở BE, *kiểm quyền tại nơi lấy dữ liệu* vẫn ở AI. | [Suy ra — R4, NT4; PO chốt 23/9] |
 | **T4** | **Mỗi bên chỉ khẳng định sự thật thuộc dữ liệu của mình.** BE khẳng định *"người này có vai trò X ở Space S"*. AI tự kiểm *"đối tượng này có thật sự nằm ở Space S không"*. Nếu không nằm ở đó, AI từ chối với `OBJECT_NOT_IN_SPACE`. Xoá tài liệu **chỉ theo `document_id`**, không bao giờ theo vân tay nội dung, tên hay số hiệu. | [PO chốt 23/9 — lý do PO nêu: tránh xoá nhầm bản trùng ở Space khác] |
@@ -96,7 +96,7 @@ HTTP + JSON, tiền tố phiên bản `/v1`. Tài liệu này là nguồn để 
 
 ### 3.4 Idempotency — [Đề xuất]
 
-Mọi lời gọi ghi mang header `Idempotency-Key`. Gửi lại cùng khoá thì nhận lại đúng kết quả lần đầu, không ghi thêm. Xoá vĩnh viễn thì tự nó đã idempotent theo thiết kế (08 T2.8), nhưng vẫn dùng chung quy ước. Mọi lời gọi mang `X-Request-Id`, AI ghi kèm vào nhật ký của mình.
+Mọi lời gọi ghi mang header `Idempotency-Key`. Gửi lại cùng khoá thì nhận lại đúng kết quả lần đầu, không ghi thêm. Xoá vĩnh viễn thì tự nó đã idempotent theo thiết kế (08 T2.8), nhưng vẫn dùng chung quy ước. Mọi lời gọi mang `X-Request-Id`, AI ghi kèm vào nhật ký của mình. **Chốt 24/9:** lời gọi ghi thiếu `Idempotency-Key` bị từ chối (`IDEMPOTENCY_KEY_MISSING`), không mặc định bỏ qua chống lặp. Dùng lại một khoá cho thân lời gọi khác thì trả `IDEMPOTENCY_KEY_REUSED`.
 
 ### 3.5 Lỗi — nguyên tắc "lên tiếng", không hỏng im lặng
 
@@ -117,12 +117,16 @@ Mọi lỗi có mã máy đọc được (`code`) và thông điệp tiếng Vi�
 | `STATE_VERSION_UNSUPPORTED` | 422 | `conversation_state` mang `schema_version` AI không đọc được | §6.1 |
 | `CONTEXT_OVERFLOW` | 422 | Ngữ cảnh trả lời tràn. **Tuyệt đối không cắt ngầm** | 06 §6.5; 08 T3.4 |
 | `SERVICE_MISCONFIGURED` | 503 | Lệch con dấu kho vector hoặc thiếu khoá cấu hình. Service không phục vụ | 07 §3.3 |
+| `UNAUTHENTICATED` | 401 | Thiếu hoặc sai khoá dịch vụ. *Thêm 24/9* | T1 |
+| `IDEMPOTENCY_KEY_MISSING` | 400 | Lời gọi ghi thiếu `Idempotency-Key`. *Thêm 24/9* | §3.4 |
+| `IDEMPOTENCY_KEY_REUSED` | 422 | Cùng `Idempotency-Key` nhưng thân lời gọi khác lần đầu. *Thêm 24/9* | §3.4 |
+| `INTERNAL_ERROR` | 500 | Lỗi không lường trước. Luôn trả đúng dạng `code` + `message`, không lộ traceback. *Thêm 24/9* | — |
 
 Ngoài lỗi còn có các trạng thái **không phải lỗi nhưng phải hiển thị được**: từ chối theo R1, chạm trần, chưa đối chiếu xong. Các trạng thái này nằm trong thân phản hồi (§6.1), không nằm trong mã lỗi.
 
 ### 3.6 Thông tin hợp đồng và trạng thái sẵn sàng — `GET /v1/meta` — [Đề xuất]
 
-Trả về: `ready` (bool) và `not_ready_reason` (ví dụ lệch con dấu kho vector, thiếu khoá cấu hình — 07 §3.1, §3.3); `contract_version`; `limits` gồm `max_recent_turns` (K), trần độ dài/số phần tử từng trường của `conversation_state`, `conversation_state_schema_version`, cỡ file tối đa. BE gọi lúc khởi động và định kỳ, để **không phải đoán K** và biết AI đang từ chối phục vụ trước khi người dùng gặp lỗi `503`. Không cần `actor`.
+Trả về: `ready` (bool) và `not_ready_reason` (ví dụ lệch con dấu kho vector, thiếu khoá cấu hình — 07 §3.1, §3.3); `contract_version`; `limits` gồm `max_recent_turns` (K), trần độ dài/số phần tử từng trường của `conversation_state`, `conversation_state_schema_version`, cỡ file tối đa. BE gọi lúc khởi động và định kỳ, để **không phải đoán K** và biết AI đang từ chối phục vụ trước khi người dùng gặp lỗi `503`. Không cần `actor`, nhưng **vẫn phải qua xác thực dịch vụ** theo T1 (chốt 24/9). `contract_version` hiện lấy số phiên bản schema dùng chung (07 §3.1); khi tài liệu này rời bản nháp và có số phiên bản riêng thì xem Q10.
 
 ### 3.7 Vị trí trong văn bản — [Đề xuất]
 
@@ -146,6 +150,8 @@ API **không bắt BE hay giao diện tự cắt chuỗi**. Mọi trích dẫn t
 4. Chuyển Space sang *đã xoá*.
 
 `GET /v1/spaces/{space_id}` — trạng thái và tiến độ (số tài liệu đã xoá / còn lại). Gọi `DELETE` lần hai: trả tiến độ hiện tại, không lỗi, không xoá lặp.
+
+> **Khung code 24/9 chưa đạt hai điểm của mục này** (đã ghi vào TASKS.md, phải xong trước khi chạm dữ liệu thật): (1) `DELETE` đang chạy **đồng bộ** trong lời gọi vì repo chưa có bộ chạy nền, nên Space nhiều tài liệu sẽ giữ lời gọi rất lâu; (2) `GET` chưa trả được số tài liệu **đã xoá**, chỉ trả số còn lại. Cùng đợt đó phải thay kho idempotency trong bộ nhớ bằng kho bền.
 
 **Ba ràng buộc chống xoá nhầm:**
 - Chọn tài liệu cần xoá **chỉ theo `space_id` trên hồ sơ tài liệu** — không theo vân tay nội dung, tên hay số hiệu. Bản trùng khít ở Space khác là tài liệu khác (`document_id` khác, 06 §5.7) và **không bị đụng tới**; chỉ các liên kết quan hệ nối tới tài liệu bị xoá mới bị gỡ (06 §5.6).
@@ -416,6 +422,7 @@ Dùng kiểu kéo (BE hỏi theo con trỏ) thay vì đẩy (AI gọi webhook), 
 | ~~Q6~~ | — | ~~Phát từng chữ hay trả trọn?~~ | **Đã chốt 23/9** — v1 trả trọn một lần, xem §6.1 |
 | Q7 | TB | Hỏi theo mốc thời gian (06 §4): người dùng chọn mốc bằng tham số tường minh `as_of`, hay hệ thống tự hiểu từ câu hỏi, hay cả hai? | 06 §4 chốt "phải lùi về được" nhưng không chốt cách người dùng nói ra mốc đó. |
 | Q8 | THẤP | `notified_uploader`/`notified_manager` (07 §2.4) nghĩa là "AI đã phát sự kiện" hay "người đã thật sự được báo"? | Dưới §7.2, AI chỉ biết vế đầu. |
+| Q10 | THẤP | `contract_version` trong `/v1/meta`: dùng số phiên bản schema 07 (như khung code hiện nay) hay số phiên bản riêng của tài liệu này? | Chỉ cần chốt khi tài liệu này rời bản nháp. |
 | ~~Q9~~ | — | ~~"Lịch sử hội thoại đi theo người dùng khi nghỉ việc"~~ | **Không còn thuộc hợp đồng này (23/9).** Lịch sử ở BE, nên đây là việc nội bộ của BE. |
 
 ---
