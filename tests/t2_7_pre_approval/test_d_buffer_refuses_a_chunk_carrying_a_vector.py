@@ -16,7 +16,6 @@ import pytest
 from ingestion.pre_approval_buffer import (
     BufferedIngestion,
     EmbeddedChunkInPreApprovalBufferError,
-    InMemoryPreApprovalBuffer,
 )
 from schema.chunk import Chunk
 from schema.document import DateSource, Document
@@ -44,8 +43,8 @@ def _document() -> Document:
     )
 
 
-def test_buffer_refuses_a_chunk_carrying_a_vector() -> None:
-    buffer = InMemoryPreApprovalBuffer()
+def test_buffer_refuses_a_chunk_carrying_a_vector(buffer_factory) -> None:
+    buffer = buffer_factory()
     entry = BufferedIngestion(
         document=_document(),
         buffered_at=INGESTED_AT,

@@ -12,24 +12,28 @@ vào đó rồi chỉ hoãn nạp vector là đã vi phạm bất biến."*
 from __future__ import annotations
 
 from ingestion.intake import InMemoryFingerprintIndex
-from ingestion.pre_approval_buffer import InMemoryPreApprovalBuffer
 from ingestion.pre_approval_runner import DuplicateLocation, run_pre_approval_ingestion
 from schema.document import DateSource, Document
 
 from .conftest import CHUNK_LENGTH_CAP, INGESTED_AT, make_request, registered_spaces, write_sample
 
 
-def test_duplicate_already_in_the_shared_store_is_reported(tmp_path) -> None:
+def test_duplicate_already_in_the_shared_store_is_reported(tmp_path, buffer_factory) -> None:
     path = write_sample(tmp_path)
-    buffer = InMemoryPreApprovalBuffer()
+    buffer = buffer_factory()
     fingerprint_index = InMemoryFingerprintIndex()
 
     # Find out what fingerprint this file produces, then pre-register an
-    # approved twin under it.
+    # approved twin under it. Probed into `space-other`, deliberately NOT
+    # `space-private`: the final assertion checks `space-private` stays
+    # empty, and a PG-backed buffer is one real table shared by every
+    # `buffer_factory()` call in this test — a probe landing in the SAME
+    # Space as the assertion would make it fail for a reason that has
+    # nothing to do with the behaviour under test.
     probe = run_pre_approval_ingestion(
-        make_request(path, document_id="doc-probe"),
+        make_request(path, document_id="doc-probe", space_id="space-other"),
         fingerprint_index=fingerprint_index,
-        buffer=InMemoryPreApprovalBuffer(),
+        buffer=buffer_factory(),
         space_registry=registered_spaces(),
         chunk_length_cap=CHUNK_LENGTH_CAP,
     )

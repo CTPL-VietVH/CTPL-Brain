@@ -9,14 +9,13 @@ và không đổi kết quả"*), and it costs nothing to get right here.
 from __future__ import annotations
 
 from ingestion.intake import InMemoryFingerprintIndex
-from ingestion.pre_approval_buffer import InMemoryPreApprovalBuffer
 from ingestion.pre_approval_runner import run_pre_approval_ingestion
 
 from .conftest import CHUNK_LENGTH_CAP, make_request, registered_spaces, write_sample
 
 
-def test_discard_releases_an_entry_and_is_repeatable(tmp_path) -> None:
-    buffer = InMemoryPreApprovalBuffer()
+def test_discard_releases_an_entry_and_is_repeatable(tmp_path, buffer_factory) -> None:
+    buffer = buffer_factory()
     request = make_request(write_sample(tmp_path))
     run_pre_approval_ingestion(
         request,

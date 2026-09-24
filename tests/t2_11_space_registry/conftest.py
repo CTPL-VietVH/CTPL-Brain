@@ -34,6 +34,7 @@ Every fixture is function-scoped: each case builds its own world.
 
 from __future__ import annotations
 
+import os
 import pathlib
 import sys
 from datetime import date, datetime, timezone
@@ -50,6 +51,7 @@ from ingestion.deletion import (  # noqa: E402
     InMemoryDeletionLog,
     InMemoryVectorStoreDeleter,
 )
+from ingestion.pg_queue_stores import PgSpaceRegistry  # noqa: E402
 from ingestion.pre_approval_buffer import (  # noqa: E402
     BufferedIngestion,
     InMemoryPreApprovalBuffer,
@@ -67,6 +69,70 @@ from schema.relation import (  # noqa: E402
     RelationOrigin,
     RelationType,
 )
+from schema.store_schema import SPACE_REGISTRY_TABLE, SPACE_REGISTRY_TABLE_DDL  # noqa: E402
+
+# --------------------------------------------------------------------------- #
+# KHO-PG-B — `space_registry_factory`, parametrized over InMemory and the real
+# PostgreSQL table, so the SAME test body proves the SAME behaviour on both
+# (task KHO-PG-B-hang-doi-dang-ky-vung-dem). PostgreSQL is only connected to
+# when the `postgresql` param actually runs — an InMemory-param test case
+# never touches the network, and a missing/unreachable store FAILS the
+# `postgresql` case loudly rather than skipping it silently.
+# --------------------------------------------------------------------------- #
+
+
+def _require_pg_env(name: str) -> str:
+    value = os.environ.get(name)
+    if value is None or value == "":
+        pytest.fail(
+            f"Missing config key '{name}'. No default in code — copy .env.example "
+            f"to .env and fill it in before running the postgresql-parametrized case."
+        )
+    return value
+
+
+def _pg_dsn() -> str:
+    host = _require_pg_env("CBRAIN_PG_HOST")
+    port = _require_pg_env("CBRAIN_PG_PORT")
+    database = _require_pg_env("CBRAIN_PG_DATABASE")
+    user = _require_pg_env("CBRAIN_PG_USER")
+    password = os.environ.get("CBRAIN_PG_PASSWORD") or ""
+    auth = f"{user}:{password}" if password else user
+    return f"postgresql://{auth}@{host}:{port}/{database}"
+
+
+@pytest.fixture(scope="session")
+def _pg_connection():
+    """One real connection for the whole session, only opened the first time
+    a `postgresql`-param test actually asks for it."""
+    import psycopg
+    from dotenv import load_dotenv
+
+    load_dotenv(REPO_ROOT / ".env")
+    with psycopg.connect(_pg_dsn(), autocommit=True) as connection:
+        connection.execute(SPACE_REGISTRY_TABLE_DDL)
+        yield connection
+
+
+@pytest.fixture(params=["in_memory", "postgresql"])
+def space_registry_factory(request):
+    """A zero-argument callable that returns a FRESH `SpaceRegistry`.
+
+    `in_memory` never imports psycopg or reads `.env` — the InMemory half of
+    this suite keeps working with no PostgreSQL running at all, exactly as it
+    did before this task. `postgresql` connects to the real table, deletes
+    any rows a previous run of THESE tests left behind (the space_ids this
+    file uses are constants, e.g. `DOOMED_SPACE`/`KEEPER_SPACE`, not random
+    per-run ids), and cleans up again afterwards.
+    """
+    if request.param == "in_memory":
+        yield InMemorySpaceRegistry
+        return
+
+    connection = request.getfixturevalue("_pg_connection")
+    connection.execute(f"DELETE FROM {SPACE_REGISTRY_TABLE}")
+    yield lambda: PgSpaceRegistry(connection)
+    connection.execute(f"DELETE FROM {SPACE_REGISTRY_TABLE}")
 
 DOOMED_SPACE = "space-doomed"
 KEEPER_SPACE = "space-keeper"

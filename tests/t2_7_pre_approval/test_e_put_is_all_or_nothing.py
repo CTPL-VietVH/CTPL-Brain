@@ -15,7 +15,6 @@ import pytest
 from ingestion.pre_approval_buffer import (
     BufferedIngestion,
     EmbeddedChunkInPreApprovalBufferError,
-    InMemoryPreApprovalBuffer,
 )
 from schema.chunk import Chunk
 
@@ -36,8 +35,8 @@ def _chunk(chunk_id: str, *, embedding: list[float] | None = None) -> Chunk:
     )
 
 
-def test_put_is_all_or_nothing() -> None:
-    buffer = InMemoryPreApprovalBuffer()
+def test_put_is_all_or_nothing(buffer_factory) -> None:
+    buffer = buffer_factory()
 
     # The bad chunk is LAST: a buffer that wrote as it validated would already
     # have committed the two good ones by the time it noticed.

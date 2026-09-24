@@ -14,16 +14,15 @@ test would pass just as well on a pipeline that silently did nothing at all.
 from __future__ import annotations
 
 from ingestion.intake import InMemoryFingerprintIndex
-from ingestion.pre_approval_buffer import InMemoryPreApprovalBuffer
 from ingestion.pre_approval_runner import run_pre_approval_ingestion
 
 from .conftest import CHUNK_LENGTH_CAP, FakeSharedVectorStore, make_request, registered_spaces, write_sample
 
 
-def test_pre_approval_document_is_in_no_shared_store(tmp_path) -> None:
+def test_pre_approval_document_is_in_no_shared_store(tmp_path, buffer_factory) -> None:
     fingerprint_index = InMemoryFingerprintIndex()  # the official `document` table
     vector_store = FakeSharedVectorStore()  # Qdrant
-    buffer = InMemoryPreApprovalBuffer()
+    buffer = buffer_factory()
 
     request = make_request(write_sample(tmp_path))
     result = run_pre_approval_ingestion(

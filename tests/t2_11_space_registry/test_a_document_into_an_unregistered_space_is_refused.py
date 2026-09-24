@@ -24,7 +24,7 @@ import pytest
 from ingestion.intake import InMemoryFingerprintIndex, IntakeRequest, receive_and_validate
 from ingestion.pre_approval_buffer import InMemoryPreApprovalBuffer
 from ingestion.pre_approval_runner import PreApprovalRequest, run_pre_approval_ingestion
-from ingestion.space_registry import InMemorySpaceRegistry, SpaceNotRegistered
+from ingestion.space_registry import SpaceNotRegistered
 
 from .conftest import DOOMED_SPACE, INGESTED_AT, make_document
 
@@ -51,9 +51,9 @@ def _request(space_id: str) -> IntakeRequest:
     )
 
 
-def test_the_official_path_refuses_an_unregistered_space() -> None:
+def test_the_official_path_refuses_an_unregistered_space(space_registry_factory) -> None:
     fingerprint_index = InMemoryFingerprintIndex()
-    registry = InMemorySpaceRegistry()
+    registry = space_registry_factory()
     registry.register(DOOMED_SPACE)  # a DIFFERENT Space is registered
 
     with pytest.raises(SpaceNotRegistered):
@@ -68,11 +68,13 @@ def test_the_official_path_refuses_an_unregistered_space() -> None:
     )
 
 
-def test_the_pre_approval_path_refuses_an_unregistered_space(tmp_path) -> None:
+def test_the_pre_approval_path_refuses_an_unregistered_space(
+    tmp_path, space_registry_factory
+) -> None:
     path = tmp_path / "quyet-dinh.txt"
     path.write_text("Điều 1. Phạm vi điều chỉnh.\nQuyết định này quy định.\n", encoding="utf-8")
     buffer = InMemoryPreApprovalBuffer()
-    registry = InMemorySpaceRegistry()
+    registry = space_registry_factory()
     registry.register(DOOMED_SPACE)
 
     with pytest.raises(SpaceNotRegistered):
@@ -97,12 +99,12 @@ def test_the_pre_approval_path_refuses_an_unregistered_space(tmp_path) -> None:
     )
 
 
-def test_an_unknown_space_is_never_registered_on_first_use() -> None:
+def test_an_unknown_space_is_never_registered_on_first_use(space_registry_factory) -> None:
     """The tempting repair for the two cases above is to create the Space on
     first sight. docs/10 §4.0 gives registration to Backend alone — a Space
     AI invented would hold documents nobody can reach, because no `DELETE`
     and no permission grant will ever name that code."""
-    registry = InMemorySpaceRegistry()
+    registry = space_registry_factory()
 
     with pytest.raises(SpaceNotRegistered):
         receive_and_validate(

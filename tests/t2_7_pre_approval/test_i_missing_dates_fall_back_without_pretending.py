@@ -11,7 +11,6 @@ and K3's date gate both read the source, not the date.
 from __future__ import annotations
 
 from ingestion.intake import InMemoryFingerprintIndex
-from ingestion.pre_approval_buffer import InMemoryPreApprovalBuffer
 from ingestion.pre_approval_runner import run_pre_approval_ingestion
 from schema.document import DateSource
 
@@ -25,11 +24,11 @@ from .conftest import (
 )
 
 
-def test_missing_dates_fall_back_without_pretending(tmp_path) -> None:
+def test_missing_dates_fall_back_without_pretending(tmp_path, buffer_factory) -> None:
     path = write_sample(
         tmp_path, name="quy-che-khong-ngay.txt", text=SAMPLE_DOCUMENT_WITHOUT_DATES
     )
-    buffer = InMemoryPreApprovalBuffer()
+    buffer = buffer_factory()
     request = make_request(path)
 
     run_pre_approval_ingestion(

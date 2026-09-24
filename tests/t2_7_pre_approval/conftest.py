@@ -12,15 +12,85 @@ first real INSERT.
 
 from __future__ import annotations
 
+import os
 import pathlib
 import sys
 from datetime import datetime
 
+import pytest
+
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT / "packages"))
 
+from ingestion.pg_queue_stores import PgPreApprovalBuffer  # noqa: E402
+from ingestion.pre_approval_buffer import (  # noqa: E402
+    PRE_APPROVAL_CHUNK_TABLE_DDL,
+    PRE_APPROVAL_DOCUMENT_TABLE,
+    PRE_APPROVAL_DOCUMENT_TABLE_DDL,
+    InMemoryPreApprovalBuffer,
+)
 from ingestion.pre_approval_runner import PreApprovalRequest  # noqa: E402
 from ingestion.space_registry import InMemorySpaceRegistry  # noqa: E402
+
+# --------------------------------------------------------------------------- #
+# KHO-PG-B — `buffer_factory`, parametrized over InMemory and the real
+# PostgreSQL table pair, so the SAME test body proves the SAME behaviour on
+# both (task KHO-PG-B-hang-doi-dang-ky-vung-dem). PostgreSQL is only touched
+# when the `postgresql` param actually runs — see the matching fixture in
+# `tests/t2_11_space_registry/conftest.py` for the full reasoning; this is
+# the same shape.
+# --------------------------------------------------------------------------- #
+
+
+def _require_pg_env(name: str) -> str:
+    value = os.environ.get(name)
+    if value is None or value == "":
+        pytest.fail(
+            f"Missing config key '{name}'. No default in code — copy .env.example "
+            f"to .env and fill it in before running the postgresql-parametrized case."
+        )
+    return value
+
+
+def _pg_dsn() -> str:
+    host = _require_pg_env("CBRAIN_PG_HOST")
+    port = _require_pg_env("CBRAIN_PG_PORT")
+    database = _require_pg_env("CBRAIN_PG_DATABASE")
+    user = _require_pg_env("CBRAIN_PG_USER")
+    password = os.environ.get("CBRAIN_PG_PASSWORD") or ""
+    auth = f"{user}:{password}" if password else user
+    return f"postgresql://{auth}@{host}:{port}/{database}"
+
+
+@pytest.fixture(scope="session")
+def _pg_connection():
+    import psycopg
+    from dotenv import load_dotenv
+
+    load_dotenv(REPO_ROOT / ".env")
+    with psycopg.connect(_pg_dsn(), autocommit=True) as connection:
+        connection.execute(PRE_APPROVAL_DOCUMENT_TABLE_DDL)
+        connection.execute(PRE_APPROVAL_CHUNK_TABLE_DDL)
+        yield connection
+
+
+def _clean_buffer_tables(connection) -> None:
+    # Chunk rows cascade from their document row (`ON DELETE CASCADE`), so
+    # deleting the document table alone is enough.
+    connection.execute(f"DELETE FROM {PRE_APPROVAL_DOCUMENT_TABLE}")
+
+
+@pytest.fixture(params=["in_memory", "postgresql"])
+def buffer_factory(request):
+    """A zero-argument callable that returns a FRESH `PreApprovalBuffer`."""
+    if request.param == "in_memory":
+        yield InMemoryPreApprovalBuffer
+        return
+
+    connection = request.getfixturevalue("_pg_connection")
+    _clean_buffer_tables(connection)
+    yield lambda: PgPreApprovalBuffer(connection)
+    _clean_buffer_tables(connection)
 
 #: Every Space these cases submit into. T2.11 (docs/10 §4.0) made a live
 #: Space register a precondition of any upload, official path or

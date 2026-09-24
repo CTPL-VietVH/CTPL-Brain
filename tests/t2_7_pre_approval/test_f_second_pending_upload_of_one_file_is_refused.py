@@ -16,15 +16,14 @@ through and land in front of the Manager as two separate approvals.
 from __future__ import annotations
 
 from ingestion.intake import InMemoryFingerprintIndex
-from ingestion.pre_approval_buffer import InMemoryPreApprovalBuffer
 from ingestion.pre_approval_runner import DuplicateLocation, run_pre_approval_ingestion
 
 from .conftest import CHUNK_LENGTH_CAP, make_request, registered_spaces, write_sample
 
 
-def test_second_pending_upload_of_one_file_is_refused(tmp_path) -> None:
+def test_second_pending_upload_of_one_file_is_refused(tmp_path, buffer_factory) -> None:
     fingerprint_index = InMemoryFingerprintIndex()
-    buffer = InMemoryPreApprovalBuffer()
+    buffer = buffer_factory()
     path = write_sample(tmp_path)
 
     first = run_pre_approval_ingestion(

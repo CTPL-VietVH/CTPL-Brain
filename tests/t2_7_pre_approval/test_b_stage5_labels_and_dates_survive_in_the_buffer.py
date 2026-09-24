@@ -13,15 +13,14 @@ from __future__ import annotations
 from datetime import date
 
 from ingestion.intake import InMemoryFingerprintIndex
-from ingestion.pre_approval_buffer import InMemoryPreApprovalBuffer
 from ingestion.pre_approval_runner import run_pre_approval_ingestion
 from schema.document import DateSource
 
 from .conftest import CHUNK_LENGTH_CAP, make_request, registered_spaces, write_sample
 
 
-def test_stage5_labels_and_dates_survive_in_the_buffer(tmp_path) -> None:
-    buffer = InMemoryPreApprovalBuffer()
+def test_stage5_labels_and_dates_survive_in_the_buffer(tmp_path, buffer_factory) -> None:
+    buffer = buffer_factory()
     request = make_request(write_sample(tmp_path))
 
     run_pre_approval_ingestion(

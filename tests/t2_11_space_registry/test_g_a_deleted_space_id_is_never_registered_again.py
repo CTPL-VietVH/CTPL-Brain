@@ -20,11 +20,7 @@ from __future__ import annotations
 import pytest
 
 from ingestion.space_deletion import delete_space
-from ingestion.space_registry import (
-    InMemorySpaceRegistry,
-    SpaceCannotBeRegisteredAgain,
-    SpaceState,
-)
+from ingestion.space_registry import SpaceCannotBeRegisteredAgain, SpaceState
 
 from .conftest import DOOMED_SPACE
 
@@ -57,11 +53,11 @@ def test_registering_a_space_that_is_still_being_deleted_is_refused(
     assert world.registry.get(DOOMED_SPACE).state is SpaceState.BEING_DELETED
 
 
-def test_registering_a_space_that_is_in_use_is_idempotent() -> None:
+def test_registering_a_space_that_is_in_use_is_idempotent(space_registry_factory) -> None:
     """docs/10 §4.0: *"Gọi lại cùng `space_id` đang dùng → trả kết quả như lần
     đầu (idempotent)."* Backend retrying a `POST /v1/spaces` after a timeout
     must not get an error — the Space is exactly as it asked for."""
-    registry = InMemorySpaceRegistry()
+    registry = space_registry_factory()
 
     first = registry.register("space-new")
     second = registry.register("space-new")
