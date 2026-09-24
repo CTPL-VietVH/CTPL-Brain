@@ -10,7 +10,6 @@ from __future__ import annotations
 
 from ingestion.pre_approval_buffer import InMemoryPreApprovalBuffer
 from ingestion.promotion import (
-    InMemorySharedProfileStore,
     InMemoryVectorStoreWriter,
     promote_approved_ingestion,
 )
@@ -27,8 +26,8 @@ from .conftest import (
 )
 
 
-def test_promote_writes_to_both_shared_stores(tmp_path) -> None:
-    store = InMemorySharedProfileStore()  # the official `document` + `relation`
+def test_promote_writes_to_both_shared_stores(tmp_path, profile_store) -> None:
+    store = profile_store  # the official `document` + `relation`
     vectors = InMemoryVectorStoreWriter()  # Qdrant
     buffer = InMemoryPreApprovalBuffer()
 

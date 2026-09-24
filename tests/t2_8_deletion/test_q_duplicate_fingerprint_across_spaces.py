@@ -25,8 +25,8 @@ def test_deleting_the_duplicate_in_space_a_leaves_the_one_in_space_b_whole(world
         document_id="doc-fp-b", space_id="space-fp-b", content_fingerprint=FINGERPRINT
     )
 
-    world.inner_store.write_document_and_relations(document=doc_a, relations=[])
-    world.inner_store.write_document_and_relations(
+    world.profile_store.write_document_and_relations(document=doc_a, relations=[])
+    world.profile_store.write_document_and_relations(
         document=doc_b,
         relations=[
             make_relation(
@@ -53,7 +53,7 @@ def test_deleting_the_duplicate_in_space_a_leaves_the_one_in_space_b_whole(world
     assert outcome.profile_was_present is True
 
     # B, the duplicate in the OTHER Space, survives intact in both stores.
-    assert world.inner_store.get_document("doc-fp-b") == doc_b
+    assert world.profile_store.get_document("doc-fp-b") == doc_b
     assert "chunk-fp-b-1" in world.point_ids()
     assert "rel-b-unrelated" in world.relation_ids()
 

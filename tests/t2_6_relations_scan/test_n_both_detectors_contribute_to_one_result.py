@@ -15,7 +15,6 @@ from datetime import date
 
 from ingestion.relations_scan import (
     InMemorySpace,
-    InMemorySpaceDocumentSource,
     InMemorySpaceScanScope,
     scan_relations_for_new_document,
 )
@@ -24,7 +23,7 @@ from schema.relation import RelationOrigin, RelationType
 from .conftest import CITATION_110, DOC_NUMBER_110, ISSUED_110, StubClock, make_document
 
 
-def test_both_detectors_contribute_to_one_result() -> None:
+def test_both_detectors_contribute_to_one_result(document_source_factory) -> None:
     new_document = make_document(
         document_id="new",
         doc_number="30/2020/NĐ-CP",
@@ -49,7 +48,7 @@ def test_both_detectors_contribute_to_one_result() -> None:
     result = scan_relations_for_new_document(
         new_document,
         scope=InMemorySpaceScanScope([InMemorySpace(space_id="space-own")]),
-        document_source=InMemorySpaceDocumentSource([new_document, cited, superseded]),
+        document_source=document_source_factory([new_document, cited, superseded]),
         saturation_epsilon=0.01,
         saturation_rounds=3,
         scan_pair_budget=100,

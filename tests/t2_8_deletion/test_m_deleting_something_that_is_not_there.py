@@ -20,6 +20,8 @@ import pytest
 
 from ingestion.deletion import ObjectNotInSpace, purge_document_permanently
 
+from .conftest import pop_document_without_trace
+
 
 def test_an_unknown_document_id_is_refused_not_silently_completed(world, deletion_kwargs):
     before = world.snapshot()
@@ -40,7 +42,7 @@ def test_a_profile_gone_with_no_matching_log_line_is_the_same_unknown_case(world
     directly, with no log line ever written, is not that state: it is
     indistinguishable from an id that never existed, and must be refused the
     same way, not treated as "the deletion continuing"."""
-    world.inner_store._documents.pop("doc-doomed")
+    pop_document_without_trace(world, "doc-doomed")
     before_points = world.point_ids()
 
     with pytest.raises(ObjectNotInSpace):

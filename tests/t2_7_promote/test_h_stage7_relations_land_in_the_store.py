@@ -13,7 +13,6 @@ from datetime import date
 
 from ingestion.pre_approval_buffer import InMemoryPreApprovalBuffer
 from ingestion.promotion import (
-    InMemorySharedProfileStore,
     InMemoryVectorStoreWriter,
     promote_approved_ingestion,
 )
@@ -51,8 +50,8 @@ Quyết định này quy định về công tác quản lý tài liệu nội b�
 """
 
 
-def test_stage7_relations_land_in_the_store(tmp_path) -> None:
-    store = InMemorySharedProfileStore()
+def test_stage7_relations_land_in_the_store(tmp_path, profile_store) -> None:
+    store = profile_store
     vectors = InMemoryVectorStoreWriter()
     buffer = InMemoryPreApprovalBuffer()
 

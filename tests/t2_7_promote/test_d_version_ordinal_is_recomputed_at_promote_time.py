@@ -11,7 +11,6 @@ from __future__ import annotations
 
 from ingestion.pre_approval_buffer import InMemoryPreApprovalBuffer
 from ingestion.promotion import (
-    InMemorySharedProfileStore,
     InMemoryVectorStoreWriter,
     promote_approved_ingestion,
 )
@@ -28,8 +27,8 @@ from .conftest import (
 )
 
 
-def test_version_ordinal_is_recomputed_at_promote_time(tmp_path) -> None:
-    store = InMemorySharedProfileStore()
+def test_version_ordinal_is_recomputed_at_promote_time(tmp_path, profile_store) -> None:
+    store = profile_store
     vectors = InMemoryVectorStoreWriter()
     buffer = InMemoryPreApprovalBuffer()
     entry = buffer_a_document(tmp_path, buffer=buffer, fingerprint_index=store)

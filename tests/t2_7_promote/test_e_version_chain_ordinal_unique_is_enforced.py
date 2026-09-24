@@ -11,13 +11,13 @@ T2.1-E2's race condition.
 from __future__ import annotations
 
 import pytest
-from ingestion.promotion import InMemorySharedProfileStore, VersionChainOrdinalConflictError
+from ingestion.promotion import VersionChainOrdinalConflictError
 
 from .conftest import make_stored_document
 
 
-def test_version_chain_ordinal_unique_is_enforced() -> None:
-    store = InMemorySharedProfileStore()
+def test_version_chain_ordinal_unique_is_enforced(profile_store) -> None:
+    store = profile_store
     store.register(
         make_stored_document(
             document_id="doc-a",
@@ -41,9 +41,9 @@ def test_version_chain_ordinal_unique_is_enforced() -> None:
     assert len(store.documents()) == 1
 
 
-def test_a_different_chain_may_reuse_the_same_ordinal() -> None:
+def test_a_different_chain_may_reuse_the_same_ordinal(profile_store) -> None:
     """The constraint is on the PAIR — every chain has its own ordinal 1."""
-    store = InMemorySharedProfileStore()
+    store = profile_store
     store.register(
         make_stored_document(
             document_id="doc-a",

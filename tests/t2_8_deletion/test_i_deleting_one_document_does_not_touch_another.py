@@ -11,20 +11,20 @@ from ingestion.deletion import purge_document_permanently
 
 
 def test_the_neighbour_in_the_same_space_survives_intact(world, deletion_kwargs):
-    neighbour_before = world.inner_store.get_document("doc-neighbour")
+    neighbour_before = world.profile_store.get_document("doc-neighbour")
 
     purge_document_permanently("doc-doomed", **deletion_kwargs)
 
-    assert world.inner_store.get_document("doc-neighbour") == neighbour_before
+    assert world.profile_store.get_document("doc-neighbour") == neighbour_before
     assert "chunk-neighbour-1" in world.point_ids()
 
 
 def test_a_document_in_another_space_is_untouched(world, deletion_kwargs):
-    bystander_before = world.inner_store.get_document("doc-bystander")
+    bystander_before = world.profile_store.get_document("doc-bystander")
 
     purge_document_permanently("doc-doomed", **deletion_kwargs)
 
-    assert world.inner_store.get_document("doc-bystander") == bystander_before
+    assert world.profile_store.get_document("doc-bystander") == bystander_before
 
 
 def test_deleting_the_neighbour_instead_takes_the_other_half(world, deletion_kwargs):

@@ -17,13 +17,13 @@ from __future__ import annotations
 import dataclasses
 
 import pytest
-from ingestion.promotion import DuplicateActiveFingerprintError, InMemorySharedProfileStore
+from ingestion.promotion import DuplicateActiveFingerprintError
 
 from .conftest import make_stored_document
 
 
-def test_two_active_documents_may_not_share_a_fingerprint_in_one_space() -> None:
-    store = InMemorySharedProfileStore()
+def test_two_active_documents_may_not_share_a_fingerprint_in_one_space(profile_store) -> None:
+    store = profile_store
     store.register(
         make_stored_document(
             document_id="doc-a",
@@ -44,8 +44,8 @@ def test_two_active_documents_may_not_share_a_fingerprint_in_one_space() -> None
         )
 
 
-def test_a_removed_twin_does_not_block_a_re_upload() -> None:
-    store = InMemorySharedProfileStore()
+def test_a_removed_twin_does_not_block_a_re_upload(profile_store) -> None:
+    store = profile_store
     removed = make_stored_document(
         document_id="doc-a",
         version_chain_id="chain-a",
@@ -66,10 +66,10 @@ def test_a_removed_twin_does_not_block_a_re_upload() -> None:
     assert len(store.documents()) == 2
 
 
-def test_the_same_fingerprint_in_another_space_is_fine() -> None:
+def test_the_same_fingerprint_in_another_space_is_fine(profile_store) -> None:
     """06 Mục 5.7: *"Trùng khít, khác Space → hợp lệ, không cảnh báo"* — the
     constraint is scoped to one Space, not to the tenant."""
-    store = InMemorySharedProfileStore()
+    store = profile_store
     first = make_stored_document(
         document_id="doc-a",
         version_chain_id="chain-a",

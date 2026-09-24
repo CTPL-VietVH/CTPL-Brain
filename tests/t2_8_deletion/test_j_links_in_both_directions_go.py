@@ -24,6 +24,6 @@ def test_no_surviving_link_points_at_a_deleted_document(world, deletion_kwargs):
     purge_document_permanently("doc-doomed", **deletion_kwargs)
 
     live_ids = world.document_ids()
-    for relation in world.inner_store.relations():
+    for relation in world.profile_store.relations():
         assert relation.from_document_id in live_ids
         assert relation.to_document_id in live_ids

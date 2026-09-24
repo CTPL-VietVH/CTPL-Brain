@@ -15,7 +15,7 @@ thẳng `result.document.document_id`.
 
 from __future__ import annotations
 
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 
 from ingestion.intake import receive_and_validate
 from schema.document import DateSource, Document
@@ -34,7 +34,7 @@ def _removed_as_wrong_document(*, document_id: str, space_id: str, content_finge
         issued_date_source=DateSource.EXTRACTED,
         effective_date=date(2024, 1, 1),
         effective_date_source=DateSource.EXTRACTED,
-        ingested_at=datetime(2024, 1, 1),
+        ingested_at=datetime(2024, 1, 1, tzinfo=timezone.utc),
         source_format="pdf",
         content_fingerprint=content_fingerprint,
         extracted_text="Nội dung sai.",

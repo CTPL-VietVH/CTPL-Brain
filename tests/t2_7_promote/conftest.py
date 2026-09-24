@@ -1,31 +1,56 @@
 """Shared fixtures for the T2.7 promote tests — inserts `packages/` into
 `sys.path`, same as the other Nhóm 2 test folders.
 
-No live PostgreSQL and no live Qdrant: `InMemorySharedProfileStore` enforces
-every constraint `schema/store_schema.py` declares, and
-`InMemoryVectorStoreWriter` stands in for the collection. The BGE-M3 model is
-faked too — GĐ6's real behaviour is T2.5's subject and is tested there; what
-matters here is that GĐ6 ran and produced vectors before anything was
-written.
+No live Qdrant: `InMemoryVectorStoreWriter` stands in for the collection, in
+every case. The BGE-M3 model is faked too — GĐ6's real behaviour is T2.5's
+subject and is tested there; what matters here is that GĐ6 ran and produced
+vectors before anything was written.
+
+──────────────────────────────────────────────────────────────────────────
+KHO-PG-A — `profile_store` tham số hoá InMemory / PostgreSQL
+──────────────────────────────────────────────────────────────────────────
+
+`SharedProfileStore` (promotion.py) giờ có hai cài đặt: `InMemorySharedProfile
+Store` (không đổi, vẫn tự kiểm mọi ràng buộc `schema/store_schema.py` khai
+báo) và `ingestion.pg_document_stores.PgDocumentStore` (mới — Postgres THẬT,
+để chính PostgreSQL kiểm hai unique constraint và FK). `profile_store` là
+fixture tham số hoá theo cả hai; mỗi file test chỉ đổi
+`store = InMemorySharedProfileStore()` thành `store = profile_store`.
+
+`test_i` (đối chiếu DDL với dataclass) và `test_j` (một ca ghi thẳng vào
+`store._relations` — mô phỏng bề mặt ghi của Manager, T2.10, CHƯA XÂY — cho
+CẢ hai backend) không tham số hoá: `test_i` không cần store nào; `test_j`
+thao túng thuộc tính nội bộ `_relations` của `InMemorySharedProfileStore`,
+không có tương đương an toàn ở `PgDocumentStore` (dựng một "cửa hậu ghi
+thẳng" chỉ để một test riêng lẻ poke vào là việc của T2.10 thật, không phải
+việc giả lập ở đây) — giữ nguyên InMemory-only, đã ghi trong báo cáo
+KHO-PG-A.
 """
 
 from __future__ import annotations
 
+import os
 import pathlib
 import sys
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 
 import numpy as np
+import psycopg
+import pytest
+from dotenv import load_dotenv
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT / "packages"))
 
+from ingestion.pg_document_stores import PgDocumentStore  # noqa: E402
+from ingestion.promotion import InMemorySharedProfileStore  # noqa: E402
 from ingestion.relations_scan import InMemorySpace, InMemorySpaceScanScope  # noqa: E402
 from ingestion.space_registry import InMemorySpaceRegistry  # noqa: E402
 from schema.document import DateSource, Document  # noqa: E402
+from schema.store_schema import SHARED_STORE_DDL  # noqa: E402
 
 CHUNK_LENGTH_CAP = 5000
-INGESTED_AT = datetime(2026, 9, 22, 15, 0)
+INGESTED_AT = datetime(2026, 9, 22, 15, 0, tzinfo=timezone.utc)
 
 # The four GĐ7 scan parameters. Real values live in `config/ingestion.yaml`;
 # these are the test's own, passed explicitly because neither the scan nor
@@ -181,3 +206,70 @@ def buffer_a_document(
     )
     assert result.buffered is not None, "the pre-approval chain must have buffered it"
     return result.buffered
+
+
+# --------------------------------------------------------------------------- #
+# Kết nối PostgreSQL — CHỈ dựng khi một ca thử thật sự xin nhánh "pg" (qua
+# `request.getfixturevalue` bên dưới), nên nhánh "memory" không bao giờ đòi
+# `.env` hay một Postgres đang chạy.
+# --------------------------------------------------------------------------- #
+
+
+def _require(name: str) -> str:
+    value = os.environ.get(name)
+    if value is None or value == "":
+        pytest.fail(
+            f"Thiếu khoá cấu hình '{name}'. Không có giá trị mặc định trong mã — "
+            f"chép .env.example thành .env và điền."
+        )
+    return value
+
+
+@pytest.fixture(scope="session")
+def _env() -> None:
+    env_file = REPO_ROOT / ".env"
+    if not env_file.exists():
+        pytest.fail(f"Thiếu {env_file}. Chạy: cp .env.example .env")
+    load_dotenv(env_file)
+
+
+@pytest.fixture(scope="session")
+def pg_dsn(_env: None) -> str:
+    host = _require("CBRAIN_PG_HOST")
+    port = _require("CBRAIN_PG_PORT")
+    db = _require("CBRAIN_PG_DATABASE")
+    user = _require("CBRAIN_PG_USER")
+    password = os.environ.get("CBRAIN_PG_PASSWORD") or ""
+    auth = f"{user}:{password}" if password else user
+    return f"postgresql://{auth}@{host}:{port}/{db}"
+
+
+@pytest.fixture(scope="session")
+def _pg_schema_ready(pg_dsn: str) -> None:
+    with psycopg.connect(pg_dsn, autocommit=True) as conn:
+        for statement in SHARED_STORE_DDL:
+            conn.execute(statement)
+
+
+@pytest.fixture
+def pg_connection(pg_dsn: str, _pg_schema_ready: None):
+    """Xem docstring của cùng fixture ở `tests/t2_1_intake/conftest.py` —
+    `psycopg.Rollback` bên trong `with conn.transaction():` là cách bắt buộc
+    rollback thật; `conn.rollback()` đơn thuần KHÔNG xoá được gì vì
+    `Connection.transaction()` là khối giao dịch NGOÀI CÙNG nếu gọi nó mà
+    chưa có `BEGIN` nào mở sẵn — nó tự COMMIT khi thoát bình thường."""
+    with psycopg.connect(pg_dsn) as conn:
+        with conn.transaction():
+            yield conn
+            raise psycopg.Rollback
+
+
+@pytest.fixture(params=["memory", "pg"], ids=["memory", "pg"])
+def profile_store(request: pytest.FixtureRequest):
+    """`SharedProfileStore` + `FingerprintIndex` + `SpaceDocumentSource`,
+    tham số hoá theo cả hai cài đặt — thay `InMemorySharedProfileStore()`
+    trực tiếp trong từng test bằng fixture này."""
+    if request.param == "pg":
+        pg_connection = request.getfixturevalue("pg_connection")
+        return PgDocumentStore(connection=pg_connection)
+    return InMemorySharedProfileStore()

@@ -36,7 +36,7 @@ def test_the_entry_has_no_field_that_could_carry_content():
 
 
 def test_no_word_of_the_deleted_document_survives_in_the_log(world, deletion_kwargs):
-    document = world.inner_store.get_document("doc-doomed")
+    document = world.profile_store.get_document("doc-doomed")
 
     purge_document_permanently("doc-doomed", **deletion_kwargs)
 

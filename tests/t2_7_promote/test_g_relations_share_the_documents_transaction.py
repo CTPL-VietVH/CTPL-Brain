@@ -11,14 +11,14 @@ first, because every relation row carries a foreign key to it.
 from __future__ import annotations
 
 import pytest
-from ingestion.promotion import InMemorySharedProfileStore, UnknownRelationEndpointError
+from ingestion.promotion import UnknownRelationEndpointError
 from schema.relation import ApprovalState, Relation, RelationOrigin, RelationType
 
 from .conftest import make_stored_document
 
 
-def test_a_relation_to_an_unknown_document_is_refused_and_changes_nothing() -> None:
-    store = InMemorySharedProfileStore()
+def test_a_relation_to_an_unknown_document_is_refused_and_changes_nothing(profile_store) -> None:
+    store = profile_store
     document = make_stored_document(
         document_id="doc-new",
         version_chain_id="chain-new",
@@ -47,10 +47,10 @@ def test_a_relation_to_an_unknown_document_is_refused_and_changes_nothing() -> N
     assert store.relations() == []
 
 
-def test_a_relation_to_the_document_being_written_is_accepted() -> None:
+def test_a_relation_to_the_document_being_written_is_accepted(profile_store) -> None:
     """The FK is satisfied inside the transaction — the document row goes in
     before the relation rows, so a self-referencing write is legal."""
-    store = InMemorySharedProfileStore()
+    store = profile_store
     store.register(
         make_stored_document(
             document_id="doc-old",

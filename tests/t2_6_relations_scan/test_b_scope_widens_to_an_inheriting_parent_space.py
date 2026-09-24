@@ -9,7 +9,6 @@ from __future__ import annotations
 from .conftest import CITATION_110, DOC_NUMBER_110, ISSUED_110, StubClock, make_document
 from ingestion.relations_scan import (
     InMemorySpace,
-    InMemorySpaceDocumentSource,
     InMemorySpaceScanScope,
     scan_relations_for_new_document,
 )
@@ -17,7 +16,7 @@ from schema.document import RelationsScanState
 from schema.relation import RelationType
 
 
-def test_scope_widens_to_an_inheriting_parent_space() -> None:
+def test_scope_widens_to_an_inheriting_parent_space(document_source_factory) -> None:
     new_document = make_document(
         document_id="new",
         doc_number="30/2020/NĐ-CP",
@@ -43,7 +42,7 @@ def test_scope_widens_to_an_inheriting_parent_space() -> None:
                 ),
             ]
         ),
-        document_source=InMemorySpaceDocumentSource([new_document, cited]),
+        document_source=document_source_factory([new_document, cited]),
         saturation_epsilon=0.01,
         saturation_rounds=3,
         scan_pair_budget=100,

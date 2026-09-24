@@ -13,13 +13,12 @@ from __future__ import annotations
 from .conftest import CITATION_110, DOC_NUMBER_110, ISSUED_110, StubClock, make_document
 from ingestion.relations_scan import (
     InMemorySpace,
-    InMemorySpaceDocumentSource,
     InMemorySpaceScanScope,
     scan_relations_for_new_document,
 )
 
 
-def test_relations_between_two_candidates_are_not_returned() -> None:
+def test_relations_between_two_candidates_are_not_returned(document_source_factory) -> None:
     new_document = make_document(
         document_id="new",
         doc_number="30/2020/NĐ-CP",
@@ -39,7 +38,7 @@ def test_relations_between_two_candidates_are_not_returned() -> None:
     result = scan_relations_for_new_document(
         new_document,
         scope=InMemorySpaceScanScope([InMemorySpace(space_id="space-own")]),
-        document_source=InMemorySpaceDocumentSource(
+        document_source=document_source_factory(
             [new_document, citing_candidate, cited_candidate]
         ),
         saturation_epsilon=0.01,

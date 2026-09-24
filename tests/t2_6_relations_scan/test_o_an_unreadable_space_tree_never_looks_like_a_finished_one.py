@@ -27,7 +27,6 @@ from __future__ import annotations
 import pytest
 
 from ingestion.relations_scan import (
-    InMemorySpaceDocumentSource,
     InMemorySpace,
     InMemorySpaceScanScope,
     SpaceTopologyUnavailable,
@@ -45,11 +44,11 @@ SATURATION_EPSILON = 0.01
 SATURATION_ROUNDS = 3
 
 
-def _scan(new_document, *, scope, documents):
+def _scan(new_document, *, scope, documents, document_source_factory):
     return scan_relations_for_new_document(
         new_document,
         scope=scope,
-        document_source=InMemorySpaceDocumentSource(documents),
+        document_source=document_source_factory(documents),
         saturation_epsilon=SATURATION_EPSILON,
         saturation_rounds=SATURATION_ROUNDS,
         scan_pair_budget=500,
@@ -57,7 +56,7 @@ def _scan(new_document, *, scope, documents):
     )
 
 
-def test_o_an_unavailable_tree_leaves_the_document_expanding():
+def test_o_an_unavailable_tree_leaves_the_document_expanding(document_source_factory):
     """The saturation condition is met (one idle round, nothing found) and
     the scan STILL may not conclude, because the ceiling condition was never
     honestly evaluated — S8's two conditions have to hold together, and one
@@ -70,12 +69,13 @@ def test_o_an_unavailable_tree_leaves_the_document_expanding():
         new_document,
         scope=UnavailableSpaceScanScope(reason="Backend did not answer"),
         documents=[new_document],
+        document_source_factory=document_source_factory,
     )
 
     assert result.recommended_scan_state is RelationsScanState.EXPANDING
 
 
-def test_o_an_exhausted_tree_is_still_allowed_to_stop():
+def test_o_an_exhausted_tree_is_still_allowed_to_stop(document_source_factory):
     """The control case. Without it, the case above would also pass on a scan
     that could never reach `STOPPED` at all — and a document permanently
     saying *"chưa đối chiếu xong"* is the misconfiguration 07 Mục 3.2's hint
@@ -89,12 +89,13 @@ def test_o_an_exhausted_tree_is_still_allowed_to_stop():
         new_document,
         scope=InMemorySpaceScanScope([InMemorySpace(space_id="space-a")]),
         documents=[new_document],
+        document_source_factory=document_source_factory,
     )
 
     assert result.recommended_scan_state is RelationsScanState.STOPPED
 
 
-def test_o_relations_found_before_the_tree_failed_are_kept():
+def test_o_relations_found_before_the_tree_failed_are_kept(document_source_factory):
     """A refusal to conclude is not a refusal to report.
 
     Round 1 compares against the document's own Space and really did read
@@ -117,6 +118,7 @@ def test_o_relations_found_before_the_tree_failed_are_kept():
         citing,
         scope=UnavailableSpaceScanScope(reason="Backend did not answer"),
         documents=[cited, citing],
+        document_source_factory=document_source_factory,
     )
 
     assert result.relations, "relations found in round 1 were discarded"

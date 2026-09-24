@@ -18,7 +18,7 @@ from __future__ import annotations
 
 import pytest
 from ingestion.pre_approval_buffer import InMemoryPreApprovalBuffer
-from ingestion.promotion import InMemorySharedProfileStore, promote_approved_ingestion
+from ingestion.promotion import promote_approved_ingestion
 from schema.chunk import Chunk
 
 from .conftest import (
@@ -43,8 +43,8 @@ class FailingVectorStoreWriter:
         raise QdrantIsDown("connection refused")
 
 
-def test_profile_lands_before_the_vector_gate_opens(tmp_path) -> None:
-    store = InMemorySharedProfileStore()
+def test_profile_lands_before_the_vector_gate_opens(tmp_path, profile_store) -> None:
+    store = profile_store
     buffer = InMemoryPreApprovalBuffer()
     entry = buffer_a_document(tmp_path, buffer=buffer, fingerprint_index=store)
 
