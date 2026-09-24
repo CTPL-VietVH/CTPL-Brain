@@ -36,14 +36,34 @@ What is NOT here, on purpose
   write surface (08 T2.10), which has no owner yet — a module here that
   quietly `new`-ed in-memory stores would be a deployment that loses every
   document on restart and says nothing.
-* **No background task runner.** `DELETE /v1/spaces/{space_id}` (docs/10 §4.0)
-  is specified as `202` + *"chạy nền"*; this version runs the one unit of work
-  synchronously inside the request. `space_deletion.delete_space` was written
-  to be called repeatedly, so a runner can be put in front of it later without
-  touching the route — see that route's docstring.
 * **No answer/conversation endpoints (§6.1).** Retrieval v2 does not exist yet,
   so `GET /v1/meta` publishes a strict SUBSET of the `limits` §3.6 lists, and
   deliberately does not invent `max_recent_turns` or the `conversation_state`
   ceilings: a number published with no mechanism behind it is a number Backend
-  would rely on.
+  would rely on. (*"Cỡ file tối đa"* IS published since 24/9/2026 — the
+  endpoint that enforces it exists now.)
+
+──────────────────────────────────────────────────────────────────────────
+The background worker — added 24/9/2026
+──────────────────────────────────────────────────────────────────────────
+
+Both `202` endpoints (`DELETE /v1/spaces/{id}` §4.0 and `POST /v1/ingestions`
+§4.1) hand their work to `background.BackgroundWorker`: ⭐ **one thread for
+the whole service**, PO chốt 24/9/2026. Read that module before touching it —
+the number one is what makes the crash-recovery rule in
+`ingestion.ingestion_record_store` sound without a timeout, and raising it
+breaks that rule silently.
+
+The two `202`s are not symmetrical, and the difference is worth knowing:
+
+* a submission is durable before its `202` (the row is in PostgreSQL), so a
+  restart resumes it;
+* a Space deletion is NOT: its job lives only in the worker's queue, because
+  the register may hold nothing but `space_id` + state (docs/10 §2) and there
+  is nowhere to put the `reason` and the actor a resumed run would need. A
+  restart mid-deletion therefore leaves the Space `being_deleted` with the
+  door shut and no job — Backend's own procedure (§4.0, *"gọi AI → đợi AI báo
+  đã xoá"*) has to re-issue the `DELETE`, which is safe and idempotent.
+  Reported as an escalation; a durable job table belongs with the task that
+  replaces the in-memory idempotency store.
 """

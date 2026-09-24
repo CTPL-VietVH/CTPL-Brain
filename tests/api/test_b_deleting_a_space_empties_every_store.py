@@ -39,12 +39,20 @@ def test_b_a_space_deletion_removes_every_document_of_that_space(backend, world)
     response = backend.delete_space(DOOMED_SPACE)
 
     assert response.status_code == 202, "docs/10 §4.0 answers a Space deletion with 202"
-    body = response.json()
-    assert body["completed"] is True
-    assert body["documents_purged"] == 3
-    assert body["buffer_entries_discarded"] == 1
-    assert body["documents_remaining"] == 0
-    assert body["unfinished_purges_remaining"] == 0
+    # ⭐ The body of a 202 is the body of a GET — PO chốt 24/9, §4.0: *"để BE
+    # chỉ phải hiểu một dạng"*. At this instant the door is shut and nothing
+    # has been emptied yet, and the answer says exactly that.
+    assert response.json() == {
+        "space_id": DOOMED_SPACE,
+        "state": "being_deleted",
+        "documents_remaining": 3,
+        "unfinished_purges_remaining": 0,
+    }
+    assert response.json() == backend.read_space(DOOMED_SPACE).json(), (
+        "the 202 body and the GET body have drifted apart"
+    )
+
+    world.run_background()
 
     # ⭐ Straight into the stores — not through the answer above.
     assert world.document_ids() == {"doc-twin"}, (
@@ -70,6 +78,7 @@ def test_b_the_space_reads_back_as_deleted(backend, world):
     world.seed_document(document_id="doc-doomed-1", space_id=DOOMED_SPACE)
 
     backend.delete_space(DOOMED_SPACE)
+    world.run_background()
 
     status = backend.read_space(DOOMED_SPACE)
     assert status.status_code == 200
@@ -87,6 +96,7 @@ def test_b_a_deleted_space_is_never_registered_again(backend, world):
     never be mistaken for one of a new Space wearing the same code."""
     backend.register_space(DOOMED_SPACE)
     backend.delete_space(DOOMED_SPACE)
+    world.run_background()
 
     again = backend.register_space(DOOMED_SPACE)
 

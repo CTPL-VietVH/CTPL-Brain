@@ -168,6 +168,51 @@ class FakeBackend:
             idempotency_key=idempotency_key,
         )
 
+    def submit_ingestion(
+        self,
+        *,
+        source: dict[str, Any],
+        space_id: str,
+        space_is_private: bool = False,
+        declared_previous_document_id: str | None = None,
+        actor_block: dict[str, str] | None = None,
+        idempotency_key: str | None = None,
+    ) -> httpx.Response:
+        """`POST /v1/ingestions` — docs/10 §4.1.
+
+        ⛔ No `title` and no `doc_number` are sent, and there is no parameter
+        for them: §4.2 makes both AI's to suggest (*"BE **không** gửi chúng
+        khi nộp"*). A fake Backend that could send them would let a case pass
+        that a real Backend could never produce.
+
+        `space_is_private` defaults to `False` because that is the path that
+        writes to the shared stores — the one worth exercising by default.
+        The private path is opted into, so a case that means to test
+        pre-approval says so at the call site.
+        """
+        body: dict[str, Any] = {
+            "source": source,
+            "space_id": space_id,
+            "space_is_private": space_is_private,
+            "actor": actor_block or actor(acting_as="contributor"),
+        }
+        if declared_previous_document_id is not None:
+            body["declared_previous_document_id"] = declared_previous_document_id
+        return self.call(
+            "POST", "/v1/ingestions", json=body, idempotency_key=idempotency_key
+        )
+
+    def read_ingestion(self, ingestion_id: str, *, space_id: str) -> httpx.Response:
+        """`GET /v1/ingestions/{ingestion_id}?space_id=` — docs/10 §4.2.
+
+        `space_id` is required here because it is required there: it is what
+        AI checks for itself under T4, and a convenience default would let
+        every case skip the one field that makes the check possible.
+        """
+        return self.call(
+            "GET", f"/v1/ingestions/{ingestion_id}?space_id={space_id}"
+        )
+
     def read_meta(self, *, send_service_key: bool = True) -> httpx.Response:
         """`GET /v1/meta` — docs/10 §3.6."""
         return self.call("GET", "/v1/meta", send_service_key=send_service_key)

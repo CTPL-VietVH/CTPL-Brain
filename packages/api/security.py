@@ -46,9 +46,12 @@ __all__ = [
     "REQUEST_ID_HEADER",
     "SERVICE_KEY_ENV_VAR",
     "SERVICE_KEY_HEADER",
+    "TENANT_ID_ENV_VAR",
     "ServiceKeyNotConfigured",
+    "TenantIdNotConfigured",
     "presented_key_matches",
     "resolve_service_key",
+    "resolve_tenant_id",
 ]
 
 
@@ -67,6 +70,19 @@ IDEMPOTENCY_KEY_HEADER: Final = "Idempotency-Key"
 #: in this repo ever contains the secret itself. Mirrored (with an empty value)
 #: in `.env.example`, the same way `CBRAIN_PG_HOST` is.
 SERVICE_KEY_ENV_VAR: Final = "CBRAIN_API_SERVICE_KEY"
+
+#: The customer this install belongs to — docs/10 §2, chốt 24/9/2026:
+#: *"`tenant_id` | Cấu hình cài đặt (R6: mỗi khách hàng một bản) | **Không
+#: truyền theo từng lời gọi.** Bản cài v1: biến môi trường
+#: `CBRAIN_TENANT_ID`, thiếu thì từ chối khởi động — cùng loại tham số triển
+#: khai với khoá dịch vụ T1."*
+#:
+#: It lives here, beside the service key, because it is the same KIND of
+#: value: not a tuning parameter (so not one of the three config groups of 07
+#: Mục 3.3), but a per-install deployment fact. It is not a secret — it is in
+#: every `document` and every Qdrant payload — but it has the same startup
+#: rule, and that is what this module is about.
+TENANT_ID_ENV_VAR: Final = "CBRAIN_TENANT_ID"
 
 
 class ServiceKeyNotConfigured(RuntimeError):
@@ -105,6 +121,51 @@ def resolve_service_key(*, env_var: str, environ: Mapping[str, str]) -> str:
             f"service key that authenticates Backend C.Brain does not exist. "
             f"AI Services REFUSES TO START rather than serve unauthenticated "
             f"calls (docs/10 §1 T1; CLAUDE.md Mục 4 quy tắc 2). Set it in the "
+            f"deployment environment — see .env.example."
+        )
+    return value
+
+
+class TenantIdNotConfigured(RuntimeError):
+    """The environment variable holding `tenant_id` is absent or blank.
+
+    Raised while the application is being BUILT. ⛔ There is no default and
+    there must never be one: `tenant_id` goes into every `document` row and
+    every Qdrant payload, it is IMMUTABLE once written (07 Mục 2.1), and a
+    fallback like `"default"` would quietly file one customer's documents
+    under a code that means nothing — with no error at any point, and no way
+    back short of a full re-ingest.
+    """
+
+
+def resolve_tenant_id(*, env_var: str, environ: Mapping[str, str]) -> str:
+    """Read `tenant_id` out of `environ`, or refuse to start.
+
+    Same shape as `resolve_service_key`, deliberately: both are per-install
+    deployment parameters (R6), both are read by the composition root at
+    startup, and both make a missing value a refusal that names the variable.
+
+    ⛔ **Never read per request.** docs/10 §2: *"Không truyền theo từng lời
+    gọi."* A `tenant_id` arriving in a request body would let one call file a
+    document under another customer's code, in an install that by R6 serves
+    exactly one customer.
+
+    Raises:
+        TenantIdNotConfigured: the variable is absent, or present and blank.
+    """
+    if not env_var or not env_var.strip():
+        raise TenantIdNotConfigured(
+            "No environment variable name was given for the tenant id. The "
+            "caller must name it explicitly (docs/10 §2)."
+        )
+
+    value = environ.get(env_var)
+    if value is None or not value.strip():
+        raise TenantIdNotConfigured(
+            f"Environment variable {env_var!r} is missing or blank, so this "
+            f"install does not know which customer it serves. AI Services "
+            f"REFUSES TO START rather than write documents under a made-up "
+            f"tenant_id (docs/10 §2; CLAUDE.md Mục 4 quy tắc 2). Set it in the "
             f"deployment environment — see .env.example."
         )
     return value

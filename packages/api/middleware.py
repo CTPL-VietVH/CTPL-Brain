@@ -39,12 +39,15 @@ usual fix is to reach into `request._receive` — a private attribute. At this
 layer the raw form is both shorter and honest: the body is buffered once and
 replayed downstream through a receive channel this module owns.
 
-⚠️ Buffering means the whole body is in memory. True for JSON bodies of a few
-hundred bytes; NOT true for `POST /v1/ingestions` (docs/10 §4.1 — multipart
-file upload), which is not built yet. When it is, it must be exempted from
-this middleware rather than have the limit discovered under load — the
-fingerprint of a 200 MB upload is not worth 200 MB of RSS, and §3.4's repeat
-guarantee for an upload belongs to the ingestion id, not to a body hash.
+⚠️ Buffering means the whole body is in memory, so every endpoint's request
+body has to be small. It is — and after 24/9/2026 that is guaranteed by the
+contract rather than by luck: docs/10 §4.1 chốt that **the file travels by
+reference**, so `POST /v1/ingestions` carries a presigned URL plus a digest,
+a few hundred bytes like every other call. (An earlier draft of §4.1 had a
+multipart upload, which would have had to be exempted from this middleware —
+the fingerprint of a 100 MB upload is not worth 100 MB of RSS. That
+exemption is no longer needed and must not be added back without §4.1
+changing first.)
 """
 
 from __future__ import annotations

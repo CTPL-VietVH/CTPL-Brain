@@ -48,7 +48,7 @@ from datetime import date, datetime
 from enum import Enum
 
 from ingestion.chunking import cat_thanh_mau
-from ingestion.extraction import extract_file
+from ingestion.extraction import ExtractionResult, extract_file
 from ingestion.intake import FingerprintIndex, decide_intake
 from ingestion.labeling import (
     extract_subject_entities,
@@ -65,6 +65,7 @@ __all__ = [
     "DuplicateLocation",
     "PreApprovalRequest",
     "PreApprovalResult",
+    "prepare_ingestion",
     "run_pre_approval_ingestion",
 ]
 
@@ -89,17 +90,26 @@ class DuplicateHit:
 
 @dataclass(frozen=True, slots=True, kw_only=True)
 class PreApprovalRequest:
-    """One upload into a private Space.
+    """One upload, before any stage has run.
 
     `title` and `doc_number` come from the uploader: no GĐ5 function extracts
     them (`labeling.py` covers labels, both dates and subject entities), so
-    they cannot be derived here — see the T2.7 report.
+    they cannot be derived here — see the T2.7 report. Over `POST
+    /v1/ingestions` nobody supplies them either (PO chốt 24/9/2026: Backend
+    does not send them and the filename must NOT be used as a title), so that
+    caller passes the empty string and `suggestions` reports `null`.
 
     `ingested_at` is passed in rather than read from the clock so the caller
     owns the timestamp, and so a test is not racing `datetime.now()`.
+
+    `path` is optional for exactly one caller: `prepare_ingestion` takes the
+    GĐ2 result as an argument, and the `POST /v1/ingestions` path deletes the
+    staged file the instant GĐ2 returns (docs/10 §4.1), so by then there is
+    no path to name. `run_pre_approval_ingestion`, which reads the file
+    itself, requires it and says so.
     """
 
-    path: str | pathlib.Path
+    path: str | pathlib.Path | None = None
     document_id: str
     space_id: str
     tenant_id: str
@@ -116,6 +126,14 @@ class PreApprovalResult:
     Kept as two mutually exclusive fields rather than a flag beside a value:
     a boolean that has to agree with a nullable field is the shape DX1 (07
     Mục 2.3) rejects — two cells that must match will one day not match.
+
+    ⚠️ **`buffered` names the TYPE, not the destination.** This is also the
+    result of `prepare_ingestion`, which both submission paths share
+    (docs/10 §4.1): on the Space-riêng path the value is handed to
+    `PreApprovalBuffer.put`, and on the ordinary path it is handed straight
+    to `promotion.promote_approved_ingestion` and never enters a buffer.
+    That both paths carry the SAME `BufferedIngestion` value into the SAME
+    write function is the point — see `prepare_ingestion`.
     """
 
     buffered: BufferedIngestion | None = None
@@ -142,46 +160,61 @@ def _resolve_date(
     return suggested, suggested_source
 
 
-def run_pre_approval_ingestion(
+def prepare_ingestion(
     request: PreApprovalRequest,
     *,
+    extraction: ExtractionResult,
     fingerprint_index: FingerprintIndex,
     buffer: PreApprovalBuffer,
     space_registry: SpaceRegistry,
     chunk_length_cap: int,
 ) -> PreApprovalResult:
-    """Run GĐ2, GĐ3 and GĐ5 for one upload into a private Space and park the
-    whole result in the pre-approval buffer.
+    """GĐ1 → GĐ5 → GĐ3 over an ALREADY-READ file, stopping before GĐ6/GĐ7.
+
+    ⭐ **This is the head both submission paths share, and sharing it is a
+    decision, not a convenience** (PO chốt 24/9/2026). docs/10 §4.1 gives one
+    submission endpoint and two destinations — *"`space_is_private = true`
+    thì chạy GĐ2, GĐ3, GĐ5 rồi dừng ở vùng đệm (T2.7). Ngược lại thì chạy
+    trọn và ghi vào kho."* Two destinations must not mean two pipelines:
+
+        prepare_ingestion(...)  ─┬─►  buffer.put(entry)              (riêng)
+                                 │        … later, on approve:
+                                 └─►  promote_approved_ingestion(entry)
+                                          ▲
+                                          └── the ordinary path goes here
+                                              DIRECTLY, same entry, same
+                                              function, same write order.
+
+    A second write path would be a second chance to get S6-in-reverse wrong
+    (`promotion.py`: profile+relations in one transaction, THEN the vector
+    gate). `tests/api/` asserts that both paths reach the same function,
+    because a comment cannot keep them together.
+
+    `extraction` is passed in rather than read here: the caller owns the
+    staged file and deletes it the moment GĐ2 is done (docs/10 §4.1 — *"Bản
+    tạm bị xoá ngay sau khi đọc xong chữ, kể cả khi từ chối giữa chừng"*), so
+    the read has to happen outside this function's lifetime.
 
     `chunk_length_cap` has no default — CLAUDE.md Mục 4 quy tắc 2; the caller
     reads `config/ingestion.yaml` and passes the live value down, exactly as
     `cat_thanh_mau` requires it.
 
-    Stage order note: GĐ2 runs FIRST even though GĐ1 is "nhận và xác thực",
-    because the duplicate key is `content_fingerprint`, computed from the text
-    GĐ2 reads out (06 Mục 5.7: *"vân tay nội dung, tính ở GĐ2 sau khi đã đọc
-    được chữ ra"*). `intake.py` says the same from the other side: calling GĐ1
-    before GĐ2 has finished is calling it in the wrong order.
-
-    `space_registry` has no default either, and for a sharper reason (T2.11,
-    docs/10 §4.0): a private Space being deleted must stop taking uploads on
-    the pre-approval path exactly as it does on the official one. The check
-    runs BEFORE GĐ2 here rather than only inside `decide_intake`, so a file
-    aimed at a Space that is going away is not read and cut first.
+    Stage order note: GĐ2 has already run when this is called, and that is
+    the required order, not an accident — the duplicate key is
+    `content_fingerprint`, computed from the text GĐ2 reads out (06 Mục 5.7:
+    *"vân tay nội dung, tính ở GĐ2 sau khi đã đọc được chữ ra"*).
 
     Raises:
         SpaceNotRegistered / SpaceNotAcceptingDocuments: the Space is unknown
-            or no longer accepting documents (docs/10 §4.0).
-        DinhDangKhongNhan / KhongDocDuocLopChu: GĐ2 refused the file.
+            or no longer accepting documents (docs/10 §4.0). Re-checked here
+            even though the submission already checked it: an upload queued
+            before a Space deletion started must not land after it.
+        BanMoiKhacSpace: the declared previous version is in another Space.
         KhongDungDuocCauTruc / KhoiVuotTranKhongTheChia: GĐ3 could not cut.
-        Nothing is buffered when any of these is raised — the single `put`
-        happens after every stage has succeeded.
+        Nothing is written anywhere when any of these is raised.
     """
     # ---- T2.11 — the Space gate, before any work is done -----------------
     assert_space_accepts_documents(request.space_id, space_registry=space_registry)
-
-    # ---- GĐ2 — read the file out ----------------------------------------
-    extraction = extract_file(request.path)
 
     # ---- GĐ1 — decide, READ-ONLY against the shared store ----------------
     pending_twin = buffer.find_in_space_by_fingerprint(
@@ -267,12 +300,59 @@ def run_pre_approval_ingestion(
         tran_do_dai_mau=chunk_length_cap,
     )
 
-    # ---- STOP. GĐ6 and GĐ7 do not run; nothing is written to a shared
-    # store. One `put` = one transaction (see `PreApprovalBuffer.put`).
-    entry = BufferedIngestion(
-        document=document,
-        chunks=chunks,
-        buffered_at=request.ingested_at,
+    # ---- STOP. GĐ6 and GĐ7 do not run, and nothing has been written to any
+    # store: this function is READ-ONLY end to end. Where the value goes next
+    # is the caller's decision — see the diagram in the docstring.
+    return PreApprovalResult(
+        buffered=BufferedIngestion(
+            document=document,
+            chunks=chunks,
+            buffered_at=request.ingested_at,
+        )
     )
-    buffer.put(entry)
-    return PreApprovalResult(buffered=entry)
+
+
+def run_pre_approval_ingestion(
+    request: PreApprovalRequest,
+    *,
+    fingerprint_index: FingerprintIndex,
+    buffer: PreApprovalBuffer,
+    space_registry: SpaceRegistry,
+    chunk_length_cap: int,
+) -> PreApprovalResult:
+    """The Space-riêng path: read the file, prepare it, park it in the buffer.
+
+    GĐ2 here and the rest in `prepare_ingestion`. The Space gate is checked
+    BEFORE GĐ2 as well as inside `prepare_ingestion`, so a file aimed at a
+    Space that is going away is not read and cut first.
+
+    Raises:
+        Everything `prepare_ingestion` raises, plus
+        DinhDangKhongNhan / KhongDocDuocLopChu: GĐ2 refused the file.
+        Nothing is buffered when any of these is raised — the single `put`
+        happens after every stage has succeeded.
+    """
+    assert_space_accepts_documents(request.space_id, space_registry=space_registry)
+
+    if request.path is None:
+        raise ValueError(
+            "run_pre_approval_ingestion reads the file itself, so "
+            "PreApprovalRequest.path is required here. A caller that has "
+            "already run GĐ2 calls prepare_ingestion(extraction=...) instead."
+        )
+
+    # ---- GĐ2 — read the file out ----------------------------------------
+    extraction = extract_file(request.path)
+
+    result = prepare_ingestion(
+        request,
+        extraction=extraction,
+        fingerprint_index=fingerprint_index,
+        buffer=buffer,
+        space_registry=space_registry,
+        chunk_length_cap=chunk_length_cap,
+    )
+    if result.buffered is not None:
+        # One `put` = one transaction (see `PreApprovalBuffer.put`).
+        buffer.put(result.buffered)
+    return result

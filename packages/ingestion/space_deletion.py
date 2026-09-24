@@ -117,6 +117,7 @@ from ingestion.pre_approval_buffer import PreApprovalBuffer
 from ingestion.relations_scan import SpaceDocumentSource
 from ingestion.space_registry import (
     SpaceNotRegistered,
+    SpaceRegistration,
     SpaceRegistry,
     SpaceState,
 )
@@ -124,6 +125,7 @@ from ingestion.space_registry import (
 __all__ = [
     "SPACE_DELETION_REASON_PREFIX",
     "SpaceDeletionProgress",
+    "begin_space_deletion",
     "delete_space",
 ]
 
@@ -184,6 +186,43 @@ class SpaceDeletionProgress:
     completed: bool
 
 
+def begin_space_deletion(
+    space_id: str, *, space_registry: SpaceRegistry
+) -> SpaceRegistration:
+    """Step 1 of docs/10 §4.0 on its own: **close the door**.
+
+    Split out because the door has to close INSIDE the `DELETE` request while
+    the emptying runs in the background (§4.0 returns `202` *"và chạy nền"*).
+    Closing it in the background job instead would leave a window in which
+    the caller has been told `202` and a submission into that Space would
+    still be accepted — and the loop may already have walked past the place
+    that document lands. §4.0 is explicit about the ordering: *"Từ lúc này
+    mọi lời gọi nộp tài liệu hay thao tác ghi vào Space trả `409
+    SPACE_BEING_DELETED`"*.
+
+    Idempotent, in both directions of "already": a Space already
+    `BEING_DELETED` stays there, and a Space already `DELETED` is returned
+    untouched rather than moved backwards.
+
+    Returns the registration AFTER the move, so the caller does not read it
+    twice.
+
+    Raises:
+        SpaceNotRegistered: AI has never heard of this `space_id`. Refused
+            rather than treated as "nothing to delete" — see `delete_space`.
+    """
+    registration = space_registry.get(space_id)
+    if registration is None:
+        raise SpaceNotRegistered(
+            f"space_id={space_id!r} was never registered, so there is no Space to "
+            f"delete (docs/10 §4.0). Refusing rather than deleting whatever happens "
+            f"to carry that space_id."
+        )
+    if registration.state is SpaceState.DELETED:
+        return registration
+    return space_registry.advance_state(space_id, to=SpaceState.BEING_DELETED)
+
+
 def delete_space(
     space_id: str,
     *,
@@ -220,13 +259,11 @@ def delete_space(
             heard of is a Backend mistake, and its documents — if any exist
             under that code — must not be removed on the strength of it.
     """
-    registration = space_registry.get(space_id)
-    if registration is None:
-        raise SpaceNotRegistered(
-            f"space_id={space_id!r} was never registered, so there is no Space to "
-            f"delete (docs/10 §4.0). Refusing rather than deleting whatever happens "
-            f"to carry that space_id."
-        )
+    # ---- 1. Close the door BEFORE emptying the room ----------------------
+    # Idempotent, so it does not matter whether the HTTP layer already called
+    # it inside the request (it does — see `begin_space_deletion`) or whether
+    # this is a background re-run.
+    registration = begin_space_deletion(space_id, space_registry=space_registry)
 
     if registration.state is SpaceState.DELETED:
         # Already finished, by this call's predecessor. docs/10 §4.0: a second
@@ -243,9 +280,6 @@ def delete_space(
             buffer_entries_discarded=0,
             completed=True,
         )
-
-    # ---- 1. Close the door BEFORE emptying the room ----------------------
-    space_registry.advance_state(space_id, to=SpaceState.BEING_DELETED)
 
     # ---- 2. Everything of this Space that is not finished yet -------------
     doomed = _worklist(

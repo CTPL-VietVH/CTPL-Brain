@@ -76,8 +76,33 @@ __all__ = [
     "RelationsScanResult",
     "SpaceDocumentSource",
     "SpaceScanScope",
+    "SpaceTopologyUnavailable",
+    "UnavailableSpaceScanScope",
     "scan_relations_for_new_document",
 ]
+
+
+class SpaceTopologyUnavailable(Exception):
+    """The Space tree could not be read, so the scan may not conclude.
+
+    docs/10 §7.1, verbatim: *"**BE không trả lời:** hoãn vòng quét, giữ
+    trạng thái "đang mở rộng", thử lại sau. Không đoán, không quét toàn kho.
+    Trong lúc đó câu trả lời tự nói "chưa đối chiếu xong" — cơ chế đã có (06
+    §5.1)."*
+
+    Raised by a `SpaceScanScope` whose source of truth is not reachable —
+    including the v1 case where the Backend topology client has not been
+    built at all (`UnavailableSpaceScanScope`). It is caught inside
+    `scan_relations_for_new_document`, which then returns what it has found
+    so far with `EXPANDING`.
+
+    ⛔ It must never be turned into "scope exhausted". Those two look
+    identical from inside the loop — `expand` produced nothing new — and
+    they mean opposite things: exhausted says *there is nothing further to
+    compare*, unavailable says *nobody knows yet*. Reading the second as the
+    first would let a document be marked `STOPPED`, i.e. tell every future
+    answer that reconciliation is complete when no tree was ever consulted.
+    """
 
 
 # ---------------------------------------------------------------------------
@@ -98,6 +123,11 @@ class SpaceScanScope(Protocol):
     nhánh riêng" rule: a private (`riêng`) child is NOT crossed into, and a
     private Space does not reach up to its parent. `InMemorySpaceScanScope`
     below shows the rule applied, for tests and single-process runs.
+
+    ⚠️ **`expand` is allowed to fail, and failing is not the same as being
+    finished.** An implementation that cannot read the tree right now raises
+    `SpaceTopologyUnavailable` — never a fixed point, never a guess. See
+    that exception for why the difference is load-bearing.
     """
 
     def expand(self, current_space_ids: frozenset[str]) -> frozenset[str]: ...
@@ -166,6 +196,40 @@ class InMemorySpaceScanScope:
                 if child.inherits_from_parent:
                     widened.add(child.space_id)
         return frozenset(widened)
+
+
+class UnavailableSpaceScanScope:
+    """The `SpaceScanScope` of a deployment that has no Space-tree client yet.
+
+    docs/10 §7.1 gives GĐ7 exactly one way to learn the Space tree: *"`GET
+    {BE}/internal/v1/space-topology`"*, and notes that the real
+    implementation of `SpaceScanScope` is where it plugs in. **That client is
+    not built** (it is its own task), so this is the honest stand-in for a
+    live install: every hop refuses, the scan keeps what round 1 found inside
+    the document's own Space, and the document keeps saying *"chưa đối chiếu
+    xong"*.
+
+    ⛔ Do NOT replace this with a scope that returns `current_space_ids`
+    unchanged "until the client lands". That is a fixed point, the scan reads
+    a fixed point as *scope exhausted*, and every newly ingested document
+    would be stamped `STOPPED` — a claim that reconciliation finished, made
+    by a deployment that never looked at a single other Space. The whole
+    reason 06 §5.1 has a "chưa đối chiếu xong" state is so that gap is
+    VISIBLE (NT2: *"chỗ nào bỏ sót gây hại thì phải NHÌN THẤY ĐƯỢC"*).
+    """
+
+    def __init__(self, *, reason: str) -> None:
+        """`reason` has no default: it is what an operator reads in the log,
+        and *"the topology client is not built"* and *"Backend answered
+        503"* call for different actions."""
+        self._reason = reason
+
+    def expand(self, current_space_ids: frozenset[str]) -> frozenset[str]:
+        raise SpaceTopologyUnavailable(
+            f"the Space tree could not be read, so the relation scan may not "
+            f"conclude for scope {sorted(current_space_ids)}: {self._reason} "
+            f"(docs/10 §7.1 — hoãn vòng quét, giữ trạng thái đang mở rộng)"
+        )
 
 
 class InMemorySpaceDocumentSource:
@@ -422,7 +486,22 @@ def scan_relations_for_new_document(
                 pairs_compared,
             )
 
-        widened_space_ids = scope.expand(current_space_ids)
+        try:
+            widened_space_ids = scope.expand(current_space_ids)
+        except SpaceTopologyUnavailable:
+            # docs/10 §7.1 — *"hoãn vòng quét, giữ trạng thái đang mở rộng,
+            # thử lại sau"*. Everything found so far is kept: those relations
+            # came from real documents in a scope that really was read. What
+            # is NOT kept is the right to conclude — `EXPANDING` regardless of
+            # `saturated`, because saturation measured over a scope that was
+            # never widened says nothing about the scope that was not read.
+            return _result(
+                relations_by_key,
+                RelationsScanState.EXPANDING,
+                rounds_run,
+                pairs_compared,
+            )
+
         if widened_space_ids == current_space_ids and not newcomers:
             # Scope exhausted: fixed point AND nothing new this round. Every
             # further round is a no-op, so waiting for the pair or time

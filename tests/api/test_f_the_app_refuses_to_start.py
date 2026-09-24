@@ -34,7 +34,13 @@ from api.ingestion_routes import (
     IngestionServices,
     create_ingestion_router,
 )
-from api.security import SERVICE_KEY_ENV_VAR, ServiceKeyNotConfigured
+from api.security import (
+    SERVICE_KEY_ENV_VAR,
+    TENANT_ID_ENV_VAR,
+    ServiceKeyNotConfigured,
+    TenantIdNotConfigured,
+    resolve_tenant_id,
+)
 from api.settings import ReadinessReport
 from conftest import CONFIG_FILENAMES, REPO_ROOT, TEST_SERVICE_KEY
 from schema.config import MissingConfigKeyError
@@ -181,6 +187,58 @@ def test_f_the_secret_itself_never_appears_in_the_refusal(
 
     assert wrong_variable in str(excinfo.value)
     assert TEST_SERVICE_KEY not in str(excinfo.value)
+
+
+@pytest.mark.parametrize(
+    "broken_environ, why",
+    [
+        ({}, "variable absent"),
+        ({TENANT_ID_ENV_VAR: ""}, "variable present but empty"),
+        ({TENANT_ID_ENV_VAR: "   "}, "variable present but blank"),
+    ],
+)
+def test_f_a_missing_tenant_id_stops_the_install(broken_environ, why):
+    """docs/10 §2, chốt 24/9 — *"biến môi trường `CBRAIN_TENANT_ID`, thiếu
+    thì từ chối khởi động"*.
+
+    ⛔ The reason there is no default is sharper than for the service key: a
+    made-up `tenant_id` does not fail, it SUCCEEDS — every document is
+    written under a code that means nothing, `tenant_id` is immutable (07 Mục
+    2.1), and only a full re-ingest can undo it.
+    """
+    with pytest.raises(TenantIdNotConfigured) as excinfo:
+        resolve_tenant_id(env_var=TENANT_ID_ENV_VAR, environ=broken_environ)
+
+    assert TENANT_ID_ENV_VAR in str(excinfo.value), (
+        f"The refusal ({why}) must name the environment variable."
+    )
+
+
+def test_f_a_blank_tenant_id_is_refused_where_it_is_used_too(world):
+    """The second net, at the place the value is USED.
+
+    `resolve_tenant_id` guards the read; this guards the wiring. A
+    composition root that got the value from somewhere else — a settings
+    object, a literal, a typo'd helper — still cannot hand a blank one to the
+    routes.
+    """
+    with pytest.raises(ValueError, match=TENANT_ID_ENV_VAR):
+        IngestionServices(
+            space_registry=world.registry,
+            document_source=world.profile_store,
+            profile_store=world.profile_store,
+            vector_store=world.vector_store,
+            background_cleanup=world.cleanup,
+            deletion_log=world.log,
+            pre_approval_buffer=world.buffer,
+            pipeline=world.pipeline,
+            worker=world.worker,
+            tenant_id="   ",  # the rule this case breaks
+            max_upload_bytes=world.ingestion_config.max_upload_bytes,
+            source_download_timeout_seconds=(
+                world.ingestion_config.source_download_timeout_seconds
+            ),
+        )
 
 
 def test_f_a_complete_configuration_does_build(

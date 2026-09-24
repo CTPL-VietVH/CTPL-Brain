@@ -2,8 +2,8 @@
 
 | | |
 |---|---|
-| **Phiên bản** | v0.6 — **BẢN NHÁP** (Cowork soạn 23/9/2026, sửa 24/9/2026) |
-| **Lịch sử** | v0.6 — 24/9/2026 (chiều), PO chốt: **Q5 — file đi bằng tham chiếu** (BE gửi đường dẫn có chữ ký, hạn ngắn, trỏ vào MinIO nơi FE đã lưu file), sửa §4.1 và §2; duyệt 9 escalation của kế hoạch API-nap-tai-lieu-va-chay-nen: `ingestion_id` khác `document_id`; `tenant_id` là biến môi trường; thân phản hồi `DELETE /v1/spaces` = thân `GET`; mã lỗi mới ở §3.5; tên và số hiệu văn bản do AI gợi ý, không thêm vào lời gọi của BE. v0.5 — 24/9/2026, sau khi dựng khung FastAPI (task API-khung-fastapi-va-be-gia), PO chốt: khoá dịch vụ T1 là biến môi trường `CBRAIN_API_SERVICE_KEY`, không nằm trong `config/`; `GET /v1/meta` vẫn đòi xác thực dịch vụ; thêm 4 mã lỗi tầng vận chuyển ở §3.5; thiếu `Idempotency-Key` trên lời gọi ghi thì từ chối; ghi nhận hai chỗ khung chưa đạt hợp đồng (xoá Space chạy đồng bộ, chưa đếm số tài liệu đã xoá) ở §4.0; thêm Q10 ở §8. v0.4 — 23/9/2026 (khuya), PO chốt: T4; đăng ký Space khi BE tạo Space (AI chỉ biết `space_id` tồn tại, không lưu cây); xoá Space (§4.0); xoá tài liệu chỉ theo `document_id`. Đóng Q4 (phần xoá/tạo Space). v0.3 — 23/9/2026 (tối), sau vòng phản biện độc lập (REVIEW-10) và nghiên cứu phương án (RESEARCH-10), PO chốt: `recent_turns` chỉ gồm câu hỏi người dùng; lọc trạng thái hội thoại ngay đầu lượt; Q1 liên kết xuyên Space; Q2 AI hỏi BE cây Space mỗi vòng quét; Q6 trả trọn một lần; định nghĩa dẫn nguồn hợp lệ; cảnh báo chỉ tính từ tài liệu đã qua bộ lọc cứng. Thêm `GET /v1/meta`. Sửa nhãn nguồn theo phản biện. Đã sửa theo: 06 v1.11, 08 v1.5. v0.2 — 23/9/2026, PO chốt: T1–T3 ở §1; lịch sử hội thoại do BE lưu, AI không giữ trạng thái giữa các lượt, thêm trạng thái hội thoại dạng biểu mẫu (§6.1–6.2); hồ sơ cá nhân hoá ra khỏi phiên bản hiện tại. Đã sửa theo: 06 v1.10, 07 v1.10, 08 v1.4, 09 (ghi chú), CLAUDE.md. v0.1 — bản nháp đầu |
+| **Phiên bản** | v0.7 — **BẢN NHÁP** (Cowork soạn 23/9/2026, sửa 24/9/2026) |
+| **Lịch sử** | v0.7 — 24/9/2026 (tối), sau khi cài `POST/GET /v1/ingestions` và bộ chạy nền: `DUPLICATE_IN_SPACE` chỉ còn là trạng thái §4.2, không phải mã HTTP; `VERSION_ORDINAL_CONFLICT` chưa phát sinh ở v1; BE gọi lại `DELETE /v1/spaces` khi việc xoá chưa xong sau lần AI khởi động lại (§4.0); ràng buộc triển khai *một bản sao duy nhất* (§4.1); `failed` → BE nộp lại (§4.2). v0.6 — 24/9/2026 (chiều), PO chốt: **Q5 — file đi bằng tham chiếu** (BE gửi đường dẫn có chữ ký, hạn ngắn, trỏ vào MinIO nơi FE đã lưu file), sửa §4.1 và §2; duyệt 9 escalation của kế hoạch API-nap-tai-lieu-va-chay-nen: `ingestion_id` khác `document_id`; `tenant_id` là biến môi trường; thân phản hồi `DELETE /v1/spaces` = thân `GET`; mã lỗi mới ở §3.5; tên và số hiệu văn bản do AI gợi ý, không thêm vào lời gọi của BE. v0.5 — 24/9/2026, sau khi dựng khung FastAPI (task API-khung-fastapi-va-be-gia), PO chốt: khoá dịch vụ T1 là biến môi trường `CBRAIN_API_SERVICE_KEY`, không nằm trong `config/`; `GET /v1/meta` vẫn đòi xác thực dịch vụ; thêm 4 mã lỗi tầng vận chuyển ở §3.5; thiếu `Idempotency-Key` trên lời gọi ghi thì từ chối; ghi nhận hai chỗ khung chưa đạt hợp đồng (xoá Space chạy đồng bộ, chưa đếm số tài liệu đã xoá) ở §4.0; thêm Q10 ở §8. v0.4 — 23/9/2026 (khuya), PO chốt: T4; đăng ký Space khi BE tạo Space (AI chỉ biết `space_id` tồn tại, không lưu cây); xoá Space (§4.0); xoá tài liệu chỉ theo `document_id`. Đóng Q4 (phần xoá/tạo Space). v0.3 — 23/9/2026 (tối), sau vòng phản biện độc lập (REVIEW-10) và nghiên cứu phương án (RESEARCH-10), PO chốt: `recent_turns` chỉ gồm câu hỏi người dùng; lọc trạng thái hội thoại ngay đầu lượt; Q1 liên kết xuyên Space; Q2 AI hỏi BE cây Space mỗi vòng quét; Q6 trả trọn một lần; định nghĩa dẫn nguồn hợp lệ; cảnh báo chỉ tính từ tài liệu đã qua bộ lọc cứng. Thêm `GET /v1/meta`. Sửa nhãn nguồn theo phản biện. Đã sửa theo: 06 v1.11, 08 v1.5. v0.2 — 23/9/2026, PO chốt: T1–T3 ở §1; lịch sử hội thoại do BE lưu, AI không giữ trạng thái giữa các lượt, thêm trạng thái hội thoại dạng biểu mẫu (§6.1–6.2); hồ sơ cá nhân hoá ra khỏi phiên bản hiện tại. Đã sửa theo: 06 v1.10, 07 v1.10, 08 v1.4, 09 (ghi chú), CLAUDE.md. v0.1 — bản nháp đầu |
 | **Trạng thái** | Đã chốt: §1 T1–T4, §2, §4.0, §5.1–5.2, §5.6, §6.1–6.2, §7.1. Còn chờ PO: T5–T6 ở §1, các mục **[Đề xuất]**, và các điểm mở còn lại ở §8 (Q3, Q4 phần đổi loại Space, Q7, Q8, Q10). §4.1 cách truyền file đã chốt 24/9 |
 | **Nguồn chân lý** | `06` v1.12, `07` v1.10, `08` v1.6 — tài liệu này **không** được đổi quyết định nào trong ba tài liệu đó; chỗ nào cần đổi thì ghi ở §9 |
 | **Phạm vi** | Mọi lời gọi giữa Backend C.Brain (BE) và AI Services, theo **cả hai chiều**. Lấp đúng khoảng trống mà `07` Mục 0 loại trừ và `08` T2.10 yêu cầu phải chốt tường minh |
@@ -107,11 +107,11 @@ Mọi lỗi có mã máy đọc được (`code`) và thông điệp tiếng Vi�
 | `SCOPE_MISSING` | 400 | Thiếu `space_id`, `readable_space_ids` hoặc `actor` | §3.3 |
 | `OBJECT_NOT_IN_SPACE` | 404 | Đối tượng không nằm trong Space hoặc phạm vi khẳng định. Trả 404 chứ không trả 403, để không tiết lộ đối tượng tồn tại | T4; 06 §9.5 |
 | `UNSUPPORTED_FORMAT` | 422 | Không thuộc 4 định dạng v1, hoặc PDF chỉ có ảnh quét | 06 §5.2 GĐ2 |
-| `DUPLICATE_IN_SPACE` | 409 | Trùng khít vân tay trong cùng Space. Kèm `existing_document_id` | 06 §5.7 |
+| `DUPLICATE_IN_SPACE` | — (trả dưới dạng `status: duplicate` của §4.2) | Trùng khít vân tay trong cùng Space. Kèm `existing_document_id`. *Sửa 24/9: nạp chạy bất đồng bộ, việc trùng chỉ biết sau khi đọc chữ, nên không bao giờ là mã HTTP* | 06 §5.7 |
 | `SPACE_NOT_REGISTERED` | 404 | `space_id` chưa từng được BE đăng ký (§4.0) | §4.0 |
 | `SPACE_BEING_DELETED` | 409 | Space đang được xoá hoặc đã xoá; không nhận tài liệu hay thao tác ghi mới | §4.0 |
 | `NEW_VERSION_OTHER_SPACE` | 422 | Khai "bản mới của X" nhưng X ở Space khác | code `BanMoiKhacSpace`; 06 §5.7 |
-| `VERSION_ORDINAL_CONFLICT` | 409 | Hai người cùng khai bản mới của một tài liệu | 08 T2.2 cập nhật 21/9 |
+| `VERSION_ORDINAL_CONFLICT` | 409 | Hai người cùng khai bản mới của một tài liệu. *24/9: chưa phát sinh ở bản cài v1 — chỉ một luồng công nhân nên hai lượt nạp không chạy song song. Đưa vào lại khi có kho claim bền (cho phép nhiều bản sao)* | 08 T2.2 cập nhật 21/9 |
 | `INVALID_STATE` | 409 | Thao tác không hợp trạng thái, ví dụ duyệt một tài liệu không ở trạng thái chờ duyệt | — |
 | `TOO_MANY_TURNS` | 400 | `recent_turns` vượt K. Không tự cắt | §6.1 |
 | `STATE_VERSION_UNSUPPORTED` | 422 | `conversation_state` mang `schema_version` AI không đọc được | §6.1 |
@@ -161,6 +161,7 @@ API **không bắt BE hay giao diện tự cắt chuỗi**. Mọi trích dẫn t
 - Chọn tài liệu cần xoá **chỉ theo `space_id` trên hồ sơ tài liệu** — không theo vân tay nội dung, tên hay số hiệu. Bản trùng khít ở Space khác là tài liệu khác (`document_id` khác, 06 §5.7) và **không bị đụng tới**; chỉ các liên kết quan hệ nối tới tài liệu bị xoá mới bị gỡ (06 §5.6).
 - AI **không tự suy ra phải xoá Space con**. Xoá Space nào thì BE gọi riêng cho Space đó — cây là dữ liệu của BE.
 - **Thứ tự phía BE**: đánh dấu Space "đang xoá" ở BE → gọi AI → đợi AI báo *đã xoá* → mới xoá Space ở BE. Làm ngược lại mà hỏng giữa chừng thì tài liệu mồ côi nằm lại trong kho AI: không bị lộ (không ai còn Space đó trong danh sách quyền) nhưng dữ liệu vẫn còn.
+- **BE gọi lại khi chưa xong** (chốt 24/9): nếu `GET` vẫn báo *đang xoá* một thời gian sau khi AI khởi động lại, BE gọi lại `DELETE`. Lời gọi lặp an toàn, không xoá lặp. Lý do: ở bản cài v1, việc xoá Space chạy nền **chưa bền qua lần khởi động lại** — Space nằm lại ở *đang xoá* (cửa đã đóng, không lộ, không mất dữ liệu) nhưng không tự chạy tiếp.
 
 Tám thao tác ghi của con người mà thiết kế nêu được liệt kê trọn ở §4 và §5. `08` T2.10 hiện chỉ đếm 5. Ba thao tác thiếu được đánh dấu ★.
 
@@ -179,6 +180,7 @@ Tám thao tác ghi của con người mà thiết kế nêu được liệt kê 
   - Không tải được → `SOURCE_UNREACHABLE`, không tạo đối tượng nạp, không còn file tạm.
   - AI **không lưu `url`** ở bất cứ đâu (nhật ký, bảng, thông báo lỗi) — đường dẫn có chữ ký là một thứ quyền tạm thời. Bản tạm bị xoá ngay sau khi đọc xong chữ, kể cả khi từ chối giữa chừng.
   - **Mạng:** AI Services phải với tới MinIO của bản cài. Đây là một dòng trong checklist triển khai.
+  - **Một bản sao duy nhất** (checklist triển khai, chốt 24/9): bản cài v1 chạy **đúng một** tiến trình AI Services. Lúc khởi động, mọi việc nạp đang dở được coi là mồ côi và chạy lại — quy tắc này chỉ đúng khi có một bản sao. Chạy hai bản sao trước khi có kho claim bền thì một file có thể bị nạp hai lần mà không lỗi nào báo.
 - `declared_previous_document_id` không tồn tại hoặc không nằm ở `space_id` này → từ chối `OBJECT_NOT_IN_SPACE`. **Không được** im lặng coi như tài liệu mới.
 - **Chạy bất đồng bộ** [Đề xuất]: GĐ2 phải đọc xong file mới biết trùng hay không (vân tay tính sau khi đọc chữ, 08 T2.1 cập nhật 19/9). GĐ6–GĐ7 còn lâu hơn nữa.
 - `space_is_private = true` thì chạy GĐ2, GĐ3, GĐ5 rồi dừng ở vùng đệm (T2.7). Ngược lại thì chạy trọn và ghi vào kho. **Luật "Space riêng thì tiền kiểm" nằm ở AI. BE chỉ gửi sự thật về loại Space.**
@@ -195,7 +197,7 @@ Tám thao tác ghi của con người mà thiết kế nêu được liệt kê 
 | `duplicate` | trùng khít cùng Space | `existing_document_id` |
 | `awaiting_approval` | Space riêng, đang ở vùng đệm | `suggestions` |
 | `active` | đã vào kho dùng chung | `document_id`, `suggestions`, `relations_scan_state` |
-| `failed` | lỗi kỹ thuật | `code` |
+| `failed` | lỗi kỹ thuật | `code`. BE **nộp lại** với đường dẫn mới. Ví dụ: AI khởi động lại đúng lúc đang đọc file — AI không lưu đường dẫn nên không tự tải lại được (chủ ý, §4.1) |
 
 `ingestion_id` và `document_id` là **hai định danh khác nhau** (chốt 24/9): đối tượng nạp có thể kết thúc mà không sinh tài liệu (`rejected`, `duplicate`, `failed`). `duplicate` là một trạng thái duy nhất trên dây, dù bản trùng nằm ở kho dùng chung hay ở vùng đệm tiền kiểm; AI phân biệt hai trường hợp trong nhật ký nội bộ.
 

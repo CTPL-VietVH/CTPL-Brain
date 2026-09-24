@@ -98,11 +98,16 @@ def test_g_contract_version_is_the_shared_schema_version(backend):
 
 
 def test_g_limits_are_read_from_the_config_the_app_was_built_with(backend, config_dir):
-    """`accepted_formats` on the wire == `accepted_formats` in the file.
+    """Both limits on the wire == both limits in the file.
 
-    The expected value is read from the config file this app was built from,
-    never typed into the test: a literal here would be a third home for the
-    parameter (07 Mục 3.3 quy tắc 2).
+    The expected values are read from the config file this app was built
+    from, never typed into the test: a literal here would be a third home for
+    the parameter (07 Mục 3.3 quy tắc 2).
+
+    `max_upload_bytes` joined the answer on 24/9/2026, when `POST
+    /v1/ingestions` started enforcing it — docs/10 §3.6 asks for *"cỡ file
+    tối đa"*, and the rule this file guards is that a number only appears
+    here once some code actually enforces it.
     """
     ingestion_config = yaml.safe_load(
         (config_dir / "ingestion.yaml").read_text(encoding="utf-8")
@@ -110,7 +115,10 @@ def test_g_limits_are_read_from_the_config_the_app_was_built_with(backend, confi
 
     body = backend.read_meta().json()
 
-    assert body["limits"] == {"accepted_formats": ingestion_config["accepted_formats"]}
+    assert body["limits"] == {
+        "accepted_formats": ingestion_config["accepted_formats"],
+        "max_upload_bytes": ingestion_config["max_upload_bytes"],
+    }
 
 
 def test_g_every_number_in_the_answer_comes_from_config(backend, config_dir):

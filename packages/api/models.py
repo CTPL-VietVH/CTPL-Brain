@@ -24,6 +24,7 @@ verdict into AI's stored data. `actor` is read, recorded as a trace
 
 from __future__ import annotations
 
+from datetime import date
 from enum import Enum
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -34,9 +35,13 @@ __all__ = [
     "DocumentDeletionOutcome",
     "DocumentDeletionRequest",
     "DocumentDeletionResponse",
+    "IngestionSource",
+    "IngestionStatusResponse",
+    "IngestionSubmissionRequest",
+    "IngestionSubmissionResponse",
+    "IngestionSuggestions",
     "MetaResponse",
     "SpaceDeletionRequest",
-    "SpaceDeletionResponse",
     "SpaceRegistrationRequest",
     "SpaceRegistrationResponse",
     "SpaceStatusResponse",
@@ -115,36 +120,24 @@ class SpaceDeletionRequest(BaseModel):
     actor: Actor
 
 
-class SpaceDeletionResponse(BaseModel):
-    """Every field of `space_deletion.SpaceDeletionProgress`, unabridged.
-
-    docs/10 §4.0 asks `GET /v1/spaces/{space_id}` for *"trạng thái và tiến độ
-    (số tài liệu đã xoá / còn lại)"*. The two "remaining" counts are kept
-    apart on purpose — see `SpaceDeletionProgress`: profiles still carrying
-    the `space_id`, and purges whose background cleanup has not reported done.
-    Collapsing them would hide the second, which is the one with no other
-    trace anywhere in the system.
-    """
-
-    model_config = ConfigDict(extra="forbid")
-
-    space_id: str
-    state: str
-    documents_purged: int
-    documents_already_purged: int
-    documents_remaining: int
-    unfinished_purges_remaining: int
-    buffer_entries_discarded: int
-    completed: bool
-
-
 class SpaceStatusResponse(BaseModel):
     """`GET /v1/spaces/{space_id}` — read-only progress.
+
+    ⭐ **Also the body of `DELETE /v1/spaces/{space_id}` (202)** — PO chốt
+    24/9/2026, written into docs/10 §4.0: *"**Thân phản hồi của `DELETE`
+    (202) giống hệt thân của `GET`**, để BE chỉ phải hiểu một dạng."* Before
+    that decision `DELETE` answered with the whole `SpaceDeletionProgress`
+    object; it could, because the deletion ran inside the request. Now that
+    it runs in the background there is nothing honest to say about "how many
+    did THIS call delete" — the answer at `202` time is always zero — so the
+    only meaningful answer is the same progress snapshot `GET` returns.
 
     No `documents_purged`: the number of finished deletions is not readable
     through the `DeletionLog` Protocol (it exposes the OPEN lines only), and
     inventing it here would mean either a second query path into the log or a
-    number that is quietly wrong. Reported as an escalation instead.
+    number that is quietly wrong. Still owed to §4.0 (*"số tài liệu đã xoá /
+    còn lại"*) and still an escalation — it belongs to the task that opens
+    that Protocol.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -191,6 +184,129 @@ class DocumentDeletionResponse(BaseModel):
 
     outcome: DocumentDeletionOutcome
     background_cleanup_complete: bool
+
+
+class IngestionSource(BaseModel):
+    """`POST /v1/ingestions` → `source` — docs/10 §4.1, chốt 24/9/2026.
+
+    *"`url` là **đường dẫn có chữ ký, hạn ngắn** (presigned GET) do BE sinh
+    cho đúng một file."*
+
+    ⛔ None of these five fields has a home in `packages/schema/`, and none
+    may get one. They describe a TRANSFER, not a document: `url` is a
+    temporary permission, `sha256`/`size_bytes` are checked once and thrown
+    away, `filename` is a string a person typed (and is explicitly NOT the
+    document's title — §4.2), and `content_type` is the sender's claim about
+    bytes this service identifies for itself by extension. `ingestion_record`
+    stores not one of them.
+
+    `content_type` is accepted and deliberately UNUSED: refusing a
+    submission because Backend sent `application/octet-stream` would reject
+    files the readers handle perfectly, and trusting it to choose a reader
+    would put a second format decision beside `reader.readers.doc_file`'s.
+    It is part of the contract, so it is part of the model; the field being
+    inert is the point, not an oversight.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    url: str = Field(min_length=1)
+    sha256: str = Field(min_length=1)
+    size_bytes: int = Field(ge=0)
+    filename: str = Field(min_length=1)
+    content_type: str = Field(min_length=1)
+
+
+class IngestionSubmissionRequest(BaseModel):
+    """`POST /v1/ingestions` — docs/10 §4.1.
+
+    ⛔ **No `title` and no `doc_number`** (PO chốt 24/9/2026, escalation E3).
+    §4.2 is explicit that both are AI's to suggest: *"`title` và `doc_number`
+    do AI gợi ý (07 §2.1 ...) — BE **không** gửi chúng khi nộp"*. Adding them
+    to this model would move the decision to Backend and quietly make 07 §2.1
+    wrong about who writes those fields.
+
+    `space_is_private` is Backend's statement about the Space *at this
+    moment* — §4.1: *"loại Space **tại thời điểm nộp**"*. AI consumes it here
+    and does not store it; what survives is the branch this submission takes
+    (`ingestion_record.requires_pre_approval`, which explains the
+    difference). Backend sends it rather than AI looking it up because T2
+    keeps the Space tree on Backend's side.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    source: IngestionSource
+    space_id: str = Field(min_length=1)
+    space_is_private: bool
+    actor: Actor
+    declared_previous_document_id: str | None = None
+
+
+class IngestionSubmissionResponse(BaseModel):
+    """`202` — docs/10 §4.1: `{ ingestion_id, status: "processing" }`.
+
+    `status` is a plain `str` carrying `wire_status(...)`, not an enum of its
+    own: the values belong to `schema.ingestion_record`, and a second
+    enumeration here would be a second list to keep in step.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    ingestion_id: str
+    status: str
+
+
+class IngestionSuggestions(BaseModel):
+    """`suggestions` — docs/10 §4.2, the input to *"máy gợi ý, người xác
+    nhận"* (06 §5.2 GĐ5).
+
+    ⚠️ `title` and `doc_number` are `null` and will stay `null` until the
+    extractor for them exists (T2.4b). PO chốt 24/9/2026: *"Khi bộ trích hai
+    trường này chưa có, AI trả `null`, **không** lấy tên file giả làm tên văn
+    bản."* A filename dressed as a title is worse than an empty box, because
+    a Manager confirming the screen would never notice they had approved one.
+
+    The two `*_source` fields travel with their dates and are not decoration:
+    06 §6.4 wants the reader told when a date is the ingestion date standing
+    in for one nobody could find.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    category_labels: list[str]
+    issued_date: date | None
+    issued_date_source: str | None
+    effective_date: date | None
+    effective_date_source: str | None
+    title: str | None
+    doc_number: str | None
+
+
+class IngestionStatusResponse(BaseModel):
+    """`GET /v1/ingestions/{ingestion_id}?space_id=` — docs/10 §4.2.
+
+    Every field is always present, `null` where it does not apply, rather
+    than the body changing shape per status. §4.2 lists what comes "kèm
+    theo" each status; a stable shape says the same thing and gives Backend
+    one parser instead of six. What must NOT happen is a field carrying a
+    value it has no business carrying — a `document_id` on a `rejected`
+    submission would name a document that was never created.
+
+    `relations_scan_state` is read from the document profile, never stored on
+    the ingestion row: GĐ7 keeps running after the row is terminal (06 §5.1),
+    so a copy here would be the stale one (NT3).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    ingestion_id: str
+    status: str
+    code: str | None = None
+    document_id: str | None = None
+    existing_document_id: str | None = None
+    suggestions: IngestionSuggestions | None = None
+    relations_scan_state: str | None = None
 
 
 class MetaResponse(BaseModel):

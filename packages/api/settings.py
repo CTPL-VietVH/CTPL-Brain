@@ -15,16 +15,25 @@ Why `limits` is a strict SUBSET of docs/10 §3.6 today
 
 §3.6 lists *"`max_recent_turns` (K), trần độ dài/số phần tử từng trường của
 `conversation_state`, `conversation_state_schema_version`, cỡ file tối đa"*.
-Every one of those belongs to a surface that does not exist yet — the answer
-endpoint (§6.1) and the upload endpoint (§4.1). Publishing a K that no code
-enforces would be worse than publishing nothing: Backend is told to call this
-endpoint exactly so that it *"không phải đoán K"*, and a number nobody
-enforces is a guess with a `200 OK` in front of it.
+The first three belong to the answer endpoint (§6.1), which does not exist
+yet. Publishing a K that no code enforces would be worse than publishing
+nothing: Backend is told to call this endpoint exactly so that it *"không
+phải đoán K"*, and a number nobody enforces is a guess with a `200 OK` in
+front of it.
 
-So `limits` carries only `accepted_formats` for now — the one request-shaping
-limit that has a real config key behind it, and the sibling of §3.6's *"cỡ
-file tối đa"*: it tells Backend which uploads are worth sending rather than
-letting them come back `422 UNSUPPORTED_FORMAT`.
+The fourth — *"cỡ file tối đa"* — IS published now, because the endpoint it
+belongs to exists: `source_fetch` enforces `max_upload_bytes` on every
+download and answers `413 FILE_TOO_LARGE` at the byte that crosses it. So
+`limits` carries two things, and both have a live config key behind them:
+
+* `accepted_formats` — which uploads are worth sending at all, rather than
+  letting them come back `422 UNSUPPORTED_FORMAT`;
+* `max_upload_bytes` — how big they may be.
+
+⚠️ `max_upload_bytes` is the ONLY one of 07 Mục 3.2's eleven parameters that
+may appear here, and the exception is docs/10 §3.6's own. Its sibling
+`source_download_timeout_seconds` is NOT published: how patient AI is with
+Backend's object store is nothing Backend can act on.
 
 ⚠️ It is also the boundary of what belongs in this endpoint at all. docs/10 §2
 is explicit that *"Cấu hình mô hình và tham số"* does not travel over the API:
@@ -74,11 +83,21 @@ class ApiLimits:
     """
 
     accepted_formats: tuple[str, ...]
+    max_upload_bytes: int
 
     def as_payload(self) -> dict[str, Any]:
         """The JSON shape. A tuple would serialise fine; a list is what the
-        wire contract of docs/10 §3.1 (plain JSON) actually describes."""
-        return {"accepted_formats": list(self.accepted_formats)}
+        wire contract of docs/10 §3.1 (plain JSON) actually describes.
+
+        The key is spelled exactly as the config key is. Backend reading
+        `max_upload_bytes` and an operator editing `max_upload_bytes` are
+        then talking about the same name, which is the whole of why the
+        number is publishable at all.
+        """
+        return {
+            "accepted_formats": list(self.accepted_formats),
+            "max_upload_bytes": self.max_upload_bytes,
+        }
 
 
 def api_limits_from_ingestion_config(config: IngestionConfig) -> ApiLimits:
@@ -88,7 +107,10 @@ def api_limits_from_ingestion_config(config: IngestionConfig) -> ApiLimits:
     `schema.config`'s job and happens once per process, and a second reader of
     the same file is a second place for the file to be misread.
     """
-    return ApiLimits(accepted_formats=config.accepted_formats)
+    return ApiLimits(
+        accepted_formats=config.accepted_formats,
+        max_upload_bytes=config.max_upload_bytes,
+    )
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)

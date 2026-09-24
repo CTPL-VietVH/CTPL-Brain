@@ -10,8 +10,13 @@ Every route below is a translation, never a decision:
     HTTP                          →  business function that already exists
     ─────────────────────────────────────────────────────────────────────
     POST   /v1/spaces             →  space_registry.register
-    DELETE /v1/spaces/{id}        →  space_deletion.delete_space
+    DELETE /v1/spaces/{id}        →  space_deletion.begin_space_deletion,
+                                     then delete_space in the background
     GET    /v1/spaces/{id}        →  two reads, NO write
+    POST   /v1/ingestions         →  fetch the file, write a QUEUED row,
+                                     wake the worker — the pipeline itself
+                                     is ingestion_pipeline.IngestionPipeline
+    GET    /v1/ingestions/{id}    →  one read, NO write
     DELETE /v1/documents/{id}     →  deletion.purge_document_permanently
 
 The refusals those functions raise are mapped to the codes of docs/10 §3.5 in
@@ -37,16 +42,21 @@ a second implementation of the same rule, free to drift from the audited one.
 
 from __future__ import annotations
 
-import dataclasses
+import uuid
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
+from datetime import datetime, timezone
 
-from fastapi import APIRouter, Request, Response
+from fastapi import APIRouter, Query, Request, Response
 
+from api.background import BackgroundWorker
 from api.errors import (
+    MESSAGE_FILE_TOO_LARGE,
     MESSAGE_INVALID_REQUEST,
     MESSAGE_INVALID_STATE,
     MESSAGE_OBJECT_NOT_IN_SPACE,
+    MESSAGE_SOURCE_INTEGRITY_MISMATCH,
+    MESSAGE_SOURCE_UNREACHABLE,
     MESSAGE_SPACE_BEING_DELETED,
     MESSAGE_SPACE_NOT_REGISTERED,
     ErrorCode,
@@ -56,11 +66,22 @@ from api.models import (
     DocumentDeletionOutcome,
     DocumentDeletionRequest,
     DocumentDeletionResponse,
+    IngestionStatusResponse,
+    IngestionSubmissionRequest,
+    IngestionSubmissionResponse,
+    IngestionSuggestions,
     SpaceDeletionRequest,
-    SpaceDeletionResponse,
     SpaceRegistrationRequest,
     SpaceRegistrationResponse,
     SpaceStatusResponse,
+)
+from api.source_fetch import (
+    ClientFactory,
+    FileTooLarge,
+    SourceIntegrityMismatch,
+    SourceUnreachable,
+    default_http_client,
+    fetch_source_to_staging,
 )
 from ingestion.deletion import (
     BackgroundCleanup,
@@ -71,15 +92,24 @@ from ingestion.deletion import (
     VectorStoreDeleter,
     purge_document_permanently,
 )
+from ingestion.ingestion_pipeline import IngestionPipeline
 from ingestion.pre_approval_buffer import PreApprovalBuffer
 from ingestion.relations_scan import SpaceDocumentSource
-from ingestion.space_deletion import delete_space
+from ingestion.space_deletion import begin_space_deletion, delete_space
+from api.security import TENANT_ID_ENV_VAR
 from ingestion.space_registry import (
     IllegalSpaceStateTransition,
     SpaceCannotBeRegisteredAgain,
     SpaceNotAcceptingDocuments,
     SpaceNotRegistered,
     SpaceRegistry,
+    assert_space_accepts_documents,
+)
+from schema.document import Document
+from schema.ingestion_record import (
+    IngestionRecord,
+    IngestionStatus,
+    wire_status,
 )
 
 __all__ = [
@@ -114,6 +144,63 @@ class IngestionServices:
     deletion_log: DeletionLog
     pre_approval_buffer: PreApprovalBuffer
 
+    #: Everything `POST /v1/ingestions` hands off. The pipeline owns the
+    #: record store, the staging area and the five config numbers — this
+    #: layer never reads any of them twice.
+    pipeline: IngestionPipeline
+
+    #: ONE thread for the whole service (see `api.background`). Both `202`
+    #: endpoints put their work on it, which is what keeps the single-worker
+    #: invariant true across the two of them rather than per endpoint.
+    worker: BackgroundWorker
+
+    #: R6 — one install, one customer (docs/10 §2). Resolved from
+    #: `CBRAIN_TENANT_ID` at startup; ⛔ never taken from a request, or one
+    #: call could file a document under another customer's `tenant_id`.
+    tenant_id: str
+
+    #: The two ceilings of the fetch, from `config/ingestion.yaml` (07 Mục
+    #: 3.2). Held here rather than inside `source_fetch` because that module
+    #: must have no home for a number — CLAUDE.md Mục 4 quy tắc 2 — and held
+    #: here rather than on the pipeline because the fetch happens in the
+    #: REQUEST, not in the job (§4.1: the queue would outlive the link).
+    max_upload_bytes: int
+    source_download_timeout_seconds: float
+
+    #: Injected so a test can serve the presigned URL from a local fixture
+    #: without a socket, and so a deployment behind a proxy can supply its
+    #: own client.
+    http_client_factory: ClientFactory = default_http_client
+
+    #: Injected for the same reason every other module in this repo injects
+    #: one: a test must be able to know what `submitted_at` will be.
+    clock: Callable[[], datetime] = lambda: datetime.now(timezone.utc)
+
+    #: `ingestion_id` generator. AI mints it — Backend has no say, because
+    #: the id names AI's own row (docs/10 §4.1 returns it).
+    new_ingestion_id: Callable[[], str] = lambda: uuid.uuid4().hex
+
+    def __post_init__(self) -> None:
+        """Refuse a blank `tenant_id` at construction — i.e. at startup.
+
+        The composition root is expected to obtain the value through
+        `api.security.resolve_tenant_id`, which refuses a missing or blank
+        `CBRAIN_TENANT_ID`. This second check is not redundant: it closes the
+        path where a caller passes `""` from somewhere else entirely, and it
+        fails where the value is USED rather than where it was read.
+
+        ⛔ There is no fallback, here or anywhere: `tenant_id` is immutable on
+        every `document` it reaches (07 Mục 2.1), so a made-up value is not
+        something a later release can quietly correct.
+        """
+        if not self.tenant_id or not self.tenant_id.strip():
+            raise ValueError(
+                "IngestionServices.tenant_id is blank. Every document and every "
+                "chunk this service writes carries it and can never be moved "
+                "(07 Mục 2.1), so there is no default — resolve it from "
+                f"{TENANT_ID_ENV_VAR} at startup (docs/10 §2)."
+            )
+
 
 def create_ingestion_router(*, services: IngestionServices) -> APIRouter:
     """Build the router, closed over the services it calls."""
@@ -140,49 +227,49 @@ def create_ingestion_router(*, services: IngestionServices) -> APIRouter:
 
     @router.delete(
         "/v1/spaces/{space_id}",
-        response_model=SpaceDeletionResponse,
+        response_model=SpaceStatusResponse,
         status_code=202,  # docs/10 §4.0
     )
     def delete_space_endpoint(
         space_id: str, body: SpaceDeletionRequest
-    ) -> SpaceDeletionResponse:
-        """docs/10 §4.0 — close the Space, purge its documents, then mark it gone.
+    ) -> SpaceStatusResponse:
+        """docs/10 §4.0 — close the door now, empty the room in the background.
 
-        ⚠️ **Runs synchronously inside this request**, while §4.0 specifies
-        `202` *"và chạy nền"*. There is no task runner in this repo yet, and
-        inventing one here would choose an execution model the plan has not
-        chosen (`space_deletion.py` says the same about itself). The status
-        code stays `202` because the CONTRACT is unchanged from Backend's
-        side: the answer may report work still outstanding
-        (`completed=false`), and Backend's own procedure — *"gọi AI → đợi AI
-        báo đã xoá"* — is to keep asking until it is done.
+        ⭐ **The door closes inside this request** and only the emptying is
+        deferred. §4.0 step 1 is *"Từ lúc này mọi lời gọi nộp tài liệu hay
+        thao tác ghi vào Space trả `409 SPACE_BEING_DELETED`"* — "từ lúc
+        này" has to mean the moment Backend gets its `202`, or a document
+        submitted a millisecond later could land in a Space the loop has
+        already walked past, and nothing would ever mention it again.
 
-        What makes that safe to put behind a runner later without touching
-        this route: `delete_space` re-derives its worklist from the stores on
-        every call, so calling it once per request, or a hundred times from a
-        queue, converges to the same end state.
+        The body is the SAME body `GET /v1/spaces/{space_id}` returns (PO
+        chốt 24/9, §4.0: *"để BE chỉ phải hiểu một dạng"*), read AFTER the
+        job was queued and therefore describing the world as it is now — in
+        practice `state = being_deleted` and the counts not yet moved.
 
-        The response is built from the progress dataclass FIELD BY FIELD via
-        `dataclasses.asdict`, and the response model forbids unknown fields.
-        So a new field added to `SpaceDeletionProgress` makes this route fail
-        loudly instead of silently dropping the one number a future case
-        needs — the deliberate opposite of a `**kwargs` that swallows it.
+        Calling it twice is safe and is meant to be: `delete_space`
+        re-derives its worklist from the stores on every run, so two queued
+        jobs for one Space converge on the same end state (§4.0: *"Gọi
+        `DELETE` lần hai: trả tiến độ hiện tại, không lỗi, không xoá lặp"*).
         """
-        progress = delete_space(
-            space_id,
-            reason=body.reason,
-            deleted_by=body.actor.user_id,
-            space_registry=services.space_registry,
-            document_source=services.document_source,
-            profile_store=services.profile_store,
-            vector_store=services.vector_store,
-            background_cleanup=services.background_cleanup,
-            deletion_log=services.deletion_log,
-            pre_approval_buffer=services.pre_approval_buffer,
-        )
-        payload = dataclasses.asdict(progress)
-        payload["state"] = progress.state.value
-        return SpaceDeletionResponse(**payload)
+        begin_space_deletion(space_id, space_registry=services.space_registry)
+
+        def job() -> None:
+            delete_space(
+                space_id,
+                reason=body.reason,
+                deleted_by=body.actor.user_id,
+                space_registry=services.space_registry,
+                document_source=services.document_source,
+                profile_store=services.profile_store,
+                vector_store=services.vector_store,
+                background_cleanup=services.background_cleanup,
+                deletion_log=services.deletion_log,
+                pre_approval_buffer=services.pre_approval_buffer,
+            )
+
+        services.worker.submit(job)
+        return _space_status(space_id, services=services)
 
     @router.get("/v1/spaces/{space_id}", response_model=SpaceStatusResponse)
     def read_space(space_id: str) -> SpaceStatusResponse:
@@ -196,33 +283,116 @@ def create_ingestion_router(*, services: IngestionServices) -> APIRouter:
 
         So the two numbers are read directly, from the same two sources
         `delete_space` treats as its worklist (see that module: profiles still
-        carrying the `space_id`, and deletion-log lines still open).
+        carrying the `space_id`, and deletion-log lines still open). The same
+        reader serves `DELETE`'s `202` body — one shape, one code path.
         """
-        registration = services.space_registry.get(space_id)
-        if registration is None:
-            # Not an exception from the registry: `get` returns None by
-            # design, and this route is the place that knows a missing row is
-            # a 404 rather than an empty answer.
-            raise SpaceNotRegistered(
-                f"space_id={space_id!r} is not in the Space register (docs/10 §4.0)."
-            )
+        return _space_status(space_id, services=services)
 
-        remaining = [
-            document
-            for document in services.document_source.documents_in(frozenset({space_id}))
-            # The `space_id` re-test mirrors `space_deletion._profiles_in`:
-            # `documents_in` takes a SET, and a store that over-returned would
-            # otherwise report another Space's documents as this one's.
-            if document.space_id == space_id
-        ]
-        unfinished = services.deletion_log.open_entries_for_space(space_id)
+    @router.post(
+        "/v1/ingestions",
+        response_model=IngestionSubmissionResponse,
+        status_code=202,  # docs/10 §4.1
+    )
+    def submit_ingestion(
+        body: IngestionSubmissionRequest,
+    ) -> IngestionSubmissionResponse:
+        """docs/10 §4.1 — the six steps, in this order, before `202`.
 
-        return SpaceStatusResponse(
-            space_id=registration.space_id,
-            state=registration.state.value,
-            documents_remaining=len(remaining),
-            unfinished_purges_remaining=len(unfinished),
+        §4.1, verbatim: *"xác thực → kiểm thân → kiểm Space (§4.0) **trước
+        khi tải byte nào** → tải thẳng ra file tạm, đếm byte khi ghi, vượt cỡ
+        tối đa thì ngừng ngay (`413 FILE_TOO_LARGE`) → so `sha256` và
+        `size_bytes` (lệch → `SOURCE_INTEGRITY_MISMATCH`) → tạo đối tượng nạp
+        → trả 202."*
+
+        Steps 1–2 happened before this function: the service key in
+        `ServiceAuthMiddleware`, the body in `IngestionSubmissionRequest`.
+        What is left is the order of 3–6, and each boundary is a decision:
+
+        * **Space before bytes.** Downloading first and then discovering the
+          Space is gone would have spent the transfer, filled the disk, and
+          handed the caller a `409` anyway.
+        * **`declared_previous_document_id` before bytes too**, for the same
+          reason and one more: PO chốt 24/9 (K11) that a declaration which
+          cannot be resolved is a refusal, never silence. Refusing at the
+          door makes the refusal synchronous, where Backend can act on it,
+          instead of a `rejected` row discovered minutes later.
+        * **The download stays in the request**, not in the worker: §4.1 —
+          *"Tải trong lời gọi chứ không để cho bộ chạy nền, vì hàng đợi dài
+          sẽ làm đường dẫn hết hạn."*
+        * **The row is written before `202`.** The answer promises the work
+          will happen; a row in PostgreSQL is what makes that promise
+          survive a restart. Waking the worker comes last, after the promise
+          is durable.
+        """
+        # ---- 3. The Space gate — before a single byte is fetched ---------
+        assert_space_accepts_documents(
+            body.space_id, space_registry=services.space_registry
         )
+        previous = _resolve_declared_previous(body, services=services)
+
+        ingestion_id = services.new_ingestion_id()
+
+        # ---- 4/5. Fetch, counting and hashing as it writes ---------------
+        fetched = fetch_source_to_staging(
+            url=body.source.url,
+            sha256=body.source.sha256,
+            size_bytes=body.source.size_bytes,
+            source_filename=body.source.filename,
+            ingestion_id=ingestion_id,
+            staging=services.pipeline.staging,
+            max_upload_bytes=services.max_upload_bytes,
+            timeout_seconds=services.source_download_timeout_seconds,
+            client_factory=services.http_client_factory,
+        )
+
+        # ---- 6. The durable row, then the wake-up ------------------------
+        now = services.clock()
+        record = IngestionRecord(
+            ingestion_id=ingestion_id,
+            space_id=body.space_id,
+            tenant_id=services.tenant_id,
+            status=IngestionStatus.QUEUED,
+            submitted_by=body.actor.user_id,
+            submitted_at=now,
+            updated_at=now,
+            # Backend's statement about the Space is consumed HERE and stored
+            # as the branch this job takes — see `IngestionRecord`, which
+            # explains at length why that is not `space_is_private` renamed.
+            requires_pre_approval=body.space_is_private,
+            staged_filename=fetched.staged_filename,
+            declared_previous_document_id=(
+                None if previous is None else previous.document_id
+            ),
+        )
+        services.pipeline.records.put(record)
+        services.worker.submit(services.pipeline.drain)
+
+        return IngestionSubmissionResponse(
+            ingestion_id=record.ingestion_id, status=wire_status(record.status)
+        )
+
+    @router.get(
+        "/v1/ingestions/{ingestion_id}", response_model=IngestionStatusResponse
+    )
+    def read_ingestion(
+        ingestion_id: str,
+        space_id: str = Query(min_length=1),
+    ) -> IngestionStatusResponse:
+        """docs/10 §4.2 — where one submission got to. READ ONLY.
+
+        `space_id` is a REQUIRED query parameter, and it is T4 (§1): Backend
+        says who is asking, AI checks for itself that the object is in the
+        Space named. A row in another Space answers `404
+        OBJECT_NOT_IN_SPACE` — the same answer as a row that does not exist,
+        *"để không tiết lộ đối tượng tồn tại"* (§3.5).
+        """
+        record = services.pipeline.records.get(ingestion_id)
+        if record is None or record.space_id != space_id:
+            raise ObjectNotInSpace(
+                f"ingestion_id={ingestion_id!r} is not in space {space_id!r} "
+                f"(docs/10 §1 T4)."
+            )
+        return _ingestion_status(record, services=services)
 
     @router.delete(
         "/v1/documents/{document_id}", response_model=DocumentDeletionResponse
@@ -264,6 +434,129 @@ def create_ingestion_router(*, services: IngestionServices) -> APIRouter:
         )
 
     return router
+
+
+# --------------------------------------------------------------------------- #
+# Reads shared by more than one route — written once so two routes cannot
+# come to disagree about what the same question answers.
+# --------------------------------------------------------------------------- #
+
+
+def _space_status(space_id: str, *, services: IngestionServices) -> SpaceStatusResponse:
+    """The body of BOTH `GET /v1/spaces/{id}` and `DELETE /v1/spaces/{id}`.
+
+    docs/10 §4.0, chốt 24/9: the two bodies are identical, so there is one
+    function. Two builders would be two chances for the `202` to describe a
+    slightly different world than the poll that follows it.
+    """
+    registration = services.space_registry.get(space_id)
+    if registration is None:
+        # Not an exception from the registry: `get` returns None by design,
+        # and this layer is where a missing row is a 404 rather than an empty
+        # answer.
+        raise SpaceNotRegistered(
+            f"space_id={space_id!r} is not in the Space register (docs/10 §4.0)."
+        )
+
+    remaining = [
+        document
+        for document in services.document_source.documents_in(frozenset({space_id}))
+        # The `space_id` re-test mirrors `space_deletion._profiles_in`:
+        # `documents_in` takes a SET, and a store that over-returned would
+        # otherwise report another Space's documents as this one's.
+        if document.space_id == space_id
+    ]
+    unfinished = services.deletion_log.open_entries_for_space(space_id)
+
+    return SpaceStatusResponse(
+        space_id=registration.space_id,
+        state=registration.state.value,
+        documents_remaining=len(remaining),
+        unfinished_purges_remaining=len(unfinished),
+    )
+
+
+def _resolve_declared_previous(
+    body: IngestionSubmissionRequest, *, services: IngestionServices
+) -> Document | None:
+    """*"đây là bản mới của X"* — resolve X, or refuse.
+
+    docs/10 §4.1: *"`declared_previous_document_id` không tồn tại hoặc không
+    nằm ở `space_id` này → từ chối `OBJECT_NOT_IN_SPACE`. **Không được** im
+    lặng coi như tài liệu mới."* The silent branch is the dangerous one: the
+    submission would succeed, a fresh version chain would start, and the two
+    versions of one document would never be linked — with a `202` in front
+    of it.
+
+    The job re-resolves the same id when it runs (the document can be deleted
+    in between) and refuses again there. Both checks are needed: this one so
+    Backend hears it synchronously, that one so the pipeline cannot proceed
+    on a stale answer.
+    """
+    declared = body.declared_previous_document_id
+    if declared is None:
+        return None
+    previous = services.profile_store.get_document(declared)
+    if previous is None or previous.space_id != body.space_id:
+        raise ObjectNotInSpace(
+            f"declared_previous_document_id={declared!r} is not in space "
+            f"{body.space_id!r} (docs/10 §4.1)."
+        )
+    return previous
+
+
+def _ingestion_status(
+    record: IngestionRecord, *, services: IngestionServices
+) -> IngestionStatusResponse:
+    """docs/10 §4.2 — the row, plus what only the stores know.
+
+    `suggestions` and `relations_scan_state` are NOT columns of
+    `ingestion_record`; they are read fresh from wherever the document
+    actually is. That is NT3 applied to a read: GĐ7 keeps running after the
+    row went terminal, and a Manager can edit labels through §4.3, so a copy
+    on the row would be the stale one.
+    """
+    document: Document | None = None
+    if record.status is IngestionStatus.ACTIVE and record.document_id is not None:
+        document = services.profile_store.get_document(record.document_id)
+    elif record.status is IngestionStatus.AWAITING_APPROVAL:
+        entry = services.pre_approval_buffer.get(record.ingestion_id)
+        document = None if entry is None else entry.document
+
+    return IngestionStatusResponse(
+        ingestion_id=record.ingestion_id,
+        status=wire_status(record.status),
+        code=None if record.code is None else record.code.value,
+        document_id=record.document_id,
+        existing_document_id=record.existing_document_id,
+        suggestions=None if document is None else _suggestions(document),
+        relations_scan_state=(
+            document.relations_scan_state.value
+            if document is not None and record.status is IngestionStatus.ACTIVE
+            else None
+        ),
+    )
+
+
+def _suggestions(document: Document) -> IngestionSuggestions:
+    """The GĐ5 output Backend shows on the *"máy gợi ý, người xác nhận"*
+    screen (06 §5.2 GĐ5).
+
+    `title` and `doc_number` are projected from the empty string to `null`:
+    no extractor for either exists (T2.4b), the columns are NOT NULL (07
+    §2.1), and docs/10 §4.2 requires the ANSWER to be `null` rather than
+    anything that could be mistaken for a suggestion. ⛔ The filename is not
+    a fallback — that is the specific substitution §4.2 forbids by name.
+    """
+    return IngestionSuggestions(
+        category_labels=list(document.category_labels),
+        issued_date=document.issued_date,
+        issued_date_source=document.issued_date_source.value,
+        effective_date=document.effective_date,
+        effective_date_source=document.effective_date_source.value,
+        title=document.title or None,
+        doc_number=document.doc_number or None,
+    )
 
 
 # --------------------------------------------------------------------------- #
@@ -333,6 +626,36 @@ def _deletion_request_incomplete(request: Request, exc: Exception) -> Response:
     )
 
 
+def _source_unreachable(request: Request, exc: Exception) -> Response:
+    """docs/10 §3.5 — `422`. ⛔ The message must not repeat the presigned
+    link, and it does not: `errors.MESSAGE_SOURCE_UNREACHABLE` is a fixed
+    sentence and `exc` is never formatted into the answer (§4.1)."""
+    return error_response(
+        status_code=422,
+        code=ErrorCode.SOURCE_UNREACHABLE,
+        message=MESSAGE_SOURCE_UNREACHABLE,
+    )
+
+
+def _source_integrity_mismatch(request: Request, exc: Exception) -> Response:
+    return error_response(
+        status_code=422,
+        code=ErrorCode.SOURCE_INTEGRITY_MISMATCH,
+        message=MESSAGE_SOURCE_INTEGRITY_MISMATCH,
+    )
+
+
+def _file_too_large(request: Request, exc: Exception) -> Response:
+    """docs/10 §3.5 — `413`, and the download has ALREADY been abandoned by
+    the time this runs (`source_fetch` stops at the byte that crosses the
+    ceiling, not at the end of the body)."""
+    return error_response(
+        status_code=413,
+        code=ErrorCode.FILE_TOO_LARGE,
+        message=MESSAGE_FILE_TOO_LARGE,
+    )
+
+
 #: Passed to `app.create_app` by the composition root. A mapping rather than a
 #: list of decorators so that the whole refusal surface of this module is one
 #: readable table — and so `app.py` never imports an Ingestion exception.
@@ -345,4 +668,7 @@ INGESTION_EXCEPTION_HANDLERS: Mapping[
     IllegalSpaceStateTransition: _illegal_state_transition,
     ObjectNotInSpace: _object_not_in_space,
     DeletionRequestIncomplete: _deletion_request_incomplete,
+    SourceUnreachable: _source_unreachable,
+    SourceIntegrityMismatch: _source_integrity_mismatch,
+    FileTooLarge: _file_too_large,
 }

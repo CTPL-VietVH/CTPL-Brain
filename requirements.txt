@@ -62,7 +62,13 @@ fastapi==0.141.1
 starlette==1.7.0
 pydantic==2.13.5
 uvicorn==0.53.0
-# `httpx` — TestClient của FastAPI gọi app trong tiến trình (tests/api/).
+# `httpx` — phụ thuộc TRỰC TIẾP của mã chạy thật từ 24/9/2026, không còn chỉ
+# là thư viện của test: `packages/api/source_fetch.py` dùng nó để tải file từ
+# đường dẫn có chữ ký Backend gửi (docs/10 §4.1, "file đi bằng tham chiếu").
+# ⛔ Cố ý KHÔNG thêm thư viện MinIO: §4.1 chốt "AI chỉ gọi HTTP GET, không dùng
+#    thư viện MinIO, không cầm tài khoản MinIO — BE vẫn là bên quyết ai đọc
+#    được gì". Một client MinIO ở đây là một chỗ thứ hai quyết định quyền đọc.
+# (Vẫn đồng thời là thư viện TestClient của FastAPI dùng — tests/api/.)
 httpx==0.28.1
 
 # ─── Kiểm thử ─────────────────────────────────────────────────────────────────

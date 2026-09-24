@@ -46,10 +46,12 @@ from typing import Any, Final
 from fastapi.responses import JSONResponse
 
 from schema.document import Document
+from schema.ingestion_record import IngestionFailureCode
 
 __all__ = [
     "CODE_FIELD",
     "MESSAGE_FIELD",
+    "MESSAGE_FILE_TOO_LARGE",
     "MESSAGE_IDEMPOTENCY_KEY_MISSING",
     "MESSAGE_IDEMPOTENCY_KEY_REUSED",
     "MESSAGE_INTERNAL_ERROR",
@@ -57,6 +59,8 @@ __all__ = [
     "MESSAGE_INVALID_STATE",
     "MESSAGE_OBJECT_NOT_IN_SPACE",
     "MESSAGE_SCOPE_MISSING",
+    "MESSAGE_SOURCE_INTEGRITY_MISMATCH",
+    "MESSAGE_SOURCE_UNREACHABLE",
     "MESSAGE_SPACE_BEING_DELETED",
     "MESSAGE_SPACE_NOT_REGISTERED",
     "MESSAGE_UNAUTHENTICATED",
@@ -83,10 +87,18 @@ class ErrorCode:
 
     # -- verbatim from the docs/10 §3.5 table --------------------------- #
     SCOPE_MISSING: Final = "SCOPE_MISSING"
-    OBJECT_NOT_IN_SPACE: Final = "OBJECT_NOT_IN_SPACE"
+    #: ⚠️ Read off `schema.ingestion_record.IngestionFailureCode` rather than
+    #: typed a second time: this string is BOTH an HTTP answer here and a
+    #: value stored in `ingestion_record.code`, and two spellings of one code
+    #: is the `doc_profile_code`/`profile_code` bug with a `404` on it
+    #: (CLAUDE.md Mục 6).
+    OBJECT_NOT_IN_SPACE: Final = IngestionFailureCode.OBJECT_NOT_IN_SPACE.value
     SPACE_NOT_REGISTERED: Final = "SPACE_NOT_REGISTERED"
     SPACE_BEING_DELETED: Final = "SPACE_BEING_DELETED"
     INVALID_STATE: Final = "INVALID_STATE"
+    SOURCE_UNREACHABLE: Final = "SOURCE_UNREACHABLE"
+    SOURCE_INTEGRITY_MISMATCH: Final = "SOURCE_INTEGRITY_MISMATCH"
+    FILE_TOO_LARGE: Final = "FILE_TOO_LARGE"
 
     # -- [added] not in the §3.5 table; see the module docstring -------- #
     UNAUTHENTICATED: Final = "UNAUTHENTICATED"
@@ -145,6 +157,23 @@ MESSAGE_IDEMPOTENCY_KEY_REUSED: Final = (
 MESSAGE_INVALID_REQUEST: Final = (
     "Thân lời gọi không đúng hợp đồng: sai kiểu dữ liệu, hoặc có trường không "
     "thuộc hợp đồng này."
+)
+
+#: ⛔ Không nêu lại đường dẫn có chữ ký trong thông điệp này — docs/10 §4.1:
+#: *"AI không lưu `url` ở bất cứ đâu (nhật ký, bảng, thông báo lỗi)"*.
+MESSAGE_SOURCE_UNREACHABLE: Final = (
+    "Không tải được file từ đường dẫn Backend gửi: đường dẫn đã hết hạn, bị từ "
+    "chối, hoặc quá thời gian. Hãy sinh đường dẫn mới rồi nộp lại."
+)
+
+MESSAGE_SOURCE_INTEGRITY_MISMATCH: Final = (
+    "File tải về không khớp `sha256` hoặc `size_bytes` mà Backend khai. Không "
+    "nạp — đây là một file khác với file được mô tả."
+)
+
+MESSAGE_FILE_TOO_LARGE: Final = (
+    "File vượt cỡ tối đa. Cỡ tối đa được công bố ở `GET /v1/meta` "
+    "(`limits.max_upload_bytes`)."
 )
 
 #: No detail, on purpose: an unforeseen failure must not describe itself to the

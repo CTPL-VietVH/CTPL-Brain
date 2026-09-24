@@ -205,6 +205,15 @@ def build_app(
     `config_dir` has no default for the reason `schema.config`'s loaders have
     none: where `config/` lives is a per-install deployment fact (R6).
 
+    ⚠️ **`CBRAIN_TENANT_ID` is NOT read here**, and the asymmetry with the
+    service key is deliberate. The service key is used by a middleware this
+    factory installs, so this factory has to hold it. `tenant_id` is used by
+    a ROUTER, and routers arrive already built — so reading it here would
+    give the value two readers and two chances to disagree. The composition
+    root resolves it with `api.security.resolve_tenant_id` (which refuses a
+    missing or blank variable with the same force as the service key) and
+    hands it to `IngestionServices`, which refuses a blank value in turn.
+
     Raises:
         schema.config.ConfigError: any of the three files is missing, empty,
             missing a key, carrying an unknown key, or carrying a value of the

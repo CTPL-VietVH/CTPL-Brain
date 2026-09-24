@@ -86,6 +86,11 @@ def test_e_the_same_key_with_a_different_body_is_refused(backend, world):
 
     first = backend.delete_space(DOOMED_SPACE, idempotency_key="key-space-1")
     reused = backend.delete_space(KEEPER_SPACE, idempotency_key="key-space-1")
+    # The refused call must not have QUEUED anything either — since 24/9 the
+    # emptying is a background job, so a `422` that had already submitted one
+    # would delete the second Space a moment later, with the refusal already
+    # on the wire.
+    world.run_background()
 
     assert first.status_code == 202
     assert reused.status_code == 422
