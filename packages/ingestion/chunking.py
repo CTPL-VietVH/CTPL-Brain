@@ -53,11 +53,14 @@ cấm giá trị mặc định trong mã. Giá trị sống do bên gọi truy�
 `config/ingestion.yaml` (`chunk_length_cap`).
 
 Cơ chế chia bước 2: chỉ cắt tại ranh giới AN TOÀN có sẵn trong văn bản —
-đoạn (dòng trống) trước, câu (dấu kết câu) nếu đoạn vẫn quá dài. Các mẩu con
-liền kề được đóng gói THAM LAM tới gần trần để tránh sinh nhiều mẩu rất
-ngắn, nhưng không bao giờ cắt bên trong một câu. Một đoạn/câu tự nó đã vượt
-trần (không còn ranh giới an toàn để chia tiếp — ví dụ bảng số liệu nhúng
-trong văn bản) thì module này KHÔNG bịa cách cắt cứng theo số ký tự; nó nổ
+đoạn (dòng trống) trước, câu (dấu kết câu) nếu đoạn vẫn quá dài, DÒNG ĐƠN
+(xuống dòng, thêm 25/9/2026, CHUNK-bang-bieu) nếu câu vẫn quá dài — ca thật:
+một bảng phụ lục xuống dòng giữa các hàng nhưng không có dòng trống hay dấu
+kết câu thật nào, nên trước đây cả bảng rơi vào đúng MỘT "câu" và nổ ngoại
+lệ ngay. Các mẩu con liền kề được đóng gói THAM LAM tới gần trần để tránh
+sinh nhiều mẩu rất ngắn, nhưng không bao giờ cắt bên trong một dòng. Một
+đoạn/câu/dòng tự nó đã vượt trần (không còn ranh giới an toàn để chia tiếp)
+thì module này KHÔNG bịa cách cắt cứng theo số ký tự; nó nổ
 `KhoiVuotTranKhongTheChia` để việc đó được người xem trực tiếp, đúng tinh
 thần "loại trừ phải nhìn thấy được" (NT2) — không lặng lẽ hạ chuẩn.
 
@@ -100,17 +103,20 @@ class KhongDungDuocCauTruc(Exception):
 
 
 class KhoiVuotTranKhongTheChia(Exception):
-    """Bước 2: một khối vượt trần, và một ĐOẠN hoặc CÂU đơn lẻ bên trong nó
-    cũng tự nó đã vượt trần — không còn ranh giới an toàn nào (đoạn/câu) để
-    chia tiếp.
+    """Bước 2: một khối vượt trần, và một ĐOẠN, CÂU, hay DÒNG ĐƠN lẻ bên
+    trong nó cũng tự nó đã vượt trần — không còn ranh giới an toàn nào
+    (đoạn/câu/dòng) để chia tiếp.
 
     Cố ý KHÔNG rơi về cắt cứng theo số ký tự — đó chính là việc bị cấm
     (06 Mục 5.2). Nổ ồn ào để người xem trực tiếp khối này, kèm
     `structure_path` và vị trí tuyệt đối trong `extracted_text`.
 
-    Đo 24/9/2026: 2/36 tài liệu của kho thử rơi vào đây, cả hai vì một BẢNG
-    phụ lục (228 dòng, không dòng trống, không dấu kết câu) — việc bổ sung
-    mức ranh giới "dòng đơn" là một work-order riêng (CHUNK-bang-bieu).
+    Đo 24/9/2026 (trước khi có mức "dòng đơn"): 2/36 tài liệu của kho thử rơi
+    vào đây, cả hai vì một BẢNG phụ lục (228 dòng, không dòng trống, không
+    dấu kết câu) — mức ranh giới "dòng đơn" thêm 25/9/2026 (CHUNK-bang-bieu)
+    giải quyết đúng hai ca này: các dòng bảng có xuống dòng đơn giữa các
+    hàng dù không có dòng trống hay dấu kết câu thật. Từ nay ngoại lệ này chỉ
+    còn nổ khi một DÒNG ĐƠN — không phải cả bảng — tự nó đã vượt trần.
     """
 
 
@@ -139,11 +145,11 @@ class InternalBlockHasNoOwnText(Exception):
 # dòng) trước khi tới đây, nên "\n\n+" là ranh giới đoạn an toàn.
 _MAU_RANH_GIOI_DOAN = re.compile(r"\n\n+")
 
-# Dấu kết câu — không dùng danh sách từ khoá viết tắt, xem `_tim_diem_cat_cau`.
+# Dấu kết câu — không dùng danh sách từ khoá viết tắt, xem `_find_sentence_cut_points`.
 _KY_TU_KET_CAU = ".!?…"
 
 
-def _tim_diem_cat_cau(text: str) -> list[int]:
+def _find_sentence_cut_points(text: str) -> list[int]:
     """Vị trí NGAY SAU mỗi ranh giới câu hợp lệ trong `text` (offset tương đối).
 
     Một dấu kết câu là ranh giới THẬT khi ký tự tiếp theo (bỏ qua khoảng
@@ -166,6 +172,21 @@ def _tim_diem_cat_cau(text: str) -> list[int]:
     return diem
 
 
+def _find_line_cut_points(text: str) -> list[int]:
+    """Vị trí NGAY SAU mỗi ký tự xuống dòng trong `text` — ranh giới DÒNG
+    ĐƠN, mức chia thứ BA và cuối cùng (sau đoạn, sau câu).
+
+    Ca cần tới mức này (25/9/2026, CHUNK-bang-bieu): một bảng phụ lục nhúng
+    trong một Khoản — mỗi hàng đứng riêng một dòng, nhưng KHÔNG có dòng trống
+    giữa các hàng (nên không phải ranh giới đoạn) và số liệu trong bảng
+    không mang dấu kết câu thật nào (nên `_find_sentence_cut_points` không tìm được
+    điểm cắt nào, cả bảng rơi vào đúng MỘT "câu"). Cùng cách `_find_sentence_cut_points`
+    giữ đúng nguyên bản: điểm cắt đứng NGAY SAU ký tự `\\n`, tức chính dấu
+    xuống dòng ở lại với dòng ĐỨNG TRƯỚC — không mất, không lặp ký tự nào khi
+    ghép lại."""
+    return [i + 1 for i, ch in enumerate(text) if ch == "\n"]
+
+
 def _chia_theo_diem_cat(text: str, diem_cat: list[int]) -> list[tuple[int, int]]:
     """Chia `text` tại các điểm cắt (offset tương đối) thành các đoạn liền
     mạch, không mất ký tự nào — khác `_MAU_RANH_GIOI_DOAN` (loại bỏ phần
@@ -184,7 +205,8 @@ def _split_block_to_cap(
 ) -> list[tuple[int, int]]:
     """Chia khoảng TUYỆT ĐỐI `[block_start, block_end)` thành các khoảng
     con an toàn khi nó vượt `tran_do_dai_mau` — đoạn trước, câu nếu đoạn vẫn
-    quá dài, đóng gói tham lam để tránh sinh nhiều mẩu rất ngắn.
+    quá dài, DÒNG ĐƠN (thêm 25/9/2026) nếu câu vẫn quá dài, đóng gói tham lam
+    để tránh sinh nhiều mẩu rất ngắn.
 
     Nhận VỊ TRÍ chứ không nhận `Node`: từ 25/9/2026 nó còn được gọi cho phần
     chữ RIÊNG của một Node nội bộ và cho khối đầu/cuối văn bản — cả hai đều
@@ -194,8 +216,8 @@ def _split_block_to_cap(
     khối đã đủ ngắn — GĐ3 bước 1 điều cấm 3: khối đủ ngắn thì là MỘT mẩu.
 
     Raises:
-        KhoiVuotTranKhongTheChia: một đoạn hoặc câu đơn lẻ vẫn vượt trần sau
-        khi đã cắt tại ranh giới an toàn nhỏ nhất còn lại.
+        KhoiVuotTranKhongTheChia: một đoạn, câu, hay dòng đơn vẫn vượt trần
+        sau khi đã cắt tại ranh giới an toàn nhỏ nhất còn lại (dòng đơn).
     """
     if block_end - block_start <= tran_do_dai_mau:
         return [(block_start, block_end)]
@@ -230,22 +252,42 @@ def _split_block_to_cap(
 
         doan_text = text[bat_dau:ket_thuc]
         for cau_bat_dau, cau_ket_thuc in _chia_theo_diem_cat(
-            doan_text, _tim_diem_cat_cau(doan_text)
+            doan_text, _find_sentence_cut_points(doan_text)
         ):
             do_dai_cau = cau_ket_thuc - cau_bat_dau
-            if do_dai_cau > tran_do_dai_mau:
-                vi_tri_tuyet_doi_dau = block_start + bat_dau + cau_bat_dau
-                vi_tri_tuyet_doi_cuoi = block_start + bat_dau + cau_ket_thuc
-                raise KhoiVuotTranKhongTheChia(
-                    f"Một CÂU trong khối {' > '.join(structure_path) or '(khối đầu/cuối văn bản)'} "
-                    f"dài {do_dai_cau} ký tự (vị trí [{vi_tri_tuyet_doi_dau}, "
-                    f"{vi_tri_tuyet_doi_cuoi}) trong extracted_text, vượt trần "
-                    f"{tran_do_dai_mau} ký tự. Không còn ranh giới an toàn "
-                    "(đoạn/câu) nào để chia tiếp — module này KHÔNG bịa cách "
-                    "cắt cứng theo số ký tự (06 Mục 5.2). Cần người xem trực "
-                    "tiếp khối này."
-                )
-            don_vi.append((bat_dau + cau_bat_dau, bat_dau + cau_ket_thuc))
+            if do_dai_cau <= tran_do_dai_mau:
+                don_vi.append((bat_dau + cau_bat_dau, bat_dau + cau_ket_thuc))
+                continue
+
+            # Câu vẫn vượt trần: mức ranh giới CUỐI CÙNG trước khi từ bỏ là
+            # DÒNG ĐƠN (25/9/2026) — ca thật: một bảng phụ lục xuống dòng
+            # giữa các hàng nhưng không có dòng trống hay dấu kết câu thật,
+            # nên cả bảng rơi vào đúng một "câu" ở mức trên. Nếu chính câu
+            # này không còn dấu xuống dòng nào (`_find_line_cut_points` rỗng),
+            # `_chia_theo_diem_cat` trả nguyên một khoảng bằng cả câu — vòng
+            # lặp dưới đây tự nhiên rơi vào nhánh raise, không cần nhánh
+            # riêng cho "hết ranh giới".
+            cau_text = doan_text[cau_bat_dau:cau_ket_thuc]
+            for dong_bat_dau, dong_ket_thuc in _chia_theo_diem_cat(
+                cau_text, _find_line_cut_points(cau_text)
+            ):
+                do_dai_dong = dong_ket_thuc - dong_bat_dau
+                if do_dai_dong > tran_do_dai_mau:
+                    vi_tri_tuyet_doi_dau = block_start + bat_dau + cau_bat_dau + dong_bat_dau
+                    vi_tri_tuyet_doi_cuoi = block_start + bat_dau + cau_bat_dau + dong_ket_thuc
+                    raise KhoiVuotTranKhongTheChia(
+                        f"Một DÒNG trong khối {' > '.join(structure_path) or '(khối đầu/cuối văn bản)'} "
+                        f"dài {do_dai_dong} ký tự (vị trí [{vi_tri_tuyet_doi_dau}, "
+                        f"{vi_tri_tuyet_doi_cuoi}) trong extracted_text, vượt trần "
+                        f"{tran_do_dai_mau} ký tự. Không còn ranh giới an toàn "
+                        "(đoạn/câu/dòng) nào để chia tiếp — module này KHÔNG bịa cách "
+                        "cắt cứng theo số ký tự (06 Mục 5.2). Cần người xem trực "
+                        "tiếp khối này."
+                    )
+                don_vi.append((
+                    bat_dau + cau_bat_dau + dong_bat_dau,
+                    bat_dau + cau_bat_dau + dong_ket_thuc,
+                ))
 
     goi: list[tuple[int, int]] = [don_vi[0]]
     for bat_dau, ket_thuc in don_vi[1:]:

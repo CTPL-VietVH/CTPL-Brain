@@ -111,6 +111,14 @@ _UNSUPPORTED_FORMAT_ERRORS = (DinhDangKhongNhan, KhongDocDuocLopChu)
 #: ceiling. One code because they are one fact for Backend — the file was
 #: readable and could still not be turned into searchable chunks — and
 #: because none of the three is fixed by Backend sending something different.
+#: `InternalBlockHasNoOwnText` is deliberately NOT in this tuple. It is a
+#: tripwire for a tree shape nobody has produced yet (chunking.py docstring:
+#: "never fires" on the 36-document corpus, smallest own-text region found is
+#: 10 characters) — an unforeseen system bug, not a document the pipeline
+#: knows how to refuse. Falling through to the generic handler below turns it
+#: into `INTERNAL_ERROR` so a developer sees it, instead of quietly reporting
+#: `DOCUMENT_NOT_STRUCTURABLE` to Backend for something no format change on
+#: their side could ever fix.
 _NOT_STRUCTURABLE_ERRORS = (
     KhongDungDuocCauTruc,
     KhoiVuotTranKhongTheChia,

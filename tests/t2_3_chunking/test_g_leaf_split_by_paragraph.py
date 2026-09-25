@@ -123,7 +123,7 @@ def test_mau_dau_va_cuoi_khop_dung_bien_cua_node_khoan():
         )
 
 
-def test_mau_con_cung_mot_khoi_mang_cung_mot_structure_block():
+def test_sibling_fragments_of_one_block_share_the_same_structure_block():
     """E1 (PO chốt 25/9/2026, 07 Mục 2.2 dòng 172): khi một khối LÁ bị chia
     thành nhiều mảnh vì vượt `tran_do_dai_mau`, MỌI mảnh phải mang CÙNG MỘT
     `structure_block_start`/`structure_block_end` — trọn khối LÁ GỐC, không
