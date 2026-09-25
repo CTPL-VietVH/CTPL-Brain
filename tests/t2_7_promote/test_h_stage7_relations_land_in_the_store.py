@@ -26,6 +26,7 @@ from .conftest import (
     FakeBgeM3,
     buffer_a_document,
     make_scope,
+    vector_deleter_for,
     make_stored_document,
 )
 
@@ -77,8 +78,10 @@ def test_stage7_relations_land_in_the_store(tmp_path, profile_store) -> None:
     result = promote_approved_ingestion(
         entry,
         profile_store=store,
+        profile_deleter=store,
         buffer=buffer,
         vector_writer=vectors,
+        vector_deleter=vector_deleter_for(vectors),
         embedding_model=FakeBgeM3(),
         relation_scope=make_scope(),
         relation_document_source=store,

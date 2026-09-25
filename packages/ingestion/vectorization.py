@@ -15,7 +15,8 @@ Chia hai bước rõ ràng, TÁCH RỜI phần tính toán (không I/O) khỏi p
    không tự mang chữ**, 07 Mục 2.2), cắt substring theo `span_start`/
    `span_end` (chỉ số KÝ TỰ UNICODE), gọi BGE-M3 THEO LÔ (docs/09 hàng T2.5),
    trả về `list[Chunk]` MỚI với `embedding` đã điền. Không chạm Qdrant.
-2. `ghi_vao_qdrant()` — kiểm con dấu (bắt buộc), rồi `upsert` các điểm.
+2. `write_to_qdrant()` — kiểm con dấu (bắt buộc), rồi `upsert` các điểm THEO
+   LÔ (xem docstring của hàm: một lô mang cả tài liệu đã hỏng thật 25/9/2026).
 
 ⚠️ **Trần ngữ cảnh 8192 token — TỪ CHỐI, không cắt bớt.** `tests/t0_2_embedding/
 test_bge_m3_contract.py::test_above_the_ceiling_the_tail_IS_cut_and_only_warns`
@@ -59,7 +60,7 @@ __all__ = [
     "BgeM3Like",
     "dem_token",
     "sinh_vector",
-    "ghi_vao_qdrant",
+    "write_to_qdrant",
 ]
 
 
@@ -166,26 +167,70 @@ def _payload_tu_chunk(chunk: Chunk) -> dict[str, Any]:
     return {name: payload[name] for name in CHUNK_PAYLOAD_FIELDS}
 
 
-def ghi_vao_qdrant(
+def write_to_qdrant(
     chunks: list[Chunk],
     *,
     qdrant_client: QdrantClient,
     collection_name: str,
     contract_config: ContractConfig,
     pg_connection: PgConnectionLike,
+    upsert_batch_points: int,
 ) -> None:
-    """GĐ6 phần ghi kho — kiểm con dấu TRƯỚC, rồi `upsert`.
+    """GĐ6, the store-writing half — check the stamp FIRST, then upsert IN
+    BATCHES of at most `upsert_batch_points` points.
 
     `assert_collection_ready_for_contract` (T1.3, `schema.embedding_registry`)
-    là ĐIỂM VÀO DUY NHẤT đã chốt cho việc này — gọi nguyên, không viết lại
-    logic so khớp ở đây (06 dòng 258, 07 Mục 3.1 ràng buộc 2).
+    stays the ONE entry point for the stamp check — called, never
+    re-implemented here (06 dòng 258, 07 Mục 3.1 ràng buộc 2). It runs once
+    per call, not once per batch: it is a check about the collection, and
+    repeating it per batch would make a document's cost depend on how it was
+    cut up.
+
+    ──────────────────────────────────────────────────────────────────────
+    Why the batching, and why `wait=True`
+    ──────────────────────────────────────────────────────────────────────
+
+    ⚠️ **One upsert carrying a whole document is what broke on 25/9/2026**:
+    2 of 36 documents ended `failed`/`INTERNAL_ERROR` because the request body
+    reached 40-43 MB and Qdrant's REST endpoint refused it. The size is not
+    exotic — measured 25/9/2026, one 1024-dimension point plus its payload
+    serialises to 16.7 KB of JSON, so any document past roughly 1900 chunks
+    reaches the 32 MB default on its own. `upsert_batch_points` has no default
+    here: it is `qdrant_upsert_batch_points` in `config/ingestion.yaml` and
+    the caller passes the live value down (CLAUDE.md Mục 4 quy tắc 2).
+
+    ⭐ **`wait=True` is not a removable performance knob** — the same reason
+    `deletion.QdrantVectorStoreDeleter.delete_document_points` states for the
+    delete side. It makes each call return only AFTER the batch has applied.
+    Without it a refused batch could still be in flight while the caller's
+    compensating cleanup (`promotion.promote_approved_ingestion`) deletes this
+    document's points, and the late batch would land AFTER that delete —
+    resurrecting exactly the orphan the cleanup just removed.
+
+    ⚠️ Batches are NOT one transaction. A failure at batch k leaves batches
+    1..k-1 in the collection; this function does not clean them up, because
+    the only actor that knows whether those points should exist at all is the
+    one that decided to write the document (`promote_approved_ingestion`,
+    which deletes by `document_id` filter — that filter catches a partially
+    applied write, a list of the ids just sent would not).
 
     Raises:
-        ChunkChuaCoVector: có Chunk còn `embedding=[]` — `sinh_vector()` chưa
-            chạy qua danh sách này.
-        (mọi lỗi từ `assert_collection_ready_for_contract`, xem
-        `schema.embedding_registry`, khi cấu hình lệch con dấu trên kho).
+        ValueError: `upsert_batch_points` is below 1 — refused before the
+            stamp check, so a nonsensical parameter does not need a live store
+            to be caught.
+        ChunkChuaCoVector: a Chunk still carries `embedding=[]` —
+            `sinh_vector()` has not run over this list.
+        (everything `assert_collection_ready_for_contract` raises — see
+        `schema.embedding_registry` — when the config drifts from the stamp).
     """
+    if upsert_batch_points < 1:
+        raise ValueError(
+            f"upsert_batch_points must be at least 1, got {upsert_batch_points!r}. "
+            f"Its one home is `qdrant_upsert_batch_points` in "
+            f"config/ingestion.yaml; this module has no default for it "
+            f"(CLAUDE.md Mục 4 quy tắc 2)."
+        )
+
     assert_collection_ready_for_contract(
         config=contract_config,
         qdrant_client=qdrant_client,
@@ -196,15 +241,21 @@ def ghi_vao_qdrant(
     if not chunks:
         return
 
-    thieu_vector = [chunk.chunk_id for chunk in chunks if not chunk.embedding]
-    if thieu_vector:
+    chunks_without_vector = [chunk.chunk_id for chunk in chunks if not chunk.embedding]
+    if chunks_without_vector:
         raise ChunkChuaCoVector(
-            f"{len(thieu_vector)} mẩu vẫn còn embedding=[] (placeholder từ GĐ3): "
-            f"{thieu_vector}. Gọi sinh_vector() trước ghi_vao_qdrant()."
+            f"{len(chunks_without_vector)} chunks still carry embedding=[] (the "
+            f"placeholder GĐ3 leaves): {chunks_without_vector}. Call sinh_vector() "
+            f"before write_to_qdrant()."
         )
 
     points = [
         models.PointStruct(id=chunk.chunk_id, vector=chunk.embedding, payload=_payload_tu_chunk(chunk))
         for chunk in chunks
     ]
-    qdrant_client.upsert(collection_name=collection_name, points=points)
+    for batch_start in range(0, len(points), upsert_batch_points):
+        qdrant_client.upsert(
+            collection_name=collection_name,
+            points=points[batch_start : batch_start + upsert_batch_points],
+            wait=True,
+        )

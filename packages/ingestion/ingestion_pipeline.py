@@ -60,6 +60,7 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from ingestion.chunking import KhoiVuotTranKhongTheChia, KhongDungDuocCauTruc
+from ingestion.deletion import DeletableProfileStore, VectorStoreDeleter
 from ingestion.extraction import DinhDangKhongNhan, ExtractionResult, KhongDocDuocLopChu, extract_file
 from ingestion.intake import BanMoiKhacSpace, FingerprintIndex, VanTayNoiDungRong
 from ingestion.ingestion_record_store import IngestionRecordStore
@@ -154,6 +155,14 @@ class IngestionPipeline:
     fingerprint_index: FingerprintIndex
     buffer: PreApprovalBuffer
     vector_writer: VectorStoreWriter
+    #: ⭐ The SAME two stores again, in their delete-side roles — VEC-1. A
+    #: promote whose Qdrant write fails has to take its own PostgreSQL write
+    #: back (`promotion.py`'s module docstring says why that is not optional),
+    #: and it cannot do that through the write-side ports above. In a
+    #: deployment `profile_deleter is profile_store`, exactly as
+    #: `fingerprint_index is profile_store` already is.
+    profile_deleter: DeletableProfileStore
+    vector_deleter: VectorStoreDeleter
     embedding_model: BgeM3Like
     relation_scope: SpaceScanScope
     relation_document_source: SpaceDocumentSource
@@ -401,11 +410,13 @@ class IngestionPipeline:
             promoted = promote_approved_ingestion(
                 entry,
                 profile_store=self.profile_store,
+                profile_deleter=self.profile_deleter,
                 # The ordinary path holds nothing in the buffer, so the
                 # `discard` at the end of the promote answers False. See the
                 # module docstring: not special-cased on purpose.
                 buffer=self.buffer,
                 vector_writer=self.vector_writer,
+                vector_deleter=self.vector_deleter,
                 embedding_model=self.embedding_model,
                 relation_scope=self.relation_scope,
                 relation_document_source=self.relation_document_source,

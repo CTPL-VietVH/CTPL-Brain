@@ -180,8 +180,10 @@ def test_m_the_pre_approval_path_uses_the_same_function_on_approval(
     ingestion_pipeline.promote_approved_ingestion(
         entry,
         profile_store=world.inner_store,
+        profile_deleter=world.profile_store,
         buffer=world.buffer,
         vector_writer=world.vector_writer,
+        vector_deleter=world.vector_store,
         embedding_model=world.model,
         relation_scope=world.pipeline.relation_scope,
         relation_document_source=world.inner_store,

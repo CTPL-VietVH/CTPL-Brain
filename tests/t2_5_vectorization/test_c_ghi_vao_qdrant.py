@@ -1,4 +1,4 @@
-"""T2.5 (c) — `ghi_vao_qdrant` ghi THẬT vào Qdrant, payload đúng whitelist
+"""T2.5 (c) — `write_to_qdrant` ghi THẬT vào Qdrant, payload đúng whitelist
 07 Mục 2.2 (không có `chunk_id`/`embedding` — đã tách thành id/vector của
 điểm), và đọc `config/contract.yaml` THẬT qua `load_contract_config`.
 """
@@ -9,9 +9,9 @@ from schema.config import load_contract_config
 
 from ingestion.chunking import cat_thanh_mau
 from ingestion.reader.vn_normalizer import dung_cau_truc
-from ingestion.vectorization import ghi_vao_qdrant, sinh_vector
+from ingestion.vectorization import sinh_vector, write_to_qdrant
 
-from .conftest import CONTRACT_PATH, DOC_ID, SPACE_ID, TENANT_ID
+from .conftest import CONTRACT_PATH, DOC_ID, SPACE_ID, TENANT_ID, UPSERT_BATCH_POINTS
 
 VAN_BAN = """Điều 1. Phạm vi điều chỉnh
 Quy chế này áp dụng cho toàn thể cán bộ, nhân viên của công ty.
@@ -27,7 +27,7 @@ def test_contract_config_that_khop_bge_m3():
     assert config.distance_metric.value == "cosine"
 
 
-def test_ghi_vao_qdrant_upsert_dung_payload_whitelist(model, qdrant, pg, stamped_collection):
+def test_write_to_qdrant_upsert_dung_payload_whitelist(model, qdrant, pg, stamped_collection):
     read_result = dung_cau_truc(VAN_BAN, source_format="txt")
     chunks = cat_thanh_mau(
         read_result,
@@ -39,12 +39,13 @@ def test_ghi_vao_qdrant_upsert_dung_payload_whitelist(model, qdrant, pg, stamped
     chunks_co_vector = sinh_vector(chunks, full_text=read_result.full_text, model=model)
     contract_config = load_contract_config(CONTRACT_PATH)
 
-    ghi_vao_qdrant(
+    write_to_qdrant(
         chunks_co_vector,
         qdrant_client=qdrant,
         collection_name=stamped_collection,
         contract_config=contract_config,
         pg_connection=pg,
+        upsert_batch_points=UPSERT_BATCH_POINTS,
     )
 
     diem = qdrant.retrieve(

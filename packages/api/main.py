@@ -512,6 +512,7 @@ def build_deployment_app(
         collection_name=deployment.qdrant_collection,
         contract_config=contract_config,
         pg_connection=pg_connection,
+        upsert_batch_points=ingestion_config.qdrant_upsert_batch_points,
     )
     background_cleanup = PgBackgroundCleanup()
     staging = StagingArea(deployment.staging_dir)
@@ -523,8 +524,13 @@ def build_deployment_app(
         space_registry=space_registry,
         profile_store=document_store,
         fingerprint_index=document_store,
+        # The delete-side halves of the same two stores — VEC-1. `PgDocument
+        # Store` carries both the write and the delete Protocol, and
+        # `vector_deleter` is the object already built for T2.8 above.
+        profile_deleter=document_store,
         buffer=pre_approval_buffer,
         vector_writer=vector_writer,
+        vector_deleter=vector_deleter,
         embedding_model=embedding_model,
         # T2.6b (the real Backend space-topology client) is explicitly out of
         # scope for this task — see the module docstring's "What is

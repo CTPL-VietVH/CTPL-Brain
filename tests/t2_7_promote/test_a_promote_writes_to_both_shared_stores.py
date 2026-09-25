@@ -23,6 +23,7 @@ from .conftest import (
     FakeBgeM3,
     buffer_a_document,
     make_scope,
+    vector_deleter_for,
 )
 
 
@@ -40,8 +41,10 @@ def test_promote_writes_to_both_shared_stores(tmp_path, profile_store) -> None:
     result = promote_approved_ingestion(
         entry,
         profile_store=store,
+        profile_deleter=store,
         buffer=buffer,
         vector_writer=vectors,
+        vector_deleter=vector_deleter_for(vectors),
         embedding_model=FakeBgeM3(),
         relation_scope=make_scope(),
         relation_document_source=store,

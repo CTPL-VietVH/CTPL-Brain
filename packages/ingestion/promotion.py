@@ -28,11 +28,52 @@ Writing therefore runs S6 backwards:
 5. **Qdrant**: the vectors. The document becomes findable exactly here.
 6. `buffer.discard(...)`.
 
-The gate opens LAST, so the intermediate states are the harmless ones. A
-crash after step 4 leaves a profile with no vectors: invisible to every
-query, and pointing at nothing that does not exist. The opposite order would
-leave findable chunks whose profile is missing — precisely the dangling
-pointer S6 was written to prevent.
+The gate opens LAST, so a half-done write never leaves findable chunks whose
+profile is missing — precisely the dangling pointer S6 was written to
+prevent.
+
+──────────────────────────────────────────────────────────────────────────
+⚠️ Step 5 failing is NOT a harmless state — VEC-1, sự cố 25/9/2026
+──────────────────────────────────────────────────────────────────────────
+
+This docstring used to call a profile with no vectors *"invisible to every
+query, and pointing at nothing that does not exist"*, i.e. harmless. **That
+was wrong, and the 25/9/2026 incident is the proof.** It is invisible to
+QUESTIONS, and it is poison to the NEXT UPLOAD of the same file:
+
+* the fingerprint index reads the `document` table directly
+  (`pg_document_stores.PgDocumentStore.find_by_fingerprint`), so
+  `intake.decide_intake` finds the orphan and answers `duplicate`;
+* Backend is then told the file is already here, naming a `document_id` that
+  no question can ever reach — no error, no log, nothing to notice.
+
+So step 5 is wrapped, and a failure of it **undoes the write this call
+made**, in S6 order: the vectors (by `document_id` FILTER, which catches a
+partially applied batch — see `vectorization.write_to_qdrant`), then profile
++ relations in ONE transaction. Then the ORIGINAL error is re-raised; the
+cleanup is not allowed to replace the story of what actually went wrong.
+
+Three rules the cleanup follows, each one load-bearing:
+
+* **Only when THIS call created the profile.** A promote re-run over a
+  document that was already committed (`already_committed is not None`) must
+  never roll back: that document may be healthy and findable, and its
+  vectors merely failed to be re-written. Deleting it would turn a retry into
+  data loss.
+* **Vectors first, PostgreSQL second — never the other way.** If the vector
+  delete fails, the profile is LEFT ALONE on purpose: removing it while
+  points survive is the dangling pointer of điều cấm #17 and S6.
+* **No `deletion_log` line.** 06 Mục 5.6's log answers *"ai, khi nào, tài
+  liệu nào, lý do"* for a permanent deletion a PERSON ordered. This is the
+  system undoing its own half-finished write of a document no user ever saw;
+  inventing a `deleted_by` for it would put fiction in the one record that
+  has to stay literal, and would leave an open line that
+  `space_deletion.delete_space` would later adopt as unfinished work.
+  The visible trace lives where the rest of this job's story lives: the
+  `ingestion_record` row (`failed`) plus this module's log.
+
+What is still NOT handled here, by decision: a process that dies mid-cleanup
+leaves an orphan nothing has swept yet. Finishing those at startup is VEC-2.
 
 ⚠️ The Qdrant↔PostgreSQL boundary has no shared transaction — 07 Mục 2 calls
 it *"ranh giới duy nhất còn thiếu giao dịch chung"*. The answer is the same
@@ -62,18 +103,25 @@ ordinal on every retry.
 from __future__ import annotations
 
 import dataclasses
+import logging
 import time
 from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Protocol
 
+# The two delete-side ports the compensating cleanup needs. Imported from
+# `deletion.py`, never re-declared here: a second Protocol describing the same
+# two calls is the `doc_profile_code`/`profile_code` bug in Protocol form
+# (CLAUDE.md Mục 6). `deletion.py` imports nothing from this module, so the
+# dependency stays one-way.
+from ingestion.deletion import DeletableProfileStore, VectorStoreDeleter
 from ingestion.pre_approval_buffer import BufferedIngestion, PreApprovalBuffer
 from ingestion.relations_scan import (
     SpaceDocumentSource,
     SpaceScanScope,
     scan_relations_for_new_document,
 )
-from ingestion.vectorization import BgeM3Like, ghi_vao_qdrant, sinh_vector
+from ingestion.vectorization import BgeM3Like, sinh_vector, write_to_qdrant
 from schema.chunk import Chunk
 from schema.document import Document
 from schema.relation import ApprovalState, Relation
@@ -97,6 +145,8 @@ __all__ = [
     "VersionChainOrdinalConflictError",
     "promote_approved_ingestion",
 ]
+
+logger = logging.getLogger(__name__)
 
 
 # --------------------------------------------------------------------------- #
@@ -163,7 +213,7 @@ class SharedProfileStore(Protocol):
 class VectorStoreWriter(Protocol):
     """The Qdrant side, narrowed to the one call this module makes.
 
-    Narrowed on purpose: `vectorization.ghi_vao_qdrant` needs a live
+    Narrowed on purpose: `vectorization.write_to_qdrant` needs a live
     `QdrantClient` AND a live PostgreSQL connection (it verifies the store
     stamp before writing a single point — T1.3). `QdrantVectorStoreWriter`
     below is the real adapter that supplies both; the Protocol is what lets
@@ -174,9 +224,17 @@ class VectorStoreWriter(Protocol):
 
 
 class QdrantVectorStoreWriter:
-    """The real `VectorStoreWriter` — delegates to `ghi_vao_qdrant`, which
+    """The real `VectorStoreWriter` — delegates to `write_to_qdrant`, which
     stays the single entry point for the stamp check (06 dòng 258, 07 Mục
-    3.1 ràng buộc 2). Nothing about that check is re-implemented here."""
+    3.1 ràng buộc 2). Nothing about that check is re-implemented here.
+
+    `upsert_batch_points` has no default: it is `qdrant_upsert_batch_points`
+    from `config/ingestion.yaml`, handed down by the composition root like
+    every other live number (CLAUDE.md Mục 4 quy tắc 2). Held here rather
+    than passed through `VectorStoreWriter.write` because it describes the
+    STORE this adapter talks to, not the document being written — the promote
+    path must not have to know about the transport's limits.
+    """
 
     def __init__(
         self,
@@ -185,19 +243,22 @@ class QdrantVectorStoreWriter:
         collection_name: str,
         contract_config: object,
         pg_connection: object,
+        upsert_batch_points: int,
     ) -> None:
         self._qdrant_client = qdrant_client
         self._collection_name = collection_name
         self._contract_config = contract_config
         self._pg_connection = pg_connection
+        self._upsert_batch_points = upsert_batch_points
 
     def write(self, chunks: list[Chunk]) -> None:
-        ghi_vao_qdrant(
+        write_to_qdrant(
             chunks,
             qdrant_client=self._qdrant_client,  # type: ignore[arg-type]
             collection_name=self._collection_name,
             contract_config=self._contract_config,  # type: ignore[arg-type]
             pg_connection=self._pg_connection,  # type: ignore[arg-type]
+            upsert_batch_points=self._upsert_batch_points,
         )
 
 
@@ -234,8 +295,10 @@ def promote_approved_ingestion(
     entry: BufferedIngestion,
     *,
     profile_store: SharedProfileStore,
+    profile_deleter: DeletableProfileStore,
     buffer: PreApprovalBuffer,
     vector_writer: VectorStoreWriter,
+    vector_deleter: VectorStoreDeleter,
     embedding_model: BgeM3Like,
     relation_scope: SpaceScanScope,
     relation_document_source: SpaceDocumentSource,
@@ -251,6 +314,14 @@ def promote_approved_ingestion(
     `config/ingestion.yaml` and the caller passes the live values down
     (CLAUDE.md Mục 4 quy tắc 2). `scan_time_budget` is IN MINUTES, the unit
     that config key carries.
+
+    `profile_deleter` and `vector_deleter` are the SAME two stores as
+    `profile_store` and `vector_writer` — in a deployment `PgDocumentStore` is
+    literally both halves of the first pair. Four parameters because they are
+    four different sets of promises, the same reason `IngestionPipeline`
+    keeps `profile_store` and `fingerprint_index` apart. They are required,
+    not optional: a promote wired without them would look like it worked and
+    would quietly go back to leaving orphans behind.
 
     This function does not record WHO approved: `Document` has no approval
     field, by design — S1 makes everything in the shared store already usable,
@@ -305,7 +376,30 @@ def promote_approved_ingestion(
     profile_store.write_document_and_relations(document=document, relations=scan.relations)
 
     # ---- 5. Qdrant — the gate opens here --------------------------------
-    vector_writer.write(vectorized_chunks)
+    try:
+        vector_writer.write(vectorized_chunks)
+    except Exception as vector_write_error:
+        if already_committed is None:
+            # This call is the one that created the profile in step 4, so this
+            # call is the one that has to take it back. See the module
+            # docstring for why a retry over an already-committed document is
+            # NOT rolled back.
+            _undo_the_write_this_call_made(
+                document_id=document.document_id,
+                profile_deleter=profile_deleter,
+                vector_deleter=vector_deleter,
+                cause=vector_write_error,
+            )
+        else:
+            logger.warning(
+                "Vector write failed for document %s, which an EARLIER promote had "
+                "already committed. Leaving both stores alone: that document may be "
+                "healthy and findable, and rolling it back here would turn a retry "
+                "into data loss. Cause: %r",
+                document.document_id,
+                vector_write_error,
+            )
+        raise
 
     # ---- 6. Release the working area ------------------------------------
     buffer.discard(document.document_id)
@@ -315,6 +409,80 @@ def promote_approved_ingestion(
         chunks=vectorized_chunks,
         relations=scan.relations,
         version_ordinal_was_recomputed=recomputed,
+    )
+
+
+def _undo_the_write_this_call_made(
+    *,
+    document_id: str,
+    profile_deleter: DeletableProfileStore,
+    vector_deleter: VectorStoreDeleter,
+    cause: BaseException,
+) -> None:
+    """Take back step 4 and whatever of step 5 landed — in S6 order.
+
+    Never raises: the caller re-raises the ORIGINAL failure, which is the one
+    that explains what happened. A cleanup error that replaced it would hide
+    the cause behind its own symptom.
+
+    ⭐ **Vectors first, and the profile is left alone if that fails.** S6
+    (07 Mục 6) puts the gate at the vector store; a profile deleted while its
+    points survive is the dangling pointer of điều cấm #17 — findable chunks
+    whose profile is gone. Between "a document nothing can find" and "chunks
+    that lead nowhere", the first is the one the design already tolerates for
+    the length of a retry, so that is the state this function stops in.
+
+    ⛔ Writes NOTHING to `deletion_log`. See the module docstring: that log
+    belongs to a permanent deletion a person ordered (06 Mục 5.6), not to the
+    system undoing its own half-finished write.
+    """
+    logger.warning(
+        "Vector write failed for document %s after PostgreSQL had committed. "
+        "Undoing this promote — vector store first, then profile + relations "
+        "(S6 order). Cause: %r",
+        document_id,
+        cause,
+    )
+
+    try:
+        # By FILTER on document_id, inside `VectorStoreDeleter` — not by the
+        # ids just sent. A batch that applied partially leaves points this
+        # call never confirmed, and only a filter catches those.
+        points_deleted = vector_deleter.delete_document_points(document_id)
+    except Exception:
+        logger.exception(
+            "⚠️ CLEANUP INCOMPLETE for document %s: the vector store refused to "
+            "delete its points, so the PostgreSQL profile is deliberately LEFT IN "
+            "PLACE (deleting it now would leave findable chunks pointing at nothing "
+            "— điều cấm #17). The document is an orphan in BOTH stores until it is "
+            "swept. Original failure that started this: %r",
+            document_id,
+            cause,
+        )
+        return
+
+    try:
+        counts = profile_deleter.delete_document_and_relations(document_id)
+    except Exception:
+        logger.exception(
+            "⚠️ CLEANUP INCOMPLETE for document %s: its vectors are gone (%d points) "
+            "but PostgreSQL still holds the profile. Nothing can find the document, "
+            "and re-uploading the same file will be refused as a duplicate until "
+            "this row is swept. Original failure that started this: %r",
+            document_id,
+            points_deleted,
+            cause,
+        )
+        return
+
+    logger.warning(
+        "Promote of document %s undone: %d vector point(s), %d profile row(s) and "
+        "%d relation(s) removed. Both stores are back to not knowing this document, "
+        "so the same file can be submitted again.",
+        document_id,
+        points_deleted,
+        counts.profile_rows_deleted,
+        counts.relations_deleted,
     )
 
 
@@ -469,7 +637,7 @@ class InMemorySharedProfileStore:
 class InMemoryVectorStoreWriter:
     """`VectorStoreWriter` in a dict — the Qdrant stand-in.
 
-    Refuses a chunk with no vector for the same reason `ghi_vao_qdrant` does
+    Refuses a chunk with no vector for the same reason `write_to_qdrant` does
     (`ChunkChuaCoVector`): writing an empty vector is worse than not writing.
     """
 

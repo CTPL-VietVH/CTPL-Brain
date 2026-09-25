@@ -77,8 +77,8 @@ chunk_length_cap: 5000
 #   FILE_TOO_LARGE`) — docs/10 §3.5: "Ngừng tải ngay khi vượt, không tải hết
 #   rồi mới kiểm". Tin `Content-Length` của bên gửi là không kiểm gì cả.
 # 📣 Đây là con số DUY NHẤT của nhóm này được công bố ra ngoài: docs/10 §3.6
-#   bắt `GET /v1/meta` nêu "cỡ file tối đa". Tám tham số điều chỉnh còn lại
-#   vẫn không đi qua API (docs/10 §2).
+#   bắt `GET /v1/meta` nêu "cỡ file tối đa". Mười một tham số điều chỉnh còn
+#   lại vẫn không đi qua API (docs/10 §2).
 # Dấu hiệu đặt sai (07 Mục 3.2, nguyên văn):
 #   "Người dùng thường xuyên nhận `413 FILE_TOO_LARGE` cho tài liệu có thật
 #   trong kho giấy tờ của họ → nới. Một lần nộp giữ hàng đợi rất lâu và chiếm
@@ -96,3 +96,26 @@ max_upload_bytes: 104857600  # ĐƠN VỊ: BYTE (= 100 MB)
 #   "`SOURCE_UNREACHABLE` xuất hiện với file lớn mà tải tay vẫn được → nới.
 #   Lời gọi nộp tài liệu treo lâu rồi mới báo lỗi → siết"
 source_download_timeout_seconds: 120  # ĐƠN VỊ: GIÂY
+
+# `qdrant_upsert_batch_points` — số điểm tối đa trong MỘT lệnh `upsert` vào
+# Qdrant (VEC-1, sau sự cố 25/9/2026: 2/36 tài liệu nạp hỏng vì một lệnh upsert
+# mang toàn bộ mẩu của cả tài liệu, thân 40–43 MB, vượt trần REST 32 MB).
+# ĐƠN VỊ: SỐ ĐIỂM, không phải byte.
+#   Vì sao đếm theo điểm chứ không theo byte: phần chiếm chỗ áp đảo của một
+#   điểm là vector, kích thước CỐ ĐỊNH theo `embedding_dim` (nhóm Hợp đồng);
+#   payload cạnh mẩu không chứa văn bản (điều cấm #3) nên chỉ vài trăm byte.
+#   Đếm theo byte đòi ước lượng thân HTTP trước khi thư viện tuần tự hoá —
+#   tức viết lại một nửa bộ tuần tự của `qdrant_client`, mà ước lượng vẫn
+#   KHÔNG bằng thân thật.
+# Vì sao 256: ĐO THẬT 25/9/2026 trên vector 1024 chiều + payload cạnh mẩu —
+#   16,7 KB/điểm (JSON). Tức ~1900 mẩu là chạm trần 32 MB, khớp đúng hai tài
+#   liệu đã hỏng. Một lô 256 điểm ≈ 4,1 MB, dưới trần khoảng 8 lần. Biên rộng
+#   đó là cố ý — nó phải còn an toàn cả khi đổi sang mô hình nhiều chiều hơn
+#   mà chưa ai kịp sửa khoá này.
+# ⚠️ KHÔNG tự thích ứng theo `embedding_dim`: đổi mô hình sang số chiều lớn
+#   hơn thì phải TÍNH LẠI GIÁ TRỊ NÀY BẰNG TAY. Không lỗi nào báo trước —
+#   chỉ là một ngày nào đó upsert bị từ chối lại y như 25/9.
+# Dấu hiệu đặt sai:
+#   Upsert bị Qdrant từ chối vì thân quá lớn → SIẾT. Nạp một tài liệu sinh ra
+#   hàng nghìn lời gọi HTTP và chậm thấy rõ → NỚI.
+qdrant_upsert_batch_points: 256  # ĐƠN VỊ: SỐ ĐIỂM mỗi lệnh upsert

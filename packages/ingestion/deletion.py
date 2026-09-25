@@ -359,7 +359,7 @@ def purge_document_permanently(
     )
 
     # ---- 1. Vector store — the gate closes here --------------------------
-    # No store-stamp check, unlike `ghi_vao_qdrant`. That check protects the
+    # No store-stamp check, unlike `write_to_qdrant`. That check protects the
     # collection from vectors of a different model; deleting by document id
     # cannot corrupt anything, and refusing to delete because the embedding
     # config drifted would block an obligation (06 Mục 5.6) over a mismatch

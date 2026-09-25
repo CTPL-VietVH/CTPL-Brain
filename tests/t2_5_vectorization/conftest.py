@@ -20,6 +20,7 @@ from qdrant_client import QdrantClient, models
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT / "packages"))
 
+from schema.config import load_ingestion_config  # noqa: E402
 from schema.embedding_registry import (  # noqa: E402
     EMBEDDING_MODEL_COLLECTIONS_TABLE,
     EMBEDDING_MODEL_COLLECTIONS_TABLE_DDL,
@@ -29,6 +30,12 @@ from schema.embedding_registry import (  # noqa: E402
 
 MODEL_HOME = REPO_ROOT / ".runtime" / "models"
 CONTRACT_PATH = REPO_ROOT / "config" / "contract.yaml"
+INGESTION_PATH = REPO_ROOT / "config" / "ingestion.yaml"
+
+# VEC-1: `write_to_qdrant` không có mặc định cho cỡ lô — đọc từ file cấu hình
+# THẬT, không gõ lại con số ở đây (gõ lại là cái nhà thứ hai của tham số,
+# 07 Mục 3.3 quy tắc 2).
+UPSERT_BATCH_POINTS = load_ingestion_config(INGESTION_PATH).qdrant_upsert_batch_points
 
 DOC_ID = "doc-t2-5-1"
 SPACE_ID = "space-t2-5-1"
@@ -152,7 +159,7 @@ def catalog_rows(pg):
 def stamped_collection(qdrant, pg, probe_collection, catalog_rows):
     """Một collection Qdrant MỚI, đã đóng dấu active đúng model/version khớp
     `config/contract.yaml` thật (BAAI/bge-m3, 1024 chiều, cosine) — dùng cho
-    mọi test cần `ghi_vao_qdrant` chạy trọn qua bước kiểm con dấu."""
+    mọi test cần `write_to_qdrant` chạy trọn qua bước kiểm con dấu."""
     from schema.embedding_registry import (
         register_embedding_model,
         set_active_embedding_model_for_collection,

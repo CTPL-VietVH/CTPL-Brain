@@ -325,9 +325,9 @@ Cấu hình này phải đọc được từ bên ngoài mã nguồn (**R5** —
 
 ---
 
-### 3.2 Mười một giá trị tham số — CHỐT 14/9/2026
+### 3.2 Mười hai giá trị tham số — CHỐT 14/9/2026
 
-Mười một con số dưới đây trước nay chỉ có **cơ chế**, không có **giá trị**, vì đều ghi là "cần đo trên dữ liệu thật". Nhưng Mục 9.6 của tài liệu 06 chốt v1 không phát sự kiện đo lường nào — nên sẽ không có dữ liệu thật để đo, và vẫn phải có người điền số.
+Mười hai con số dưới đây trước nay chỉ có **cơ chế**, không có **giá trị**, vì đều ghi là "cần đo trên dữ liệu thật". Nhưng Mục 9.6 của tài liệu 06 chốt v1 không phát sự kiện đo lường nào — nên sẽ không có dữ liệu thật để đo, và vẫn phải có người điền số.
 
 Vì vậy mỗi giá trị đi kèm **một dấu hiệu con người nhìn thấy được**. Đó không phải phần trang trí: khi không có dòng số liệu nào, dấu hiệu quan sát bằng mắt là cách duy nhất biết mình đặt sai.
 
@@ -344,20 +344,25 @@ Vì vậy mỗi giá trị đi kèm **một dấu hiệu con người nhìn th�
 | `chunk_length_cap` — trần độ dài một mẩu (Điểm mở #4, 06 Mục 10) | **5000 ký tự Unicode** | Ingestion | Mẩu vượt trần bị chia tại ranh giới câu quá thường xuyên, làm mẩu quá ngắn và loãng so khớp → nới. Một khối cấu trúc dài (vài trang) vẫn lọt thành một mẩu duy nhất, so khớp không trúng → siết |
 | `max_upload_bytes` — cỡ file tối đa AI chịu tải về (`10` Mục 4.1) | **104857600 byte** (100 MB) | Ingestion | Người dùng thường xuyên nhận `413 FILE_TOO_LARGE` cho tài liệu có thật trong kho giấy tờ của họ → nới. Một lần nộp giữ hàng đợi rất lâu và chiếm hết đĩa tạm → siết |
 | `source_download_timeout_seconds` — trần thời gian tải một file (`10` Mục 4.1) | **120 giây** | Ingestion | `SOURCE_UNREACHABLE` xuất hiện với file lớn mà tải tay vẫn được → nới. Lời gọi nộp tài liệu treo lâu rồi mới báo lỗi → siết |
+| `qdrant_upsert_batch_points` — số điểm tối đa trong MỘT lệnh `upsert` vào Qdrant | **256 điểm** | Ingestion | Upsert bị Qdrant từ chối vì thân quá lớn → SIẾT. Nạp một tài liệu sinh ra hàng nghìn lời gọi HTTP và chậm thấy rõ → NỚI |
 
 > `chunk_length_cap` chốt **21/9/2026** — khác ngày với tám tham số đầu bảng (14/9/2026): đây là giá trị đóng nửa **trần** của Điểm mở #4 (06 Mục 10 — "Trần và sàn độ dài đơn vị cắt"); nửa **sàn** vẫn còn mở.
 
 > **Hai tham số cuối bảng chốt 24/9/2026** — cùng ngày với `10` Mục 4.1 ("file đi bằng tham chiếu"), và chỉ tồn tại vì quyết định đó: từ lúc Backend gửi **đường dẫn có chữ ký** thay vì gửi thẳng file, chính AI là bên tải byte về, nên phải có trần cỡ file và trần thời gian tải. Cả hai thuộc nhóm **Ingestion** vì chỉ đường nạp đọc tới — Retrieval không tải file nào.
 >
-> `max_upload_bytes` là **con số duy nhất trong bảng này được công bố ra ngoài**: `10` Mục 3.6 bắt `GET /v1/meta` nêu "cỡ file tối đa", để Backend biết trước thay vì để một lần tải 100 MB kết thúc bằng `413`. Đây không phải ngoại lệ của `10` Mục 2 ("cấu hình mô hình và tham số **không qua API**") theo nghĩa nới lỏng: giá trị vẫn **chỉ đổi được bằng file cấu hình**, API chỉ đọc ra. Chín tham số còn lại vẫn tuyệt đối không xuất hiện trên bất kỳ endpoint nào.
+> `max_upload_bytes` là **con số duy nhất trong bảng này được công bố ra ngoài**: `10` Mục 3.6 bắt `GET /v1/meta` nêu "cỡ file tối đa", để Backend biết trước thay vì để một lần tải 100 MB kết thúc bằng `413`. Đây không phải ngoại lệ của `10` Mục 2 ("cấu hình mô hình và tham số **không qua API**") theo nghĩa nới lỏng: giá trị vẫn **chỉ đổi được bằng file cấu hình**, API chỉ đọc ra. Mười một tham số còn lại vẫn tuyệt đối không xuất hiện trên bất kỳ endpoint nào.
 >
 > ⚠️ `max_upload_bytes` phải được đếm **trong lúc ghi từng khối byte**, và vượt thì **ngừng tải ngay** (`10` Mục 3.5: *"Ngừng tải ngay khi vượt, không tải hết rồi mới kiểm"*). Tin `Content-Length` bên gửi khai là không kiểm gì cả.
+
+> **`qdrant_upsert_batch_points` chốt 25/9/2026**, sau một sự cố thật chứ không phải phán đoán: 2/36 tài liệu nạp hỏng vì một lệnh `upsert` mang **toàn bộ** mẩu của cả tài liệu, thân 40–43 MB, vượt trần REST mặc định 32 MB của Qdrant. Đếm theo **số điểm** chứ không theo byte vì phần chiếm chỗ áp đảo của một điểm là vector, kích thước cố định theo `embedding_dim`; đo thật 25/9 được 16,7 KB/điểm ở 1024 chiều, nên một lô 256 điểm ≈ 4,1 MB.
+>
+> ⚠️ Con số này **không tự thích ứng** theo `embedding_dim` ở nhóm Hợp đồng (3.1): đổi sang mô hình nhiều chiều hơn thì phải tính lại bằng tay. Nới trần phía máy chủ Qdrant **không** phải cách thay thế — R6 cho mỗi khách một bản cài riêng, nên một sửa đổi nằm trong cấu hình máy chủ của từng bản cài là thứ sẽ bị quên ở bản cài thứ ba.
 
 > **Giả định nằm dưới cả bảng: kho cỡ vài nghìn tài liệu** — chính con số mà 06 Mục 6.5 dùng khi lập luận về ngưỡng cảnh báo. Nếu kho thật lớn hơn một bậc thì ít nhất `cap_warning_multiple`, `scan_pair_budget` và `scan_time_budget` phải tính lại.
 
 > **Vì sao `inheritance_decay` phải áp trên điểm ĐÃ CHUẨN HOÁ.** Điểm giống thô thường dồn cục trong một dải hẹp; nhân một hệ số vào đó thì con của tài liệu hạng nhất tụt xuống dưới cả chục tài liệu không liên quan, và cơ chế thừa hưởng mất tác dụng. Chuẩn hoá về khoảng đầy trên tập ứng viên rồi mới nhân thì hệ số mới có ý nghĩa như thiết kế mô tả.
 
-**Mười một tham số này chia sạch theo service** — bốn cái của Retrieval, bảy cái của Ingestion, không cái nào cần hai bên cùng biết. Khác hẳn cấu hình mô hình ở 3.1, vốn là **hợp đồng** mà lệch nhau là hỏng.
+**Mười hai tham số này chia sạch theo service** — bốn cái của Retrieval, tám cái của Ingestion, không cái nào cần hai bên cùng biết. Khác hẳn cấu hình mô hình ở 3.1, vốn là **hợp đồng** mà lệch nhau là hỏng.
 
 ### 3.3 Quy tắc cấu hình — CHỐT 14/9/2026
 

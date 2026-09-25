@@ -42,6 +42,10 @@ from dotenv import load_dotenv
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT / "packages"))
 
+from ingestion.deletion import (  # noqa: E402
+    InMemoryDeletableProfileStore,
+    InMemoryVectorStoreDeleter,
+)
 from ingestion.pg_document_stores import PgDocumentStore  # noqa: E402
 from ingestion.promotion import InMemorySharedProfileStore  # noqa: E402
 from ingestion.relations_scan import InMemorySpace, InMemorySpaceScanScope  # noqa: E402
@@ -91,6 +95,13 @@ class FakeBgeM3:
             ],
             dtype=float,
         )
+
+
+def vector_deleter_for(vector_writer) -> InMemoryVectorStoreDeleter:
+    """The delete-side port of the SAME in-memory collection the promote
+    writes to (VEC-1). Takes the writer itself, not a copy of its dict, so a
+    rollback in a test acts on one store — the property the deployment has."""
+    return InMemoryVectorStoreDeleter(vector_writer)
 
 
 def make_scope(*spaces: InMemorySpace) -> InMemorySpaceScanScope:
@@ -266,10 +277,17 @@ def pg_connection(pg_dsn: str, _pg_schema_ready: None):
 
 @pytest.fixture(params=["memory", "pg"], ids=["memory", "pg"])
 def profile_store(request: pytest.FixtureRequest):
-    """`SharedProfileStore` + `FingerprintIndex` + `SpaceDocumentSource`,
-    tham số hoá theo cả hai cài đặt — thay `InMemorySharedProfileStore()`
-    trực tiếp trong từng test bằng fixture này."""
+    """`SharedProfileStore` + `FingerprintIndex` + `SpaceDocumentSource` +
+    `DeletableProfileStore`, tham số hoá theo cả hai cài đặt — thay
+    `InMemorySharedProfileStore()` trực tiếp trong từng test bằng fixture này.
+
+    VEC-1: nhánh "memory" bọc thêm `InMemoryDeletableProfileStore` để fixture
+    mang ĐỦ BỐN vai trò mà `PgDocumentStore` (nhánh "pg") vốn đã mang sẵn
+    trong một đối tượng. Không phải tiện tay: một promote hỏng ở bước ghi
+    Qdrant phải xoá lại hồ sơ nó vừa ghi, nên "cùng một cái kho" là điều kiện
+    để test nói được điều gì về deployment thật.
+    """
     if request.param == "pg":
         pg_connection = request.getfixturevalue("pg_connection")
         return PgDocumentStore(connection=pg_connection)
-    return InMemorySharedProfileStore()
+    return InMemoryDeletableProfileStore(InMemorySharedProfileStore())

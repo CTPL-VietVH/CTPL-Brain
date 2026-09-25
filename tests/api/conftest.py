@@ -250,8 +250,12 @@ class World:
             space_registry=self.registry,
             profile_store=self.inner_store,
             fingerprint_index=self.inner_store,
+            # VEC-1 — the delete-side halves of the same two stores, which
+            # this World already builds for the T2.8 deletion cases above.
+            profile_deleter=self.profile_store,
             buffer=self.buffer,
             vector_writer=self.vector_writer,
+            vector_deleter=self.vector_store,
             embedding_model=self.model,
             # ⭐ The scope a real v1 install has: the Backend topology client
             # of docs/10 §7.1 is NOT built, so GĐ7 may not conclude and every

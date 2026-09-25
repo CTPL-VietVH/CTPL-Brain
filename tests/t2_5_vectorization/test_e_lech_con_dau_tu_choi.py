@@ -1,4 +1,4 @@
-"""T2.5 (e) — `ghi_vao_qdrant` PHẢI thật sự gọi
+"""T2.5 (e) — `write_to_qdrant` PHẢI thật sự gọi
 `schema.embedding_registry.assert_collection_ready_for_contract` trước khi
 ghi — không phải một lời gọi trang trí. Chứng minh bằng cách đưa vào một
 `ContractConfig` LỆCH con dấu của kho và xác nhận bị từ chối, không có gì
@@ -12,9 +12,9 @@ import dataclasses
 import pytest
 from schema.config import StoreStampMismatchError, load_contract_config
 
-from ingestion.vectorization import ghi_vao_qdrant
+from ingestion.vectorization import write_to_qdrant
 
-from .conftest import CONTRACT_PATH
+from .conftest import CONTRACT_PATH, UPSERT_BATCH_POINTS
 
 
 def test_contract_lech_dim_bi_tu_choi_khong_ghi_gi(qdrant, pg, stamped_collection):
@@ -22,12 +22,13 @@ def test_contract_lech_dim_bi_tu_choi_khong_ghi_gi(qdrant, pg, stamped_collectio
     contract_lech = dataclasses.replace(contract_that, embedding_dim=9999)
 
     with pytest.raises(StoreStampMismatchError):
-        ghi_vao_qdrant(
+        write_to_qdrant(
             [],
             qdrant_client=qdrant,
             collection_name=stamped_collection,
             contract_config=contract_lech,
             pg_connection=pg,
+            upsert_batch_points=UPSERT_BATCH_POINTS,
         )
 
 
@@ -35,10 +36,11 @@ def test_contract_khop_that_thi_khong_bi_chan(qdrant, pg, stamped_collection):
     """Đối chứng: cấu hình ĐÚNG khớp con dấu thì bước kiểm không chặn gì
     (danh sách Chunk rỗng — chỉ kiểm cổng con dấu có mở đúng lúc không)."""
     contract_that = load_contract_config(CONTRACT_PATH)
-    ghi_vao_qdrant(
+    write_to_qdrant(
         [],
         qdrant_client=qdrant,
         collection_name=stamped_collection,
         contract_config=contract_that,
         pg_connection=pg,
+        upsert_batch_points=UPSERT_BATCH_POINTS,
     )

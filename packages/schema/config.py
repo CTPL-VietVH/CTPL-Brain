@@ -165,6 +165,15 @@ class IngestionConfig:
     `max_upload_bytes` là con số duy nhất trong nhóm này được công bố ra
     ngoài — docs/10 §3.6 bắt `GET /v1/meta` nêu *"cỡ file tối đa"* để Backend
     biết trước, thay vì để một lần tải 100 MB kết thúc bằng `413`.
+
+    `qdrant_upsert_batch_points` — how many points ONE `upsert` call may
+    carry (VEC-1, after the 25/9/2026 incident: one upsert holding a whole
+    document's chunks reached 40-43 MB and Qdrant's REST endpoint refused it).
+    UNIT: NUMBER OF POINTS, not bytes — the dominant term in a point is the
+    embedding, whose size is fixed by `embedding_dim`, so a point count IS a
+    byte budget expressed in the only unit this side can count without
+    re-implementing the client's serialiser. It belongs to the Ingestion group
+    because only Ingestion writes points; Retrieval never upserts.
     """
 
     saturation_epsilon: float
@@ -175,6 +184,7 @@ class IngestionConfig:
     chunk_length_cap: int
     max_upload_bytes: int
     source_download_timeout_seconds: float
+    qdrant_upsert_batch_points: int
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -232,6 +242,7 @@ INGESTION_KEYS: tuple[str, ...] = (
     "chunk_length_cap",
     "max_upload_bytes",
     "source_download_timeout_seconds",
+    "qdrant_upsert_batch_points",
 )
 
 RETRIEVAL_KEYS: tuple[str, ...] = (
@@ -476,6 +487,15 @@ def load_ingestion_config(path: Path) -> IngestionConfig:
         source_download_timeout_seconds, "source_download_timeout_seconds", path
     )
 
+    qdrant_upsert_batch_points = _as_int(
+        _require(data, "qdrant_upsert_batch_points", path),
+        "qdrant_upsert_batch_points",
+        path,
+    )
+    _require_positive(
+        qdrant_upsert_batch_points, "qdrant_upsert_batch_points", path
+    )
+
     return IngestionConfig(
         saturation_epsilon=saturation_epsilon,
         saturation_rounds=saturation_rounds,
@@ -485,6 +505,7 @@ def load_ingestion_config(path: Path) -> IngestionConfig:
         chunk_length_cap=chunk_length_cap,
         max_upload_bytes=max_upload_bytes,
         source_download_timeout_seconds=source_download_timeout_seconds,
+        qdrant_upsert_batch_points=qdrant_upsert_batch_points,
     )
 
 
