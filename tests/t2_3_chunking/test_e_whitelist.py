@@ -1,5 +1,5 @@
 """T2.3 (e) — Mọi `Chunk` mà `cat_thanh_mau` sinh ra chỉ được mang đúng
-whitelist 10 trường của 07 Mục 2.2 (QT2); và cơ chế bảo vệ `slots=True` của
+whitelist 12 trường của 07 Mục 2.2 v1.11 (QT2); và cơ chế bảo vệ `slots=True` của
 `Chunk` (packages/schema/chunk.py) vẫn đứng vững — `TypeError` khi cố truyền
 một trường lạ, kể cả từ bên trong module GĐ3 này.
 
@@ -29,6 +29,8 @@ CHUNK_WHITELIST = {
     "structure_path",
     "span_start",
     "span_end",
+    "structure_block_start",
+    "structure_block_end",
     "embedding",
     "parent_chunk_id",
     "category_labels",
@@ -82,6 +84,8 @@ def test_truyen_truong_la_vao_chunk_raise_typeerror(truong_la):
         structure_path=["Điều 1"],
         span_start=0,
         span_end=10,
+        structure_block_start=0,
+        structure_block_end=10,
         embedding=[],
     )
     kwargs[truong_la] = "gia-tri-bat-hop-phap"

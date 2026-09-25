@@ -26,6 +26,8 @@ CHUNK_WHITELIST = {
     "structure_path",
     "span_start",
     "span_end",
+    "structure_block_start",
+    "structure_block_end",
     "embedding",
     "parent_chunk_id",
     "category_labels",

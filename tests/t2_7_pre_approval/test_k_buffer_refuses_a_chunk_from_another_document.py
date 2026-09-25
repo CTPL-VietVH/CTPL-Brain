@@ -32,6 +32,8 @@ def test_buffer_refuses_a_chunk_from_another_document(buffer_factory) -> None:
                 structure_path=["Điều 1"],
                 span_start=0,
                 span_end=26,
+                structure_block_start=0,
+                structure_block_end=26,
                 embedding=[],
             )
         ],

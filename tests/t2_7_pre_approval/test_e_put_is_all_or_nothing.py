@@ -31,6 +31,8 @@ def _chunk(chunk_id: str, *, embedding: list[float] | None = None) -> Chunk:
         structure_path=["Điều 1"],
         span_start=0,
         span_end=26,
+        structure_block_start=0,
+        structure_block_end=26,
         embedding=embedding if embedding is not None else [],
     )
 

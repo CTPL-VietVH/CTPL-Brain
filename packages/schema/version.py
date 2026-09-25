@@ -9,6 +9,10 @@
 trường là một lần phải dừng cả hai service — và người ta sẽ nhanh chóng ngừng
 tăng số, tức là mất luôn cơ chế" (CLAUDE.md Mục 3 #22).
 
+⭐ **Số phá vỡ tăng thì số bổ sung VỀ 0** (07 Mục 3.1, quy ước chốt 25/9/2026).
+Số bổ sung đếm các lần thêm trường tính từ MỘT hình dạng dữ liệu cụ thể; hình
+dạng đổi thì cái đếm cũ hết nghĩa.
+
 Vì sao hai số này nằm TRONG MÃ chứ không trong `config/`, dù quy tắc 5 của
 CLAUDE.md Mục 4 cấm con số cứng trong mã: quy tắc đó nói về **tham số điều
 chỉnh** — thứ người vận hành đổi để hệ thống chạy khác đi. Hai số dưới đây
@@ -43,13 +47,31 @@ logger = logging.getLogger(__name__)
 
 # Tăng khi: đổi tên trường, xoá trường, đổi ý nghĩa của trường.
 # Hai bên lệch số này → TỪ CHỐI CHẠY.
-SCHEMA_BREAKING_VERSION = 1
+# 1 → 2 (25/9/2026, CHUNK-mau-noi-bo): `Chunk.span_start`/`span_end` ĐỔI Ý
+# NGHĨA trên mẩu của một khối CÓ con — trước: trọn khối gồm cả con cháu; sau:
+# chỉ phần chữ riêng của khối. Kèm theo, `parent_chunk_id` đổi cách được dùng
+# để dựng đơn vị đọc: đọc `structure_block_*` của mẩu cha, không đọc `span_*`
+# của mẩu cha (07 Mục 2.2 v1.11, S2). Hai trường mới `structure_block_start` /
+# `structure_block_end` tự chúng chỉ là thêm trường, NHƯNG việc đổi ý nghĩa
+# của `span_*` mới là thứ quyết định nhánh: đây là PHÁ VỠ TƯƠNG THÍCH.
+# Hệ quả bắt buộc, không có đường vòng: **nạp lại toàn kho**. Mẩu cắt theo
+# luật cũ và mẩu cắt theo luật mới không dùng chung được, và không có bước
+# nâng cấp tại chỗ nào biến cái cũ thành cái mới.
+SCHEMA_BREAKING_VERSION = 2
 
 # Tăng khi: thêm trường mới mà bên cũ bỏ qua được.
 # Hai bên lệch số này → GHI NHẬT KÝ, VẪN CHẠY.
+# ⭐ QUY ƯỚC (E2, PO chốt 25/9/2026, ghi thành văn ở 07 Mục 3.1): khi số PHÁ
+# VỠ tương thích tăng thì số này **về 0**. Lý do: số này đếm các lần thêm
+# trường TÍNH TỪ một hình dạng dữ liệu cụ thể; hình dạng đó vừa đổi, nên cái
+# đếm cũ không còn nghĩa. Giữ nguyên số cũ sẽ làm hai bản cài khác nhánh phá
+# vỡ nhưng trùng số bổ sung trông như đang tương thích một phần — trong khi
+# thực tế chúng không nói chuyện được với nhau chút nào.
 # 0 → 1 (22/9/2026, T2.4-add-subject-entities): thêm `Document.subject_entities`
 # (07 Mục 2.1 dòng 93) — trường mới có mặc định, bên cũ bỏ qua được.
-SCHEMA_ADDITIVE_VERSION = 1
+# 1 → 0 (25/9/2026, CHUNK-mau-noi-bo): reset theo quy ước trên, vì
+# SCHEMA_BREAKING_VERSION vừa tăng 1 → 2.
+SCHEMA_ADDITIVE_VERSION = 0
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)

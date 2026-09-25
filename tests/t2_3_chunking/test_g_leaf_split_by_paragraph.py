@@ -121,3 +121,31 @@ def test_mau_dau_va_cuoi_khop_dung_bien_cua_node_khoan():
             f"Khoảng hở giữa hai mẩu con chứa nội dung thật, không chỉ khoảng "
             f"trắng: {khoang_ho!r}"
         )
+
+
+def test_mau_con_cung_mot_khoi_mang_cung_mot_structure_block():
+    """E1 (PO chốt 25/9/2026, 07 Mục 2.2 dòng 172): khi một khối LÁ bị chia
+    thành nhiều mảnh vì vượt `tran_do_dai_mau`, MỌI mảnh phải mang CÙNG MỘT
+    `structure_block_start`/`structure_block_end` — trọn khối LÁ GỐC, không
+    phải span riêng của từng mảnh. Nếu không, đơn vị ĐỌC dựng từ một mảnh
+    con của Khoản 1 sẽ không trùng đơn vị đọc dựng từ mảnh con còn lại của
+    chính Khoản 1 đó — hai câu trả lời cho cùng một Khoản trích ra hai đoạn
+    khác nhau, không lỗi nào báo."""
+    read_result = dung_cau_truc(VAN_BAN_KHOAN_HAI_DOAN, source_format="txt")
+    chunks = cat_thanh_mau(
+        read_result,
+        document_id=DOC_ID,
+        space_id=SPACE_ID,
+        tenant_id=TENANT_ID,
+        tran_do_dai_mau=TRAN_DO_DAI_MAU_THU,
+    )
+    khoan_1 = sorted(
+        (c for c in chunks if c.structure_path == ["Điều 1", "Khoản 1"]),
+        key=lambda c: c.span_start,
+    )
+    node_khoan_1 = next(n for n in read_result.root.walk() if n.path == ["Khoản 1"])
+    assert len(khoan_1) == 2, "Phép thử tự hỏng: cần ít nhất hai mảnh để so sánh"
+
+    assert {(c.structure_block_start, c.structure_block_end) for c in khoan_1} == {
+        (node_khoan_1.char_start, node_khoan_1.char_end)
+    }

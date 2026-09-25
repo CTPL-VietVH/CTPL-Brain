@@ -121,6 +121,8 @@ def make_chunk(*, chunk_id: str, document: Document, span: tuple[int, int]) -> C
         structure_path=["Điều 1"],
         span_start=span[0],
         span_end=span[1],
+        structure_block_start=span[0],
+        structure_block_end=span[1],
         embedding=[0.1, 0.2, 0.3, 0.4],
     )
 

@@ -25,6 +25,8 @@ def _chunk(*, span_start: int, span_end: int, chunk_id: str | None = None) -> Ch
         structure_path=["Điều 12"],
         span_start=span_start,
         span_end=span_end,
+        structure_block_start=span_start,
+        structure_block_end=span_end,
         embedding=[],
     )
 

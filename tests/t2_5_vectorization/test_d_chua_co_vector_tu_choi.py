@@ -27,6 +27,8 @@ def test_chunk_chua_co_vector_bi_tu_choi(qdrant, pg, stamped_collection):
         structure_path=["Điều 1"],
         span_start=0,
         span_end=10,
+        structure_block_start=0,
+        structure_block_end=10,
         embedding=[],
     )
     contract_config = load_contract_config(CONTRACT_PATH)

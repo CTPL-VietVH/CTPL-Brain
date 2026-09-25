@@ -1,9 +1,10 @@
 """T1.4 (a) — Whitelist tuyệt đối của `Chunk` (07 Mục 2.2, QT2).
 
-07 Mục 2.2 liệt kê CHÍNH XÁC mười trường được phép đặt cạnh mẩu vector —
-không hơn, không kém. `category_labels` là ngoại lệ duy nhất của QT2 (một
-bản sao nhãn để xếp hạng nhanh, đã được quyết ở 6.4) chứ không phải một lỗ
-hổng của whitelist.
+07 Mục 2.2 liệt kê CHÍNH XÁC mười hai trường được phép đặt cạnh mẩu vector —
+không hơn, không kém (v1.11, 25/9/2026: thêm `structure_block_start` /
+`structure_block_end`; trước đó là mười). `category_labels` là ngoại lệ duy
+nhất của QT2 (một bản sao nhãn để xếp hạng nhanh, đã được quyết ở 6.4) chứ
+không phải một lỗ hổng của whitelist.
 
 Đây là ca thử "hệ thống LÊN TIẾNG": bất kỳ ai thêm một trường mới vào
 `Chunk` — dù đặt tên gì, dù có nằm trong 8 danh mục cấm liệt kê tường minh ở
@@ -23,10 +24,10 @@ def _chunk_field_names() -> set[str]:
     return {f.name for f in dataclasses.fields(Chunk)}
 
 
-def test_chunk_has_exactly_ten_fields():
-    assert len(dataclasses.fields(Chunk)) == len(CHUNK_WHITELIST) == 10, (
-        "07 Mục 2.2 định nghĩa đúng 10 trường cho `chunk` (8 bắt buộc + "
-        "`parent_chunk_id`/`category_labels` có mặc định) — số trường lệch "
+def test_chunk_has_exactly_twelve_fields():
+    assert len(dataclasses.fields(Chunk)) == len(CHUNK_WHITELIST) == 12, (
+        "07 Mục 2.2 v1.11 định nghĩa đúng 12 trường cho `chunk` (10 bắt buộc "
+        "+ `parent_chunk_id`/`category_labels` có mặc định) — số trường lệch "
         "đi là dấu hiệu chắc chắn có trường lạ hoặc thiếu trường hợp lệ."
     )
 
@@ -50,6 +51,8 @@ def test_chunk_constructs_with_only_whitelisted_fields():
         structure_path=["Chương II", "Điều 7", "Khoản 3"],
         span_start=0,
         span_end=120,
+        structure_block_start=0,
+        structure_block_end=120,
         embedding=[0.1, 0.2, 0.3],
     )
     assert chunk.parent_chunk_id is None

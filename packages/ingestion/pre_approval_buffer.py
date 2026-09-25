@@ -138,6 +138,12 @@ CREATE TABLE IF NOT EXISTS {PRE_APPROVAL_CHUNK_TABLE} (
     structure_path  text[]  NOT NULL,
     span_start      integer NOT NULL,
     span_end        integer NOT NULL,
+    -- NOT NULL cả hai, cùng lý do `Chunk` không cho chúng giá trị mặc định:
+    -- một hàng thiếu vị trí trọn khối là một mẩu mà GĐ6 sẽ nạp ra kho dùng
+    -- chung với đơn vị ĐỌC hỏng. Chặn ở tầng lưu trữ, không chỉ ở tầng ứng
+    -- dụng (08 dòng 210).
+    structure_block_start integer NOT NULL,
+    structure_block_end   integer NOT NULL,
     parent_chunk_id text,
     category_labels text[]  NOT NULL,
     chunk_ordinal   integer NOT NULL,

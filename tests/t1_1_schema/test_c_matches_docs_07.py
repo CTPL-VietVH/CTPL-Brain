@@ -33,6 +33,7 @@ DOCUMENT_FIELDS = {
 CHUNK_FIELDS = {
     "chunk_id", "document_id", "space_id", "tenant_id",
     "structure_path", "parent_chunk_id", "span_start", "span_end",
+    "structure_block_start", "structure_block_end",
     "category_labels", "embedding",
 }
 

@@ -2,9 +2,9 @@
 
 | | |
 |---|---|
-| **Phiên bản** | v1.10 |
-| **Ngày** | 23/9/2026 (bản rút lần đầu: 12/9/2026) |
-| **Lịch sử** | v1.10 — 23/9/2026: lịch sử hội thoại ra khỏi danh sách thực thể của AI Services ở Mục 4 (Backend C.Brain lưu, 06 Mục 9.4 v1.10); trỏ hợp đồng với Backend sang `10_Hop_Dong_API_Backend_AI_Services.md`. Không đổi trường nào của bốn thực thể dùng chung. v1.9 — sửa dòng `labels_confirmed_by` ở 2.1 cho khớp cột Kiểu: tách thành hai trường `labels_confirmed_by` + `labels_confirmed_at`, cùng mẫu với ba cặp `_by`/`_at` khác trong cùng bảng (phát hiện lúc rút module mã nguồn T1.1, PO chốt 18/9). v1.8 — ghi chú ba kho logic nhưng hai kho vật lý (Qdrant + PostgreSQL), và hệ quả cho thứ tự xoá ở S6. v1.7 — chốt tám giá trị tham số kèm dấu hiệu nhận biết đặt sai (3.2); thêm quy tắc cấu hình: ba nhóm không chồng lấn, mỗi tham số một nhà, thiếu khoá thì từ chối chạy, cấm con số cứng trong mã (3.3). v1.6 — sau vòng kiểm nhất quán và bàn giao (14/9): sửa hai tham chiếu sai và một chỗ đếm lệch; chốt `structure_path` là danh sách các đoạn chứ không phải chuỗi nối; làm rõ ô đúng/sai là ô có thẩm quyền trong mỗi cặp trạng thái; thêm bảng sáu tham số PO phải chốt giá trị khởi đầu trước khi code. v1.5 — sau khi chốt bốn kịch bản pre-mortem còn lại: `content_fingerprint` có thêm hai người dùng và phải đánh chỉ mục (K5); các quyết định K1/K3/K4 không sinh trường mới nào ở đây. v1.4 — bổ sung `extracted_text` (lỗ hổng bốn vòng phản biện đều bỏ sót: không trường nào chứa văn bản) theo phương án nguồn chân lý duy nhất + vị trí đầu/cuối trên mẩu, đếm theo ký tự Unicode; tách `issued_date` khỏi `effective_date`, mỗi ngày mang nguồn. v1.3 — chốt S1 (tài liệu chờ duyệt không vào kho dùng chung, NT4 giữ nguyên hai bộ lọc cứng), chốt S2 (đơn vị đọc là khối cấu trúc cha một cấp, kèm ba quy tắc con), duyệt DX1/DX2/DX3 (con dấu trên kho vector, hai số phiên bản, quy trình đổi mô hình ở v1). v1.2 — sau gói nghiên cứu 14/9: đóng S4, S5, S6, S7, S8; chốt cosine + chuẩn hoá L2 ở Mục 3; đề xuất parent-child cho S2 kèm trường `parent_chunk_id`; thêm Phụ lục A. v1.1 — sau hai vòng phản biện độc lập: phát biểu lại QT1 (dấu vết khác phán quyết), chốt quy ước chiều quan hệ `from` tác động lên `to`, tách các trường kiểu gộp, định nghĩa liên kết do người gắn tay, bổ sung nhánh Manager cho `version_declared_by`, thêm mục ba thứ nằm ngoài phạm vi. Thêm điểm mở S8; S3 đổi bản chất thành mâu thuẫn của tài liệu 06. v1.0 — bản rút lần đầu |
+| **Phiên bản** | v1.11 |
+| **Ngày** | 25/9/2026 (bản rút lần đầu: 12/9/2026) |
+| **Lịch sử** | **v1.11 — 25/9/2026, sau phép đo 36 tài liệu thật (work-order CHUNK-mau-noi-bo): `chunk` thêm hai trường vị trí `structure_block_start` / `structure_block_end` (Mục 2.2, 10 → 12 trường), và `span_start`/`span_end` ĐỔI Ý NGHĨA trên mẩu của một khối CÓ con — nay chỉ còn phần chữ riêng của khối, không bao trùm con cháu. Vì có đổi ý nghĩa trường nên đây là nhánh PHÁ VỠ TƯƠNG THÍCH (Mục 3.1): `SCHEMA_BREAKING_VERSION` 1 → 2, `SCHEMA_ADDITIVE_VERSION` về 0, bắt buộc nạp lại toàn kho. Mục 3.1 thêm quy ước "số phá vỡ tăng thì số bổ sung về 0". Khối đầu/cuối văn bản cũng thành mẩu, `structure_path` rỗng, không có cha.** v1.10 — 23/9/2026: lịch sử hội thoại ra khỏi danh sách thực thể của AI Services ở Mục 4 (Backend C.Brain lưu, 06 Mục 9.4 v1.10); trỏ hợp đồng với Backend sang `10_Hop_Dong_API_Backend_AI_Services.md`. Không đổi trường nào của bốn thực thể dùng chung. v1.9 — sửa dòng `labels_confirmed_by` ở 2.1 cho khớp cột Kiểu: tách thành hai trường `labels_confirmed_by` + `labels_confirmed_at`, cùng mẫu với ba cặp `_by`/`_at` khác trong cùng bảng (phát hiện lúc rút module mã nguồn T1.1, PO chốt 18/9). v1.8 — ghi chú ba kho logic nhưng hai kho vật lý (Qdrant + PostgreSQL), và hệ quả cho thứ tự xoá ở S6. v1.7 — chốt tám giá trị tham số kèm dấu hiệu nhận biết đặt sai (3.2); thêm quy tắc cấu hình: ba nhóm không chồng lấn, mỗi tham số một nhà, thiếu khoá thì từ chối chạy, cấm con số cứng trong mã (3.3). v1.6 — sau vòng kiểm nhất quán và bàn giao (14/9): sửa hai tham chiếu sai và một chỗ đếm lệch; chốt `structure_path` là danh sách các đoạn chứ không phải chuỗi nối; làm rõ ô đúng/sai là ô có thẩm quyền trong mỗi cặp trạng thái; thêm bảng sáu tham số PO phải chốt giá trị khởi đầu trước khi code. v1.5 — sau khi chốt bốn kịch bản pre-mortem còn lại: `content_fingerprint` có thêm hai người dùng và phải đánh chỉ mục (K5); các quyết định K1/K3/K4 không sinh trường mới nào ở đây. v1.4 — bổ sung `extracted_text` (lỗ hổng bốn vòng phản biện đều bỏ sót: không trường nào chứa văn bản) theo phương án nguồn chân lý duy nhất + vị trí đầu/cuối trên mẩu, đếm theo ký tự Unicode; tách `issued_date` khỏi `effective_date`, mỗi ngày mang nguồn. v1.3 — chốt S1 (tài liệu chờ duyệt không vào kho dùng chung, NT4 giữ nguyên hai bộ lọc cứng), chốt S2 (đơn vị đọc là khối cấu trúc cha một cấp, kèm ba quy tắc con), duyệt DX1/DX2/DX3 (con dấu trên kho vector, hai số phiên bản, quy trình đổi mô hình ở v1). v1.2 — sau gói nghiên cứu 14/9: đóng S4, S5, S6, S7, S8; chốt cosine + chuẩn hoá L2 ở Mục 3; đề xuất parent-child cho S2 kèm trường `parent_chunk_id`; thêm Phụ lục A. v1.1 — sau hai vòng phản biện độc lập: phát biểu lại QT1 (dấu vết khác phán quyết), chốt quy ước chiều quan hệ `from` tác động lên `to`, tách các trường kiểu gộp, định nghĩa liên kết do người gắn tay, bổ sung nhánh Manager cho `version_declared_by`, thêm mục ba thứ nằm ngoài phạm vi. Thêm điểm mở S8; S3 đổi bản chất thành mâu thuẫn của tài liệu 06. v1.0 — bản rút lần đầu |
 | **Trạng thái** | **Đủ để chuyển thành module mã nguồn.** Tám điểm mở đã đóng, ba đề xuất đã duyệt. **Không còn điểm mở nào** — S3 đã chốt ở tài liệu 06 ngày 14/9 (hoãn bước quét chỗ nhạy cảm ở v1). Xem Mục 7 |
 | **Người quyết định** | Viet (PO) |
 | **Phạm vi** | **Chỉ hợp đồng dữ liệu giữa Ingestion v2 và Retrieval v2.** Không bao gồm hợp đồng với Backend/Frontend — hợp đồng đó nằm ở `10_Hop_Dong_API_Backend_AI_Services.md` |
@@ -150,8 +150,10 @@ Nơi cư trú: kho vector. Đây là đơn vị để **TÌM**, không phải đ
 | `tenant_id` | định danh | bất biến | Ingestion | 6.4 |
 | `structure_path` | **danh sách các đoạn, theo thứ tự từ ngoài vào trong** — ví dụ [Chương II, Điều 7, Khoản 3]; với tài liệu không có điều khoản thì là chuỗi tiêu đề lồng nhau. **Không phải một chuỗi nối lại**: quy tắc "cha là đúng một cấp lên" ở dưới cần đọc được từng cấp mà không phải tách chuỗi | bất biến | Ingestion (GĐ3) | 6.1 — dẫn nguồn theo vị trí |
 | `parent_chunk_id` | định danh, **có thể trống** | bất biến | Ingestion (GĐ3) | 6.1 — con trỏ tới khối cấu trúc cha, chính là đơn vị ĐỌC (S2, chốt 14/9) |
-| `span_start` | số nguyên | bất biến | Ingestion (GĐ3) | 6.4 — vị trí trong tài liệu, được phép nằm cạnh mẩu |
+| `span_start` | số nguyên | bất biến | Ingestion (GĐ3) | 6.4 — vị trí trong tài liệu, được phép nằm cạnh mẩu. **Từ v1.11: đoạn chữ ĐÃ ĐEM TẠO VECTOR, không còn bao trùm con cháu** |
 | `span_end` | số nguyên | bất biến | Ingestion (GĐ3) | 6.4 |
+| `structure_block_start` | số nguyên | bất biến | Ingestion (GĐ3) | 6.4 + S2 — vị trí ĐẦU của **trọn khối cấu trúc** chứa mẩu này |
+| `structure_block_end` | số nguyên | bất biến | Ingestion (GĐ3) | 6.4 + S2 — vị trí CUỐI của trọn khối đó |
 | `category_labels` | danh sách nhãn | **đổi được — ngoại lệ đã quyết** | Ingestion | 6.4 — bản sao để xếp hạng nhanh một nhịp |
 | `embedding` | vector | bất biến với một cấu hình mô hình | Ingestion (GĐ6) | 5.2 GĐ6 |
 
@@ -159,7 +161,25 @@ Nơi cư trú: kho vector. Đây là đơn vị để **TÌM**, không phải đ
 >
 > Đây đúng loại chi tiết mà module dùng chung sinh ra để chặn. Tiếng Việt có dấu, một ký tự chiếm nhiều byte — một bên đếm ký tự còn bên kia đếm byte thì đoạn cắt ra lệch đi, **không có lỗi nào báo**, chỉ là câu trả lời dẫn nguồn sai chỗ và trích nhầm đoạn. Cùng loại hỏng im lặng với việc lệch thước đo vector ở Mục 3.
 
-> **Mẩu không giữ bản sao chữ của mình.** Chữ nằm ở `extracted_text` của tài liệu (Mục 2.1); mẩu chỉ giữ vị trí. Đơn vị ĐỌC lấy được bằng cách theo `parent_chunk_id` rồi cắt theo vị trí của mẩu cha. Hai vị trí này được phép nằm cạnh mẩu vì 06 Mục 6.4 liệt kê tường minh *"con trỏ về tài liệu và vị trí trong tài liệu"* vào nhóm bất biến đặt cạnh mẩu.
+> **⭐ HAI CẶP VỊ TRÍ, KHÔNG PHẢI MỘT — CHỐT 25/9/2026 (PO). Đây là thay đổi PHÁ VỠ TƯƠNG THÍCH.**
+>
+> `span_start`/`span_end` khoanh **đúng đoạn chữ đã được đem tạo vector**. `structure_block_start`/`structure_block_end` khoanh **trọn khối cấu trúc mà mẩu đó thuộc về**. Ba ca, đủ để không phải đoán:
+>
+> | Mẩu của | `span_*` | `structure_block_*` |
+> |---|---|---|
+> | Khối **CÓ con** (Chương, Mục, một Điều có Khoản) | phần chữ **RIÊNG**: từ đầu khối tới ngay trước con đầu tiên | trọn khối, gồm cả con cháu |
+> | Khối **KHÔNG con**, không bị chia | trọn khối | **bằng đúng** `span_*` |
+> | Một **mảnh** của khối không con bị chia vì vượt `chunk_length_cap` | mảnh đó | **trọn khối gốc** — mọi mảnh mang cùng một giá trị |
+>
+> Hai bất biến bắt buộc: (1) `structure_block_start ≤ span_start < span_end ≤ structure_block_end`; (2) `structure_block_*` của một mẩu **CHA** bao trọn `span_*` **và** `structure_block_*` của **MỌI** mẩu con cháu — không chỉ của chính nó.
+>
+> **Vì sao phải tách.** Bản trước để `span_*` của một khối có con bao trùm toàn bộ con cháu. Đo thật trên 36 tài liệu (21 văn bản hành chính + 15 tài liệu doanh nghiệp, 24/9/2026): cách đó làm **18/36 tài liệu không nạp được** — 47 mẩu vượt trần ngữ cảnh 8192 token của mô hình biểu diễn, mẩu nặng nhất **233.712 token**, và **47/48 mẩu vượt trần là mẩu của khối có con**. Nó còn làm mỗi ký tự của kho bị đem tạo vector **3,48 lần** (một lần ở mỗi tầng cây). Sau khi tách: mẩu vượt trần còn **1**, số token đem tạo vector còn **1,02 lần** kho, **34/36 tài liệu nạp được**.
+>
+> **⚠️ Vì sao đây là PHÁ VỠ tương thích, không phải bổ sung.** Hai trường mới tự chúng chỉ là *thêm trường*. Nhưng cùng lúc đó **`span_start`/`span_end` ĐỔI Ý NGHĨA** trên mẩu của mọi khối có con, và `parent_chunk_id` đổi cách được dùng để dựng đơn vị đọc. Mục 3.1 xếp *"đổi ý nghĩa của trường"* vào đúng vế **phá vỡ tương thích → từ chối chạy**. Hệ quả không có đường vòng: **nạp lại toàn kho**. Mẩu cắt theo luật cũ và mẩu cắt theo luật mới không dùng chung được, và không có bước nâng cấp tại chỗ nào biến cái cũ thành cái mới — một kho lẫn hai loại mẩu sẽ dựng đơn vị đọc sai mà không lỗi nào báo.
+>
+> **Vì sao hai trường này được phép nằm cạnh mẩu.** 06 Mục 6.4 liệt kê tường minh *"Space, tenant, con trỏ về tài liệu và vị trí trong tài liệu — bất biến, nằm cạnh mẩu"*. `span_start`/`span_end` đã đứng đúng chỗ đó từ v1.4; `structure_block_start`/`structure_block_end` là **vị trí trong tài liệu** của cùng một mẩu, cùng loại dữ liệu, cùng lý do. Chạy phép thử một câu của QT2 — *"nếu trường này đổi giá trị, có phải nạp lại các mẩu không?"*: giá trị của chúng chỉ đổi khi chính văn bản được cắt lại, mà cắt lại thì mẩu đằng nào cũng được nạp lại — **không có tình huống nào trường này đổi mà mẩu vẫn nằm yên**, nên nó không phải thứ QT2 loại ra. Đối chiếu ngược để thấy rõ đường biên: `effective_date` bị loại vì người ta sửa ngày mà không đụng gì tới mẩu, và khi ấy hàng trăm mẩu phải nạp lại chỉ vì một ô. QT3 cũng sạch: hai trường này **không bao giờ** xuất hiện trong mệnh đề loại trừ — hai bộ lọc cứng vẫn đúng là hai (quyền đọc, tài liệu bị gỡ vì sai).
+
+> **Mẩu không giữ bản sao chữ của mình.** Chữ nằm ở `extracted_text` của tài liệu (Mục 2.1); mẩu chỉ giữ vị trí. Đơn vị ĐỌC lấy được bằng cách theo `parent_chunk_id` rồi cắt theo **`structure_block_start`/`structure_block_end` của mẩu cha** — **không** phải theo `span_start`/`span_end` của mẩu cha, vì từ v1.11 span của một khối có con chỉ còn là phần chữ riêng của nó. Các vị trí này được phép nằm cạnh mẩu vì 06 Mục 6.4 liệt kê tường minh *"con trỏ về tài liệu và vị trí trong tài liệu"* vào nhóm bất biến đặt cạnh mẩu.
 
 > **`category_labels` là ngoại lệ duy nhất của QT2**, đã được quyết ở 6.4: chấp nhận rằng đổi cách phân loại thì phải gán lại toàn bộ mẩu của tài liệu bị ảnh hưởng. Sau khi NT4 hạ nhãn xuống thành tín hiệu mềm, bản sao này dùng để **xếp hạng**, không dùng để lọc.
 
@@ -172,6 +192,10 @@ Nơi cư trú: kho vector. Đây là đơn vị để **TÌM**, không phải đ
 > 1. **Cha là đúng một cấp lên** trong `structure_path`, không phải cấp bất kỳ.
 > 2. **Mẩu đã là đơn vị cấu trúc cao nhất của tài liệu thì đơn vị đọc là chính nó** — khi đó `parent_chunk_id` để trống. Ví dụ một Điều ngắn không bị cắt nhỏ thì không có cha để lên.
 > 3. **Hai mẩu cùng một cha thì cha chỉ được lấy MỘT lần.** Nếu không, một Điều trúng ba Khoản sẽ chiếm ba suất trong trần số lượng tài liệu (06 Mục 6.5).
+>
+> **Lấy vị trí của khối cha bằng cách nào — làm rõ 25/9/2026; ba quy tắc con ở trên KHÔNG đổi một chữ.** Theo `parent_chunk_id` tới mẩu cha, rồi cắt `extracted_text` theo **`structure_block_start`/`structure_block_end`** của mẩu cha đó. Quy tắc con 2 đọc theo đúng cách ấy: mẩu không có cha thì đơn vị đọc là **trọn khối của chính nó**, tức cặp `structure_block_*` của chính nó — không phải mảnh `span_*` của nó, để một khối dài bị chia nhỏ vẫn được đọc trọn vẹn chứ không đọc mỗi mảnh trúng.
+>
+> **Khối đầu và khối cuối văn bản.** Phần chữ nằm trước khối cấu trúc cao nhất đầu tiên (tên cơ quan ban hành, số hiệu, phần *"Căn cứ…"*) và phần nằm sau khối cuối cùng (nơi ký) cũng là mẩu, và chúng **không có cha** — chúng đã là đơn vị cấu trúc cao nhất theo đúng nghĩa quy tắc con 2, nên `parent_chunk_id` để trống và đơn vị đọc là trọn khối của chính chúng. `structure_path` của chúng là **danh sách rỗng**: chúng thật sự không nằm ở cấp nào của cây, và đặt cho chúng một nhãn do máy sinh sẽ là chuỗi ký tự đầu tiên trong `structure_path` không lấy từ chính văn bản.
 >
 > Hai cách còn lại bị loại có lý do: *cửa sổ câu lân cận* cắt ngang ranh giới điều/khoản nên làm đứt mạch quy phạm — đúng cái mà GĐ3 cố tránh khi bỏ cắt theo độ dài; *gộp theo ngưỡng thống kê* để số liệu quyết định ranh giới thay vì cấu trúc văn bản, cùng vấn đề. Lấy trọn tài liệu thì tràn ngữ cảnh.
 >
@@ -274,6 +298,12 @@ Không khớp thì không khởi động, không có chế độ cảnh báo r�
 | **Số bổ sung tương thích** | thêm trường mới mà bên cũ bỏ qua được | **ghi nhật ký, vẫn chạy** |
 
 Hai số chứ không một, vì nếu chỉ có một số thì mỗi lần thêm một trường là một lần phải dừng cả hai service — và người ta sẽ nhanh chóng ngừng tăng số, tức là mất luôn cơ chế.
+
+> **⭐ Quy ước: SỐ PHÁ VỠ tăng thì SỐ BỔ SUNG về 0 — chốt 25/9/2026 (PO).**
+>
+> Số bổ sung đếm các lần thêm trường **tính từ một hình dạng dữ liệu cụ thể**. Hình dạng vừa đổi thì cái đếm cũ hết nghĩa. Giữ nguyên số bổ sung qua một lần tăng số phá vỡ sẽ làm hai bản cài **khác nhánh phá vỡ nhưng trùng số bổ sung** trông như đang tương thích một phần — trong khi chúng không nói chuyện được với nhau chút nào.
+>
+> **Và một hệ quả phải nói thẳng: tăng số phá vỡ nghĩa là NẠP LẠI TOÀN KHO.** Không có bước nâng cấp tại chỗ nào biến dữ liệu cũ thành dữ liệu mới, vì chính ý nghĩa của trường đã đổi. Việc dựng lại kho (xoá và tạo lại collection, dựng lại bảng) là **điều kiện nghiệm thu** của mọi thay đổi chạm số này, không phải một bước dọn dẹp tuỳ chọn sau đó.
 
 ### Đổi mô hình biểu diễn — quy trình ở v1
 

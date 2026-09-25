@@ -54,7 +54,20 @@ alike (`Luật-54-2019-QH14.docx`, `Bộ-luật-45-2019-QH14.docx`, … all show
 same failure). This is a gap in the already-closed T2.3/T2.5 modules, not
 something this composition-root task may fix (CLAUDE.md Mục 8: read the
 reason before changing a decision, report rather than silently work around
-it). `30_2020_ND_CP.docx` is small enough that no internal node's full span
+it).
+
+⭐ **CẬP NHẬT 25/9/2026 — nguyên nhân trên ĐÃ ĐƯỢC SỬA** (work-order
+CHUNK-mau-noi-bo, 07 Mục 2.2 v1.11): mẩu của một khối có con nay chỉ mang
+phần chữ RIÊNG của nó và đi qua đúng `tran_do_dai_mau`, còn trọn khối chuyển
+sang `structure_block_start`/`structure_block_end`. Đo lại trên cùng 36 tài
+liệu: **34/36 nạp được** (trước: 18/36), **0 mẩu vượt trần ngữ cảnh**
+(trước: 48), mẩu nặng nhất **2.036 token** (trước: 233.712). Hai tài liệu
+còn lại hỏng vì một lý do KHÁC hẳn — một bảng phụ lục không có ranh giới
+đoạn/câu nào để chia (`KhoiVuotTranKhongTheChia`), để lại cho work-order
+CHUNK-bang-bieu. Đoạn mô tả bên trên được giữ nguyên làm bản ghi lịch sử của
+lần chẩn đoán, không phải mô tả hành vi hiện tại.
+
+`30_2020_ND_CP.docx` is small enough that no internal node's full span
 crosses the ceiling — verified directly against the real BGE-M3 tokenizer,
 every one of its 260 chunks ≤ 3,099 tokens — so it is the sample document
 here, with the REAL, unmodified `config/ingestion.yaml` (`chunk_length_cap`

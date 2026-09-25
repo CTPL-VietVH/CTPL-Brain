@@ -47,6 +47,8 @@ def _lam_chunk(span_start: int, span_end: int) -> Chunk:
         structure_path=["Điều 7"],
         span_start=span_start,
         span_end=span_end,
+        structure_block_start=span_start,
+        structure_block_end=span_end,
         embedding=[0.0],
     )
 

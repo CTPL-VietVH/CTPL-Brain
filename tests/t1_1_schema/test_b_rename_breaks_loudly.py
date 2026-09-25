@@ -81,6 +81,7 @@ def test_chunk_rejects_field_that_belongs_to_document():
         Chunk(
             chunk_id="c1", document_id="d1", space_id="s", tenant_id="t",
             structure_path=["Điều 1"], span_start=0, span_end=10,
+            structure_block_start=0, structure_block_end=10,
             embedding=[0.0],
             effective_date=date(2024, 1, 1),
         )

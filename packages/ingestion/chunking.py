@@ -8,21 +8,49 @@ danh sách `Chunk` mà kho vector cần (07 Mục 2.2, QT2).
 1. **Cấu trúc quyết định ranh giới** — mỗi khối cấu trúc là một mẩu. Ba điều
    cấm: không được GỘP hai khối cấu trúc làm một mẩu; không được cắt NGANG
    ranh giới điều/khoản; khối đủ ngắn thì là một mẩu, hết việc.
-2. **Ý nghĩa chia nhỏ TIẾP một khối cấu trúc quá dài** — CHỈ áp dụng cho
-   Chunk LÁ (Node không có con). Một Node cha/nội bộ luôn có `char_start`/
-   `char_end` BAO TRÙM toàn bộ nội dung con cháu (bất biến kiểm ở
-   `structure.py` — `ReadResult.kiem_vi_tri`), nên span dài của một Node nội
-   bộ là cộng dồn từ con cháu, KHÔNG PHẢI bằng chứng nội dung riêng của nó
-   quá dài — module này TUYỆT ĐỐI không chia nhỏ Node nội bộ.
+2. **Ý nghĩa chia nhỏ TIẾP một khối cấu trúc quá dài** — tại ranh giới an
+   toàn có sẵn trong văn bản (đoạn, rồi câu).
+
+⭐ **MỘT KHỐI CÓ CON CHỈ MANG PHẦN CHỮ RIÊNG CỦA NÓ — chốt 25/9/2026 (PO),
+07 Mục 2.2 v1.11. Đây là thay đổi PHÁ VỠ TƯƠNG THÍCH.**
+
+Bản trước cho mẩu của một Node nội bộ mang span BAO TRÙM toàn bộ con cháu
+(`char_start`..`char_end`), với lập luận: span dài của Node nội bộ là cộng
+dồn từ con cháu nên không phải bằng chứng nội dung riêng của nó quá dài. Lập
+luận đó đúng về mặt cấu trúc và **sai về mặt hậu quả** — đo thật ngày
+24/9/2026 trên 36 tài liệu (21 văn bản hành chính + 15 tài liệu doanh
+nghiệp):
+
+* **18/36 tài liệu không nạp được**; 47 mẩu vượt trần ngữ cảnh 8192 token
+  của BGE-M3, mẩu nặng nhất **233.712 token** (`tt-200-btc` › Chương II);
+* **47/48 mẩu vượt trần đều là mẩu của Node nội bộ** — chỉ đúng 1 mẩu lá;
+* mỗi ký tự của kho bị đem tạo vector **3,48 lần**, vì nó nằm lại trong span
+  của mọi tổ tiên.
+
+Nay: mẩu của một Node CÓ con chỉ mang `[node.char_start,
+con_đầu_tiên.char_start)` — dòng tiêu đề cộng câu dẫn, tức đúng phần chữ
+thuộc về chính khối đó — và **cũng đi qua bước 2** như mọi mẩu khác, nên nó
+chịu `tran_do_dai_mau` thật sự. Phần chữ riêng luôn là MỘT khoảng liền mạch:
+đo trên cả 4.132 Node nội bộ của kho thử, không Node nào có khe hở giữa hai
+con, không Node nào còn chữ sau con cuối cùng.
+
+Cặp `structure_block_start`/`structure_block_end` giữ lại trọn khối, nên đơn
+vị ĐỌC của S2 không mất gì: Retrieval theo `parent_chunk_id` lên mẩu cha rồi
+cắt `extracted_text` theo `structure_block_*` **của mẩu cha** — không theo
+`span_*` của mẩu cha nữa.
+
+**Khối đầu và khối cuối văn bản cũng là mẩu** (07 Mục 2.2 v1.11). Phần chữ
+trước khối cấu trúc cao nhất đầu tiên — tên cơ quan ban hành, số hiệu, phần
+*"Căn cứ…"* — đo được **34.195 ký tự trên 35/36 tài liệu**, và trước đây nằm
+ngoài mọi mẩu, tức không tìm được. Phần sau khối cuối cùng (nơi ký) xử lý
+đối xứng; trên kho thử hiện tại **0/36 tài liệu** có phần này, vì khối cấu
+trúc cuối luôn chạy hết văn bản — nhánh đó là phòng thủ, không phải nhánh có
+dữ liệu.
 
 Trần độ dài (Điểm mở #4, `06` Mục 10) là **tham số bắt buộc, không mặc
 định** (`tran_do_dai_mau` của `cat_thanh_mau`) — CLAUDE.md Mục 4 quy tắc 2
-cấm giá trị mặc định trong mã. PO đã chốt giá trị sống là **5000 ký tự
-Unicode** (21/9/2026), nhưng giá trị đó KHÔNG hardcode ở đây: work-order của
-bước này cố ý không cho module chạm `packages/schema/` (nơi ba nhóm cấu hình
-sống), nên việc đưa 5000 vào đúng MỘT nhà cấu hình (khả năng: một khoá mới
-trong `config/ingestion.yaml`, theo đúng khuôn các tham số khác ở đó) là
-việc của bên gọi (nơi lắp ráp pipeline), không phải của module này.
+cấm giá trị mặc định trong mã. Giá trị sống do bên gọi truyền vào từ
+`config/ingestion.yaml` (`chunk_length_cap`).
 
 Cơ chế chia bước 2: chỉ cắt tại ranh giới AN TOÀN có sẵn trong văn bản —
 đoạn (dòng trống) trước, câu (dấu kết câu) nếu đoạn vẫn quá dài. Các mẩu con
@@ -33,22 +61,16 @@ trong văn bản) thì module này KHÔNG bịa cách cắt cứng theo số ký
 `KhoiVuotTranKhongTheChia` để việc đó được người xem trực tiếp, đúng tinh
 thần "loại trừ phải nhìn thấy được" (NT2) — không lặng lẽ hạ chuẩn.
 
-**Mỗi Node trong cây (trừ gốc `Level.DOCUMENT`) sinh ra ÍT NHẤT MỘT
-`Chunk`** — đúng một, trừ khi là Chunk LÁ vượt trần và được chia thành nhiều
-mẩu con. Các mẩu con cùng gốc giữ NGUYÊN `structure_path` của Node lá gốc và
-CÙNG một `parent_chunk_id` (chính là `chunk_id` của khối cha một cấp lên,
-không đôn thêm tầng nào) — phân biệt nhau chỉ bằng `span_start`/`span_end`.
-Đây là cách duy nhất khớp với 07 Mục 2.2: `parent_chunk_id` "con trỏ tới
-khối cấu trúc CHA, chính là đơn vị ĐỌC" — muốn tra được vị trí (`span_start`/
-`span_end`) của khối cha qua `parent_chunk_id` thì khối cha đó phải có mặt
-là một `Chunk` thật, không phải một khái niệm ảo. Gốc `Level.DOCUMENT` không
-sinh `Chunk` — `Node.path` của nó luôn rỗng (`vn_normalizer._dung_cay`), và
-nó không phải "khối cấu trúc" theo nghĩa 07 Mục 2.2, chỉ là điểm neo của cây.
+**Mỗi Node trong cây (trừ gốc `Level.DOCUMENT`) sinh ra ÍT NHẤT MỘT `Chunk`**
+— đúng một, trừ khi phần chữ của nó vượt trần và được chia thành nhiều mảnh.
+Các mảnh cùng gốc giữ NGUYÊN `structure_path`, CÙNG `parent_chunk_id`, và
+CÙNG `structure_block_*` của khối gốc (E1, PO chốt 25/9/2026) — phân biệt
+nhau chỉ bằng `span_start`/`span_end`. Gốc `Level.DOCUMENT` không sinh
+`Chunk`: `Node.path` của nó luôn rỗng (`vn_normalizer._dung_cay`), và nó
+không phải "khối cấu trúc" theo nghĩa 07 Mục 2.2, chỉ là điểm neo của cây.
 
-`embedding` (GĐ6/T2.5, ngoài phạm vi T2.3) được khởi tạo `[]` — placeholder
-hợp lệ với kiểu `list[float]` của `Chunk` (07 Mục 2.2 không cho trường này
-giá trị mặc định, và việc sửa `Chunk` không thuộc quyền của T2.3). T2.5 điền
-vector thật vào sau, cùng đối tượng `Chunk` này (`Chunk` không `frozen`).
+`embedding` (GĐ6/T2.5) được khởi tạo `[]` — placeholder; T2.5 điền vector
+thật vào sau, cùng đối tượng `Chunk` này (`Chunk` không `frozen`).
 """
 
 from __future__ import annotations
@@ -60,7 +82,12 @@ from schema.chunk import Chunk
 
 from .reader.structure import Node, ReadResult
 
-__all__ = ["KhongDungDuocCauTruc", "KhoiVuotTranKhongTheChia", "cat_thanh_mau"]
+__all__ = [
+    "InternalBlockHasNoOwnText",
+    "KhongDungDuocCauTruc",
+    "KhoiVuotTranKhongTheChia",
+    "cat_thanh_mau",
+]
 
 
 class KhongDungDuocCauTruc(Exception):
@@ -73,19 +100,38 @@ class KhongDungDuocCauTruc(Exception):
 
 
 class KhoiVuotTranKhongTheChia(Exception):
-    """Bước 2: một khối cấu trúc LÁ vượt trần, và một ĐOẠN hoặc CÂU đơn lẻ
-    bên trong nó cũng tự nó đã vượt trần — không còn ranh giới an toàn nào
-    (đoạn/câu) để chia tiếp.
+    """Bước 2: một khối vượt trần, và một ĐOẠN hoặc CÂU đơn lẻ bên trong nó
+    cũng tự nó đã vượt trần — không còn ranh giới an toàn nào (đoạn/câu) để
+    chia tiếp.
 
     Cố ý KHÔNG rơi về cắt cứng theo số ký tự — đó chính là việc bị cấm
-    (06 Mục 5.2, CLAUDE.md Mục 0 điều tuyệt đối #3: không tự quyết điểm mở).
-    Nổ ồn ào để người xem trực tiếp khối này, kèm `structure_path` và vị trí
-    tuyệt đối trong `extracted_text` để tìm đúng chỗ.
+    (06 Mục 5.2). Nổ ồn ào để người xem trực tiếp khối này, kèm
+    `structure_path` và vị trí tuyệt đối trong `extracted_text`.
+
+    Đo 24/9/2026: 2/36 tài liệu của kho thử rơi vào đây, cả hai vì một BẢNG
+    phụ lục (228 dòng, không dòng trống, không dấu kết câu) — việc bổ sung
+    mức ranh giới "dòng đơn" là một work-order riêng (CHUNK-bang-bieu).
+    """
+
+
+class InternalBlockHasNoOwnText(Exception):
+    """A structure block that HAS children begins exactly where its first
+    child begins, so it owns no text of its own.
+
+    Refused loudly instead of resolved quietly, because both quiet answers
+    are wrong: emitting a zero-length chunk puts a meaningless vector in the
+    store, and emitting no chunk at all breaks the `parent_chunk_id` chain
+    that S2 needs to build the reading unit — a wrong citation that reports
+    no error (07 Mục 2.2).
+
+    Measured on the 36-document corpus (25/9/2026): never fires. The smallest
+    own-text region found is 10 characters. This is a tripwire for a tree
+    shape nobody has seen yet, not a case the readers are known to produce.
     """
 
 
 # ---------------------------------------------------------------------------
-# Bước 2 — chia nhỏ TIẾP một Chunk LÁ vượt trần, chỉ tại ranh giới an toàn.
+# Bước 2 — chia nhỏ TIẾP một khối vượt trần, chỉ tại ranh giới an toàn.
 # ---------------------------------------------------------------------------
 
 # Ranh giới ĐOẠN: một hay nhiều dòng trống liên tiếp. `full_text` đã qua
@@ -128,35 +174,40 @@ def _chia_theo_diem_cat(text: str, diem_cat: list[int]) -> list[tuple[int, int]]
     return [(bien[i], bien[i + 1]) for i in range(len(bien) - 1) if bien[i] < bien[i + 1]]
 
 
-def _chia_nho_la(
-    node: Node,
+def _split_block_to_cap(
+    block_start: int,
+    block_end: int,
     full_text: str,
     *,
     tran_do_dai_mau: int,
     structure_path: list[str],
 ) -> list[tuple[int, int]]:
-    """Chia span TUYỆT ĐỐI của một Chunk LÁ vượt `tran_do_dai_mau` thành các
-    khoảng con an toàn — đoạn trước, câu nếu đoạn vẫn quá dài, đóng gói tham
-    lam để tránh sinh nhiều mẩu rất ngắn.
+    """Chia khoảng TUYỆT ĐỐI `[block_start, block_end)` thành các khoảng
+    con an toàn khi nó vượt `tran_do_dai_mau` — đoạn trước, câu nếu đoạn vẫn
+    quá dài, đóng gói tham lam để tránh sinh nhiều mẩu rất ngắn.
 
-    Trả về `[(node.char_start, node.char_end)]` (một khoảng, không chia) khi
+    Nhận VỊ TRÍ chứ không nhận `Node`: từ 25/9/2026 nó còn được gọi cho phần
+    chữ RIÊNG của một Node nội bộ và cho khối đầu/cuối văn bản — cả hai đều
+    không phải một Node trọn vẹn.
+
+    Trả về `[(block_start, block_end)]` (một khoảng, không chia) khi
     khối đã đủ ngắn — GĐ3 bước 1 điều cấm 3: khối đủ ngắn thì là MỘT mẩu.
 
     Raises:
         KhoiVuotTranKhongTheChia: một đoạn hoặc câu đơn lẻ vẫn vượt trần sau
         khi đã cắt tại ranh giới an toàn nhỏ nhất còn lại.
     """
-    if node.char_end - node.char_start <= tran_do_dai_mau:
-        return [(node.char_start, node.char_end)]
+    if block_end - block_start <= tran_do_dai_mau:
+        return [(block_start, block_end)]
 
-    text = full_text[node.char_start:node.char_end]
+    text = full_text[block_start:block_end]
 
-    # `node.char_end` là vị trí BẮT ĐẦU của mốc kế tiếp (structure.py
+    # `block_end` là vị trí BẮT ĐẦU của mốc kế tiếp (structure.py
     # `_dung_cay`), nên đuôi `text` gần như luôn là khoảng trắng/dòng trống
     # trước mốc đó — một trận khớp ranh giới đoạn CHẠM ĐÚNG cuối `text` không
     # có nội dung nào theo sau để tách; loại nó khỏi danh sách ranh giới thay
     # vì để nó nuốt mất khoảng trắng đuôi, tránh mẩu con cuối cùng hụt mất vài
-    # ký tự so với `node.char_end` thật.
+    # ký tự so với `block_end` thật.
     ranh_gioi_doan = [
         (m.start(), m.end())
         for m in _MAU_RANH_GIOI_DOAN.finditer(text)
@@ -183,11 +234,11 @@ def _chia_nho_la(
         ):
             do_dai_cau = cau_ket_thuc - cau_bat_dau
             if do_dai_cau > tran_do_dai_mau:
-                vi_tri_tuyet_doi_dau = node.char_start + bat_dau + cau_bat_dau
-                vi_tri_tuyet_doi_cuoi = node.char_start + bat_dau + cau_ket_thuc
+                vi_tri_tuyet_doi_dau = block_start + bat_dau + cau_bat_dau
+                vi_tri_tuyet_doi_cuoi = block_start + bat_dau + cau_ket_thuc
                 raise KhoiVuotTranKhongTheChia(
-                    f"Một CÂU trong khối lá {' > '.join(structure_path)} dài "
-                    f"{do_dai_cau} ký tự (vị trí [{vi_tri_tuyet_doi_dau}, "
+                    f"Một CÂU trong khối {' > '.join(structure_path) or '(khối đầu/cuối văn bản)'} "
+                    f"dài {do_dai_cau} ký tự (vị trí [{vi_tri_tuyet_doi_dau}, "
                     f"{vi_tri_tuyet_doi_cuoi}) trong extracted_text, vượt trần "
                     f"{tran_do_dai_mau} ký tự. Không còn ranh giới an toàn "
                     "(đoạn/câu) nào để chia tiếp — module này KHÔNG bịa cách "
@@ -204,10 +255,57 @@ def _chia_nho_la(
         else:
             goi.append((bat_dau, ket_thuc))
 
-    return [(node.char_start + s, node.char_start + e) for s, e in goi]
+    return [(block_start + s, block_start + e) for s, e in goi]
 
 
-def _duyet(
+# ---------------------------------------------------------------------------
+# Bước 1 — mỗi khối cấu trúc một mẩu, cắt theo ranh giới của cây.
+# ---------------------------------------------------------------------------
+
+
+def _emit_chunks_for_block(
+    *,
+    spans: list[tuple[int, int]],
+    structure_path: list[str],
+    block: tuple[int, int],
+    parent_chunk_id: str | None,
+    document_id: str,
+    space_id: str,
+    tenant_id: str,
+    ket_qua: list[Chunk],
+) -> str:
+    """Đổ các khoảng con của MỘT khối thành `Chunk`, trả `chunk_id` của mảnh
+    đầu tiên (mảnh làm cha cho các khối con — S2 quy tắc con 1).
+
+    Mọi mảnh của cùng một khối nhận CÙNG `structure_block_*` = trọn khối gốc
+    (E1, PO chốt 25/9/2026), CÙNG `structure_path`, CÙNG `parent_chunk_id`.
+    """
+    block_start, block_end = block
+    chunk_id_dau_tien: str | None = None
+    for span_start, span_end in spans:
+        chunk_id = str(uuid.uuid4())
+        if chunk_id_dau_tien is None:
+            chunk_id_dau_tien = chunk_id
+        ket_qua.append(
+            Chunk(
+                chunk_id=chunk_id,
+                document_id=document_id,
+                space_id=space_id,
+                tenant_id=tenant_id,
+                structure_path=structure_path,
+                span_start=span_start,
+                span_end=span_end,
+                structure_block_start=block_start,
+                structure_block_end=block_end,
+                embedding=[],
+                parent_chunk_id=parent_chunk_id,
+            )
+        )
+    assert chunk_id_dau_tien is not None  # `spans` không bao giờ rỗng
+    return chunk_id_dau_tien
+
+
+def _walk_tree(
     node: Node,
     *,
     duong_dan_cha: list[str],
@@ -229,40 +327,41 @@ def _duyet(
             )
         duong_dan_con = duong_dan_cha + doan
 
-        # Bước 2 CHỈ áp dụng cho Chunk LÁ (không con) — một Node nội bộ có
-        # span dài là cộng dồn từ con cháu (bất biến containment,
-        # structure.py `kiem_vi_tri`), không phải bằng chứng nó cần chia.
+        # Phần chữ RIÊNG của khối: tới ngay trước con đầu tiên nếu có con,
+        # còn không thì trọn khối. Trọn khối luôn được giữ nguyên ở
+        # `structure_block_*` để đơn vị ĐỌC của S2 không mất gì.
         if con.children:
-            khoang: list[tuple[int, int]] = [(con.char_start, con.char_end)]
-        else:
-            khoang = _chia_nho_la(
-                con,
-                full_text,
-                tran_do_dai_mau=tran_do_dai_mau,
-                structure_path=duong_dan_con,
-            )
-
-        chunk_id_dau_tien: str | None = None
-        for span_start, span_end in khoang:
-            chunk_id = str(uuid.uuid4())
-            if chunk_id_dau_tien is None:
-                chunk_id_dau_tien = chunk_id
-
-            ket_qua.append(
-                Chunk(
-                    chunk_id=chunk_id,
-                    document_id=document_id,
-                    space_id=space_id,
-                    tenant_id=tenant_id,
-                    structure_path=duong_dan_con,
-                    span_start=span_start,
-                    span_end=span_end,
-                    embedding=[],
-                    parent_chunk_id=parent_chunk_id,
+            own_text_end = con.children[0].char_start
+            if not full_text[con.char_start:own_text_end].strip():
+                raise InternalBlockHasNoOwnText(
+                    f"Khối {' > '.join(duong_dan_con)} có con nhưng không có chữ "
+                    f"riêng nào: nó bắt đầu ở {con.char_start} và con đầu tiên "
+                    f"cũng bắt đầu ở {own_text_end}. Không thể vừa giữ "
+                    "chuỗi parent_chunk_id (S2 cần để dựng đơn vị đọc) vừa "
+                    "tránh sinh một mẩu rỗng — cần người xem cây của tài liệu này."
                 )
-            )
+        else:
+            own_text_end = con.char_end
 
-        _duyet(
+        spans = _split_block_to_cap(
+            con.char_start,
+            own_text_end,
+            full_text,
+            tran_do_dai_mau=tran_do_dai_mau,
+            structure_path=duong_dan_con,
+        )
+        chunk_id_dau_tien = _emit_chunks_for_block(
+            spans=spans,
+            structure_path=duong_dan_con,
+            block=(con.char_start, con.char_end),
+            parent_chunk_id=parent_chunk_id,
+            document_id=document_id,
+            space_id=space_id,
+            tenant_id=tenant_id,
+            ket_qua=ket_qua,
+        )
+
+        _walk_tree(
             con,
             duong_dan_cha=duong_dan_con,
             parent_chunk_id=chunk_id_dau_tien,
@@ -275,6 +374,50 @@ def _duyet(
         )
 
 
+def _emit_edge_block(
+    *,
+    block_start: int,
+    block_end: int,
+    full_text: str,
+    tran_do_dai_mau: int,
+    document_id: str,
+    space_id: str,
+    tenant_id: str,
+    ket_qua: list[Chunk],
+) -> None:
+    """Khối đầu hoặc khối cuối văn bản → mẩu (07 Mục 2.2 v1.11).
+
+    `structure_path` là DANH SÁCH RỖNG và `parent_chunk_id` là `None`: khối
+    này không nằm ở cấp nào của cây, và nó đã là đơn vị cấu trúc cao nhất
+    theo đúng nghĩa quy tắc con 2 của S2, nên đơn vị ĐỌC của nó là trọn khối
+    của chính nó.
+
+    Khoảng chỉ có khoảng trắng thì KHÔNG sinh mẩu — một vector của mấy dòng
+    trống không trả lời được câu hỏi nào, và ở đây bỏ qua là an toàn: không
+    mẩu nào nhận khối này làm cha, nên không có chuỗi `parent_chunk_id` nào
+    bị đứt (khác hẳn `InternalBlockHasNoOwnText` ở trên).
+    """
+    if block_end <= block_start or not full_text[block_start:block_end].strip():
+        return
+    spans = _split_block_to_cap(
+        block_start,
+        block_end,
+        full_text,
+        tran_do_dai_mau=tran_do_dai_mau,
+        structure_path=[],
+    )
+    _emit_chunks_for_block(
+        spans=spans,
+        structure_path=[],
+        block=(block_start, block_end),
+        parent_chunk_id=None,
+        document_id=document_id,
+        space_id=space_id,
+        tenant_id=tenant_id,
+        ket_qua=ket_qua,
+    )
+
+
 def cat_thanh_mau(
     read_result: ReadResult,
     *,
@@ -283,35 +426,38 @@ def cat_thanh_mau(
     tenant_id: str,
     tran_do_dai_mau: int,
 ) -> list[Chunk]:
-    """GĐ3 — mỗi khối cấu trúc của `read_result.root` → một `Chunk` (bước 1);
-    một Chunk LÁ vượt `tran_do_dai_mau` ký tự được chia nhỏ TIẾP tại ranh
-    giới đoạn/câu an toàn (bước 2, 06 Mục 5.2, Điểm mở #4).
+    """GĐ3 — mỗi khối cấu trúc của `read_result.root` → một `Chunk` mang phần
+    chữ RIÊNG của khối (bước 1); phần chữ nào vượt `tran_do_dai_mau` ký tự
+    được chia nhỏ TIẾP tại ranh giới đoạn/câu an toàn (bước 2). Khối đầu và
+    khối cuối văn bản cũng thành mẩu.
+
+    Mẩu trả về theo đúng THỨ TỰ VĂN BẢN: khối đầu, rồi cây theo DFS, rồi khối
+    cuối — `pg_queue_stores` dựa vào thứ tự này để đánh `chunk_ordinal`.
 
     `tran_do_dai_mau` KHÔNG có giá trị mặc định — CLAUDE.md Mục 4 quy tắc 2.
-    Bên gọi (nơi lắp ráp pipeline, đọc `config/ingestion.yaml`) chịu trách
-    nhiệm truyền giá trị sống; PO đã chốt 5000 ký tự Unicode (21/9/2026).
 
     Duyệt DFS từ gốc, tích luỹ `structure_path` (danh sách các đoạn, ngoài
     vào trong — 07 Mục 2.2) và `parent_chunk_id` (S2, ba quy tắc con):
 
     1. **Cha đúng một cấp lên**: `parent_chunk_id` truyền xuống là `chunk_id`
-       của node CHA trực tiếp trong cây, không phải cấp bất kỳ. Khi một
-       Chunk LÁ bị chia thành nhiều mẩu con, TẤT CẢ mẩu con nhận CÙNG một
-       `parent_chunk_id` (của khối cha một cấp lên — không đôn thêm tầng
-       nào) và CÙNG một `structure_path`, phân biệt nhau chỉ bằng
+       của MẢNH ĐẦU TIÊN của node CHA trực tiếp. Khi phần chữ của một khối bị
+       chia thành nhiều mảnh, TẤT CẢ mảnh nhận CÙNG `parent_chunk_id`, CÙNG
+       `structure_path` và CÙNG `structure_block_*`, phân biệt nhau chỉ bằng
        `span_start`/`span_end`.
     2. **Khối cấu trúc cao nhất thì không có cha**: con trực tiếp của gốc
-       (`Level.DOCUMENT`) nhận `parent_chunk_id=None`, vì gốc không sinh
-       `Chunk`.
+       (`Level.DOCUMENT`), và cả khối đầu/cuối văn bản, nhận
+       `parent_chunk_id=None`. Đơn vị đọc khi đó là `structure_block_*` của
+       chính mẩu — không phải mảnh `span_*` của nó.
     3. **Khử trùng cha khi hai mẩu cùng một cha** là việc của T3.5
-       (Retrieval, docs/09 dòng 213) — module này KHÔNG cài dedup, chỉ đảm
-       bảo các mẩu con của cùng một khối cha được gán CÙNG một
-       `parent_chunk_id`, để T3.5 khử trùng đúng.
+       (Retrieval) — module này KHÔNG cài dedup, chỉ đảm bảo các mảnh của
+       cùng một khối cha được gán CÙNG một `parent_chunk_id`.
 
     Raises:
-        KhongDungDuocCauTruc: `read_result.dung_duoc` là `False`.
-        KhoiVuotTranKhongTheChia: một Chunk LÁ vượt trần có một đoạn/câu tự
-        nó cũng vượt trần, không còn ranh giới an toàn để chia tiếp.
+        KhongDungDuocCauTruc: `read_result.dung_duoc` là `False`, hoặc cây
+            dựng được nhưng không có khối cấu trúc cao nhất nào.
+        KhoiVuotTranKhongTheChia: một khối vượt trần có một đoạn/câu tự nó
+            cũng vượt trần, không còn ranh giới an toàn để chia tiếp.
+        InternalBlockHasNoOwnText: một khối có con nhưng không có chữ riêng.
     """
     if not read_result.dung_duoc:
         raise KhongDungDuocCauTruc(
@@ -319,16 +465,50 @@ def cat_thanh_mau(
             "(06 Mục 5.2 GĐ3 cắt THEO CẤU TRÚC; không có cấu trúc thì không cắt)"
         )
 
+    top_level_blocks = read_result.root.children
+    if not top_level_blocks:
+        raise KhongDungDuocCauTruc(
+            f"ReadResult.outcome={read_result.outcome.name} nói dựng được cấu trúc, "
+            "nhưng gốc không có khối cấu trúc con nào. Từ chối thay vì coi toàn văn "
+            "là một mẩu duy nhất — đó đúng là đường 'im lặng hạ chuẩn' mà 06 Mục 5.2 "
+            "cấm."
+        )
+
+    full_text = read_result.full_text
     ket_qua: list[Chunk] = []
-    _duyet(
+
+    _emit_edge_block(
+        block_start=0,
+        block_end=top_level_blocks[0].char_start,
+        full_text=full_text,
+        tran_do_dai_mau=tran_do_dai_mau,
+        document_id=document_id,
+        space_id=space_id,
+        tenant_id=tenant_id,
+        ket_qua=ket_qua,
+    )
+
+    _walk_tree(
         read_result.root,
         duong_dan_cha=[],
         parent_chunk_id=None,
         document_id=document_id,
         space_id=space_id,
         tenant_id=tenant_id,
-        full_text=read_result.full_text,
+        full_text=full_text,
         tran_do_dai_mau=tran_do_dai_mau,
         ket_qua=ket_qua,
     )
+
+    _emit_edge_block(
+        block_start=top_level_blocks[-1].char_end,
+        block_end=len(full_text),
+        full_text=full_text,
+        tran_do_dai_mau=tran_do_dai_mau,
+        document_id=document_id,
+        space_id=space_id,
+        tenant_id=tenant_id,
+        ket_qua=ket_qua,
+    )
+
     return ket_qua

@@ -62,6 +62,8 @@ def test_chunk_constructs_with_only_documented_fields():
         structure_path=["Chương II", "Điều 7", "Khoản 3"],
         span_start=0,
         span_end=120,
+        structure_block_start=0,
+        structure_block_end=120,
         embedding=[0.1, 0.2, 0.3],
     )
     assert chunk.parent_chunk_id is None

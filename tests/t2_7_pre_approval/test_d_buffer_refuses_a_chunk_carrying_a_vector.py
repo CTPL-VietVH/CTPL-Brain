@@ -57,6 +57,8 @@ def test_buffer_refuses_a_chunk_carrying_a_vector(buffer_factory) -> None:
                 structure_path=["Điều 1"],
                 span_start=0,
                 span_end=26,
+                structure_block_start=0,
+                structure_block_end=26,
                 embedding=[0.1, 0.2, 0.3],
             )
         ],

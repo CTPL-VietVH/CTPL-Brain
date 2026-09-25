@@ -417,6 +417,8 @@ _CHUNK_COLUMNS = (
     "structure_path",
     "span_start",
     "span_end",
+    "structure_block_start",
+    "structure_block_end",
     "parent_chunk_id",
     "category_labels",
     "chunk_ordinal",
@@ -466,6 +468,8 @@ def _chunk_params(chunk: Chunk, *, ordinal: int) -> tuple:
         list(chunk.structure_path),
         chunk.span_start,
         chunk.span_end,
+        chunk.structure_block_start,
+        chunk.structure_block_end,
         chunk.parent_chunk_id,
         list(chunk.category_labels),
         ordinal,
@@ -529,6 +533,8 @@ def _row_to_chunk(row: tuple) -> Chunk:
         structure_path,
         span_start,
         span_end,
+        structure_block_start,
+        structure_block_end,
         parent_chunk_id,
         category_labels,
     ) = row
@@ -540,6 +546,8 @@ def _row_to_chunk(row: tuple) -> Chunk:
         structure_path=list(structure_path) if structure_path is not None else [],
         span_start=span_start,
         span_end=span_end,
+        structure_block_start=structure_block_start,
+        structure_block_end=structure_block_end,
         # The pre-approval chunk table has no vector column, by design (06
         # Mục 5.2 GĐ1) — GĐ6 has not run for anything in this buffer.
         embedding=[],
