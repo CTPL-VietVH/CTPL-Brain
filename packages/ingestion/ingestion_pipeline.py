@@ -179,18 +179,27 @@ class IngestionPipeline:
     def recover(self) -> list[IngestionRecord]:
         """What a process does FIRST, before serving anything.
 
-        Two sweeps, in this order and not the other:
+        Three sweeps, in this order and not another:
 
         1. every `RUNNING` row back to `QUEUED` — PO chốt 24/9/2026, and
            `IngestionRecordStore` explains why no timeout is involved and
            what it costs (one replica only);
-        2. delete every staged file no unfinished row still names.
+        2. delete every staged file no unfinished row still names;
+        3. VEC-2 — finish the cleanup of promotes that died half-written
+           (`sweep_promotion_orphans`).
 
-        The order matters: sweeping files first would delete the inputs of
-        the jobs step 1 is about to revive, because a `RUNNING` row is not
-        yet in `unfinished()`'s answer… and in fact it is — but relying on
-        that would make the sweep depend on a detail of the other step. Doing
-        the requeue first makes the `keep` list correct by construction.
+        The first two orders matter: sweeping files first would delete the
+        inputs of the jobs step 1 is about to revive, because a `RUNNING` row
+        is not yet in `unfinished()`'s answer… and in fact it is — but
+        relying on that would make the sweep depend on a detail of the other
+        step. Doing the requeue first makes the `keep` list correct by
+        construction.
+
+        Step 3 comes LAST for a different reason: step 1 has just moved every
+        `RUNNING` row to `QUEUED`, so by the time the orphan sweep runs, no
+        row it could look at is one a live job is holding. It is also the
+        only step that may touch the shared stores, and running it after the
+        cheap local work means a store that is down cannot stop the rest.
         """
         recovered = self.records.recover_orphans(now=self.clock())
         if recovered:
@@ -210,7 +219,136 @@ class IngestionPipeline:
             logger.warning(
                 "Deleted %d orphaned staged file(s): %s", len(removed), removed
             )
+        self.sweep_promotion_orphans()
         return recovered
+
+    def sweep_promotion_orphans(self) -> list[str]:
+        """VEC-2 — delete the profiles that a half-finished promote left in
+        PostgreSQL, so the same file can be uploaded again.
+
+        Returns the `document_id`s actually cleaned, for the caller's log and
+        for tests. An empty list is the normal answer.
+
+        ──────────────────────────────────────────────────────────────────
+        The state this exists for
+        ──────────────────────────────────────────────────────────────────
+
+        `promote_approved_ingestion` writes PostgreSQL (step 4) and then
+        Qdrant (step 5), and already undoes step 4 itself when step 5 fails
+        (VEC-1). Two things that undo cannot cover:
+
+        * the undo's OWN first step fails — Qdrant is down, so the points
+          cannot be deleted, and `promotion.py` then deliberately leaves the
+          profile in place rather than create the dangling pointer of điều
+          cấm #17;
+        * the process dies between step 4 and step 5, so no undo runs at all.
+          That row comes back as `RUNNING`, which this sweep deliberately
+          will not touch; it reaches `FAILED` when the requeued job finds
+          its staged file gone (`_read_out`), and the sweep at the NEXT
+          start is the one that cleans it.
+
+        Either way PostgreSQL holds a profile with no vectors. Nothing can
+        find it — and `intake.decide_intake` answers `duplicate` for the next
+        upload of the same bytes, because the fingerprint index reads that
+        very table. The file becomes un-ingestable, silently. That is the
+        whole reason this sweep exists.
+
+        ──────────────────────────────────────────────────────────────────
+        Three gates, and what each one prevents
+        ──────────────────────────────────────────────────────────────────
+
+        1. `promotion_orphan_candidates()` — terminal `FAILED` **and** a
+           non-null `promoting_document_id` (see `PROMOTION_ORPHAN_STATUS`).
+        2. the profile must still BE there. A row whose undo already worked
+           is not work; probing first also means a second run of this sweep
+           finds nothing to do even if step 3 below never ran.
+        3. S6 order — vectors first, then profile + relations in one
+           transaction. Reversing it would produce findable chunks pointing
+           at a profile that is gone.
+
+        ⛔ **No `deletion_log` line**, the same rule VEC-1 fixed for the
+        inline undo: that log records a permanent deletion a PERSON ordered
+        (06 Mục 5.6). This is the system finishing its own interrupted write
+        of a document no user ever saw.
+
+        ⚠️ **A failure here never stops startup.** The case is logged with
+        the ids that identify it and the row keeps its pointer, so the next
+        start tries again — which is also why the pointer is only cleared
+        AFTER both deletes have returned.
+        """
+        swept: list[str] = []
+        try:
+            candidates = self.records.promotion_orphan_candidates()
+        except Exception:
+            logger.exception(
+                "Could not read the promotion-orphan worklist; skipping the sweep. "
+                "Any orphaned profile stays until the next start — it blocks "
+                "re-uploading that one file, and nothing else."
+            )
+            return swept
+
+        for record in candidates:
+            document_id = record.promoting_document_id
+            if document_id is None:  # pragma: no cover - the store filtered these
+                continue
+            try:
+                if self.profile_store.get_document(document_id) is None:
+                    # The undo already ran, or this job never got past step 4.
+                    # Nothing to delete, so nothing to mark: leaving the
+                    # pointer costs one indexed lookup at the next start and
+                    # keeps the trace of which document the failed job made.
+                    continue
+
+                logger.warning(
+                    "Ingestion %s failed after writing document %s to PostgreSQL but "
+                    "before its vectors were complete. Finishing the cleanup now "
+                    "(vector store first, then profile + relations).",
+                    record.ingestion_id,
+                    document_id,
+                )
+                points_deleted = self.vector_deleter.delete_document_points(document_id)
+                counts = self.profile_deleter.delete_document_and_relations(document_id)
+            except Exception:
+                logger.exception(
+                    "⚠️ Promotion-orphan sweep FAILED for ingestion %s / document %s. "
+                    "The row keeps its promoting_document_id, so the next startup "
+                    "tries again; until then, re-uploading that one file is refused "
+                    "as a duplicate.",
+                    record.ingestion_id,
+                    document_id,
+                )
+                continue
+
+            try:
+                self.records.update(
+                    dataclasses.replace(
+                        record, promoting_document_id=None, updated_at=self.clock()
+                    )
+                )
+            except Exception:
+                # Both stores are already clean; only the marker survived.
+                # Not an error worth failing over — the next sweep finds no
+                # profile and does nothing.
+                logger.exception(
+                    "Cleaned document %s but could not clear promoting_document_id on "
+                    "ingestion %s. Harmless: the next sweep sees no profile and stops.",
+                    document_id,
+                    record.ingestion_id,
+                )
+
+            logger.warning(
+                "Promotion orphan cleaned: ingestion %s / document %s — %d vector "
+                "point(s), %d profile row(s), %d relation(s) removed. That file can "
+                "be submitted again.",
+                record.ingestion_id,
+                document_id,
+                points_deleted,
+                counts.profile_rows_deleted,
+                counts.relations_deleted,
+            )
+            swept.append(document_id)
+
+        return swept
 
     # -- the queue -------------------------------------------------------- #
 
@@ -405,6 +543,36 @@ class IngestionPipeline:
             # a filter (CLAUDE.md điều cấm #20).
             self.buffer.put(entry)
             return self._finish(record, status=IngestionStatus.AWAITING_APPROVAL)
+
+        # ⭐ VEC-2 — the pointer goes down BEFORE the promote, and it is
+        # committed by the time the next line runs (`IngestionRecordStore`
+        # writes are not held open). From here until this job reaches a
+        # terminal state, the row knows which document the promote is about to
+        # create; if the process dies in the middle of the write, that pointer
+        # is the only thing left connecting the failed job to the profile it
+        # created, and `sweep_promotion_orphans` has nothing to work from
+        # without it.
+        #
+        # `entry.document.document_id` and not the promote's return value, for
+        # the same reason: a value read afterwards cannot survive a crash
+        # before "afterwards". The promote never changes the id — it replaces
+        # `version_ordinal` and `relations_scan_state` and nothing else — so
+        # this is the same document_id step 4 writes.
+        #
+        # ⚠️ Re-read before writing, for the reason `_finish` states for
+        # itself: `_read_out` cleared `staged_filename` in the STORE, and the
+        # `record` this method was handed still carries it. Writing that copy
+        # back resurrects the name of a file that was already deleted — which
+        # is exactly what `tests/api/test_j` caught the first time this update
+        # was written from the stale value.
+        current = self.records.get(record.ingestion_id) or record
+        self.records.update(
+            dataclasses.replace(
+                current,
+                promoting_document_id=entry.document.document_id,
+                updated_at=self.clock(),
+            )
+        )
 
         try:
             promoted = promote_approved_ingestion(

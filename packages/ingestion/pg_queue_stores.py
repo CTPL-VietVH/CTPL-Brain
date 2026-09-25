@@ -74,6 +74,7 @@ from schema.chunk import Chunk
 from schema.document import DateSource, Document, VersionDeclaredBy
 from schema.ingestion_record import (
     ORPHANED_STATUS,
+    PROMOTION_ORPHAN_STATUS,
     IngestionFailureCode,
     IngestionRecord,
     IngestionStatus,
@@ -138,6 +139,13 @@ _INGESTION_RECORD_COLUMNS = (
     "document_id",
     "existing_document_id",
     "code",
+    # VEC-2, internal (see `schema/ingestion_record.py`). ⚠️ Adding a column to
+    # `IngestionRecord` means adding it in THREE places in this file — this
+    # tuple, `_record_params` and `_row_to_record` — and
+    # `tests/api/test_q_ingestion_record_columns_line_up.py` is what turns
+    # forgetting one of them into a red test instead of a `ProgrammingError`
+    # the first time a deployment writes a row.
+    "promoting_document_id",
 )
 
 
@@ -156,6 +164,7 @@ def _record_params(record: IngestionRecord) -> tuple:
         record.document_id,
         record.existing_document_id,
         record.code.value if record.code is not None else None,
+        record.promoting_document_id,
     )
 
 
@@ -174,6 +183,7 @@ def _row_to_record(row: tuple) -> IngestionRecord:
         document_id,
         existing_document_id,
         code,
+        promoting_document_id,
     ) = row
     return IngestionRecord(
         ingestion_id=ingestion_id,
@@ -189,6 +199,7 @@ def _row_to_record(row: tuple) -> IngestionRecord:
         document_id=document_id,
         existing_document_id=existing_document_id,
         code=IngestionFailureCode(code) if code is not None else None,
+        promoting_document_id=promoting_document_id,
     )
 
 
@@ -302,6 +313,22 @@ class PgIngestionRecordStore:
             f"SELECT {_INGESTION_RECORD_SELECT_LIST} FROM {INGESTION_RECORD_TABLE} "
             f"WHERE space_id = %s",
             (space_id,),
+        ).fetchall()
+        return [_row_to_record(row) for row in rows]
+
+    def promotion_orphan_candidates(self) -> list[IngestionRecord]:
+        """VEC-2 — the startup sweep's worklist. Both conditions are in the
+        WHERE clause and neither is optional; `ingestion_record_store.py`'s
+        Protocol says what each one proves.
+
+        `promoting_document_id IS NOT NULL` is also the predicate of
+        `ingestion_record_promotion_orphan_idx`, so this reads the partial
+        index rather than the table.
+        """
+        rows = self._conn.execute(
+            f"SELECT {_INGESTION_RECORD_SELECT_LIST} FROM {INGESTION_RECORD_TABLE} "
+            f"WHERE status = %s AND promoting_document_id IS NOT NULL",
+            (PROMOTION_ORPHAN_STATUS.value,),
         ).fetchall()
         return [_row_to_record(row) for row in rows]
 

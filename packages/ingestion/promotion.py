@@ -73,7 +73,18 @@ Three rules the cleanup follows, each one load-bearing:
   `ingestion_record` row (`failed`) plus this module's log.
 
 What is still NOT handled here, by decision: a process that dies mid-cleanup
-leaves an orphan nothing has swept yet. Finishing those at startup is VEC-2.
+leaves an orphan nothing has swept yet. Finishing those at startup is VEC-2 —
+`IngestionPipeline.sweep_promotion_orphans`.
+
+⚠️ **VEC-2 asks one thing of every caller of this function**: record the
+`document_id` this promote is about to write, durably, BEFORE calling it —
+`ingestion_record.promoting_document_id`, which `IngestionPipeline._ingest`
+writes for the ordinary path. The pointer cannot be created here, because the
+crash it exists to survive can happen inside this function; and it cannot be
+derived afterwards, because `ingestion_id` and `document_id` are deliberately
+two different identifiers (docs/10 §4.2, PO chốt 25/9/2026). A caller that
+skips it gets a promote that still behaves correctly — and an orphan that no
+sweep will ever find.
 
 ⚠️ The Qdrant↔PostgreSQL boundary has no shared transaction — 07 Mục 2 calls
 it *"ranh giới duy nhất còn thiếu giao dịch chung"*. The answer is the same

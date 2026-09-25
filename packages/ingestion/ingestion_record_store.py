@@ -42,6 +42,7 @@ from datetime import datetime
 from typing import Protocol
 
 from schema.ingestion_record import (
+    PROMOTION_ORPHAN_STATUS,
     UNFINISHED_STATUSES,
     IngestionRecord,
     IngestionStatus,
@@ -84,6 +85,16 @@ class IngestionRecordStore(Protocol):
     * `recover_orphans` moves every `RUNNING` row back to `QUEUED`. See the
       module docstring for why that is sound, and for the exact condition
       under which it stops being sound.
+
+    `promotion_orphan_candidates` (VEC-2) is the sweep's worklist: rows in
+    `PROMOTION_ORPHAN_STATUS` that still carry a `promoting_document_id`.
+    ⛔ Both conditions, always. The status is what proves the job is not
+    still running (see that constant for the case-by-case reason); the
+    non-null pointer is what proves it got as far as writing a profile.
+    Dropping either one turns a cleanup into the deletion of a live document.
+    It answers with CANDIDATES, not with work to do: whether that profile is
+    actually still there is a question for the profile store, and the sweep
+    asks it before deleting anything.
     """
 
     def put(self, record: IngestionRecord) -> None: ...
@@ -99,6 +110,8 @@ class IngestionRecordStore(Protocol):
     def unfinished(self) -> list[IngestionRecord]: ...
 
     def list_in_space(self, space_id: str) -> list[IngestionRecord]: ...
+
+    def promotion_orphan_candidates(self) -> list[IngestionRecord]: ...
 
 
 class InMemoryIngestionRecordStore:
@@ -173,6 +186,17 @@ class InMemoryIngestionRecordStore:
             record
             for record in self._records.values()
             if record.space_id == space_id
+        ]
+
+    def promotion_orphan_candidates(self) -> list[IngestionRecord]:
+        """Rows whose promote may have left a profile behind — see the
+        Protocol's docstring for the two conditions and why neither may be
+        relaxed."""
+        return [
+            record
+            for record in self._records.values()
+            if record.status is PROMOTION_ORPHAN_STATUS
+            and record.promoting_document_id is not None
         ]
 
     def records(self) -> list[IngestionRecord]:

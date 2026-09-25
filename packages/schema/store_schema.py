@@ -330,7 +330,8 @@ CREATE TABLE IF NOT EXISTS {INGESTION_RECORD_TABLE} (
     declared_previous_document_id text,
     document_id                   text,
     existing_document_id          text,
-    code                          text
+    code                          text,
+    promoting_document_id         text
 )
 """
 # ⚠️ **NO foreign key on `document_id`**, and it is the same decision
@@ -351,6 +352,17 @@ CREATE TABLE IF NOT EXISTS {INGESTION_RECORD_TABLE} (
 # ⛔ There is no `url` column, no `acting_as`, no `space_is_private` and no
 # `extracted_text`. Each of those four is forbidden for its own reason — see
 # `schema/ingestion_record.py`, which states them.
+#
+# `promoting_document_id` (VEC-2, 25/9/2026) is INTERNAL, and is NOT a second
+# spelling of `document_id` above: that one means *"this submission produced
+# this document"* to Backend (docs/10 §4.2, set only on `active`), while this
+# one means *"this job was in the middle of writing that document when it
+# stopped"* — a question only the orphan sweep asks, and never an answer
+# Backend receives. Full reasoning in `schema/ingestion_record.py`.
+#
+# It carries no foreign key either, and for a sharper reason than the columns
+# above: the row it points at is one the sweep is about to DELETE. A cascading
+# FK would erase the pointer at the exact moment it is being used.
 
 INGESTION_RECORD_INDEXES_DDL = (
     # The queue read, and the ONLY one the worker makes: oldest unfinished job
@@ -367,6 +379,17 @@ CREATE INDEX IF NOT EXISTS ingestion_record_queue_idx
     f"""
 CREATE INDEX IF NOT EXISTS ingestion_record_space_idx
     ON {INGESTION_RECORD_TABLE} (space_id, status)
+""",
+    # VEC-2 — the startup orphan sweep's worklist, and the same shape as
+    # `deletion_log_unfinished_idx`: a PARTIAL index holding exactly the rows
+    # that still carry unfinished work and no others. The predicate names only
+    # `promoting_document_id`, never a `status` literal — the allowed status
+    # values live in `IngestionStatus` alone, and a string here would be the
+    # second spelling CLAUDE.md Mục 6 exists to prevent.
+    f"""
+CREATE INDEX IF NOT EXISTS ingestion_record_promotion_orphan_idx
+    ON {INGESTION_RECORD_TABLE} (promoting_document_id)
+    WHERE promoting_document_id IS NOT NULL
 """,
 )
 

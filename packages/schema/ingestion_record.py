@@ -148,6 +148,24 @@ UNFINISHED_STATUSES: Final[frozenset[IngestionStatus]] = frozenset(
 #: and the same file would be ingested twice.
 ORPHANED_STATUS: Final = IngestionStatus.RUNNING
 
+#: VEC-2 — the ONE status the promotion-orphan sweep is allowed to act on.
+#:
+#: ⛔ `FAILED` and nothing else, because the sweep DELETES a document profile
+#: and the status is what proves nobody else is still using it:
+#:
+#: * `RUNNING` / `QUEUED` — the job may be between step 4 and step 5 RIGHT
+#:   NOW. Sweeping one of those would delete the profile of a promote that is
+#:   about to succeed, and the job would then write vectors for a document
+#:   whose row is gone.
+#: * `ACTIVE` — the promote finished. The profile and its vectors are exactly
+#:   what the system is supposed to have.
+#: * `REJECTED` / `DUPLICATE` / `AWAITING_APPROVAL` — never reached step 4, so
+#:   there is no profile of theirs to clean.
+#:
+#: A terminal `FAILED` row is the only one that both (a) cannot still be
+#: running and (b) may have left half a write behind.
+PROMOTION_ORPHAN_STATUS: Final = IngestionStatus.FAILED
+
 
 def wire_status(status: IngestionStatus) -> str:
     """The value `GET /v1/ingestions/{id}` publishes for a stored status.
@@ -248,6 +266,33 @@ class IngestionRecord:
     #: twin sits in the shared store or in the pre-approval buffer; which of
     #: the two it was stays in AI's own log.
     existing_document_id: str | None = None
+
+    #: ⭐ **Internal only — never leaves this service** (VEC-2). The
+    #: `document_id` this job was ABOUT TO write into the shared stores,
+    #: recorded and committed BEFORE the PostgreSQL profile is written.
+    #:
+    #: Why a second column instead of reusing `document_id` above: docs/10
+    #: §4.2 gives `document_id` a public meaning — *"set exactly when the job
+    #: ended `active`"* — so a rejected or failed submission never names a
+    #: document to Backend. That promise is what makes the id trustworthy on
+    #: the wire, and widening it to "and also sometimes a document that does
+    #: not exist" would break it silently. PO chốt 25/9/2026: keep the public
+    #: field as it is, add an internal one.
+    #:
+    #: Why it is written BEFORE the profile: the promote writes PostgreSQL
+    #: (step 4) and then Qdrant (step 5), and a process that dies in between
+    #: leaves a profile with no vectors. That profile is invisible to every
+    #: question AND blocks the next upload of the same file, because the
+    #: fingerprint index reads the `document` table directly. This column is
+    #: the only durable pointer from the failed job back to the row it
+    #: created, so `IngestionPipeline.sweep_promotion_orphans` can finish the
+    #: cleanup at the next startup.
+    #:
+    #: Set back to `None` once that cleanup has succeeded — that is what
+    #: makes a second sweep a no-op. ⛔ It is NOT a status, and nothing may
+    #: read it to decide what a submission "is": the only reader is the
+    #: sweep, and the only writer is the pipeline around a promote.
+    promoting_document_id: str | None = None
 
     #: Set exactly when `status is REJECTED` or `FAILED` — docs/10 §4.2.
     #: Typed as the enum rather than a bare string so an invented code
