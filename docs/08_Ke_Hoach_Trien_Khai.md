@@ -252,7 +252,18 @@ Trong Nhóm 2, chuỗi GĐ có thứ tự tự nhiên. Trong Nhóm 3, T3.1 và T
 
 **T3.4 — Trần và cảnh báo.** Trần 6 tài liệu; chạm trần thì trả lời bình thường và **nói rõ đã giới hạn**; cảnh báo chỉ hiện khi số ứng viên vượt trần từ 3 lần trở lên. Tràn ngữ cảnh thì **báo lỗi và ghi nhật ký**, tuyệt đối không cắt ngầm. *Nguồn*: 06 Mục 6.5.
 
-**T3.5 — Dựng đơn vị đọc.** Theo `parent_chunk_id` lên khối cha, cắt `extracted_text` theo vị trí của khối cha. Mẩu không có cha thì đơn vị đọc là chính nó. **Hai mẩu cùng cha thì cha chỉ lấy một lần.** *Nguồn*: 07 Mục 2.2.
+**T3.5 — Dựng đơn vị đọc.** Theo `parent_chunk_id` lên khối cha, cắt `extracted_text` theo **`structure_block_start`/`structure_block_end` của khối cha** — **KHÔNG** theo `span_start`/`span_end` của khối cha, vì từ schema v2 (SCHEMA_BREAKING_VERSION 1→2) span của một khối CÓ con chỉ còn là phần chữ riêng, không bao trùm con cháu. Mẩu không có cha (`parent_chunk_id=None`) thì đơn vị đọc là `structure_block_start`/`structure_block_end` **của chính nó** — kể cả khi mẩu đó chỉ là một mảnh của một khối lá bị chia vì vượt `chunk_length_cap` (mọi mảnh của cùng một khối lá mang **cùng** `structure_block_*` của khối gốc). Khối đầu và khối cuối văn bản cũng vào ca này: `structure_path=[]`, `parent_chunk_id=None`.
+
+**Cập nhật 25/9/2026 — khoá gộp trùng cho quy tắc "hai mẩu cùng cha thì cha chỉ lấy một lần" (07 Mục 2.2, quy tắc con 3):**
+- `parent_chunk_id` **khác** `None` → khoá gộp là chính `parent_chunk_id`.
+- `parent_chunk_id` **là** `None` → khoá gộp là cặp **`(document_id, structure_block_start, structure_block_end)`**.
+- Hai cách sai cần tránh: (a) gộp theo **giá trị `None`** — nhiều khối gốc không liên quan (khối đầu văn bản, khối cuối văn bản, các Chương cấp cao nhất khác nhau bị chia) đều mang `parent_chunk_id=None`, gộp theo giá trị đó sẽ trộn lẫn chúng làm một; (b) gộp theo **`chunk_id`** — mỗi mảnh của cùng một khối lá bị chia có `chunk_id` riêng, khoá theo đó thì các mảnh của cùng một khối sẽ chiếm nhiều suất trong trần thay vì đúng một.
+
+*Xong khi* (bổ sung 25/9/2026): (a) một khối cấp cao nhất bị chia thành 3 mảnh (cả 3 đều `parent_chunk_id=None`, cùng `structure_block_*`) cùng lọt vào kết quả tìm → dựng đơn vị đọc chỉ lấy **một lần**, không lấy ba; (b) khối đầu văn bản và một Chương cấp cao nhất khác cùng lọt vào kết quả tìm trong cùng một lượt (cả hai `parent_chunk_id=None` nhưng `structure_block_*` khác nhau vì thuộc hai khối gốc khác nhau) → ra **hai** đơn vị đọc riêng biệt, không bị gộp nhầm chỉ vì cùng mang `parent_chunk_id=None`.
+
+*Nguồn*: 07 Mục 2.2.
+
+> **Ghi chú — treo cùng T3.4, HOÃN, không tự đặt con số:** đơn vị đọc của một mẩu cấp cao nhất (ví dụ trọn một Chương không bị chia) bằng trọn `structure_block_*` của nó, có thể rất lớn — cùng loại rủi ro tồn dư đã ghi ở 07 Mục 2.2 ("không có van khối lượng"). **Cấp cấu trúc tối đa được phép làm đơn vị đọc** (có chặn ở một cấp nào đó dưới Chương hay không) là điểm còn để mở, chốt cùng lúc với T3.4 khi chọn mô hình sinh câu trả lời — vì nó phụ thuộc trần ngữ cảnh của mô hình đó. Trước khi chốt: giữ nguyên hành vi 06 Mục 6.5 — tràn ngữ cảnh thì **báo lỗi và ghi nhật ký**, tuyệt đối không cắt ngầm.
 
 **T3.6 — Tách bước hiểu câu hỏi khỏi bước trả lời.** Lịch sử hội thoại **chỉ** đi vào bước một — bước biến *"còn điều khoản thứ hai thì sao"* thành một câu hỏi đứng một mình. Bước sinh câu trả lời **chỉ nhận câu hỏi đã đứng một mình cộng tài liệu vừa lấy lại**, không nhận lịch sử. *Nguồn*: 06 Mục 9.4.
 *Xong khi*: hỏi tiếp nối rồi thu hồi quyền giữa chừng — lượt sau không được trả lời bằng nội dung của lượt trước.
