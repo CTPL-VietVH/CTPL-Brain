@@ -92,12 +92,16 @@ class DuplicateHit:
 class PreApprovalRequest:
     """One upload, before any stage has run.
 
-    `title` and `doc_number` come from the uploader: no GĐ5 function extracts
-    them (`labeling.py` covers labels, both dates and subject entities), so
-    they cannot be derived here — see the T2.7 report. Over `POST
-    /v1/ingestions` nobody supplies them either (PO chốt 24/9/2026: Backend
-    does not send them and the filename must NOT be used as a title), so that
-    caller passes the empty string and `suggestions` reports `null`.
+    `title` and `doc_number` are plain fields here — this module does not
+    derive them itself, it only carries whatever the caller passes in (see
+    the T2.7 report). `labeling.py` gained `extract_title` /
+    `extract_document_number` in task T2.4b; the `POST /v1/ingestions`
+    caller (`ingestion_pipeline.py`) runs both against the GĐ2 text BEFORE
+    building this request and passes the suggested values straight through
+    — `""` when neither extractor is confident. Backend itself still never
+    supplies either field (PO chốt 24/9/2026: Backend does not send them and
+    the filename must NOT be used as a title); `""` here always means
+    "nobody has suggested one yet", and `suggestions` reports it as `null`.
 
     `ingested_at` is passed in rather than read from the clock so the caller
     owns the timestamp, and so a test is not racing `datetime.now()`.

@@ -63,6 +63,7 @@ from ingestion.chunking import KhoiVuotTranKhongTheChia, KhongDungDuocCauTruc
 from ingestion.extraction import DinhDangKhongNhan, ExtractionResult, KhongDocDuocLopChu, extract_file
 from ingestion.intake import BanMoiKhacSpace, FingerprintIndex, VanTayNoiDungRong
 from ingestion.ingestion_record_store import IngestionRecordStore
+from ingestion.labeling import extract_document_number, extract_title
 from ingestion.pre_approval_buffer import PreApprovalBuffer
 from ingestion.pre_approval_runner import PreApprovalRequest, prepare_ingestion
 from ingestion.promotion import (
@@ -316,13 +317,16 @@ class IngestionPipeline:
             space_id=record.space_id,
             tenant_id=record.tenant_id,
             # ⛔ NOT the uploaded filename (docs/10 §4.2: *"không lấy tên file
-            # giả làm tên văn bản"*), and no extractor for either field exists
-            # yet — `title`/`doc_number` are reported as `null` in
-            # `suggestions` and filled by a human through §4.3. The columns
-            # are NOT NULL (07 Mục 2.1), so the empty string is what "nobody
-            # has suggested one yet" looks like in the table.
-            title="",
-            doc_number="",
+            # giả làm tên văn bản"*). GĐ5 (`ingestion.labeling`, task T2.4b)
+            # suggests both from the front matter of `extracted_text`; a
+            # human still confirms or corrects through §4.3. Neither
+            # extractor guesses when it is not confident — it returns "",
+            # exactly the same "nobody has suggested one yet" value the
+            # columns held before T2.4b (07 Mục 2.1: NOT NULL, so "" rather
+            # than `None`), and `_suggestions` in `api/ingestion_routes.py`
+            # already projects "" to `null` either way.
+            title=extract_title(extraction.extracted_text).title,
+            doc_number=extract_document_number(extraction.extracted_text).doc_number,
             ingested_at=record.submitted_at,
             declared_previous_version=self._resolve_declared_previous(record),
         )

@@ -62,6 +62,10 @@ __all__ = [
     "trich_ngay_hieu_luc",
     "SubjectEntitySuggestion",
     "extract_subject_entities",
+    "DocNumberSuggestion",
+    "extract_document_number",
+    "TitleSuggestion",
+    "extract_title",
 ]
 
 
@@ -448,3 +452,191 @@ def extract_subject_entities(extracted_text: str) -> SubjectEntitySuggestion:
         if entities:
             return SubjectEntitySuggestion(subject_entities=entities)
     return SubjectEntitySuggestion(subject_entities=[])
+
+
+# ---------------------------------------------------------------------------
+# title / doc_number — task T2.4b (docs/10 §4.2: "AI gợi ý ... BE không gửi
+# chúng khi nộp"; §4.3: người sửa qua PATCH). "docs/07" §2.1: nguồn của cả
+# hai trường là Ingestion. Written in English per CLAUDE.md Section 0 #4.
+#
+# Both reuse the SAME front-matter window: real Vietnamese administrative
+# documents put the letterhead (issuing body, "Số: ..."), the document-type
+# line ("NGHỊ ĐỊNH" / "LUẬT" / ...) and the trích yếu (subject line) — in
+# that order — before the first "Căn cứ ..." recital. `_front_matter_end`
+# reuses the SAME anchor-2 pattern (`_UPPERCASE_TITLE_PATTERN`,
+# `_TITLE_KEYWORDS`) that `_entities_from_uppercase_title` already uses, per
+# the work-order instruction to not write a parallel detector.
+#
+# ⚠️ Neither anchor found -> window is UNBOUNDED-UNSAFE, so both extractors
+# refuse rather than fall back to a fixed-length window: a body citation like
+# "Căn cứ Nghị định số 48/2008/NĐ-CP ..." contains its own "số :" and would
+# leak into doc_number if the window were not bounded by a real anchor.
+# ---------------------------------------------------------------------------
+_CAN_CU_LINE_PATTERN = re.compile(r"^[ \t]*Căn cứ\b", re.MULTILINE | re.IGNORECASE)
+
+
+def _front_matter_end(extracted_text: str) -> int | None:
+    """First of (document-type line, "Căn cứ" line) — `None` if neither is
+    found anywhere in `extracted_text`."""
+    starts = [
+        match.start()
+        for match in (
+            _UPPERCASE_TITLE_PATTERN.search(extracted_text),
+            _CAN_CU_LINE_PATTERN.search(extracted_text),
+        )
+        if match is not None
+    ]
+    return min(starts) if starts else None
+
+
+# Catches "Số:", "Luật số:", "Bộ luật số:" in one pattern — "Luật\s*số"
+# already matches the tail of "Bộ luật số:" too, so a third alternative is
+# not needed for correctness, but is kept explicit for readability against
+# the work-order's own wording. `re.IGNORECASE`: OCR'd PDFs lower-case the
+# whole line sometimes (observed: "số: 200/2014/TT-BTC"). No anchor required
+# before "Số" — a letterhead abbreviation commonly sits flush against it with
+# no space (observed: "CHÍNH PHỦ––––Số: 110/2004/NĐ-CP").
+_DOC_NUMBER_PATTERN = re.compile(
+    r"(?:Bộ\s*luật\s*số|Luật\s*số|Số)\s*:\s*(\S+)",
+    re.IGNORECASE,
+)
+
+
+@dataclass(frozen=True, slots=True, kw_only=True)
+class DocNumberSuggestion:
+    """Suggested `Document.doc_number` — NOT written to `Document` (same
+    contract as every other GĐ5 suggestion in this module).
+
+    `source_span` is a `(start, end)` character offset pair (Unicode
+    code-point indices into `extracted_text`, per CLAUDE.md Mục 5 — never
+    byte offsets) pointing at the matched number token, or `None` when
+    `doc_number == ""`. This is NOT a schema field (07 §2.1 gives
+    `doc_number` no companion span column) — it exists only for a caller
+    that wants to show a reviewer WHERE the suggestion came from.
+    """
+
+    doc_number: str
+    source_span: tuple[int, int] | None
+
+
+def extract_document_number(extracted_text: str) -> DocNumberSuggestion:
+    """Suggest `Document.doc_number` from the front matter — GĐ5 (task
+    T2.4b), "docs/10" §4.2.
+
+    `doc_number` is the join key `relations.py` uses for explicit-citation
+    linking (`_normalized_document_number`), and DX1 treats that link as
+    CERTAIN — so this function follows "THÀ TRỐNG CÒN HƠN SAI" (PO chốt):
+    it returns `""` the moment it is not confident, rather than a number
+    that merely looks plausible. In particular it NEVER reads past
+    `_front_matter_end`, so a citation embedded in a "Căn cứ ... số ..."
+    recital (this document CITING another one) can never be mistaken for
+    this document's own number.
+    """
+    boundary = _front_matter_end(extracted_text)
+    if boundary is None:
+        return DocNumberSuggestion(doc_number="", source_span=None)
+
+    match = _DOC_NUMBER_PATTERN.search(extracted_text, 0, boundary)
+    if match is None:
+        return DocNumberSuggestion(doc_number="", source_span=None)
+
+    return DocNumberSuggestion(
+        doc_number=match.group(1), source_span=(match.start(1), match.end(1))
+    )
+
+
+def _is_all_uppercase(text: str) -> bool:
+    return any(character.isalpha() for character in text) and text == text.upper()
+
+
+@dataclass(frozen=True, slots=True, kw_only=True)
+class TitleSuggestion:
+    """Suggested `Document.title` — NOT written to `Document` (same contract
+    as every other GĐ5 suggestion in this module).
+
+    `source_span` — same shape and same rationale as
+    `DocNumberSuggestion.source_span` — covers the document-type line
+    through the last trích yếu line consumed, or `None` when `title == ""`.
+    """
+
+    title: str
+    source_span: tuple[int, int] | None
+
+
+def extract_title(extracted_text: str) -> TitleSuggestion:
+    """Suggest `Document.title` from the front matter — GĐ5 (task T2.4b),
+    "docs/10" §4.2.
+
+    `title` = document-type keyword + trích yếu (subject clause), WITHOUT
+    the number ("docs/10" §4.2 keeps them as two separate suggestions).
+    Reuses the anchor-2 pattern (`_UPPERCASE_TITLE_PATTERN`) that
+    `_entities_from_uppercase_title` already uses to find the type line.
+
+    The trích yếu may span more than one physical line in `extracted_text`
+    — both a genuine multi-paragraph subject line AND a manual mid-sentence
+    line-wrap look identical there (both are just "\\n": see
+    `packages/ingestion/reader/readers.py::_doc_docx`, one paragraph per
+    line). The two are told apart by CASE, not by newlines: a continuation
+    of an unfinished clause starts lower-case ("...giao thông\\ntrong lĩnh
+    vực...", real file `168.2024.NĐ.CP.docx`); a new, unrelated line — the
+    issuing body repeated before the "Căn cứ" recitals ("CHÍNH PHỦ", real
+    file `110-2004-nd-cp.docx`) — starts upper-case and must NOT be pulled
+    in. The FIRST content line after the type keyword is always taken
+    unconditionally (there is nothing yet to compare its case against);
+    every line after that must start lower-case to be appended, and a
+    blank line or a "Căn cứ" line always stops the scan.
+
+    "IN HOA toàn bộ chuyển kiểu câu, đoạn đã viết thường/hoa lẫn thì giữ
+    nguyên chữ" (T2.4b spec item 3): the type keyword is always rendered in
+    sentence case (`"NGHỊ ĐỊNH" -> "Nghị định"`); the trích yếu is
+    lower-cased ONLY when it is ALL CAPS end to end — a trích yếu that
+    already mixes case (the normal way Vietnamese prose is written) is
+    passed through byte-for-byte.
+
+    No document-type line found anywhere -> `""`, never a guess built from
+    a filename or from unrelated text (docs/10 §4.2 forbids the filename
+    specifically).
+    """
+    match = _UPPERCASE_TITLE_PATTERN.search(extracted_text)
+    if match is None:
+        return TitleSuggestion(title="", source_span=None)
+
+    matched_line = match.group(0)
+    type_keyword = next(
+        keyword for keyword in _TITLE_KEYWORDS if matched_line.startswith(keyword)
+    )
+    remainder = match.group(1).strip(" .")
+
+    parts: list[str] = [remainder] if remainder else []
+    span_end = match.end()
+    text_length = len(extracted_text)
+    # `match.end()` sits AT the matched line's own trailing "\n" ('$' in
+    # MULTILINE mode matches before "\n" without consuming it) — step past
+    # it once before scanning subsequent lines, or the first `find("\n",
+    # cursor)` below would find that SAME newline and yield an empty line.
+    cursor = match.end() + 1 if match.end() < text_length else match.end()
+    while cursor < text_length:
+        newline_index = extracted_text.find("\n", cursor)
+        line_end = newline_index if newline_index != -1 else text_length
+        line = extracted_text[cursor:line_end].strip()
+        if not line:
+            break
+        if _CAN_CU_LINE_PATTERN.match(line):
+            break
+        if parts and not line[0].islower():
+            break
+        parts.append(line)
+        span_end = line_end
+        cursor = line_end + 1
+        if newline_index == -1:
+            break
+
+    if not parts:
+        return TitleSuggestion(title="", source_span=None)
+
+    subject_clause = " ".join(parts)
+    if _is_all_uppercase(subject_clause):
+        subject_clause = subject_clause.lower()
+
+    title = f"{type_keyword.capitalize()} {subject_clause}"
+    return TitleSuggestion(title=title, source_span=(match.start(), span_end))
