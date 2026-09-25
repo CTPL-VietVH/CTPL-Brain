@@ -97,6 +97,7 @@ from .config import (
     StoreStamp,
     assert_contract_matches_store_stamp,
 )
+from .version import LOCAL_SCHEMA_VERSION, SchemaVersion, assert_schema_versions_compatible
 
 __all__ = [
     "EmbeddingRegistryError",
@@ -106,6 +107,7 @@ __all__ = [
     "CatalogDimensionConflictError",
     "CatalogEntryConflictError",
     "UnknownCatalogEntryError",
+    "SchemaVersionNotStampedError",
     "PgConnectionLike",
     "EMBEDDING_MODELS_TABLE",
     "EMBEDDING_MODEL_COLLECTIONS_TABLE",
@@ -115,6 +117,9 @@ __all__ = [
     "assert_collection_ready_for_contract",
     "register_embedding_model",
     "set_active_embedding_model_for_collection",
+    "read_schema_version_stamp",
+    "stamp_schema_version_for_collection",
+    "assert_store_schema_version_compatible",
 ]
 
 
@@ -156,6 +161,20 @@ class CollectionNotStampedError(EmbeddingRegistryError):
     """
 
 
+class SchemaVersionNotStampedError(EmbeddingRegistryError):
+    """The collection has an active record (a model is assigned) but has
+    NEVER been stamped with a schema version — `schema_breaking_version`/
+    `schema_additive_version` are still NULL.
+
+    This is the "old store, no stamp" case (SCHEMA-stamp-store, requirement
+    3(d)): a collection that went through
+    `set_active_embedding_model_for_collection` but never through
+    `stamp_schema_version_for_collection` — this does NOT guess by treating
+    silence as "compatible", the same reasoning `CollectionNotStampedError`
+    uses for not guessing `embedding_model`.
+    """
+
+
 class CatalogDimensionConflictError(EmbeddingRegistryError):
     """`embedding_dim` ghi trong catalog Postgres LỆCH với dim thật của Qdrant.
 
@@ -189,7 +208,9 @@ class UnknownCatalogEntryError(EmbeddingRegistryError):
 
 
 class PgConnectionLike(Protocol):
-    """Mọi đối tượng có `.execute(sql, params)` trả về cursor có `.fetchone()`.
+    """Mọi đối tượng có `.execute(sql, params)` trả về cursor có `.fetchone()`
+    và `.rowcount` (used by `stamp_schema_version_for_collection` to tell an
+    UPDATE that matched 0 rows apart from one that actually wrote something).
 
     Đúng hình dạng `psycopg.Connection.execute(...)` mà
     `tests/t0_1_stores/conftest.py` đã dùng — module này không import
@@ -221,11 +242,25 @@ CREATE TABLE IF NOT EXISTS {EMBEDDING_MODELS_TABLE} (
 )
 """
 
+#: `schema_breaking_version` / `schema_additive_version` — 07 Mục 3.1
+#: constraint 3 (DX3), the REAL stamp of `packages/schema/version.py`'s two
+#: version numbers for ONE collection (SCHEMA-stamp-store). Deliberately
+#: NULLABLE, unlike `model_name`/`model_version`: a row can already have a
+#: model assigned via `set_active_embedding_model_for_collection` but never
+#: gone through `stamp_schema_version_for_collection` — "old store, no
+#: stamp" (requirement 3(d)) is a MEANINGFUL state that must stay
+#: distinguishable from "stamped and compatible", not a hidden default: no
+#: column here has a DEFAULT clause, NULL simply means "nobody has written
+#: to this cell yet". Same home as `embedding_model` (keyed by
+#: `collection_name`, PostgreSQL) — no second table, per the work order's
+#: DX2 requirement.
 EMBEDDING_MODEL_COLLECTIONS_TABLE_DDL = f"""
 CREATE TABLE IF NOT EXISTS {EMBEDDING_MODEL_COLLECTIONS_TABLE} (
-    collection_name text NOT NULL PRIMARY KEY,
-    model_name      text NOT NULL,
-    model_version   text NOT NULL,
+    collection_name         text NOT NULL PRIMARY KEY,
+    model_name              text NOT NULL,
+    model_version           text NOT NULL,
+    schema_breaking_version integer,
+    schema_additive_version integer,
     FOREIGN KEY (model_name, model_version)
         REFERENCES {EMBEDDING_MODELS_TABLE} (model_name, model_version)
 )
@@ -478,3 +513,126 @@ def set_active_embedding_model_for_collection(
                 "trước."
             ) from exc
         raise
+
+
+# --------------------------------------------------------------------------- #
+# The SCHEMA VERSION stamp on the store — SCHEMA-stamp-store, same home as
+# `embedding_model` (07 Mục 3.1, DX2): the `embedding_model_collections`
+# table, keyed by `collection_name`. NO second table.
+# --------------------------------------------------------------------------- #
+
+
+def stamp_schema_version_for_collection(
+    *,
+    pg_connection: PgConnectionLike,
+    collection_name: str,
+    schema_version: SchemaVersion,
+) -> None:
+    """Write the current schema version onto a collection's active record.
+
+    ⛔ This is an UPDATE, not an upsert: the active record
+    (`collection_name`/`model_name`/`model_version`) must already exist —
+    call `set_active_embedding_model_for_collection` before this. Same
+    reason `model_name`/`model_version` are NOT NULL on the table: a row
+    cannot exist with only a schema version and no model attached.
+
+    Idempotent: calling again with the SAME version changes nothing; calling
+    again with a DIFFERENT version is VALID behaviour — the "re-stamp" step
+    after `tools/provision/provision_stores.py` has confirmed it may proceed
+    (an additive-only change does not require reloading the store; a
+    breaking change requires a full reload — 07 Mục 3.1, that decision does
+    NOT live in this function).
+
+    Raises:
+        CollectionNotStampedError: the collection has no active record at
+            all (`UPDATE` matched 0 rows) — the same error `read_store_stamp`/
+            `read_schema_version_stamp` raise for this case, because this is
+            the SAME row of data.
+    """
+    cursor = pg_connection.execute(
+        f"""
+        UPDATE {EMBEDDING_MODEL_COLLECTIONS_TABLE}
+        SET schema_breaking_version = %s, schema_additive_version = %s
+        WHERE collection_name = %s
+        """,
+        (schema_version.breaking, schema_version.additive, collection_name),
+    )
+    if cursor.rowcount == 0:
+        raise CollectionNotStampedError(
+            f"Cannot stamp a schema version for collection '{collection_name}': "
+            f"it has no active record yet in {EMBEDDING_MODEL_COLLECTIONS_TABLE}. "
+            "Call `set_active_embedding_model_for_collection(...)` first."
+        )
+
+
+def read_schema_version_stamp(
+    *, pg_connection: PgConnectionLike, collection_name: str
+) -> SchemaVersion:
+    """Read the REAL schema-version stamp of a collection.
+
+    Order of checks:
+    1. Collection never active (no row at all) → `CollectionNotStampedError`
+       — the same error `read_store_stamp` raises for this case, because
+       this is the SAME row of data.
+    2. Active row exists but both version columns are still NULL ("old
+       store, no stamp", SCHEMA-stamp-store requirement 3(d)) →
+       `SchemaVersionNotStampedError` — does NOT guess by treating NULL as
+       "compatible" or by borrowing the caller's own `LOCAL_SCHEMA_VERSION`
+       to fill the gap.
+    """
+    row = pg_connection.execute(
+        f"""
+        SELECT schema_breaking_version, schema_additive_version
+        FROM {EMBEDDING_MODEL_COLLECTIONS_TABLE}
+        WHERE collection_name = %s
+        """,
+        (collection_name,),
+    ).fetchone()
+
+    if row is None:
+        raise CollectionNotStampedError(
+            f"Collection '{collection_name}' has NEVER been stamped active "
+            f"in PostgreSQL (table {EMBEDDING_MODEL_COLLECTIONS_TABLE}). "
+            "REFUSES TO RUN — does not guess what the schema version is."
+        )
+
+    breaking, additive = row
+    if breaking is None or additive is None:
+        raise SchemaVersionNotStampedError(
+            f"Collection '{collection_name}' has an active model, but has "
+            f"NEVER been stamped with a schema version (table "
+            f"{EMBEDDING_MODEL_COLLECTIONS_TABLE}, columns "
+            "schema_breaking_version/schema_additive_version are still NULL) "
+            "— old store, no stamp. REFUSES TO RUN. Run "
+            "`tools/provision/provision_stores.py` to stamp it before "
+            "starting the service."
+        )
+
+    return SchemaVersion(breaking=breaking, additive=additive)
+
+
+def assert_store_schema_version_compatible(
+    *, pg_connection: PgConnectionLike, collection_name: str
+) -> None:
+    """The startup ENTRY POINT for the schema version — sibling of
+    `assert_collection_ready_for_contract`, must equally be called before
+    serving any query (SCHEMA-stamp-store requirement 2).
+
+    Only wires `read_schema_version_stamp` (the real read) to
+    `assert_schema_versions_compatible` (the real comparison, imported as-is
+    from `schema.version`, NOT re-implemented here) — no decision of its own
+    lives in this function, same shape as
+    `assert_collection_ready_for_contract`.
+
+    A BREAKING mismatch → `SchemaBreakingVersionMismatchError`, refuses to
+    run. An ADDITIVE mismatch → logs at WARNING, keeps running. A store
+    never stamped (whether brand new or "old store, no stamp") → raises
+    directly from `read_schema_version_stamp`.
+    """
+    stamp = read_schema_version_stamp(pg_connection=pg_connection, collection_name=collection_name)
+    assert_schema_versions_compatible(
+        LOCAL_SCHEMA_VERSION,
+        stamp,
+        local_name="packages/schema (running code)",
+        other_name=f"store stamp (collection {collection_name!r})",
+    )

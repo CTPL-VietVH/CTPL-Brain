@@ -213,7 +213,9 @@ def main() -> int:
     from schema.embedding_registry import (
         register_embedding_model,
         set_active_embedding_model_for_collection,
+        stamp_schema_version_for_collection,
     )
+    from schema.version import LOCAL_SCHEMA_VERSION
 
     register_embedding_model(
         pg_connection=pg_connection,
@@ -226,6 +228,11 @@ def main() -> int:
         collection_name=collection_name,
         model_name=contract_config.embedding_model,
         model_version="e2e",
+    )
+    stamp_schema_version_for_collection(
+        pg_connection=pg_connection,
+        collection_name=collection_name,
+        schema_version=LOCAL_SCHEMA_VERSION,
     )
 
     file_server = _FileServer(SAMPLE_DOCUMENT)

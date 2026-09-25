@@ -44,8 +44,10 @@ from schema.embedding_registry import (  # noqa: E402
     EMBEDDING_MODELS_TABLE_DDL,
     register_embedding_model,
     set_active_embedding_model_for_collection,
+    stamp_schema_version_for_collection,
 )
 from schema.store_schema import SHARED_STORE_DDL
+from schema.version import LOCAL_SCHEMA_VERSION  # noqa: E402
 
 CONFIG_FILENAMES = ("contract.yaml", "ingestion.yaml", "retrieval.yaml")
 
@@ -162,8 +164,10 @@ def contract_values():
 @pytest.fixture
 def stamped_collection(qdrant: QdrantClient, pg: psycopg.Connection, contract_values):
     """A throwaway Qdrant collection, correctly stamped active in `pg` —
-    the happy-path precondition `assert_collection_ready_for_contract`
-    checks for. Deleted after the test, Qdrant side and Postgres side both.
+    the happy-path precondition `assert_collection_ready_for_contract` AND
+    `assert_store_schema_version_compatible` check for (both model stamp and
+    schema-version stamp, SCHEMA-stamp-store). Deleted after the test, Qdrant
+    side and Postgres side both.
     """
     name = f"cbrain_test_composition_root_{uuid.uuid4().hex[:8]}"
     qdrant.create_collection(
@@ -183,6 +187,11 @@ def stamped_collection(qdrant: QdrantClient, pg: psycopg.Connection, contract_va
         collection_name=name,
         model_name=contract_values.embedding_model,
         model_version="test",
+    )
+    stamp_schema_version_for_collection(
+        pg_connection=pg,
+        collection_name=name,
+        schema_version=LOCAL_SCHEMA_VERSION,
     )
     yield name
     qdrant.delete_collection(collection_name=name)

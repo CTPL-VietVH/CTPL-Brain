@@ -13,11 +13,16 @@ Run:  .venv/bin/python tools/provision/provision_stores.py
 
 ⛔ **Idempotent is not the same as "upgrades in place".** Before touching
 anything, this script REFUSES to run when an existing table has drifted from
-the columns `packages/schema/` declares, or when the Qdrant collection still
-holds points written by an older `Chunk` shape. It never `ALTER TABLE`s and
-never back-fills: 07 Mục 3.1 — a breaking schema bump means the DATA is
-stale, not merely the column list, so the only honest repair is drop and
-recreate, and the operator has to ask for it.
+the columns `packages/schema/` declares, when the Qdrant collection still
+holds points written by an older `Chunk` shape, or when the collection's own
+schema-version stamp (`embedding_model_collections.schema_breaking_version`,
+SCHEMA-stamp-store) disagrees with `packages/schema/version.py` on the
+BREAKING number — this last check catches a purely SEMANTIC breaking change
+(no column added or removed, e.g. `span_start`/`span_end` changing meaning in
+commit 1bcef42) that the column-diff checks above cannot see at all. It never
+`ALTER TABLE`s and never back-fills: 07 Mục 3.1 — a breaking schema bump means
+the DATA is stale, not merely the column list, so the only honest repair is
+drop and recreate, and the operator has to ask for it.
 
 Idempotent: every `CREATE TABLE` is `IF NOT EXISTS`
 (`schema/store_schema.py`, `ingestion/pre_approval_buffer.py`,
@@ -60,13 +65,23 @@ from ingestion.pre_approval_buffer import (  # noqa: E402
 from qdrant_client import models as qdrant_models  # noqa: E402
 from schema.config import load_contract_config  # noqa: E402
 from schema.embedding_registry import (  # noqa: E402
+    CollectionNotStampedError,
+    EMBEDDING_MODEL_COLLECTIONS_TABLE,
     EMBEDDING_MODEL_COLLECTIONS_TABLE_DDL,
+    EMBEDDING_MODELS_TABLE,
     EMBEDDING_MODELS_TABLE_DDL,
+    SchemaVersionNotStampedError,
+    read_schema_version_stamp,
     register_embedding_model,
     set_active_embedding_model_for_collection,
+    stamp_schema_version_for_collection,
 )
 from schema.store_schema import CHUNK_PAYLOAD_FIELDS, SHARED_STORE_DDL  # noqa: E402
-from schema.version import LOCAL_SCHEMA_VERSION  # noqa: E402
+from schema.version import (  # noqa: E402
+    LOCAL_SCHEMA_VERSION,
+    SchemaBreakingVersionMismatchError,
+    assert_schema_versions_compatible,
+)
 
 CONFIG_DIR = REPO_ROOT / "config"
 
@@ -154,7 +169,8 @@ def assert_existing_tables_match(connection) -> None:
             "đúng như ý định):\n"
             "  psql \"$CBRAIN_PG_DSN\" -c 'DROP TABLE IF EXISTS "
             "ingestion_pre_approval_chunk, ingestion_pre_approval_document, "
-            "relation, ingestion_record, deletion_log, space_registry, document "
+            "relation, ingestion_record, deletion_log, space_registry, document, "
+            f"{EMBEDDING_MODEL_COLLECTIONS_TABLE}, {EMBEDDING_MODELS_TABLE} "
             "CASCADE;'\n"
             "  rồi chạy lại lệnh này kèm --recreate-collection."
         )
@@ -192,6 +208,58 @@ def assert_existing_collection_matches(*, qdrant_client, collection_name: str) -
             "Cách dựng lại: chạy lại lệnh này kèm --recreate-collection "
             "(xoá sạch vector của collection đó), rồi nạp lại tài liệu."
         )
+
+
+def assert_existing_schema_stamp_compatible(*, pg_connection, collection_name: str) -> None:
+    """Refuse re-provisioning IN PLACE over an active record whose schema-
+    version stamp is absent or breaking-incompatible with
+    `LOCAL_SCHEMA_VERSION` — SCHEMA-stamp-store requirement 2.
+
+    Runs BEFORE `stamp_schema_version_for_collection` at the end of `main()`,
+    because that call is a plain `UPDATE` that would otherwise silently
+    overwrite an old, incompatible number with the new one and hide exactly
+    the drift this function exists to catch — same reasoning as
+    `assert_existing_collection_matches` running before `ensure_collection`.
+
+    A collection that was never stamped at all (`CollectionNotStampedError`)
+    is fine here: nothing to compare yet, it is about to be stamped for the
+    first time by the rest of `main()`. A collection whose row exists but
+    whose schema-version columns are still NULL (`SchemaVersionNotStampedError`,
+    "old store, no stamp", requirement 3(d)) is NOT fine — it predates this
+    mechanism and must be rebuilt, same as a NUMBER mismatch.
+    """
+    try:
+        stamp = read_schema_version_stamp(
+            pg_connection=pg_connection, collection_name=collection_name
+        )
+    except CollectionNotStampedError:
+        return  # never active — about to be stamped for the first time below
+    except SchemaVersionNotStampedError as exc:
+        raise StoreOutOfDateError(
+            f"REFUSES TO RUN — collection {collection_name!r} has an active model "
+            f"but has NEVER been stamped with a schema version (old store, no "
+            f"stamp): {exc}\n"
+            "How to rebuild: re-run this command with --recreate-collection, then "
+            "re-ingest the documents."
+        ) from exc
+
+    try:
+        assert_schema_versions_compatible(
+            LOCAL_SCHEMA_VERSION,
+            stamp,
+            local_name="packages/schema (running code)",
+            other_name=f"store stamp (collection {collection_name!r})",
+        )
+    except SchemaBreakingVersionMismatchError as exc:
+        raise StoreOutOfDateError(
+            f"REFUSES TO RUN — collection {collection_name!r} carries a schema "
+            f"version stamp that is BREAKING-INCOMPATIBLE with the running code: "
+            f"{exc}\n"
+            "No silent ALTER, no warn-and-continue — 07 Mục 3.1: a breaking bump "
+            "means the DATA itself is stale, not just the column list.\n"
+            "How to rebuild: re-run this command with --recreate-collection "
+            "(wipes that collection's vectors), then re-ingest the documents."
+        ) from exc
 
 
 def _load_env_file() -> None:
@@ -267,6 +335,9 @@ def main() -> None:
         assert_existing_collection_matches(
             qdrant_client=qdrant_client, collection_name=deployment.qdrant_collection
         )
+        assert_existing_schema_stamp_compatible(
+            pg_connection=pg_connection, collection_name=deployment.qdrant_collection
+        )
     created_collection = ensure_collection(
         qdrant_client=qdrant_client,
         deployment=deployment,
@@ -293,6 +364,16 @@ def main() -> None:
     print(
         f"  stamped active: {contract_config.embedding_model!r} "
         f"(version {args.model_version!r}, dim {contract_config.embedding_dim}) "
+        f"for collection {deployment.qdrant_collection!r}"
+    )
+
+    stamp_schema_version_for_collection(
+        pg_connection=pg_connection,
+        collection_name=deployment.qdrant_collection,
+        schema_version=LOCAL_SCHEMA_VERSION,
+    )
+    print(
+        f"  schema version stamped: {LOCAL_SCHEMA_VERSION} "
         f"for collection {deployment.qdrant_collection!r}"
     )
 

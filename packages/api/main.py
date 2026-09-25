@@ -46,7 +46,10 @@ already named in docs/10 §3.5 / §3.6:
   service is ever started), the Qdrant collection missing or its stamp
   mismatching `config/contract.yaml` (`schema.embedding_registry`
   `assert_collection_ready_for_contract`, called once here before the app is
-  handed to `uvicorn`).
+  handed to `uvicorn`), or the collection's schema-version stamp absent or
+  mismatching `packages/schema/version.py` on the BREAKING number
+  (`assert_store_schema_version_compatible`, SCHEMA-stamp-store — a mismatch
+  on the ADDITIVE number only logs and does not refuse, per DX3).
 * **Degrades `GET /v1/meta`** (docs/10 §3.6): the SAME stamp check, called
   again on every `/v1/meta` request by the `readiness` closure built in
   `_build_readiness`, because a store that goes unreachable AFTER a healthy
@@ -123,6 +126,7 @@ from schema.embedding_registry import (
     EMBEDDING_MODEL_COLLECTIONS_TABLE,
     EMBEDDING_MODELS_TABLE,
     assert_collection_ready_for_contract,
+    assert_store_schema_version_compatible,
 )
 from schema.store_schema import (
     DELETION_LOG_TABLE,
@@ -404,6 +408,9 @@ def _build_readiness(
                 pg_connection=pg_connection,
                 collection_name=collection_name,
             )
+            assert_store_schema_version_compatible(
+                pg_connection=pg_connection, collection_name=collection_name
+            )
         except Exception as exc:  # noqa: BLE001 - deliberately broad, see docstring
             return ReadinessReport(ready=False, not_ready_reason=str(exc))
         return ReadinessReport(ready=True, not_ready_reason=None)
@@ -465,7 +472,12 @@ def build_deployment_app(
         MissingTablesError: a required table is absent.
         schema.embedding_registry.EmbeddingRegistryError (and subclasses):
             the Qdrant collection is missing, unstamped, or its stamp
-            mismatches `config/contract.yaml`.
+            mismatches `config/contract.yaml`; or the collection's schema
+            version stamp is absent (SchemaVersionNotStampedError) or its
+            breaking number mismatches `packages/schema/version.py`
+            (schema.version.SchemaBreakingVersionMismatchError) —
+            SCHEMA-stamp-store. An additive-only mismatch does NOT raise: it
+            is only logged (DX3).
         schema.config.ConfigError: any of the three config files is missing
             or malformed (raised again inside `api.app.build_app`).
         api.security.ServiceKeyNotConfigured, TenantIdNotConfigured: the
@@ -480,6 +492,9 @@ def build_deployment_app(
         qdrant_client=qdrant_client,
         pg_connection=pg_connection,
         collection_name=deployment.qdrant_collection,
+    )
+    assert_store_schema_version_compatible(
+        pg_connection=pg_connection, collection_name=deployment.qdrant_collection
     )
 
     tenant_id = resolve_tenant_id(env_var=TENANT_ID_ENV_VAR, environ=environ)
