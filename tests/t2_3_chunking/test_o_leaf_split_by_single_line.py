@@ -190,18 +190,22 @@ def test_a_single_line_that_itself_overflows_still_raises_the_unsplittable_error
 # nhiều dòng, không dòng trống, không dấu kết câu) — mức DÒNG ĐƠN giải quyết
 # trọn vẹn, OK.
 #
-# `47_2021_nd-cp_470561.docx` VẪN escalate — nhưng vì một nguyên nhân KHÁC,
-# đọc trực tiếp `word/document.xml` xác nhận: MỘT ô bảng (bị merge ngang 10
-# cột) chứa nguyên văn cụm "Các công ty con do công ty mẹ nắm giữ 100% vốn
-# điều lệ" lặp lại 10 LẦN trong ĐÚNG MỘT `<w:t>` — không dấu xuống dòng, không
-# dấu kết câu, không khoảng trắng phân tách — ngay trong XML gốc của file,
-# KHÔNG phải lỗi đọc của `python-docx` hay của reader (T0.3). Đây là lỗi CHẤT
-# LƯỢNG DỮ LIỆU nguồn (tài liệu khách hàng), nằm NGOÀI phạm vi file của
-# work-order CHUNK-bang-bieu (chunking.py chỉ được cắt tại ranh giới AN TOÀN
-# có sẵn trong văn bản — 06 Mục 5.2 cấm bịa cách cắt cứng, và ở đây không còn
-# ranh giới nào để mà bịa: không đoạn, không câu, không dòng). Hệ thống
-# escalate đúng thiết kế (NT2 "loại trừ phải nhìn thấy được") — đã báo PO ở
-# báo cáo work-order, không tự sửa.
+# `47_2021_nd-cp_470561.docx`: KHÔNG còn escalate — cập nhật 25/9/2026
+# (READER-docx-o-gop). Khi test này được viết lần đầu (CHUNK-bang-bieu), đọc
+# trực tiếp `word/document.xml` cho thấy một ô bảng gộp ngang 10 cột chứa
+# cụm "Các công ty con do công ty mẹ nắm giữ 100% vốn điều lệ" lặp 10 lần
+# trong ĐÚNG MỘT `<w:t>`, và kết luận khi đó là lỗi CHẤT LƯỢNG DỮ LIỆU nguồn,
+# ngoài phạm vi reader. Điều tra sâu hơn (CHUNK-47-2021-dieu-tra) cho thấy
+# kết luận đó chỉ đúng MỘT PHẦN: cụm lặp 10 lần trong `<w:t>` (541/581 ký tự)
+# đúng là artifact của file nguồn — nhưng `_doc_docx` (`readers.py`) sau đó
+# NHÂN THÊM đúng 10 lần nữa, vì `python-docx` `Row.cells` trả về CÙNG một
+# `_Cell` một lần cho mỗi cột lưới mà ô gộp `gridSpan` chiếm, và `_doc_docx`
+# khi đó join thẳng mọi phần tử của `row.cells` bằng `" | "` không khử
+# trùng — 541/581 ký tự thật hoá thành 5.431/5.831 ký tự trong
+# `extracted_text`. `_unique_row_cell_texts` (READER-docx-o-gop) khử lớp
+# nhân bản THỨ HAI đó (giữ nguyên lớp lặp có sẵn trong `<w:t>` — đó vẫn là
+# dữ liệu nguồn, không phải việc của reader); dòng dài nhất của tài liệu này
+# giờ còn 787 ký tự, dưới trần.
 # ---------------------------------------------------------------------------
 CORPUS_ROOT = REPO_ROOT / "data" / "test-corpus-vn-admin"
 
@@ -233,19 +237,21 @@ def test_luat_61_2020_chunks_successfully_no_longer_fails_stage_3():
     )
 
 
-def test_47_2021_ndcp_still_escalates_over_the_cap():
+def test_47_2021_ndcp_chunks_successfully_no_longer_fails_stage_3():
+    """READER-docx-o-gop, 25/9/2026: khử nhân bản `gridSpan` ở `_doc_docx`
+    đưa dòng dài nhất của tài liệu này xuống 787 ký tự — dưới trần. Xem
+    khối chú thích ngay phía trên cho nguyên nhân đầy đủ."""
     read_result = _doc_that("ban-giam-doc-quan-tri/47_2021_nd-cp_470561.docx")
-    with pytest.raises(KhoiVuotTranKhongTheChia) as exc_info:
-        cat_thanh_mau(
-            read_result,
-            document_id=DOC_ID,
-            space_id=SPACE_ID,
-            tenant_id=TENANT_ID,
-            tran_do_dai_mau=TRAN_DO_DAI_MAU_THU,
-        )
-    thong_diep = str(exc_info.value)
-    assert "DÒNG" in thong_diep, (
-        "phải rơi đúng vào nhánh escalate mức DÒNG ĐƠN (mức cuối cùng), không "
-        "phải mức đoạn hay câu — xác nhận đây thật sự là ca 'hết ranh giới an "
-        "toàn', không phải một hồi quy ở mức khác"
+    chunks = cat_thanh_mau(
+        read_result,
+        document_id=DOC_ID,
+        space_id=SPACE_ID,
+        tenant_id=TENANT_ID,
+        tran_do_dai_mau=TRAN_DO_DAI_MAU_THU,
+    )
+    assert chunks, "phải sinh được ít nhất một mẩu — không còn FAIL-GĐ3"
+    mau_vuot_tran = [c for c in chunks if c.span_end - c.span_start > TRAN_DO_DAI_MAU_THU]
+    assert mau_vuot_tran == [], (
+        f"{len(mau_vuot_tran)} mẩu vẫn vượt trần {TRAN_DO_DAI_MAU_THU} ký tự "
+        f"sau khi reader đã khử nhân bản gridSpan"
     )

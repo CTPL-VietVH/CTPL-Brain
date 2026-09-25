@@ -63,6 +63,48 @@ def _doc_md(path: pathlib.Path) -> str:
     return "\n".join(dong)
 
 
+def _unique_row_cell_texts(row) -> list[str]:
+    """Blank out the duplicate cells `python-docx` synthesizes for a
+    horizontally-merged (`gridSpan`) cell within one table row.
+
+    `Row.cells` (`docx/table.py`, `Row.cells` docstring) yields the SAME
+    `_Cell`/underlying `_tc` once per spanned grid column — documented,
+    intentional library behavior, not a bug in `python-docx` itself. Left
+    unhandled, `_doc_docx` was joining all of those repeats with `" | "`,
+    so one merged cell's text appeared `gridSpan` times in the output line.
+
+    Measured 25/9/2026 (CHUNK-47-2021-dieu-tra): a `gridSpan=10` header row
+    in `47_2021_nd-cp_470561.docx` turned 541/581 real characters into
+    5.431/5.831 characters in `extracted_text` — over `chunk_length_cap`
+    (5000) with no `\\n`, sentence-ending punctuation, or blank-line boundary
+    left inside the row for `chunking.py` to split on, so it raised
+    `KhoiVuotTranKhongTheChia`. The same mechanism was quietly repeating
+    header text (up to 4.4x locally) in two other corpus documents that
+    never crossed the cap.
+
+    Column count is preserved — repeats become `""`, they are not dropped —
+    so the row's `" | "` count, and therefore its column alignment with
+    other rows of the same table, is unchanged.
+
+    Out of scope on purpose: a vertically-merged continuation cell
+    (`vMerge="continue"`) resolves to a `_tc` from a DIFFERENT row
+    (`python-docx` delegates to `tc._tc_above`), so it never collides with
+    an id already seen in THIS row's `seen_tc_ids` — that separate
+    duplication path is left exactly as it was (pinned by
+    `tests/t0_3_reader/test_merged_table_cells.py`).
+    """
+    seen_tc_ids: set[int] = set()
+    texts: list[str] = []
+    for cell in row.cells:
+        tc_id = id(cell._tc)
+        if tc_id in seen_tc_ids:
+            texts.append("")
+            continue
+        seen_tc_ids.add(tc_id)
+        texts.append(cell.text.strip().replace("\n", " "))
+    return texts
+
+
 def _doc_docx(path: pathlib.Path) -> str:
     """.docx → văn bản phẳng, mỗi đoạn một dòng. Bảng đọc theo hàng.
 
@@ -85,7 +127,7 @@ def _doc_docx(path: pathlib.Path) -> str:
             dong.append(Paragraph(child, tai_lieu).text)
         elif tag == "tbl":
             for row in Table(child, tai_lieu).rows:
-                o = [c.text.strip().replace("\n", " ") for c in row.cells]
+                o = _unique_row_cell_texts(row)
                 dong.append(" | ".join(o))
     return "\n".join(dong)
 
