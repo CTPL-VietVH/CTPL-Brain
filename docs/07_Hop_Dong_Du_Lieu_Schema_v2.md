@@ -191,7 +191,7 @@ Nơi cư trú: kho vector. Đây là đơn vị để **TÌM**, không phải đ
 >
 > 1. **Cha là đúng một cấp lên** trong `structure_path`, không phải cấp bất kỳ.
 > 2. **Mẩu đã là đơn vị cấu trúc cao nhất của tài liệu thì đơn vị đọc là chính nó** — khi đó `parent_chunk_id` để trống. Ví dụ một Điều ngắn không bị cắt nhỏ thì không có cha để lên.
-> 3. **Hai mẩu cùng một cha thì cha chỉ được lấy MỘT lần.** Nếu không, một Điều trúng ba Khoản sẽ chiếm ba suất trong trần số lượng tài liệu (06 Mục 6.5).
+> 3. **Hai mẩu cùng một cha thì cha chỉ được lấy MỘT lần.** Nếu không, một Điều trúng ba Khoản sẽ chiếm ba suất trong trần số lượng tài liệu (06 Mục 6.5). Khoá dùng để gộp trùng đơn vị đọc là `parent_chunk_id` khi trường này khác `None`; khi `parent_chunk_id` là `None` (mẩu đã là đơn vị cấu trúc cao nhất — quy tắc con 2 — mà chính nó bị chia thành nhiều mảnh vì vượt `chunk_length_cap`) thì khoá là cặp `(document_id, structure_block_start, structure_block_end)`, vì gộp theo `None` sẽ trộn lẫn mọi mẩu không cha của cả tài liệu vào một nhóm.
 >
 > **Lấy vị trí của khối cha bằng cách nào — làm rõ 25/9/2026; ba quy tắc con ở trên KHÔNG đổi một chữ.** Theo `parent_chunk_id` tới mẩu cha, rồi cắt `extracted_text` theo **`structure_block_start`/`structure_block_end`** của mẩu cha đó. Quy tắc con 2 đọc theo đúng cách ấy: mẩu không có cha thì đơn vị đọc là **trọn khối của chính nó**, tức cặp `structure_block_*` của chính nó — không phải mảnh `span_*` của nó, để một khối dài bị chia nhỏ vẫn được đọc trọn vẹn chứ không đọc mỗi mảnh trúng.
 >
