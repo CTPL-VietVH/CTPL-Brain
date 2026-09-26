@@ -257,6 +257,7 @@ class World:
             vector_writer=self.vector_writer,
             vector_deleter=self.vector_store,
             embedding_model=self.model,
+            embedding_batch_size=self.ingestion_config.embedding_batch_size,
             # ⭐ The scope a real v1 install has: the Backend topology client
             # of docs/10 §7.1 is NOT built, so GĐ7 may not conclude and every
             # freshly ingested document keeps saying *"chưa đối chiếu xong"*

@@ -64,6 +64,10 @@ SATURATION_ROUNDS = 3
 SCAN_PAIR_BUDGET = 100
 SCAN_TIME_BUDGET = 10.0
 
+# GĐ6's own required parameter (VEC-3) — same convention as the four above:
+# the test's own value, passed explicitly, never the real config file's.
+EMBEDDING_BATCH_SIZE = 32
+
 # Fake embedding width. Deliberately NOT 1024: nothing in this module checks
 # the contract dimension — that check lives in `ghi_vao_qdrant` behind the
 # `VectorStoreWriter` Protocol (T1.3/T2.5), and a lookalike number here would

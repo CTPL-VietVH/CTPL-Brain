@@ -34,16 +34,16 @@ from conftest import TEST_SERVICE_KEY
 from fake_backend import FakeBackend
 from schema.version import LOCAL_SCHEMA_VERSION
 
-#: Eleven of the twelve parameters of 07 Mục 3.2 — none of them may appear here.
+#: Twelve of the thirteen parameters of 07 Mục 3.2 — none of them may appear here.
 #:
-#: ⭐ The twelfth, `max_upload_bytes`, is deliberately ABSENT from this set:
+#: ⭐ The thirteenth, `max_upload_bytes`, is deliberately ABSENT from this set:
 #: docs/10 §3.6 REQUIRES `/v1/meta` to publish *"cỡ file tối đa"*, so Backend
 #: can stop an upload it already knows will come back `413`. That is not a
 #: hole in docs/10 §2 (*"Cấu hình mô hình và tham số ... Không qua API"*) —
 #: the value is still changed only by editing `config/ingestion.yaml`; this
-#: endpoint merely reads it out. Its siblings `source_download_timeout_seconds`
-#: and `qdrant_upsert_batch_points` ARE in the set: neither is something
-#: Backend can act on.
+#: endpoint merely reads it out. Its siblings `source_download_timeout_seconds`,
+#: `qdrant_upsert_batch_points` and `embedding_batch_size` ARE in the set: none
+#: of them is something Backend can act on.
 TUNING_PARAMETER_NAMES = frozenset(
     {
         "inheritance_decay",
@@ -57,6 +57,7 @@ TUNING_PARAMETER_NAMES = frozenset(
         "chunk_length_cap",
         "source_download_timeout_seconds",
         "qdrant_upsert_batch_points",
+        "embedding_batch_size",
     }
 )
 

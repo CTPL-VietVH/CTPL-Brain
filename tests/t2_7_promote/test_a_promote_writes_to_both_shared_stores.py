@@ -16,6 +16,7 @@ from ingestion.promotion import (
 from schema.document import RelationsScanState
 
 from .conftest import (
+    EMBEDDING_BATCH_SIZE,
     SATURATION_EPSILON,
     SATURATION_ROUNDS,
     SCAN_PAIR_BUDGET,
@@ -46,6 +47,7 @@ def test_promote_writes_to_both_shared_stores(tmp_path, profile_store) -> None:
         vector_writer=vectors,
         vector_deleter=vector_deleter_for(vectors),
         embedding_model=FakeBgeM3(),
+        embedding_batch_size=EMBEDDING_BATCH_SIZE,
         relation_scope=make_scope(),
         relation_document_source=store,
         saturation_epsilon=SATURATION_EPSILON,

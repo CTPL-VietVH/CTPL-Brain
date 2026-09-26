@@ -11,7 +11,14 @@ from ingestion.chunking import cat_thanh_mau
 from ingestion.reader.vn_normalizer import dung_cau_truc
 from ingestion.vectorization import sinh_vector, write_to_qdrant
 
-from .conftest import CONTRACT_PATH, DOC_ID, SPACE_ID, TENANT_ID, UPSERT_BATCH_POINTS
+from .conftest import (
+    CONTRACT_PATH,
+    DOC_ID,
+    EMBEDDING_BATCH_SIZE,
+    SPACE_ID,
+    TENANT_ID,
+    UPSERT_BATCH_POINTS,
+)
 
 VAN_BAN = """Điều 1. Phạm vi điều chỉnh
 Quy chế này áp dụng cho toàn thể cán bộ, nhân viên của công ty.
@@ -36,7 +43,12 @@ def test_write_to_qdrant_upsert_dung_payload_whitelist(model, qdrant, pg, stampe
         tenant_id=TENANT_ID,
         tran_do_dai_mau=5000,
     )
-    chunks_co_vector = sinh_vector(chunks, full_text=read_result.full_text, model=model)
+    chunks_co_vector = sinh_vector(
+        chunks,
+        full_text=read_result.full_text,
+        model=model,
+        embedding_batch_size=EMBEDDING_BATCH_SIZE,
+    )
     contract_config = load_contract_config(CONTRACT_PATH)
 
     write_to_qdrant(

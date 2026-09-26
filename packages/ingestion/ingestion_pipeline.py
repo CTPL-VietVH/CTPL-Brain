@@ -79,7 +79,7 @@ from ingestion.space_registry import (
     SpaceRegistry,
 )
 from ingestion.staging import StagingArea
-from ingestion.vectorization import BgeM3Like, ChunkVuotTranNguCanh
+from ingestion.vectorization import BgeM3Like, ChunkVuotTranNguCanh, EmbeddingOutOfMemory
 from schema.document import Document
 from schema.ingestion_record import (
     IngestionFailureCode,
@@ -139,7 +139,7 @@ class IngestionPipeline:
     a stand-in built inside would be a deployment quietly serving out of a
     dict (the rule `api/app.py` states for itself).
 
-    The five numbers are read from `config/ingestion.yaml` by the composition
+    The six numbers are read from `config/ingestion.yaml` by the composition
     root and passed down — none has a default here (CLAUDE.md Mục 4 quy tắc
     2). `scan_time_budget` is IN MINUTES, the unit that config key carries.
     """
@@ -164,6 +164,7 @@ class IngestionPipeline:
     profile_deleter: DeletableProfileStore
     vector_deleter: VectorStoreDeleter
     embedding_model: BgeM3Like
+    embedding_batch_size: int
     relation_scope: SpaceScanScope
     relation_document_source: SpaceDocumentSource
     chunk_length_cap: int
@@ -586,6 +587,7 @@ class IngestionPipeline:
                 vector_writer=self.vector_writer,
                 vector_deleter=self.vector_deleter,
                 embedding_model=self.embedding_model,
+                embedding_batch_size=self.embedding_batch_size,
                 relation_scope=self.relation_scope,
                 relation_document_source=self.relation_document_source,
                 saturation_epsilon=self.saturation_epsilon,
@@ -594,6 +596,16 @@ class IngestionPipeline:
                 scan_time_budget=self.scan_time_budget,
                 clock=self.monotonic,
             )
+        except EmbeddingOutOfMemory as exc:
+            # VEC-3 — a device-memory ceiling, not a document-structure
+            # problem (DOCUMENT_NOT_STRUCTURABLE would misname the cause)
+            # and not an unforeseen bug (INTERNAL_ERROR would too). FAILED,
+            # not REJECTED: the submission itself was not wrong.
+            raise _Terminal(
+                status=IngestionStatus.FAILED,
+                code=IngestionFailureCode.EMBEDDING_OUT_OF_MEMORY,
+                log=str(exc),
+            ) from exc
         except _NOT_STRUCTURABLE_ERRORS as exc:
             # GĐ6's context-ceiling refusal lands here — the same code as
             # GĐ3's, per PO's E5 decision.

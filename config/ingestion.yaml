@@ -119,3 +119,25 @@ source_download_timeout_seconds: 120  # ĐƠN VỊ: GIÂY
 #   Upsert bị Qdrant từ chối vì thân quá lớn → SIẾT. Nạp một tài liệu sinh ra
 #   hàng nghìn lời gọi HTTP và chậm thấy rõ → NỚI.
 qdrant_upsert_batch_points: 256  # ĐƠN VỊ: SỐ ĐIỂM mỗi lệnh upsert
+
+# `embedding_batch_size` — số mẩu tối đa trong MỘT lệnh gọi mô hình BGE-M3 để
+# tạo vector (VEC-3, chốt 25/9/2026). ĐƠN VỊ: SỐ MẨU, không phải byte.
+#   Trước VEC-3 đây chỉ là một hằng số kỹ thuật viết cứng trong
+#   vectorization.py (32) vì chỉ đổi CÁCH GỌI thư viện, không đổi kết quả.
+#   VEC-3 thêm cơ chế chia đôi lô và chạy lại khi tràn bộ nhớ thiết bị
+#   (GPU/MPS/CPU) — từ đó con số này quyết định lô nào vừa hay tràn trên máy
+#   THẬT đang chạy, nên phải có một nhà duy nhất ngoài mã (07 Mục 3.3 quy
+#   tắc 2), cùng khuôn với `qdrant_upsert_batch_points` ở trên.
+# ⚠️ Mẩu được xếp GIẢM DẦN theo số token trước khi chia lô — lô đầu tiên
+#   (nặng nhất) chạy trước, để tràn bộ nhớ lộ ra SỚM thay vì ở lô cuối cùng
+#   của một tài liệu dài.
+# ⚠️ Tràn bộ nhớ ở một lô KHÔNG làm tài liệu thất bại ngay: tự chia đôi lô đó
+#   và chạy lại, đệ quy tới lô 1 mẩu. Chỉ khi lô 1 mẩu vẫn tràn mới từ chối
+#   hẳn, bằng mã lỗi riêng `EMBEDDING_OUT_OF_MEMORY` (docs/10 §3.5) — không
+#   phải `INTERNAL_ERROR` (đây không phải lỗi không lường trước) và không
+#   phải `DOCUMENT_NOT_STRUCTURABLE` (đây không phải lỗi cấu trúc tài liệu).
+# Dấu hiệu đặt sai (07 Mục 3.2, nguyên văn):
+#   "`EMBEDDING_OUT_OF_MEMORY` xuất hiện thường xuyên dù đã chia đôi lô nhiều
+#   lần → SIẾT. Sinh vector chậm thấy rõ mà bộ nhớ thiết bị còn dư nhiều,
+#   không lô nào tràn → NỚI"
+embedding_batch_size: 32  # ĐƠN VỊ: SỐ MẨU mỗi lệnh gọi mô hình

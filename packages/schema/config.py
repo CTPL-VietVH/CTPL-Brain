@@ -174,6 +174,15 @@ class IngestionConfig:
     byte budget expressed in the only unit this side can count without
     re-implementing the client's serialiser. It belongs to the Ingestion group
     because only Ingestion writes points; Retrieval never upserts.
+
+    `embedding_batch_size` — how many chunks ONE call into the BGE-M3 model
+    may carry (VEC-3). UNIT: NUMBER OF CHUNKS. Was a hardcoded engineering
+    constant in `vectorization.py` (`_BATCH_SIZE_MAC_DINH = 32`) until VEC-3
+    gave it a real effect on behaviour: `sinh_vector()` now halves a batch
+    and retries on an out-of-memory error, so this number is no longer just a
+    call shape — it is the size that fails or fits on the machine actually
+    running the model, and CLAUDE.md Mục 4 quy tắc 2 forbids it a second home
+    in code once that is true.
     """
 
     saturation_epsilon: float
@@ -185,6 +194,7 @@ class IngestionConfig:
     max_upload_bytes: int
     source_download_timeout_seconds: float
     qdrant_upsert_batch_points: int
+    embedding_batch_size: int
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -243,6 +253,7 @@ INGESTION_KEYS: tuple[str, ...] = (
     "max_upload_bytes",
     "source_download_timeout_seconds",
     "qdrant_upsert_batch_points",
+    "embedding_batch_size",
 )
 
 RETRIEVAL_KEYS: tuple[str, ...] = (
@@ -496,6 +507,13 @@ def load_ingestion_config(path: Path) -> IngestionConfig:
         qdrant_upsert_batch_points, "qdrant_upsert_batch_points", path
     )
 
+    embedding_batch_size = _as_int(
+        _require(data, "embedding_batch_size", path),
+        "embedding_batch_size",
+        path,
+    )
+    _require_positive(embedding_batch_size, "embedding_batch_size", path)
+
     return IngestionConfig(
         saturation_epsilon=saturation_epsilon,
         saturation_rounds=saturation_rounds,
@@ -506,6 +524,7 @@ def load_ingestion_config(path: Path) -> IngestionConfig:
         max_upload_bytes=max_upload_bytes,
         source_download_timeout_seconds=source_download_timeout_seconds,
         qdrant_upsert_batch_points=qdrant_upsert_batch_points,
+        embedding_batch_size=embedding_batch_size,
     )
 
 

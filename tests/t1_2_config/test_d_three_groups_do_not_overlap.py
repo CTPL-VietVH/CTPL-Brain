@@ -1,7 +1,7 @@
 """T1.2 (d) — Ba nhóm cấu hình THẬT: mỗi tham số ĐÚNG MỘT NHÀ, và dấu hiệu đặt
 sai phải NGAY CẠNH giá trị (07 Mục 3.3 quy tắc 2 và 4).
 
-⚠️ File này CỐ Ý không khẳng định giá trị cụ thể của mười hai tham số. 07 Mục 3.3
+⚠️ File này CỐ Ý không khẳng định giá trị cụ thể của mười ba tham số. 07 Mục 3.3
 quy tắc 5: "Tài liệu này ghi lý do; file cấu hình là nơi có thẩm quyền lúc
 chạy... Bảng 3.2 ghi giá trị khởi đầu và vì sao chọn nó, không phải trạng thái
 hiện hành." Một test ghim `document_cap == 6` sẽ hoá đỏ đúng vào ngày người vận
@@ -31,13 +31,13 @@ from schema.config import (
 
 #: Tham số trong bảng 07 Mục 3.2 → (file cấu hình, khoá trong file).
 #: Từ PO chốt 18/9/2026, tên khoá trong file cấu hình khớp Y HỆT tên trong
-#: 07 Mục 3.2 cho cả mười hai tham số — đơn vị của `scan_time_budget` (phút),
+#: 07 Mục 3.2 cho cả mười ba tham số — đơn vị của `scan_time_budget` (phút),
 #: `chunk_length_cap` (ký tự Unicode) và `max_upload_bytes` (byte) nằm ở
 #: comment cạnh giá trị trong config/ingestion.yaml, không nằm trong tên khoá.
 #: Ngoại lệ đã cân nhắc: `source_download_timeout_seconds` mang sẵn đơn vị
 #: trong tên vì nó là tham số MỚI (24/9/2026) — 07 Mục 3.2 chốt luôn tên có
 #: hậu tố, nên vẫn chỉ có một cách gọi, không phải hai.
-TWELVE_PARAMS = {
+THIRTEEN_PARAMS = {
     "inheritance_decay": ("retrieval.yaml", "inheritance_decay"),
     "document_cap": ("retrieval.yaml", "document_cap"),
     "cap_warning_multiple": ("retrieval.yaml", "cap_warning_multiple"),
@@ -53,6 +53,7 @@ TWELVE_PARAMS = {
         "source_download_timeout_seconds",
     ),
     "qdrant_upsert_batch_points": ("ingestion.yaml", "qdrant_upsert_batch_points"),
+    "embedding_batch_size": ("ingestion.yaml", "embedding_batch_size"),
 }
 
 
@@ -102,16 +103,16 @@ def _wrong_value_signals_from_docs(repo_root: pathlib.Path) -> dict[str, str]:
     return signals
 
 
-def test_docs_07_still_lists_exactly_the_twelve_parameters(repo_root):
+def test_docs_07_still_lists_exactly_the_thirteen_parameters(repo_root):
     """Lưới an toàn cho chính test dưới: nếu bảng 3.2 đổi hình dạng thì biết ngay."""
     signals = _wrong_value_signals_from_docs(repo_root)
-    assert set(signals) == set(TWELVE_PARAMS), (
-        "Bảng 07 Mục 3.2 không còn đúng mười hai tham số như test đang giả định: "
+    assert set(signals) == set(THIRTEEN_PARAMS), (
+        "Bảng 07 Mục 3.2 không còn đúng mười ba tham số như test đang giả định: "
         f"{sorted(signals)}"
     )
 
 
-@pytest.mark.parametrize("param", sorted(TWELVE_PARAMS))
+@pytest.mark.parametrize("param", sorted(THIRTEEN_PARAMS))
 def test_wrong_value_signal_sits_next_to_the_value_verbatim(repo_root, config_dir, param):
     """⭐ 07 Mục 3.3 quy tắc 4 + 08 T1.2: chép NGUYÊN VĂN cột "dấu hiệu đặt sai"
     vào file cấu hình, cạnh từng giá trị.
@@ -120,7 +121,7 @@ def test_wrong_value_signal_sits_next_to_the_value_verbatim(repo_root, config_di
     ở nơi người ta dùng tới" — nên xoá ghi chú đi phải làm test đỏ, y như xoá
     một trường bắt buộc.
     """
-    filename, key = TWELVE_PARAMS[param]
+    filename, key = THIRTEEN_PARAMS[param]
     path = config_dir / filename
     signal = _wrong_value_signals_from_docs(repo_root)[param]
 
@@ -201,6 +202,8 @@ def test_real_config_files_load_with_correct_types(contract_path, ingestion_path
     assert ingestion.chunk_length_cap >= 1
     assert ingestion.max_upload_bytes >= 1
     assert ingestion.source_download_timeout_seconds > 0
+    assert ingestion.qdrant_upsert_batch_points >= 1
+    assert ingestion.embedding_batch_size >= 1
 
     retrieval = load_retrieval_config(retrieval_path)
     assert 0 <= retrieval.inheritance_decay <= 1

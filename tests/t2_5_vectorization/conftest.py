@@ -37,6 +37,9 @@ INGESTION_PATH = REPO_ROOT / "config" / "ingestion.yaml"
 # 07 Mục 3.3 quy tắc 2).
 UPSERT_BATCH_POINTS = load_ingestion_config(INGESTION_PATH).qdrant_upsert_batch_points
 
+# VEC-3: cùng lý do — `sinh_vector` không có mặc định cho `embedding_batch_size`.
+EMBEDDING_BATCH_SIZE = load_ingestion_config(INGESTION_PATH).embedding_batch_size
+
 DOC_ID = "doc-t2-5-1"
 SPACE_ID = "space-t2-5-1"
 TENANT_ID = "tenant-t2-5-1"

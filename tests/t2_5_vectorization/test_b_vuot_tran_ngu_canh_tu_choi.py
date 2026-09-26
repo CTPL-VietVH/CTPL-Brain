@@ -13,7 +13,7 @@ from schema.chunk import Chunk
 
 from ingestion.vectorization import ChunkVuotTranNguCanh, dem_token, sinh_vector
 
-from .conftest import DOC_ID, KHOAN_DAI, SPACE_ID, TENANT_ID
+from .conftest import DOC_ID, EMBEDDING_BATCH_SIZE, KHOAN_DAI, SPACE_ID, TENANT_ID
 
 
 def _chunk(*, span_start: int, span_end: int, chunk_id: str | None = None) -> Chunk:
@@ -44,7 +44,9 @@ def test_chunk_vuot_tran_bi_tu_choi_neu_ro_chunk_id(model):
     chunk = _chunk(span_start=0, span_end=len(qua_tran), chunk_id="chunk-qua-tran")
 
     with pytest.raises(ChunkVuotTranNguCanh) as exc_info:
-        sinh_vector([chunk], full_text=qua_tran, model=model)
+        sinh_vector(
+            [chunk], full_text=qua_tran, model=model, embedding_batch_size=EMBEDDING_BATCH_SIZE
+        )
 
     assert "chunk-qua-tran" in str(exc_info.value)
 
@@ -64,7 +66,12 @@ def test_mot_chunk_vuot_tran_chan_ca_lo_khong_sinh_vector_mot_phan(model):
     )
 
     with pytest.raises(ChunkVuotTranNguCanh) as exc_info:
-        sinh_vector([chunk_ngan, chunk_dai], full_text=full_text, model=model)
+        sinh_vector(
+            [chunk_ngan, chunk_dai],
+            full_text=full_text,
+            model=model,
+            embedding_batch_size=EMBEDDING_BATCH_SIZE,
+        )
 
     assert "chunk-dai-qua-tran" in str(exc_info.value)
 
@@ -72,5 +79,7 @@ def test_mot_chunk_vuot_tran_chan_ca_lo_khong_sinh_vector_mot_phan(model):
 def test_chunk_duoi_tran_khong_bi_tu_choi(model):
     van_ban = "Điều 1. Một điều ngắn, không vượt trần ngữ cảnh nào cả."
     chunk = _chunk(span_start=0, span_end=len(van_ban))
-    ket_qua = sinh_vector([chunk], full_text=van_ban, model=model)
+    ket_qua = sinh_vector(
+        [chunk], full_text=van_ban, model=model, embedding_batch_size=EMBEDDING_BATCH_SIZE
+    )
     assert len(ket_qua[0].embedding) == 1024

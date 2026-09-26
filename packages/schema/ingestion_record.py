@@ -117,6 +117,15 @@ class IngestionFailureCode(str, Enum):
     #: document (PO chốt 24/9, K11).
     OBJECT_NOT_IN_SPACE = "OBJECT_NOT_IN_SPACE"
 
+    #: VEC-3 — GĐ6 ran out of device memory (GPU/MPS/CPU) creating vectors,
+    #: even on a batch of a single chunk, after halving as far as it goes.
+    #: Paired with `IngestionStatus.FAILED`, not `REJECTED`: the submission
+    #: was not wrong, and NOT `DOCUMENT_NOT_STRUCTURABLE` either — that code
+    #: means the document's shape defeated chunking/embedding, which is not
+    #: what happened here. Not `INTERNAL_ERROR` either: this is a known
+    #: hardware ceiling, not an unforeseen bug (docs/10 §3.5).
+    EMBEDDING_OUT_OF_MEMORY = "EMBEDDING_OUT_OF_MEMORY"
+
     #: Unforeseen failure. Paired with `IngestionStatus.FAILED`, never with
     #: `REJECTED`: *rejected* means the submission was wrong, *failed* means
     #: this service was.

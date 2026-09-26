@@ -31,6 +31,7 @@ from ingestion.promotion import InMemoryVectorStoreWriter, promote_approved_inge
 from schema.chunk import Chunk
 
 from .conftest import (
+    EMBEDDING_BATCH_SIZE,
     SATURATION_EPSILON,
     SATURATION_ROUNDS,
     SCAN_PAIR_BUDGET,
@@ -105,6 +106,7 @@ def _promote(entry, *, store, buffer, writer, vector_deleter, profile_deleter=No
         vector_writer=writer,
         vector_deleter=vector_deleter,
         embedding_model=FakeBgeM3(),
+        embedding_batch_size=EMBEDDING_BATCH_SIZE,
         relation_scope=make_scope(),
         relation_document_source=store,
         saturation_epsilon=SATURATION_EPSILON,

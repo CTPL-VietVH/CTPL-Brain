@@ -532,6 +532,7 @@ def build_deployment_app(
         vector_writer=vector_writer,
         vector_deleter=vector_deleter,
         embedding_model=embedding_model,
+        embedding_batch_size=ingestion_config.embedding_batch_size,
         # T2.6b (the real Backend space-topology client) is explicitly out of
         # scope for this task — see the module docstring's "What is
         # explicitly NOT here".

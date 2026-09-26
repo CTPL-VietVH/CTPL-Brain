@@ -311,6 +311,7 @@ def promote_approved_ingestion(
     vector_writer: VectorStoreWriter,
     vector_deleter: VectorStoreDeleter,
     embedding_model: BgeM3Like,
+    embedding_batch_size: int,
     relation_scope: SpaceScanScope,
     relation_document_source: SpaceDocumentSource,
     saturation_epsilon: float,
@@ -325,6 +326,10 @@ def promote_approved_ingestion(
     `config/ingestion.yaml` and the caller passes the live values down
     (CLAUDE.md Mục 4 quy tắc 2). `scan_time_budget` is IN MINUTES, the unit
     that config key carries.
+
+    `embedding_batch_size` (VEC-3) is a fifth live number from the same file
+    — NOT a scan parameter: it is `sinh_vector()`'s own required parameter,
+    passed straight through — same reason, same rule, no default here either.
 
     `profile_deleter` and `vector_deleter` are the SAME two stores as
     `profile_store` and `vector_writer` — in a deployment `PgDocumentStore` is
@@ -366,6 +371,7 @@ def promote_approved_ingestion(
         entry.chunks,
         full_text=document.extracted_text,
         model=embedding_model,
+        embedding_batch_size=embedding_batch_size,
     )
 
     # ---- 3. GĐ7 — relations. No store touched. --------------------------

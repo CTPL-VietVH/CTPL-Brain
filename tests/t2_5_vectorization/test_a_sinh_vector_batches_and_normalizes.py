@@ -11,7 +11,7 @@ from ingestion.chunking import cat_thanh_mau
 from ingestion.reader.vn_normalizer import dung_cau_truc
 from ingestion.vectorization import sinh_vector
 
-from .conftest import DOC_ID, SPACE_ID, TENANT_ID
+from .conftest import DOC_ID, EMBEDDING_BATCH_SIZE, SPACE_ID, TENANT_ID
 
 VAN_BAN = """CHƯƠNG I
 QUY ĐỊNH CHUNG
@@ -40,7 +40,12 @@ def test_moi_chunk_deu_co_embedding_1024_chieu_va_chuan_hoa_l2(model):
     read_result, chunks = _chunks_that()
     assert all(c.embedding == [] for c in chunks), "Phép thử tự hỏng: T2.3 phải để embedding=[]"
 
-    ket_qua = sinh_vector(chunks, full_text=read_result.full_text, model=model)
+    ket_qua = sinh_vector(
+        chunks,
+        full_text=read_result.full_text,
+        model=model,
+        embedding_batch_size=EMBEDDING_BATCH_SIZE,
+    )
 
     assert len(ket_qua) == len(chunks)
     for chunk in ket_qua:
@@ -54,7 +59,12 @@ def test_khong_sua_doi_danh_sach_chunk_dau_vao(model):
     sửa, giữ đúng bất biến "Chunk không tự mang chữ, không tự có vector cho
     tới khi GĐ6 chạy"."""
     read_result, chunks = _chunks_that()
-    ket_qua = sinh_vector(chunks, full_text=read_result.full_text, model=model)
+    ket_qua = sinh_vector(
+        chunks,
+        full_text=read_result.full_text,
+        model=model,
+        embedding_batch_size=EMBEDDING_BATCH_SIZE,
+    )
 
     assert all(c.embedding == [] for c in chunks), "Danh sách đầu vào bị sửa tại chỗ"
     assert ket_qua is not chunks
@@ -66,7 +76,7 @@ def test_khong_sua_doi_danh_sach_chunk_dau_vao(model):
 
 
 def test_danh_sach_rong_tra_ve_danh_sach_rong(model):
-    assert sinh_vector([], full_text="", model=model) == []
+    assert sinh_vector([], full_text="", model=model, embedding_batch_size=EMBEDDING_BATCH_SIZE) == []
 
 
 def test_hai_mau_noi_dung_khac_nhau_ra_vector_khac_nhau(model):
@@ -75,7 +85,12 @@ def test_hai_mau_noi_dung_khac_nhau_ra_vector_khac_nhau(model):
     không được ra cùng một vector (loại trừ ca hỏng "mọi mẩu ra cùng một
     embedding vô nghĩa")."""
     read_result, chunks = _chunks_that()
-    ket_qua = sinh_vector(chunks, full_text=read_result.full_text, model=model)
+    ket_qua = sinh_vector(
+        chunks,
+        full_text=read_result.full_text,
+        model=model,
+        embedding_batch_size=EMBEDDING_BATCH_SIZE,
+    )
     theo_path = {tuple(c.structure_path): c for c in ket_qua}
 
     khoan_1 = np.array(theo_path[("Chương I", "Điều 1", "Khoản 1")].embedding)
